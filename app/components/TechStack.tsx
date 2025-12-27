@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 
 const technologies = [
@@ -123,45 +123,38 @@ export default function TechStack() {
           </p>
         </motion.div>
 
-        {/* Infinite Scrolling - Full Width */}
+        {/* Infinite Scrolling - Full Width - CSS Animation for Performance */}
         <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw]">
           {/* Gradient Overlays */}
           <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
 
-          {/* Single Row */}
+          {/* Single Row - CSS Animation */}
           <div 
             className="overflow-hidden py-8"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <motion.div
+            <div
               className="flex gap-5"
-              animate={{
-                x: isPaused ? undefined : [0, -(165 * technologies.length)],
-              }}
-              transition={{
-                x: {
-                  duration: 50,
-                  repeat: Infinity,
-                  ease: 'linear',
-                },
+              style={{
+                animation: 'marquee 40s linear infinite',
+                animationPlayState: isPaused ? 'paused' : 'running',
+                width: 'max-content',
               }}
             >
               {duplicatedTechnologies.map((tech, index) => (
-                <motion.a
+                <a
                   key={`${tech.name}-${index}`}
-                  className="flex-shrink-0 group cursor-pointer"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ duration: 0.3 }}
-                  href={(tech as any).url}
+                  className="flex-shrink-0 group cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
+                  href={(tech as { url: string }).url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div className="relative w-40 h-28 glass-strong rounded-xl p-4 flex flex-col items-center justify-center gap-3 border border-white/10 hover:border-white/30 transition-all overflow-hidden">
+                  <div className="relative w-40 h-28 glass-strong rounded-xl p-4 flex flex-col items-center justify-center gap-3 border border-white/10 hover:border-white/30 transition-all overflow-hidden gpu-accelerated">
                     {/* Gradient Background on Hover */}
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${tech.bg} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${tech.bg} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
                     />
                     
                     {/* Logo - No background, just icon */}
@@ -178,15 +171,10 @@ export default function TechStack() {
                     
                     {/* Name */}
                     <h3 className="text-xs font-semibold text-center relative z-10">{tech.name}</h3>
-                    
-                    {/* Glow Effect on Hover */}
-                    <motion.div
-                      className={`absolute inset-0 rounded-xl bg-gradient-to-br ${tech.bg} opacity-0 group-hover:opacity-20 blur-xl -z-10 transition-opacity duration-500`}
-                    />
                   </div>
-                </motion.a>
+                </a>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

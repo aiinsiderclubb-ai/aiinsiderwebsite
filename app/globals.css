@@ -55,44 +55,49 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
-/* Glassmorphism utilities */
+/* GPU acceleration utility */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Glassmorphism utilities - optimized blur values */
 .glass {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateZ(0);
 }
 
 .glass-strong {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
+  transform: translateZ(0);
 }
 
-/* Neon glow effects */
+/* Neon glow effects - optimized with fewer layers */
 .neon-cyan {
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.6),
-              0 0 60px rgba(0, 240, 255, 0.4),
-              0 0 100px rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5),
+              0 0 40px rgba(0, 240, 255, 0.25);
 }
 
 .neon-violet {
-  box-shadow: 0 0 30px rgba(153, 69, 255, 0.6),
-              0 0 60px rgba(153, 69, 255, 0.4),
-              0 0 100px rgba(153, 69, 255, 0.2);
+  box-shadow: 0 0 20px rgba(153, 69, 255, 0.5),
+              0 0 40px rgba(153, 69, 255, 0.25);
 }
 
 .neon-pink {
-  box-shadow: 0 0 30px rgba(255, 0, 128, 0.6),
-              0 0 60px rgba(255, 0, 128, 0.4),
-              0 0 100px rgba(255, 0, 128, 0.2);
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.5),
+              0 0 40px rgba(255, 0, 128, 0.25);
 }
 
 .neon-multi {
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4),
-              0 0 60px rgba(153, 69, 255, 0.4),
-              0 0 100px rgba(255, 0, 128, 0.3);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3),
+              0 0 40px rgba(153, 69, 255, 0.3);
 }
 
 .neon-border-cyan {
@@ -239,5 +244,26 @@ h1, h2, h3, h4, h5, h6 {
 ::-moz-selection {
   background: var(--accent-cyan);
   color: var(--primary-dark);
+}
+
+/* Marquee animation for tech stack - CSS based for performance */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 

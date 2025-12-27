@@ -63,37 +63,17 @@ export default function Hero() {
       {/* Animated Background with Multiple Gradients */}
       <div className="absolute inset-0 bg-black" />
       
-      {/* Multiple Animated Orbs */}
+      {/* Multiple Animated Orbs - GPU accelerated with reduced blur */}
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+        className="absolute w-[600px] h-[600px] rounded-full gpu-accelerated"
         style={{
-          background: 'radial-gradient(circle, rgba(153, 69, 255, 0.4) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(153, 69, 255, 0.35) 0%, transparent 60%)',
+          filter: 'blur(60px)',
           left: '20%',
           top: '20%',
         }}
         animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 50, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-[100px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.3) 0%, transparent 70%)',
-          right: '10%',
-          top: '40%',
-        }}
-        animate={{
-          scale: [1, 1.4, 1],
-          x: [0, -30, 0],
-          y: [0, 50, 0],
+          scale: [1, 1.15, 1],
         }}
         transition={{
           duration: 10,
@@ -101,20 +81,38 @@ export default function Hero() {
           ease: 'easeInOut',
         }}
       />
+      
+      <motion.div
+        className="absolute w-[500px] h-[500px] rounded-full gpu-accelerated"
+        style={{
+          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.25) 0%, transparent 60%)',
+          filter: 'blur(50px)',
+          right: '10%',
+          top: '40%',
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
 
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-[80px]"
+        className="absolute w-[400px] h-[400px] rounded-full gpu-accelerated"
         style={{
-          background: 'radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, transparent 60%)',
+          filter: 'blur(40px)',
           left: '50%',
           bottom: '10%',
         }}
         animate={{
-          scale: [1, 1.2, 1],
-          x: [0, -50, 0],
+          scale: [1, 1.1, 1],
         }}
         transition={{
-          duration: 7,
+          duration: 9,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -225,32 +223,20 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Main Heading - More Dynamic */}
+        {/* Main Heading - Optimized */}
         <motion.h1
           variants={itemVariants}
           className="text-6xl md:text-8xl lg:text-[10rem] font-bold font-heading mb-8 leading-[0.9]"
         >
-          <motion.span 
+          <span 
             className="block"
-            animate={{ 
-              textShadow: [
-                '0 0 20px rgba(0, 240, 255, 0.5)',
-                '0 0 60px rgba(153, 69, 255, 0.5)',
-                '0 0 20px rgba(255, 0, 128, 0.5)',
-                '0 0 60px rgba(0, 240, 255, 0.5)',
-              ]
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
+            style={{ textShadow: '0 0 30px rgba(0, 240, 255, 0.4)' }}
           >
             Automation
-          </motion.span>
-          <motion.span 
-            className="block gradient-text-animated text-7xl md:text-9xl lg:text-[12rem]"
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
+          </span>
+          <span className="block gradient-text-animated text-7xl md:text-9xl lg:text-[12rem]">
             Reimagined
-          </motion.span>
+          </span>
         </motion.h1>
 
         {/* Subtitle with Icons */}
@@ -310,18 +296,12 @@ export default function Hero() {
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
             </span>
             
-            {/* Animated Border */}
-            <motion.div
+            {/* Static Glow - no animation for performance */}
+            <div
               className="absolute inset-0 rounded-full"
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(153, 69, 255, 0.3)',
-                  '0 0 40px rgba(153, 69, 255, 0.5), 0 0 60px rgba(255, 0, 128, 0.3)',
-                  '0 0 20px rgba(255, 0, 128, 0.5), 0 0 40px rgba(0, 240, 255, 0.3)',
-                  '0 0 40px rgba(0, 240, 255, 0.5), 0 0 60px rgba(153, 69, 255, 0.3)',
-                ],
+              style={{
+                boxShadow: '0 0 25px rgba(0, 240, 255, 0.4), 0 0 50px rgba(153, 69, 255, 0.25)',
               }}
-              transition={{ duration: 3, repeat: Infinity }}
             />
           </motion.a>
 

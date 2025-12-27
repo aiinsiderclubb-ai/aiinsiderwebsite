@@ -108,7 +108,7 @@ export default function Navbar() {
             </motion.a>
           ))}
           
-          {/* CTA Button */}
+          {/* CTA Button - Optimized */}
           <motion.a
             href={SCHEDULING_URL}
             target="_blank"
@@ -119,26 +119,15 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="relative px-6 py-3 bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500 rounded-full font-bold text-sm overflow-hidden group"
+            style={{
+              boxShadow: '0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(153, 69, 255, 0.25)',
+            }}
           >
             <span className="relative z-10">Book a Call</span>
             
             {/* Hover effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-            
-            {/* Glow */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(0, 240, 255, 0.5)',
-                  '0 0 30px rgba(153, 69, 255, 0.5)',
-                  '0 0 20px rgba(255, 0, 128, 0.5)',
-                  '0 0 30px rgba(0, 240, 255, 0.5)',
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             />
           </motion.a>
         </div>

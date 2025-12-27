@@ -46,25 +46,21 @@ export default function Solutions() {
 
   return (
     <section id="solutions" className="relative py-32 px-6 overflow-hidden">
-      {/* Animated Background Orbs */}
-      <motion.div
-        className="absolute top-1/2 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px]"
-        style={{ background: 'radial-gradient(circle, rgba(153, 69, 255, 0.2) 0%, transparent 70%)' }}
-        animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 100, 0],
+      {/* Static Background Orbs - No animation for performance */}
+      <div
+        className="absolute top-1/2 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(153, 69, 255, 0.15) 0%, transparent 60%)',
+          filter: 'blur(60px)',
         }}
-        transition={{ duration: 15, repeat: Infinity }}
       />
       
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[100px]"
-        style={{ background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)' }}
-        animate={{
-          scale: [1, 1.4, 1],
-          y: [0, -50, 0],
+      <div
+        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full gpu-accelerated"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, transparent 60%)',
+          filter: 'blur(50px)',
         }}
-        transition={{ duration: 12, repeat: Infinity }}
       />
 
       <div ref={ref} className="relative max-w-7xl mx-auto">
@@ -139,17 +135,14 @@ export default function Solutions() {
                     transition={{ duration: 0.5 }}
                   />
 
-                  {/* Glow Effect */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    animate={
-                      hoveredIndex === index
-                        ? {
-                            boxShadow: `0 0 40px ${solution.glowColor}, 0 0 80px ${solution.glowColor}`,
-                          }
-                        : { boxShadow: 'none' }
-                    }
-                    transition={{ duration: 0.3 }}
+                  {/* Glow Effect - CSS transition instead of Framer Motion */}
+                  <div
+                    className="absolute inset-0 rounded-3xl transition-shadow duration-300"
+                    style={{
+                      boxShadow: hoveredIndex === index
+                        ? `0 0 30px ${solution.glowColor}`
+                        : 'none',
+                    }}
                   />
 
                   {/* Animated Border */}
