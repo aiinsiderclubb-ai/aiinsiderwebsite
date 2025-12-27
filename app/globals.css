@@ -1,26 +1,243 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-dark: #0A0014;
+  --primary-darker: #050008;
+  --accent-cyan: #00F0FF;
+  --accent-violet: #9945FF;
+  --accent-pink: #FF0080;
+  --accent-yellow: #FFD700;
+  --accent-green: #00FF88;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B4B4C8;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #000000;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
 }
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(153, 69, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 0, 128, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 240, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Neon glow effects */
+.neon-cyan {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.6),
+              0 0 60px rgba(0, 240, 255, 0.4),
+              0 0 100px rgba(0, 240, 255, 0.2);
+}
+
+.neon-violet {
+  box-shadow: 0 0 30px rgba(153, 69, 255, 0.6),
+              0 0 60px rgba(153, 69, 255, 0.4),
+              0 0 100px rgba(153, 69, 255, 0.2);
+}
+
+.neon-pink {
+  box-shadow: 0 0 30px rgba(255, 0, 128, 0.6),
+              0 0 60px rgba(255, 0, 128, 0.4),
+              0 0 100px rgba(255, 0, 128, 0.2);
+}
+
+.neon-multi {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4),
+              0 0 60px rgba(153, 69, 255, 0.4),
+              0 0 100px rgba(255, 0, 128, 0.3);
+}
+
+.neon-border-cyan {
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3),
+              inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.neon-border-violet {
+  border: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.3),
+              inset 0 0 10px rgba(138, 43, 226, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 50%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-animated {
+  background: linear-gradient(270deg, var(--accent-cyan), var(--accent-violet), var(--accent-pink), var(--accent-yellow), var(--accent-cyan));
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 8s ease infinite;
+}
+
+.gradient-text-green {
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-cyan) 100%);
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.7s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* Card hover effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: all 0.7s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* Animated gradient background */
+.gradient-bg {
+  background: linear-gradient(135deg, 
+    var(--primary-dark) 0%, 
+    var(--primary-darker) 50%, 
+    var(--primary-dark) 100%);
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Glow button */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.glow-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Neural network lines background */
+.neural-bg {
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-cyan);
+  color: var(--primary-dark);
+}
+
+::-moz-selection {
+  background: var(--accent-cyan);
+  color: var(--primary-dark);
+}
+
