@@ -25,7 +25,7 @@ const testimonials = [
   },
   {
     role: 'ai',
-    message: 'That\'s the power of AI — speed meets intelligence.',
+    message: "That's the power of AI — speed meets intelligence.",
     author: 'AI Insider',
     company: 'Response',
   },
@@ -60,14 +60,9 @@ export default function Testimonials() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6 }}
-            className="inline-block px-4 py-2 glass rounded-full mb-6"
-          >
+          <div className="inline-block px-4 py-2 glass rounded-full mb-6">
             <span className="text-sm font-medium gradient-text">Testimonials</span>
-          </motion.div>
+          </div>
 
           <h2 className="text-5xl md:text-6xl font-bold font-heading mb-6">
             What Our
@@ -92,18 +87,16 @@ export default function Testimonials() {
                 className={`flex ${isClient ? 'justify-start' : 'justify-end'}`}
               >
                 <div
-                  className={`max-w-md ${
+                  className={`max-w-md glass-strong rounded-3xl p-6 border ${
                     isClient
-                      ? 'glass-strong neon-border-cyan'
-                      : 'glass-strong neon-border-violet'
-                  } rounded-3xl p-6 ${
-                    isClient ? 'rounded-tl-none' : 'rounded-tr-none'
+                      ? 'border-cyan-500/30 shadow-[0_0_12px_rgba(0,240,255,0.1)] rounded-tl-none'
+                      : 'border-violet-500/30 shadow-[0_0_12px_rgba(153,69,255,0.1)] rounded-tr-none'
                   }`}
                 >
                   {/* Quote Icon */}
                   <Quote
                     className={`w-6 h-6 mb-3 ${
-                      isClient ? 'text-accent-cyan' : 'text-accent-violet'
+                      isClient ? 'text-cyan-400' : 'text-violet-400'
                     }`}
                   />
 
@@ -137,4 +130,3 @@ export default function Testimonials() {
     </section>
   );
 }
-

@@ -50,35 +50,17 @@ export default function BookCall() {
   const [confirmation, setConfirmation] = useState<string | null>(null);
 
   const benefits = [
-    {
-      icon: '💬',
-      title: 'Q&A',
-      desc: 'Get answers to all your questions',
-    },
-    {
-      icon: '🎯',
-      title: 'Customized marketing',
-      desc: 'Suggestions and follow up with key highlights',
-    },
-    {
-      icon: '📈',
-      title: 'Product growth discussion',
-      desc: 'Strategy for scaling your business',
-    },
-    {
-      icon: '🚀',
-      title: 'Essential guidance',
-      desc: 'On the quickest way to reach point B',
-    },
+    { icon: '💬', title: 'Q&A', desc: 'Get answers to all your questions' },
+    { icon: '🎯', title: 'Customized marketing', desc: 'Suggestions and follow up with key highlights' },
+    { icon: '📈', title: 'Product growth discussion', desc: 'Strategy for scaling your business' },
+    { icon: '🚀', title: 'Essential guidance', desc: 'On the quickest way to reach point B' },
   ];
 
-  // Calendar logic
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
     return { firstDay, daysInMonth };
   };
 
@@ -86,35 +68,27 @@ export default function BookCall() {
   const monthName = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
   const previousMonth = () => {
-    const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
-    setCurrentMonth(newMonth);
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     setSelectedDate(null);
     setSelectedTime(null);
   };
 
   const nextMonth = () => {
-    const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
-    setCurrentMonth(newMonth);
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
     setSelectedDate(null);
     setSelectedTime(null);
   };
 
   const weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
-  // Load bookings from localStorage
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      try {
-        setBookings(JSON.parse(raw));
-      } catch {
-        // ignore parse errors
-      }
+      try { setBookings(JSON.parse(raw)); } catch { /* ignore */ }
     }
   }, []);
 
-  // Persist bookings
   useEffect(() => {
     if (typeof window === 'undefined') return;
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
@@ -123,32 +97,23 @@ export default function BookCall() {
   const handleConfirm = () => {
     if (!selectedDate || !selectedTime) return;
     const key = getDateKey(currentMonth, selectedDate);
-
     setBookings((prev) => {
       const dayBookings = prev[key] || [];
       if (dayBookings.includes(selectedTime)) return prev;
-      const updated: BookingsMap = {
-        ...prev,
-        [key]: [...dayBookings, selectedTime],
-      };
-      return updated;
+      return { ...prev, [key]: [...dayBookings, selectedTime] };
     });
-
-    setConfirmation(
-      `Slot booked for ${monthName.split(' ')[0]} ${selectedDate} at ${selectedTime} (CET)`
-    );
+    setConfirmation(`Slot booked for ${monthName.split(' ')[0]} ${selectedDate} at ${selectedTime} (CET)`);
   };
 
   return (
     <section id="bookcall" className="relative py-32 px-6 overflow-hidden">
-      {/* Background */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px]"
-        style={{ background: 'radial-gradient(circle, rgba(153, 69, 255, 0.15) 0%, transparent 70%)' }}
-        animate={{
-          scale: [1, 1.2, 1],
+      {/* Static Background - no animation */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full gpu-accelerated"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(153, 69, 255, 0.12) 0%, transparent 60%)',
+          filter: 'blur(60px)',
         }}
-        transition={{ duration: 10, repeat: Infinity }}
       />
 
       <div ref={ref} className="relative max-w-7xl mx-auto">
@@ -159,45 +124,23 @@ export default function BookCall() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-gray-400 uppercase tracking-wider text-sm mb-4"
-            >
+            <p className="text-gray-400 uppercase tracking-wider text-sm mb-4">
               Want to know more?
-            </motion.p>
+            </p>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-6xl md:text-7xl font-bold font-heading mb-6 leading-tight"
-            >
-              BOOK
-              <br />
-              <span className="gradient-text-animated">INTRO CALL</span>
-            </motion.h2>
+            <h2 className="text-6xl md:text-7xl font-bold font-heading mb-6 leading-tight">
+              BOOK<br />
+              <span className="gradient-text">INTRO CALL</span>
+            </h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-gray-300 mb-12"
-            >
+            <p className="text-xl text-gray-300 mb-12">
               What do you get on this free meeting?
-            </motion.p>
+            </p>
 
             {/* Benefits Grid */}
             <div className="grid md:grid-cols-2 gap-6">
               {benefits.map((benefit, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                  className="flex gap-4"
-                >
+                <div key={index} className="flex gap-4">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-xl">
                       {benefit.icon}
@@ -207,7 +150,7 @@ export default function BookCall() {
                     <h4 className="font-bold mb-1">{benefit.title}</h4>
                     <p className="text-sm text-gray-400">{benefit.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -225,16 +168,14 @@ export default function BookCall() {
             <div className="flex items-center justify-between mb-6">
               <button
                 onClick={previousMonth}
-                className="w-10 h-10 rounded-lg glass hover:bg-white/10 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-lg glass flex items-center justify-center transition-colors duration-200 hover:bg-white/10 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              
               <span className="text-lg font-semibold">{monthName}</span>
-              
               <button
                 onClick={nextMonth}
-                className="w-10 h-10 rounded-lg glass hover:bg-white/10 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-lg glass flex items-center justify-center transition-colors duration-200 hover:bg-white/10 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -249,14 +190,12 @@ export default function BookCall() {
               ))}
             </div>
 
-            {/* Calendar Days */}
+            {/* Calendar Days - Pure CSS hover */}
             <div className="grid grid-cols-7 gap-2 mb-6">
-              {/* Empty cells for days before month starts */}
               {Array.from({ length: (firstDay + 6) % 7 }).map((_, i) => (
                 <div key={`empty-${i}`} />
               ))}
               
-              {/* Actual days */}
               {Array.from({ length: daysInMonth }).map((_, i) => {
                 const day = i + 1;
                 const key = getDateKey(currentMonth, day);
@@ -265,7 +204,7 @@ export default function BookCall() {
                 const isSelected = selectedDate === day;
 
                 return (
-                  <motion.button
+                  <button
                     key={day}
                     type="button"
                     onClick={() => {
@@ -275,28 +214,28 @@ export default function BookCall() {
                       setConfirmation(null);
                     }}
                     disabled={isFullyBooked}
-                    whileHover={!isFullyBooked ? { scale: 1.1 } : {}}
-                    whileTap={!isFullyBooked ? { scale: 0.95 } : {}}
                     className={`
-                      aspect-square rounded-lg text-sm font-semibold transition-all
-                      ${isFullyBooked ? 'text-gray-600 cursor-not-allowed opacity-40' : 'text-white hover:bg-white/10'}
-                      ${isSelected ? 'bg-gradient-to-br from-cyan-500 to-violet-500 text-white' : ''}
+                      aspect-square rounded-lg text-sm font-semibold
+                      transition-all duration-150 ease-out
+                      ${isFullyBooked 
+                        ? 'text-gray-600 cursor-not-allowed opacity-40' 
+                        : 'text-white hover:bg-white/15 hover:scale-110 active:scale-95'
+                      }
+                      ${isSelected ? 'bg-gradient-to-br from-cyan-500 to-violet-500 text-white hover:scale-100' : ''}
                     `}
                   >
                     {day}
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
 
-            {/* Time slots for selected day */}
+            {/* Time slots */}
             {selectedDate && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm text-gray-400">Select a time</span>
-                  <span className="text-xs text-gray-500">
-                    {monthName.split(' ')[0]} {selectedDate}
-                  </span>
+                  <span className="text-xs text-gray-500">{monthName.split(' ')[0]} {selectedDate}</span>
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
                   {HALF_HOUR_SLOTS.map((slot) => {
@@ -316,13 +255,12 @@ export default function BookCall() {
                         }}
                         disabled={isBooked}
                         className={`
-                          text-xs md:text-sm px-3 py-2 rounded-full border transition-all
-                          ${
-                            isBooked
-                              ? 'border-white/10 text-gray-500 cursor-not-allowed line-through bg-white/5'
-                              : isSelectedTime
-                              ? 'border-cyan-400 bg-cyan-500/20 text-white shadow-[0_0_20px_rgba(34,211,238,0.5)]'
-                              : 'border-white/15 text-gray-200 hover:border-cyan-400 hover:bg-white/10'
+                          text-xs md:text-sm px-3 py-2 rounded-full border transition-all duration-150
+                          ${isBooked
+                            ? 'border-white/10 text-gray-500 cursor-not-allowed line-through bg-white/5'
+                            : isSelectedTime
+                            ? 'border-cyan-400 bg-cyan-500/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)]'
+                            : 'border-white/15 text-gray-200 hover:border-cyan-400 hover:bg-white/10'
                           }
                         `}
                       >
@@ -341,7 +279,7 @@ export default function BookCall() {
             <div className="pt-6 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400">Time zone</span>
-                <button className="flex items-center gap-2 px-4 py-2 glass rounded-lg hover:bg-white/10 transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 glass rounded-lg transition-colors duration-200 hover:bg-white/10">
                   <Clock className="w-4 h-4 text-gray-400" />
                   <span className="text-sm">Central European Time (16:18)</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -351,17 +289,14 @@ export default function BookCall() {
 
             {/* Confirm Button */}
             {selectedDate && selectedTime && (
-              <motion.button
+              <button
                 type="button"
                 onClick={handleConfirm}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full font-bold hover:shadow-lg hover:shadow-cyan-500/40 transition-transform"
+                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full font-bold 
+                  transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-cyan-500/30 active:scale-[0.98]"
               >
                 Continue with {monthName.split(' ')[0]} {selectedDate} at {selectedTime}
-              </motion.button>
+              </button>
             )}
 
             {confirmation && (
@@ -375,4 +310,3 @@ export default function BookCall() {
     </section>
   );
 }
-
