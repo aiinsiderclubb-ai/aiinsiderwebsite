@@ -156,41 +156,29 @@ export default function Hero() {
         />
       </div>
 
-      {/* Floating Particles - More and Colorful */}
+      {/* Floating Particles - Reduced to 8 for performance */}
       {!shouldReduceMotion &&
-        [...Array(20)].map((_, i) => {
-          const colors = [
-            'bg-cyan-400',
-            'bg-violet-500',
-            'bg-pink-500',
-            'bg-yellow-400',
-          ];
+        [...Array(8)].map((_, i) => {
+          const colors = ['bg-cyan-400', 'bg-violet-500', 'bg-pink-500', 'bg-yellow-400'];
           const randomColor = colors[i % colors.length];
+          // Pre-calculate positions to avoid window access during render
+          const xPos = (i * 12.5) + 5; // Spread across viewport
+          const yPos = 50 + (i % 3) * 20;
 
           return (
             <motion.div
               key={i}
-              className={`absolute w-2 h-2 ${randomColor} rounded-full`}
-              initial={{
-                x:
-                  typeof window !== 'undefined'
-                    ? Math.random() * window.innerWidth
-                    : Math.random() * 1920,
-                y:
-                  typeof window !== 'undefined'
-                    ? Math.random() * window.innerHeight
-                    : Math.random() * 1080,
-                opacity: 0,
-              }}
+              className={`absolute w-2 h-2 ${randomColor} rounded-full gpu-accelerated`}
+              style={{ left: `${xPos}%`, top: `${yPos}%` }}
+              initial={{ opacity: 0 }}
               animate={{
-                y: [null, -Math.random() * 300 - 150],
-                opacity: [0, 1, 0],
-                scale: [0, 1.2, 0],
+                y: [0, -200],
+                opacity: [0, 0.8, 0],
               }}
               transition={{
-                duration: Math.random() * 4 + 3,
+                duration: 5 + i * 0.5,
                 repeat: Infinity,
-                delay: Math.random() * 5,
+                delay: i * 0.8,
                 ease: 'easeOut',
               }}
             />

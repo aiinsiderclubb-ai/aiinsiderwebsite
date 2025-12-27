@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,55 +58,36 @@ export default function Navbar() {
       )}
 
       <div className="relative max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <motion.a
+        {/* Logo - Optimized */}
+        <Link
           href="/"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
           className="flex items-center gap-3 group"
         >
-          <motion.div
-            className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-violet-500 to-pink-500 flex items-center justify-center relative overflow-hidden"
-            whileHover={{ scale: 1.1, rotate: 5 }}
+          <div
+            className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-violet-500 to-pink-500 flex items-center justify-center
+              transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
           >
             <Zap className="w-6 h-6 text-white" fill="currentColor" />
-            
-            {/* Animated shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              animate={{
-                x: ['-100%', '200%'],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 3,
-              }}
-            />
-          </motion.div>
+          </div>
           
           <span className="text-2xl font-bold font-heading">
-            <span className="gradient-text-animated">AI Insider</span>
+            <span className="gradient-text">AI Insider</span>
           </span>
-        </motion.a>
+        </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Optimized */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, index) => (
-            <motion.a
+          {navLinks.map((link) => (
+            <a
               key={link.name}
               href={link.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative text-sm font-semibold text-gray-300 hover:text-white transition-colors group"
+              className="relative text-sm font-semibold text-gray-300 hover:text-white transition-colors duration-200 group"
             >
               {link.name}
               
               {/* Underline effect */}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-violet-500 group-hover:w-full transition-all duration-300" />
-            </motion.a>
+            </a>
           ))}
           
           {/* CTA Button - Optimized */}
