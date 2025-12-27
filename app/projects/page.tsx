@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { ExternalLink, Github, ArrowRight, Bot, Mic, Workflow, Brain, MessageSquare, Zap } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Link from 'next/link';
 
 const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI'];
 
@@ -280,20 +281,20 @@ export default function ProjectsPage() {
               Let's discuss your project and create something extraordinary together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
+              <Link
                 href="/#bookcall"
                 className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full 
                   font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
               >
                 Start Your Project
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#contact"
                 className="inline-block px-10 py-4 glass-strong border border-white/20 rounded-full 
                   font-bold text-lg transition-all duration-300 hover:bg-white/10 hover:scale-105"
               >
                 Get in Touch
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { Linkedin, Twitter, Mail, Zap, Target, Rocket, Users } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Link from 'next/link';
 
 const teamMembers = [
   {
@@ -328,13 +329,13 @@ export default function AboutPage() {
             <p className="text-xl text-gray-300 mb-10">
               Let's discuss how we can transform your business with AI.
             </p>
-            <a
+            <Link
               href="/#bookcall"
               className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full 
                 font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
             >
               Book a Free Consultation
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
