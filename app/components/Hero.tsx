@@ -1,24 +1,39 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useEffect, useState } from 'react';
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (typeof window === 'undefined' || shouldReduceMotion) return;
+
+    let frame: number | null = null;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
+      if (frame !== null) return;
+
+      frame = window.requestAnimationFrame(() => {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth) * 100,
+          y: (e.clientY / window.innerHeight) * 100,
+        });
+        frame = null;
       });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    return () => {
+      if (frame !== null) {
+        window.cancelAnimationFrame(frame);
+      }
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [shouldReduceMotion]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -106,27 +121,29 @@ export default function Hero() {
       />
       
       {/* Cursor Follow Glow with Multiple Colors */}
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-40"
-        style={{
-          background: `radial-gradient(circle, 
+      {!shouldReduceMotion && (
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-40"
+          style={{
+            background: `radial-gradient(circle, 
             rgba(0, 240, 255, 0.3) 0%, 
             rgba(153, 69, 255, 0.2) 30%,
             rgba(255, 0, 128, 0.1) 60%,
             transparent 70%)`,
-          left: `${mousePosition.x}%`,
-          top: `${mousePosition.y}%`,
-          transform: 'translate(-50%, -50%)',
-        }}
-        animate={{
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
+            left: `${mousePosition.x}%`,
+            top: `${mousePosition.y}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+          animate={{
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      )}
 
       {/* Grid Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -142,44 +159,45 @@ export default function Hero() {
       </div>
 
       {/* Floating Particles - More and Colorful */}
-      {[...Array(40)].map((_, i) => {
-        const colors = [
-          'bg-cyan-400',
-          'bg-violet-500',
-          'bg-pink-500',
-          'bg-yellow-400',
-        ];
-        const randomColor = colors[i % colors.length];
-        
-        return (
-          <motion.div
-            key={i}
-            className={`absolute w-2 h-2 ${randomColor} rounded-full`}
-            initial={{
-              x:
-                typeof window !== 'undefined'
-                  ? Math.random() * window.innerWidth
-                  : Math.random() * 1920,
-              y:
-                typeof window !== 'undefined'
-                  ? Math.random() * window.innerHeight
-                  : Math.random() * 1080,
-              opacity: 0,
-            }}
-            animate={{
-              y: [null, -Math.random() * 400 - 200],
-              opacity: [0, 1, 0],
-              scale: [0, 1.5, 0],
-            }}
-            transition={{
-              duration: Math.random() * 4 + 3,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: 'easeOut',
-            }}
-          />
-        );
-      })}
+      {!shouldReduceMotion &&
+        [...Array(20)].map((_, i) => {
+          const colors = [
+            'bg-cyan-400',
+            'bg-violet-500',
+            'bg-pink-500',
+            'bg-yellow-400',
+          ];
+          const randomColor = colors[i % colors.length];
+
+          return (
+            <motion.div
+              key={i}
+              className={`absolute w-2 h-2 ${randomColor} rounded-full`}
+              initial={{
+                x:
+                  typeof window !== 'undefined'
+                    ? Math.random() * window.innerWidth
+                    : Math.random() * 1920,
+                y:
+                  typeof window !== 'undefined'
+                    ? Math.random() * window.innerHeight
+                    : Math.random() * 1080,
+                opacity: 0,
+              }}
+              animate={{
+                y: [null, -Math.random() * 300 - 150],
+                opacity: [0, 1, 0],
+                scale: [0, 1.2, 0],
+              }}
+              transition={{
+                duration: Math.random() * 4 + 3,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: 'easeOut',
+              }}
+            />
+          );
+        })}
 
       {/* Content */}
       <motion.div
