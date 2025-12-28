@@ -2,12 +2,12 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { ExternalLink, Github, ArrowRight, Bot, Mic, Workflow, Brain, MessageSquare, Zap } from 'lucide-react';
+import { ArrowRight, Bot, Mic, Workflow, Brain, MessageSquare, Zap, Heart, Users, Globe, Smartphone, Star } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 
-const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI'];
+const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI', 'Mobile'];
 
 const projects = [
   {
@@ -105,9 +105,11 @@ const projects = [
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const heroRef = useRef(null);
+  const featuredRef = useRef(null);
   const projectsRef = useRef(null);
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
+  const featuredInView = useInView(featuredRef, { once: true, margin: '-100px' });
   const projectsInView = useInView(projectsRef, { once: true, margin: '-100px' });
 
   const filteredProjects = activeCategory === 'All' 
@@ -153,6 +155,222 @@ export default function ProjectsPage() {
               Explore our showcase of AI-powered solutions that have transformed businesses 
               across industries. Real projects, real results.
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Project: Sweezy */}
+      <section ref={featuredRef} className="relative py-16 px-6 overflow-hidden">
+        {/* Ukrainian Flag Background Gradient */}
+        <div className="absolute inset-0 gpu-accelerated"
+          style={{
+            background: 'linear-gradient(180deg, rgba(0, 87, 184, 0.08) 0%, rgba(255, 215, 0, 0.08) 100%)',
+          }}
+        />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(0, 87, 184, 0.15) 0%, transparent 60%)',
+            filter: 'blur(100px)',
+          }}
+        />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full gpu-accelerated"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%)',
+            filter: 'blur(100px)',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={featuredInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-10"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
+              style={{ background: 'linear-gradient(90deg, rgba(0, 87, 184, 0.3) 0%, rgba(255, 215, 0, 0.3) 100%)' }}>
+              <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
+              <span className="text-sm font-semibold text-white">Featured Project</span>
+              <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={featuredInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Link href="/projects/sweezy" className="block group">
+              <div className="relative rounded-3xl overflow-hidden border-2 transition-all duration-500 hover:-translate-y-2"
+                style={{ 
+                  borderImage: 'linear-gradient(90deg, #0057B8 0%, #FFD700 100%) 1',
+                  boxShadow: '0 0 40px rgba(0, 87, 184, 0.3), 0 0 80px rgba(255, 215, 0, 0.2)',
+                }}>
+                
+                {/* Card Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0d1020] to-[#0a0a1a]" />
+                
+                <div className="relative grid lg:grid-cols-2 gap-8 p-8 md:p-12">
+                  {/* Left: Content */}
+                  <div className="flex flex-col justify-center">
+                    {/* Ukrainian Flag Accent */}
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-8 h-5 rounded-sm overflow-hidden flex flex-col shadow-lg">
+                        <div className="flex-1" style={{ backgroundColor: '#0057B8' }} />
+                        <div className="flex-1" style={{ backgroundColor: '#FFD700' }} />
+                      </div>
+                      <span className="text-sm font-medium text-gray-400">Made with love for Ukraine</span>
+                      <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
+                    </div>
+
+                    <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+                      <span style={{ 
+                        background: 'linear-gradient(90deg, #0057B8 0%, #60a5fa 50%, #FFD700 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                      }}>
+                        Sweezy
+                      </span>
+                    </h2>
+
+                    <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                      A mobile app designed to help Ukrainian refugees in Switzerland navigate 
+                      their new life — from finding housing to understanding local services.
+                    </p>
+
+                    <div className="flex flex-wrap gap-3 mb-8">
+                      {['React Native', 'AI Assistant', 'Multi-language', 'Offline Mode'].map((tag) => (
+                        <span key={tag} className="px-3 py-1.5 text-sm rounded-full font-medium"
+                          style={{ 
+                            background: 'linear-gradient(90deg, rgba(0, 87, 184, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%)',
+                            border: '1px solid rgba(255, 215, 0, 0.3)',
+                          }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Metrics */}
+                    <div className="grid grid-cols-3 gap-4 mb-8">
+                      {[
+                        { icon: Users, value: '10K+', label: 'Users Helped' },
+                        { icon: Globe, value: '4', label: 'Languages' },
+                        { icon: Smartphone, value: 'iOS/Android', label: 'Platforms' },
+                      ].map((metric, i) => (
+                        <div key={i} className="text-center p-4 rounded-xl"
+                          style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                          <metric.icon className="w-5 h-5 mx-auto mb-2" style={{ color: i === 1 ? '#FFD700' : '#0057B8' }} />
+                          <div className="text-xl font-bold" style={{ 
+                            background: 'linear-gradient(90deg, #0057B8 0%, #FFD700 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                          }}>
+                            {metric.value}
+                          </div>
+                          <div className="text-xs text-gray-500">{metric.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA */}
+                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-bold text-lg transition-all duration-300 group-hover:gap-4"
+                      style={{ 
+                        background: 'linear-gradient(90deg, #0057B8 0%, #1e40af 50%, #0057B8 100%)',
+                        boxShadow: '0 0 20px rgba(0, 87, 184, 0.5), 0 0 40px rgba(255, 215, 0, 0.2)',
+                      }}>
+                      <span>Explore Project</span>
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+
+                  {/* Right: Visual */}
+                  <div className="relative flex items-center justify-center">
+                    {/* Phone Mockup */}
+                    <div className="relative">
+                      {/* Glow Effect */}
+                      <div className="absolute inset-0 rounded-[3rem] gpu-accelerated"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(0, 87, 184, 0.4) 0%, rgba(255, 215, 0, 0.4) 100%)',
+                          filter: 'blur(40px)',
+                          transform: 'scale(1.1)',
+                        }}
+                      />
+                      
+                      {/* Phone Frame */}
+                      <div className="relative w-64 h-[500px] rounded-[3rem] p-2 transition-transform duration-500 group-hover:scale-105"
+                        style={{
+                          background: 'linear-gradient(180deg, #0057B8 0%, #FFD700 100%)',
+                        }}>
+                        <div className="w-full h-full rounded-[2.5rem] bg-[#0a0a1a] overflow-hidden flex flex-col">
+                          {/* Status Bar */}
+                          <div className="h-8 flex items-center justify-center">
+                            <div className="w-20 h-5 rounded-full bg-black" />
+                          </div>
+                          
+                          {/* App Content Preview */}
+                          <div className="flex-1 p-4 flex flex-col">
+                            <div className="text-center mb-4">
+                              <div className="text-2xl font-bold mb-1" style={{ 
+                                background: 'linear-gradient(90deg, #0057B8 0%, #FFD700 100%)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                              }}>
+                                Sweezy
+                              </div>
+                              <div className="text-xs text-gray-500">Вітаємо! Welcome!</div>
+                            </div>
+                            
+                            {/* Quick Actions */}
+                            <div className="grid grid-cols-2 gap-2 mb-4">
+                              {['🏠 Housing', '📋 Documents', '🗣️ Language', '💼 Jobs'].map((item, i) => (
+                                <div key={i} className="p-3 rounded-xl text-center text-xs font-medium"
+                                  style={{ 
+                                    background: i % 2 === 0 ? 'rgba(0, 87, 184, 0.2)' : 'rgba(255, 215, 0, 0.2)',
+                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                  }}>
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* AI Chat Preview */}
+                            <div className="flex-1 rounded-xl p-3"
+                              style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                              <div className="text-xs text-gray-400 mb-2">AI Assistant</div>
+                              <div className="space-y-2">
+                                <div className="bg-blue-900/30 rounded-lg p-2 text-xs">
+                                  How can I find an apartment?
+                                </div>
+                                <div className="rounded-lg p-2 text-xs"
+                                  style={{ background: 'linear-gradient(90deg, rgba(0, 87, 184, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%)' }}>
+                                  I can help! Let me show you the best options...
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Floating Elements */}
+                      <div className="absolute -top-4 -right-4 w-16 h-10 rounded-lg flex flex-col overflow-hidden shadow-xl 
+                        transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                        <div className="flex-1" style={{ backgroundColor: '#0057B8' }} />
+                        <div className="flex-1" style={{ backgroundColor: '#FFD700' }} />
+                      </div>
+                      
+                      <div className="absolute -bottom-2 -left-6 px-4 py-2 rounded-full text-sm font-bold shadow-xl
+                        transition-transform duration-300 group-hover:scale-110"
+                        style={{ 
+                          background: 'linear-gradient(90deg, #0057B8 0%, #1e40af 100%)',
+                          boxShadow: '0 0 20px rgba(0, 87, 184, 0.5)',
+                        }}>
+                        🇺🇦 Слава Україні!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -220,12 +438,9 @@ export default function ProjectsPage() {
                       {/* Hover Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
                         opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <a
-                          href={project.link}
-                          className="flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all"
-                        >
+                        <span className="flex items-center gap-2 text-white font-semibold">
                           View Project <ArrowRight className="w-4 h-4" />
-                        </a>
+                        </span>
                       </div>
                     </div>
 
@@ -304,4 +519,3 @@ export default function ProjectsPage() {
     </main>
   );
 }
-
