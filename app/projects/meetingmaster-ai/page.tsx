@@ -69,10 +69,10 @@ export default function MeetingMasterAIPage() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-600" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -95,13 +95,17 @@ export default function MeetingMasterAIPage() {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-600/20 border border-emerald-500/30 mb-6">
-                <Bot className="w-4 h-4 text-emerald-400" />
-                <span className="text-sm font-medium text-emerald-400">Voice AI</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
+                <Bot className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Voice AI</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+                <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   MeetingMaster AI
                 </span>
               </h1>
@@ -120,11 +124,11 @@ export default function MeetingMasterAIPage() {
               </div>
 
               {/* Integrations */}
-              <div className="glass-strong rounded-2xl p-6 border border-emerald-500/20">
+              <div className="glass-strong rounded-2xl p-6 border border-white/20">
                 <p className="text-sm text-gray-400 mb-4">Integrations</p>
                 <div className="flex flex-wrap gap-2">
                   {integrations.map((integration) => (
-                    <span key={integration} className="px-3 py-1 text-sm rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                    <span key={integration} className="px-3 py-1 text-sm rounded-lg bg-white/5 border border-white/20 text-gray-300">
                       {integration}
                     </span>
                   ))}
@@ -138,8 +142,8 @@ export default function MeetingMasterAIPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-emerald-500/30"
-                style={{ boxShadow: '0 0 60px rgba(16, 185, 129, 0.2)' }}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/20"
+                style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.1)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=600&fit=crop"
                   alt="MeetingMaster AI"
@@ -161,8 +165,12 @@ export default function MeetingMasterAIPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Proven <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">Results</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Proven <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Results</span>
             </h2>
           </motion.div>
 
@@ -175,10 +183,14 @@ export default function MeetingMasterAIPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6 rounded-2xl glass-strong border border-emerald-500/20"
+                  className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
-                  <Icon className="w-8 h-8 mx-auto mb-4 text-emerald-400" />
-                  <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-2">
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
+                  <div className="text-4xl font-bold mb-2" style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
                     {result.value}
                   </div>
                   <div className="text-sm text-gray-400">{result.label}</div>
@@ -200,8 +212,12 @@ export default function MeetingMasterAIPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Core <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">Features</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Core <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Features</span>
             </h2>
           </motion.div>
 
@@ -214,10 +230,10 @@ export default function MeetingMasterAIPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-emerald-500/30 transition-colors"
+                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
-                  <Icon className="w-10 h-10 text-emerald-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <Icon className="w-10 h-10 text-white mb-4" />
+                  <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-400 text-sm">{feature.description}</p>
                 </motion.div>
               );
@@ -235,15 +251,16 @@ export default function MeetingMasterAIPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
               Ready to Automate Your Scheduling?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's deploy a voice agent that never misses a booking.
             </p>
             <Link href="/#bookcall" 
-              className="inline-block px-10 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/30">
+              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
+                transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
               Book a Consultation
             </Link>
           </motion.div>

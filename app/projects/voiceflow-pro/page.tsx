@@ -71,12 +71,12 @@ export default function VoiceFlowProPage() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section - Monochrome */}
       <section ref={heroRef} className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -99,13 +99,17 @@ export default function VoiceFlowProPage() {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 mb-6">
-                <Mic className="w-4 h-4 text-cyan-400" />
-                <span className="text-sm font-medium text-cyan-400">Voice AI</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
+                <Mic className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Voice AI</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   VoiceFlow Pro
                 </span>
               </h1>
@@ -123,13 +127,13 @@ export default function VoiceFlowProPage() {
                 ))}
               </div>
 
-              <div className="glass-strong rounded-2xl p-6 border border-cyan-500/20">
+              <div className="glass-strong rounded-2xl p-6 border border-white/20">
                 <p className="text-sm text-gray-400 mb-4">Client Testimonial</p>
                 <p className="text-lg italic text-gray-200 mb-4">
                   "VoiceFlow Pro has transformed our customer service. We're handling 3x more calls with half the staff, 
                   and customer satisfaction has never been higher."
                 </p>
-                <p className="text-cyan-400 font-semibold">— Head of Operations, Major Swiss Insurance Company</p>
+                <p className="text-white font-semibold">— Head of Operations, Major Swiss Insurance Company</p>
               </div>
             </motion.div>
 
@@ -139,8 +143,8 @@ export default function VoiceFlowProPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-cyan-500/30"
-                style={{ boxShadow: '0 0 60px rgba(0, 240, 255, 0.2)' }}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/20"
+                style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.1)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=600&fit=crop"
                   alt="VoiceFlow Pro"
@@ -149,11 +153,11 @@ export default function VoiceFlowProPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
-                      <Headphones className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                      <Headphones className="w-6 h-6 text-black" />
                     </div>
                     <div>
-                      <p className="font-bold">Live Call Analytics</p>
+                      <p className="font-bold text-white">Live Call Analytics</p>
                       <p className="text-sm text-gray-400">Real-time monitoring dashboard</p>
                     </div>
                   </div>
@@ -173,8 +177,12 @@ export default function VoiceFlowProPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Measurable <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Results</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Measurable <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Results</span>
             </h2>
           </motion.div>
 
@@ -187,10 +195,14 @@ export default function VoiceFlowProPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6 rounded-2xl glass-strong border border-cyan-500/20"
+                  className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
-                  <Icon className="w-8 h-8 mx-auto mb-4 text-cyan-400" />
-                  <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
+                  <div className="text-4xl font-bold mb-2" style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
                     {result.value}
                   </div>
                   <div className="text-sm text-gray-400">{result.label}</div>
@@ -212,8 +224,12 @@ export default function VoiceFlowProPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Key <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Features</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Key <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Features</span>
             </h2>
           </motion.div>
 
@@ -226,10 +242,10 @@ export default function VoiceFlowProPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-cyan-500/30 transition-colors"
+                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
-                  <Icon className="w-10 h-10 text-cyan-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <Icon className="w-10 h-10 text-white mb-4" />
+                  <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-400 text-sm">{feature.description}</p>
                 </motion.div>
               );
@@ -248,8 +264,12 @@ export default function VoiceFlowProPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Project <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Timeline</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Project <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Timeline</span>
             </h2>
           </motion.div>
 
@@ -264,11 +284,11 @@ export default function VoiceFlowProPage() {
                 className="flex gap-6 items-start"
               >
                 <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-cyan-400 font-bold">{item.duration}</span>
+                  <span className="text-white font-bold">{item.duration}</span>
                 </div>
-                <div className="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mt-1 flex-shrink-0" />
+                <div className="w-4 h-4 rounded-full bg-white mt-1 flex-shrink-0" />
                 <div className="flex-1 pb-6 border-b border-white/10">
-                  <h3 className="font-bold text-lg mb-1">{item.phase}</h3>
+                  <h3 className="font-bold text-lg mb-1 text-white">{item.phase}</h3>
                   <p className="text-gray-400 text-sm">{item.description}</p>
                 </div>
               </motion.div>
@@ -286,15 +306,16 @@ export default function VoiceFlowProPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
               Ready to Transform Your Call Center?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's discuss how AI voice agents can revolutionize your customer service.
             </p>
             <Link href="/#bookcall" 
-              className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
+              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
+                transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
               Book a Consultation
             </Link>
           </motion.div>

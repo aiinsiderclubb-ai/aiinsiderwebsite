@@ -1,80 +1,68 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 const technologies = [
   { 
     name: 'Telegram', 
-    logo: 'https://cdn.simpleicons.org/telegram/26A5E4',
-    bg: 'from-cyan-400 to-blue-500',
+    logo: 'https://cdn.simpleicons.org/telegram/FFFFFF',
     url: 'https://telegram.org/',
   },
   { 
     name: 'ElevenLabs', 
-    logo: 'https://cdn.simpleicons.org/elevenlabs/8A2BE2',
-    bg: 'from-purple-400 to-pink-500',
+    logo: 'https://cdn.simpleicons.org/elevenlabs/FFFFFF',
     url: 'https://elevenlabs.io/',
   },
   { 
     name: 'Docker', 
-    logo: 'https://cdn.simpleicons.org/docker/2496ED',
-    bg: 'from-blue-400 to-cyan-400',
+    logo: 'https://cdn.simpleicons.org/docker/FFFFFF',
     url: 'https://www.docker.com/',
   },
   { 
     name: 'Supabase', 
-    logo: 'https://cdn.simpleicons.org/supabase/3FCF8E',
-    bg: 'from-green-400 to-emerald-500',
+    logo: 'https://cdn.simpleicons.org/supabase/FFFFFF',
     url: 'https://supabase.com/',
   },
   { 
     name: 'FastAPI', 
-    logo: 'https://cdn.simpleicons.org/fastapi/009688',
-    bg: 'from-teal-400 to-green-500',
+    logo: 'https://cdn.simpleicons.org/fastapi/FFFFFF',
     url: 'https://fastapi.tiangolo.com/',
   },
   { 
     name: 'Next.js', 
     logo: 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',
-    bg: 'from-gray-100 to-white',
     url: 'https://nextjs.org/',
   },
   { 
     name: 'Zapier', 
-    logo: 'https://cdn.simpleicons.org/zapier/FF4A00',
-    bg: 'from-orange-400 to-red-500',
+    logo: 'https://cdn.simpleicons.org/zapier/FFFFFF',
     url: 'https://zapier.com/',
   },
   { 
     name: 'OpenAI', 
-    logo: 'https://cdn.simpleicons.org/openai/412991',
-    bg: 'from-purple-500 to-indigo-600',
+    logo: 'https://cdn.simpleicons.org/openai/FFFFFF',
     url: 'https://openai.com/',
   },
   { 
     name: 'n8n', 
-    logo: 'https://cdn.simpleicons.org/n8n/EA4B71',
-    bg: 'from-pink-400 to-rose-500',
+    logo: 'https://cdn.simpleicons.org/n8n/FFFFFF',
     url: 'https://n8n.io/',
   },
   { 
     name: 'Make', 
-    logo: 'https://cdn.simpleicons.org/make/6D00CC',
-    bg: 'from-purple-500 to-violet-600',
+    logo: 'https://cdn.simpleicons.org/make/FFFFFF',
     url: 'https://www.make.com/',
   },
   { 
     name: 'Python', 
-    logo: 'https://cdn.simpleicons.org/python/3776AB',
-    bg: 'from-blue-500 to-yellow-400',
+    logo: 'https://cdn.simpleicons.org/python/FFFFFF',
     url: 'https://www.python.org/',
   },
   { 
     name: 'TypeScript', 
-    logo: 'https://cdn.simpleicons.org/typescript/3178C6',
-    bg: 'from-blue-600 to-blue-400',
+    logo: 'https://cdn.simpleicons.org/typescript/FFFFFF',
     url: 'https://www.typescriptlang.org/',
   },
 ];
@@ -87,13 +75,13 @@ export default function TechStack() {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Background */}
+      {/* Background - Monochrome */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/20 to-transparent"
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent"
       />
 
       <div className="relative">
-        {/* Header */}
+        {/* Header - Monochrome */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -106,24 +94,31 @@ export default function TechStack() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-block px-6 py-3 glass-strong rounded-full mb-8 border border-white/10"
+            className="inline-block px-6 py-3 glass-strong rounded-full mb-8 border border-white/20"
           >
-            <span className="text-sm font-medium gradient-text">Technology Stack</span>
+            <span className="text-sm font-medium text-white">Technology Stack</span>
           </motion.div>
 
-          <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6">
+          <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6 text-white">
             Powered by
           </h2>
-          <h2 className="text-6xl md:text-8xl font-bold font-heading gradient-text-animated mb-8">
+          <h2 
+            className="text-6xl md:text-8xl font-bold font-heading mb-8"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
             Best-in-Class Tools
           </h2>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             We work with industry-leading platforms to deliver reliable, scalable AI solutions.
           </p>
         </motion.div>
 
-        {/* Infinite Scrolling - Full Width - CSS Animation for Performance */}
+        {/* Infinite Scrolling - Monochrome */}
         <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw]">
           {/* Gradient Overlays */}
           <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
@@ -152,13 +147,13 @@ export default function TechStack() {
                   rel="noopener noreferrer"
                 >
                   <div className="relative w-40 h-28 glass-strong rounded-xl p-4 flex flex-col items-center justify-center gap-3 border border-white/10 hover:border-white/30 transition-all overflow-hidden gpu-accelerated">
-                    {/* Gradient Background on Hover */}
+                    {/* Gradient Background on Hover - Monochrome */}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${tech.bg} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                      className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
                     
-                    {/* Logo - No background, just icon */}
-                    <div className="relative w-14 h-14 flex items-center justify-center">
+                    {/* Logo */}
+                    <div className="relative w-14 h-14 flex items-center justify-center opacity-70 group-hover:opacity-100 transition-opacity">
                       <Image
                         src={tech.logo}
                         alt={tech.name}
@@ -170,7 +165,7 @@ export default function TechStack() {
                     </div>
                     
                     {/* Name */}
-                    <h3 className="text-xs font-semibold text-center relative z-10">{tech.name}</h3>
+                    <h3 className="text-xs font-semibold text-center relative z-10 text-gray-300 group-hover:text-white transition-colors">{tech.name}</h3>
                   </div>
                 </a>
               ))}

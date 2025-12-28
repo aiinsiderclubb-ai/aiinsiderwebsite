@@ -9,33 +9,21 @@ const solutions = [
     title: 'Voice & Chat Agents',
     desc: 'Humanized AI that talks to your customers and books meetings in real-time.',
     icon: Mic,
-    gradient: 'from-cyan-500 via-blue-500 to-violet-500',
-    borderColor: 'border-cyan-500/50',
-    hoverShadow: 'hover:shadow-[0_0_30px_rgba(0,240,255,0.3)]',
   },
   {
     title: 'Workflow Automations',
     desc: 'From lead capture to CRM integration — fully automated workflows.',
     icon: Workflow,
-    gradient: 'from-violet-500 via-purple-500 to-pink-500',
-    borderColor: 'border-violet-500/50',
-    hoverShadow: 'hover:shadow-[0_0_30px_rgba(153,69,255,0.3)]',
   },
   {
     title: 'Analytics Assistants',
     desc: 'AI that analyzes data and delivers weekly reports with insights.',
     icon: LineChart,
-    gradient: 'from-pink-500 via-rose-500 to-orange-500',
-    borderColor: 'border-pink-500/50',
-    hoverShadow: 'hover:shadow-[0_0_30px_rgba(255,0,128,0.3)]',
   },
   {
     title: 'Custom AI Models',
     desc: 'Tailor-made GPT and RAG systems integrated with your stack.',
     icon: Sparkles,
-    gradient: 'from-yellow-400 via-green-400 to-cyan-400',
-    borderColor: 'border-yellow-500/50',
-    hoverShadow: 'hover:shadow-[0_0_30px_rgba(255,215,0,0.3)]',
   },
 ];
 
@@ -45,11 +33,11 @@ export default function Solutions() {
 
   return (
     <section id="solutions" className="relative py-32 px-6 overflow-hidden">
-      {/* Static Background Orbs */}
+      {/* Static Background Orbs - Monochrome */}
       <div
         className="absolute top-1/2 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
         style={{ 
-          background: 'radial-gradient(circle, rgba(153, 69, 255, 0.15) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -57,7 +45,7 @@ export default function Solutions() {
       <div
         className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full gpu-accelerated"
         style={{ 
-          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%)',
           filter: 'blur(50px)',
         }}
       />
@@ -70,22 +58,31 @@ export default function Solutions() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/10">
-            <Sparkles className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm font-medium gradient-text">Our Solutions</span>
+          <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
+            <Sparkles className="w-5 h-5 text-white" />
+            <span className="text-sm font-medium text-white">Our Solutions</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block">Build Smarter,</span>
-            <span className="block gradient-text text-6xl md:text-8xl mt-2">Ship Faster</span>
+            <span className="block text-white">Build Smarter,</span>
+            <span 
+              className="block text-6xl md:text-8xl mt-2"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Ship Faster
+            </span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
             Revolutionary AI solutions that transform how you work.
           </p>
         </motion.div>
 
-        {/* Solutions Grid - Pure CSS hover */}
+        {/* Solutions Grid - Monochrome */}
         <div className="grid md:grid-cols-2 gap-8">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
@@ -98,40 +95,41 @@ export default function Solutions() {
                 className="relative group cursor-pointer"
                 href="#contact"
               >
-                {/* Card - CSS transitions only */}
+                {/* Card */}
                 <div 
-                  className={`relative h-full p-8 glass-strong rounded-3xl overflow-hidden border-2 ${solution.borderColor} 
+                  className="relative h-full p-8 glass-strong rounded-3xl overflow-hidden border border-white/10
                     transform transition-all duration-300 ease-out
-                    hover:scale-[1.03] hover:-translate-y-2 ${solution.hoverShadow}`}
+                    hover:scale-[1.03] hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]"
                 >
                   {/* Gradient Background on Hover */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${solution.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                    className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
 
                   {/* Content */}
                   <div className="relative z-10">
                     {/* Icon */}
                     <div
-                      className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 bg-gradient-to-br ${solution.gradient}
-                        transform transition-transform duration-300 group-hover:scale-110`}
+                      className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 bg-white
+                        transform transition-transform duration-300 group-hover:scale-110"
+                      style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)' }}
                     >
-                      <Icon className="w-10 h-10 text-white" />
+                      <Icon className="w-10 h-10 text-black" />
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-3xl font-bold font-heading mb-4">
+                    <h3 className="text-3xl font-bold font-heading mb-4 text-white">
                       {solution.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                    <p className="text-lg text-gray-400 leading-relaxed mb-6">
                       {solution.desc}
                     </p>
 
                     {/* Learn More Link */}
-                    <div className="flex items-center gap-3 text-lg font-semibold transition-transform duration-300 group-hover:translate-x-2">
-                      <span className="gradient-text">Explore</span>
+                    <div className="flex items-center gap-3 text-lg font-semibold text-white transition-transform duration-300 group-hover:translate-x-2">
+                      <span>Explore</span>
                       <span className="text-2xl transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </div>
                   </div>
@@ -141,7 +139,7 @@ export default function Solutions() {
           })}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA - Monochrome */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -150,8 +148,9 @@ export default function Solutions() {
         >
           <a
             href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full font-bold text-lg 
-              transform transition-transform duration-300 hover:scale-105"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg 
+              transform transition-all duration-300 hover:scale-105"
+            style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
           >
             Request Custom Solution
             <Sparkles className="w-5 h-5" />

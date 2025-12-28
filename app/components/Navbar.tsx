@@ -42,16 +42,16 @@ export default function Navbar() {
         backdropFilter: (isScrolled || !isHomePage) ? `blur(${isHomePage ? blur : 20}px)` : 'none',
       }}
     >
-      {/* Background with gradient border */}
+      {/* Background with border */}
       {(isScrolled || !isHomePage) && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="absolute inset-0 glass-strong border-b border-white/10"
         >
-          {/* Animated gradient line */}
+          {/* Animated line - monochrome */}
           <motion.div
-            className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500"
+            className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent"
             animate={{
               width: ['0%', '100%'],
             }}
@@ -61,20 +61,21 @@ export default function Navbar() {
       )}
 
       <div className="relative max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo - Monochrome */}
         <Link
           href="/"
           className="flex items-center gap-3 group"
         >
           <div
-            className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-violet-500 to-pink-500 flex items-center justify-center
+            className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
               transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+            style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
           >
-            <Zap className="w-6 h-6 text-white" fill="currentColor" />
+            <Zap className="w-6 h-6 text-black" fill="currentColor" />
           </div>
           
-          <span className="text-2xl font-bold font-heading">
-            <span className="gradient-text">AI Insider</span>
+          <span className="text-2xl font-bold font-heading text-white">
+            AI Insider
           </span>
         </Link>
 
@@ -90,10 +91,10 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={`relative text-sm font-semibold transition-colors duration-200 group
-                    ${isActive ? 'text-white' : 'text-gray-300 hover:text-white'}`}
+                    ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
                 >
                   {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-violet-500 group-hover:w-full transition-all duration-300" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
                 </a>
               );
             }
@@ -103,30 +104,27 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={`relative text-sm font-semibold transition-colors duration-200 group
-                  ${isActive ? 'text-white' : 'text-gray-300 hover:text-white'}`}
+                  ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
               >
                 {link.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-cyan-500 to-violet-500 transition-all duration-300
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-300
                   ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
               </Link>
             );
           })}
           
-          {/* CTA Button */}
+          {/* CTA Button - Monochrome */}
           <a
             href={SCHEDULING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative px-6 py-3 bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500 rounded-full font-bold text-sm overflow-hidden group
-              transition-transform duration-200 hover:scale-105 active:scale-95"
+            className="relative px-6 py-3 bg-white text-black rounded-full font-bold text-sm overflow-hidden group
+              transition-all duration-200 hover:scale-105 active:scale-95"
             style={{
-              boxShadow: '0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(153, 69, 255, 0.25)',
+              boxShadow: '0 0 25px rgba(255, 255, 255, 0.3)',
             }}
           >
             <span className="relative z-10">Book a Call</span>
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
           </a>
         </div>
 
@@ -202,7 +200,7 @@ export default function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
               onClick={() => setIsOpen(false)}
-              className="block mt-4 px-6 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full font-bold text-center"
+              className="block mt-4 px-6 py-3 bg-white text-black rounded-full font-bold text-center"
             >
               Book a Call
             </motion.a>

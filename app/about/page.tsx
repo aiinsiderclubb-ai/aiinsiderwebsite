@@ -13,7 +13,6 @@ const teamMembers = [
     role: 'CEO & Founder',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
     bio: 'Visionary leader with 15+ years in AI and tech. Former ML Lead at Google, now building the future of intelligent automation.',
-    gradient: 'from-cyan-500 to-blue-600',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -25,7 +24,6 @@ const teamMembers = [
     role: 'Co-Founder & CTO',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
     bio: 'Technical genius behind our AI architecture. PhD in Machine Learning from MIT, passionate about ethical AI development.',
-    gradient: 'from-violet-500 to-purple-600',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -37,7 +35,6 @@ const teamMembers = [
     role: 'Head of Product',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
     bio: 'Product strategist with a knack for user-centric design. Previously led product teams at Stripe and Figma.',
-    gradient: 'from-pink-500 to-rose-600',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -51,25 +48,21 @@ const values = [
     icon: Zap,
     title: 'Innovation First',
     description: 'We push boundaries and embrace cutting-edge technology to deliver solutions that redefine what\'s possible.',
-    gradient: 'from-cyan-500 to-blue-500',
   },
   {
     icon: Target,
     title: 'Results Driven',
     description: 'Every solution we build is measured by its impact. We\'re obsessed with delivering tangible ROI for our clients.',
-    gradient: 'from-violet-500 to-purple-500',
   },
   {
     icon: Rocket,
     title: 'Speed & Excellence',
     description: 'We move fast without sacrificing quality. Our agile approach ensures rapid deployment with precision.',
-    gradient: 'from-pink-500 to-rose-500',
   },
   {
     icon: Users,
     title: 'Client Partnership',
     description: 'We don\'t just deliver projects — we become strategic partners invested in your long-term success.',
-    gradient: 'from-yellow-500 to-orange-500',
   },
 ];
 
@@ -88,18 +81,18 @@ export default function AboutPage() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section - Monochrome */}
       <section ref={heroRef} className="relative pt-40 pb-20 px-6 overflow-hidden">
-        {/* Background Elements */}
+        {/* Background Elements - Monochrome */}
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(153, 69, 255, 0.1) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -110,16 +103,25 @@ export default function AboutPage() {
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-block px-4 py-2 glass rounded-full mb-6">
-              <span className="text-sm font-medium gradient-text">About Us</span>
+            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
+              <span className="text-sm font-medium text-white">About Us</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight text-white">
               Building the Future of
-              <span className="block gradient-text mt-2">Intelligent Automation</span>
+              <span 
+                className="block mt-2"
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Intelligent Automation
+              </span>
             </h1>
 
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               We're a team of AI enthusiasts, engineers, and visionaries dedicated to transforming 
               businesses through intelligent automation and voice AI technology.
             </p>
@@ -127,7 +129,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Story Section */}
+      {/* Our Story Section - Monochrome */}
       <section ref={storyRef} className="relative py-24 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -136,10 +138,14 @@ export default function AboutPage() {
               animate={storyInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-                Our <span className="gradient-text">Story</span>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+                Our <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>Story</span>
               </h2>
-              <div className="space-y-4 text-gray-300 leading-relaxed">
+              <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
                   Founded in 2023, AI Insider emerged from a simple observation: businesses were drowning 
                   in repetitive tasks while AI technology remained locked in research labs.
@@ -171,7 +177,16 @@ export default function AboutPage() {
                     { number: '3x', label: 'Avg. ROI Increase' },
                   ].map((stat, index) => (
                     <div key={index} className="text-center p-4">
-                      <div className="text-4xl font-bold gradient-text mb-2">{stat.number}</div>
+                      <div 
+                        className="text-4xl font-bold mb-2"
+                        style={{
+                          background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                        }}
+                      >
+                        {stat.number}
+                      </div>
                       <div className="text-sm text-gray-400">{stat.label}</div>
                     </div>
                   ))}
@@ -182,7 +197,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Values Section - Monochrome */}
       <section ref={valuesRef} className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 neural-bg opacity-5" />
         
@@ -193,10 +208,14 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-              Our <span className="gradient-text">Values</span>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              Our <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Values</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               The principles that guide everything we do.
             </p>
           </motion.div>
@@ -211,13 +230,15 @@ export default function AboutPage() {
                   animate={valuesInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group glass-strong rounded-2xl p-6 border border-white/10 
-                    transition-all duration-300 hover:border-white/20 hover:-translate-y-2"
+                    transition-all duration-300 hover:border-white/30 hover:-translate-y-2"
                 >
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${value.gradient} 
-                    flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110`}>
-                    <Icon className="w-7 h-7 text-white" />
+                  <div className="w-14 h-14 rounded-xl bg-white
+                    flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
+                    style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.15)' }}
+                  >
+                    <Icon className="w-7 h-7 text-black" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{value.title}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-white">{value.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{value.description}</p>
                 </motion.div>
               );
@@ -226,7 +247,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Team Section - Monochrome */}
       <section ref={teamRef} className="relative py-24 px-6 overflow-hidden">
         <div className="relative max-w-6xl mx-auto">
           <motion.div
@@ -235,13 +256,17 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <div className="inline-block px-4 py-2 glass rounded-full mb-6">
-              <span className="text-sm font-medium gradient-text">The Team</span>
+            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
+              <span className="text-sm font-medium text-white">The Team</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-              Meet the <span className="gradient-text">Minds</span> Behind AI Insider
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              Meet the <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Minds</span> Behind AI Insider
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               A passionate team of innovators dedicated to transforming your business.
             </p>
           </motion.div>
@@ -256,22 +281,22 @@ export default function AboutPage() {
                 className="group relative"
               >
                 <div className="glass-strong rounded-3xl p-6 border border-white/10 
-                  transition-all duration-300 hover:border-white/20 hover:-translate-y-2">
+                  transition-all duration-300 hover:border-white/30 hover:-translate-y-2">
                   {/* Image */}
                   <div className="relative mb-6">
-                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${member.gradient} opacity-20 blur-xl 
-                      transition-opacity duration-300 group-hover:opacity-40`} />
+                    <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl 
+                      transition-opacity duration-300 group-hover:opacity-10" />
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="relative w-full aspect-square object-cover rounded-2xl border border-white/10"
+                      className="relative w-full aspect-square object-cover rounded-2xl border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
                   {/* Info */}
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
-                    <p className={`text-transparent bg-clip-text bg-gradient-to-r ${member.gradient} font-semibold mb-4`}>
+                    <h3 className="text-2xl font-bold mb-1 text-white">{member.name}</h3>
+                    <p className="text-white/70 font-semibold mb-4">
                       {member.role}
                     </p>
                     <p className="text-gray-400 text-sm leading-relaxed mb-6">{member.bio}</p>
@@ -285,7 +310,7 @@ export default function AboutPage() {
                         className="w-10 h-10 rounded-full glass flex items-center justify-center 
                           transition-all duration-200 hover:bg-white/10 hover:scale-110"
                       >
-                        <Linkedin className="w-5 h-5 text-gray-400 hover:text-cyan-400" />
+                        <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
                       </a>
                       <a
                         href={member.social.twitter}
@@ -294,14 +319,14 @@ export default function AboutPage() {
                         className="w-10 h-10 rounded-full glass flex items-center justify-center 
                           transition-all duration-200 hover:bg-white/10 hover:scale-110"
                       >
-                        <Twitter className="w-5 h-5 text-gray-400 hover:text-cyan-400" />
+                        <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
                       </a>
                       <a
                         href={`mailto:${member.social.email}`}
                         className="w-10 h-10 rounded-full glass flex items-center justify-center 
                           transition-all duration-200 hover:bg-white/10 hover:scale-110"
                       >
-                        <Mail className="w-5 h-5 text-gray-400 hover:text-cyan-400" />
+                        <Mail className="w-5 h-5 text-gray-400 hover:text-white" />
                       </a>
                     </div>
                   </div>
@@ -312,9 +337,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Monochrome */}
       <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
         
         <div className="relative max-w-4xl mx-auto text-center">
           <motion.div
@@ -323,16 +348,17 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
               Ready to Work with Us?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's discuss how we can transform your business with AI.
             </p>
             <Link
               href="/#bookcall"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full 
-                font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
+              className="inline-block px-10 py-4 bg-white text-black rounded-full 
+                font-bold text-lg transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
             >
               Book a Free Consultation
             </Link>
@@ -344,4 +370,3 @@ export default function AboutPage() {
     </main>
   );
 }
-

@@ -65,10 +65,10 @@ export default function PredictAIAnalyticsPage() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-600" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -91,13 +91,17 @@ export default function PredictAIAnalyticsPage() {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/20 to-orange-600/20 border border-yellow-500/30 mb-6">
-                <Brain className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm font-medium text-yellow-400">Custom AI</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
+                <Brain className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Custom AI</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   PredictAI Analytics
                 </span>
               </h1>
@@ -115,13 +119,13 @@ export default function PredictAIAnalyticsPage() {
                 ))}
               </div>
 
-              <div className="glass-strong rounded-2xl p-6 border border-yellow-500/20">
+              <div className="glass-strong rounded-2xl p-6 border border-white/20">
                 <p className="text-sm text-gray-400 mb-4">Client Testimonial</p>
                 <p className="text-lg italic text-gray-200 mb-4">
                   "PredictAI has revolutionized how we manage inventory. We're saving millions in waste 
                   and our shelves are always stocked with what customers want."
                 </p>
-                <p className="text-yellow-400 font-semibold">— Supply Chain Director, European Retail Chain</p>
+                <p className="text-white font-semibold">— Supply Chain Director, European Retail Chain</p>
               </div>
             </motion.div>
 
@@ -131,8 +135,8 @@ export default function PredictAIAnalyticsPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-yellow-500/30"
-                style={{ boxShadow: '0 0 60px rgba(245, 158, 11, 0.2)' }}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/20"
+                style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.1)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
                   alt="PredictAI Analytics"
@@ -154,8 +158,12 @@ export default function PredictAIAnalyticsPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Business <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Impact</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Business <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Impact</span>
             </h2>
           </motion.div>
 
@@ -168,10 +176,14 @@ export default function PredictAIAnalyticsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6 rounded-2xl glass-strong border border-yellow-500/20"
+                  className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
-                  <Icon className="w-8 h-8 mx-auto mb-4 text-yellow-400" />
-                  <div className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-2">
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
+                  <div className="text-4xl font-bold mb-2" style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
                     {result.value}
                   </div>
                   <div className="text-sm text-gray-400">{result.label}</div>
@@ -193,8 +205,12 @@ export default function PredictAIAnalyticsPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              AI <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Capabilities</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              AI <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Capabilities</span>
             </h2>
           </motion.div>
 
@@ -207,10 +223,10 @@ export default function PredictAIAnalyticsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-yellow-500/30 transition-colors"
+                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
-                  <Icon className="w-10 h-10 text-yellow-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <Icon className="w-10 h-10 text-white mb-4" />
+                  <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-400 text-sm">{feature.description}</p>
                 </motion.div>
               );
@@ -228,15 +244,16 @@ export default function PredictAIAnalyticsPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
               Ready to Predict Your Future?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's build custom AI models tailored to your business needs.
             </p>
             <Link href="/#bookcall" 
-              className="inline-block px-10 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30">
+              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
+                transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
               Book a Consultation
             </Link>
           </motion.div>

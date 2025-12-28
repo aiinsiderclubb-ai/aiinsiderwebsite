@@ -70,10 +70,10 @@ export default function SupportBot360Page() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-rose-600" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -96,13 +96,17 @@ export default function SupportBot360Page() {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/20 to-rose-600/20 border border-pink-500/30 mb-6">
-                <MessageSquare className="w-4 h-4 text-pink-400" />
-                <span className="text-sm font-medium text-pink-400">Chatbots</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
+                <MessageSquare className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Chatbots</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">
+                <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   SupportBot 360
                 </span>
               </h1>
@@ -121,11 +125,11 @@ export default function SupportBot360Page() {
               </div>
 
               {/* Languages */}
-              <div className="glass-strong rounded-2xl p-6 border border-pink-500/20">
+              <div className="glass-strong rounded-2xl p-6 border border-white/20">
                 <p className="text-sm text-gray-400 mb-4">Supported Languages</p>
                 <div className="flex flex-wrap gap-2">
                   {languages.map((lang) => (
-                    <span key={lang} className="px-3 py-1 text-sm rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-300">
+                    <span key={lang} className="px-3 py-1 text-sm rounded-lg bg-white/5 border border-white/20 text-gray-300">
                       {lang}
                     </span>
                   ))}
@@ -139,8 +143,8 @@ export default function SupportBot360Page() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-pink-500/30"
-                style={{ boxShadow: '0 0 60px rgba(236, 72, 153, 0.2)' }}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/20"
+                style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.1)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop"
                   alt="SupportBot 360"
@@ -162,8 +166,12 @@ export default function SupportBot360Page() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Performance <span className="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">Metrics</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Performance <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Metrics</span>
             </h2>
           </motion.div>
 
@@ -176,10 +184,14 @@ export default function SupportBot360Page() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6 rounded-2xl glass-strong border border-pink-500/20"
+                  className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
-                  <Icon className="w-8 h-8 mx-auto mb-4 text-pink-400" />
-                  <div className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent mb-2">
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
+                  <div className="text-4xl font-bold mb-2" style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
                     {result.value}
                   </div>
                   <div className="text-sm text-gray-400">{result.label}</div>
@@ -201,8 +213,12 @@ export default function SupportBot360Page() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Smart <span className="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">Features</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Smart <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Features</span>
             </h2>
           </motion.div>
 
@@ -215,10 +231,10 @@ export default function SupportBot360Page() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-pink-500/30 transition-colors"
+                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
-                  <Icon className="w-10 h-10 text-pink-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <Icon className="w-10 h-10 text-white mb-4" />
+                  <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-400 text-sm">{feature.description}</p>
                 </motion.div>
               );
@@ -236,15 +252,16 @@ export default function SupportBot360Page() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
               Ready for 24/7 Intelligent Support?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's build a chatbot that truly understands your customers.
             </p>
             <Link href="/#bookcall" 
-              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/30">
+              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
+                transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
               Book a Consultation
             </Link>
           </motion.div>

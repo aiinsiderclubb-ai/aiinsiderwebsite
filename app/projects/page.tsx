@@ -17,7 +17,6 @@ const projects = [
     description: 'AI-powered voice agent handling 10,000+ daily customer calls for a major insurance company. Reduced call center costs by 60%.',
     image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=500&fit=crop',
     tags: ['Voice AI', 'NLP', 'Real-time'],
-    gradient: 'from-cyan-500 to-blue-600',
     icon: Mic,
     metrics: [
       { label: 'Daily Calls', value: '10K+' },
@@ -32,7 +31,6 @@ const projects = [
     description: 'End-to-end sales automation pipeline integrating with HubSpot, Salesforce, and custom APIs. Automated 95% of lead qualification.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
     tags: ['Automation', 'CRM', 'API'],
-    gradient: 'from-violet-500 to-purple-600',
     icon: Workflow,
     metrics: [
       { label: 'Lead Qualification', value: '95%' },
@@ -47,7 +45,6 @@ const projects = [
     description: 'Intelligent customer support chatbot with multi-language support and seamless human handoff. Handles 80% of inquiries autonomously.',
     image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=500&fit=crop',
     tags: ['Chatbot', 'NLP', 'Multi-lang'],
-    gradient: 'from-pink-500 to-rose-600',
     icon: MessageSquare,
     metrics: [
       { label: 'Autonomous', value: '80%' },
@@ -62,7 +59,6 @@ const projects = [
     description: 'Custom machine learning models for demand forecasting in retail. Improved inventory accuracy by 40% and reduced waste.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
     tags: ['ML', 'Forecasting', 'Analytics'],
-    gradient: 'from-yellow-500 to-orange-600',
     icon: Brain,
     metrics: [
       { label: 'Accuracy', value: '+40%' },
@@ -77,7 +73,6 @@ const projects = [
     description: 'Voice agent that schedules, reschedules, and manages calendar appointments. Integrated with Google Calendar and Outlook.',
     image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=500&fit=crop',
     tags: ['Voice AI', 'Scheduling', 'Integration'],
-    gradient: 'from-emerald-500 to-teal-600',
     icon: Bot,
     metrics: [
       { label: 'Bookings/Day', value: '500+' },
@@ -92,7 +87,6 @@ const projects = [
     description: 'Enterprise workflow automation platform connecting 50+ tools. Reduced manual data entry by 90% for a logistics company.',
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop',
     tags: ['Automation', 'Enterprise', 'Integration'],
-    gradient: 'from-indigo-500 to-blue-600',
     icon: Zap,
     metrics: [
       { label: 'Tools Connected', value: '50+' },
@@ -120,18 +114,18 @@ export default function ProjectsPage() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section - Monochrome */}
       <section ref={heroRef} className="relative pt-40 pb-20 px-6 overflow-hidden">
-        {/* Background Elements */}
+        {/* Background Elements - Monochrome */}
         <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(153, 69, 255, 0.12) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
         <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -142,16 +136,25 @@ export default function ProjectsPage() {
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-block px-4 py-2 glass rounded-full mb-6">
-              <span className="text-sm font-medium gradient-text">Our Portfolio</span>
+            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
+              <span className="text-sm font-medium text-white">Our Portfolio</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight text-white">
               Projects That
-              <span className="block gradient-text mt-2">Speak for Themselves</span>
+              <span 
+                className="block mt-2"
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Speak for Themselves
+              </span>
             </h1>
 
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Explore our showcase of AI-powered solutions that have transformed businesses 
               across industries. Real projects, real results.
             </p>
@@ -375,7 +378,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Category Filter - Monochrome */}
       <section className="relative py-8 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -390,9 +393,10 @@ export default function ProjectsPage() {
                 onClick={() => setActiveCategory(category)}
                 className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300
                   ${activeCategory === category 
-                    ? 'bg-gradient-to-r from-cyan-500 to-violet-500 text-white shadow-lg shadow-cyan-500/25' 
-                    : 'glass border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-white text-black shadow-lg' 
+                    : 'glass border border-white/20 text-gray-400 hover:bg-white/10 hover:text-white hover:border-white/40'
                   }`}
+                style={activeCategory === category ? { boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)' } : {}}
               >
                 {category}
               </button>
@@ -401,7 +405,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Projects Grid */}
+      {/* Projects Grid - Monochrome */}
       <section ref={projectsRef} className="relative py-16 px-6 overflow-hidden">
         <div className="relative max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -417,20 +421,20 @@ export default function ProjectsPage() {
                 >
                   <Link href={`/projects/${project.slug}`} className="block">
                     <div className="glass-strong rounded-3xl overflow-hidden border border-white/10 
-                      transition-all duration-300 hover:border-white/20 hover:-translate-y-2">
+                      transition-all duration-300 hover:border-white/30 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]">
                       {/* Image */}
                       <div className="relative h-48 overflow-hidden">
-                        <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-40`} />
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-30" />
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
                         />
                         
                         {/* Category Badge */}
                         <div className="absolute top-4 left-4">
-                          <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold 
-                            bg-gradient-to-r ${project.gradient} text-white`}>
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold 
+                            bg-white text-black">
                             <Icon className="w-3.5 h-3.5" />
                             {project.category}
                           </span>
@@ -447,7 +451,7 @@ export default function ProjectsPage() {
 
                       {/* Content */}
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                        <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
                         <p className="text-gray-400 text-sm leading-relaxed mb-4">{project.description}</p>
 
                         {/* Tags */}
@@ -463,7 +467,14 @@ export default function ProjectsPage() {
                         <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10">
                           {project.metrics.map((metric, i) => (
                             <div key={i} className="text-center">
-                              <div className={`text-lg font-bold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
+                              <div 
+                                className="text-lg font-bold"
+                                style={{
+                                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                                  WebkitBackgroundClip: 'text',
+                                  WebkitTextFillColor: 'transparent',
+                                }}
+                              >
                                 {metric.value}
                               </div>
                               <div className="text-xs text-gray-500">{metric.label}</div>
@@ -480,9 +491,9 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Monochrome */}
       <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
         
         <div className="relative max-w-4xl mx-auto text-center">
           <motion.div
@@ -491,24 +502,29 @@ export default function ProjectsPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-              Want to Be Our Next <span className="gradient-text">Success Story</span>?
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              Want to Be Our Next <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Success Story</span>?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's discuss your project and create something extraordinary together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/#bookcall"
-                className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full 
-                  font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
+                className="inline-block px-10 py-4 bg-white text-black rounded-full 
+                  font-bold text-lg transition-all duration-300 hover:scale-105"
+                style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
               >
                 Start Your Project
               </Link>
               <Link
                 href="/#contact"
-                className="inline-block px-10 py-4 glass-strong border border-white/20 rounded-full 
-                  font-bold text-lg transition-all duration-300 hover:bg-white/10 hover:scale-105"
+                className="inline-block px-10 py-4 glass-strong border border-white/30 rounded-full 
+                  font-bold text-lg text-white transition-all duration-300 hover:bg-white/10 hover:scale-105"
               >
                 Get in Touch
               </Link>

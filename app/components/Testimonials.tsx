@@ -49,32 +49,41 @@ export default function Testimonials() {
 
   return (
     <section className="relative py-32 px-6 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 neural-bg opacity-10" />
+      {/* Background - Monochrome */}
+      <div className="absolute inset-0 neural-bg opacity-5" />
 
       <div ref={ref} className="relative max-w-5xl mx-auto">
-        {/* Header */}
+        {/* Header - Monochrome */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <div className="inline-block px-4 py-2 glass rounded-full mb-6">
-            <span className="text-sm font-medium gradient-text">Testimonials</span>
+          <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
+            <span className="text-sm font-medium text-white">Testimonials</span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl font-bold font-heading mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold font-heading mb-6 text-white">
             What Our
-            <span className="block gradient-text mt-2">Clients Say</span>
+            <span 
+              className="block mt-2"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Clients Say
+            </span>
           </h2>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Real conversations, real results.
           </p>
         </motion.div>
 
-        {/* Chat-Style Testimonials */}
+        {/* Chat-Style Testimonials - Monochrome */}
         <div className="space-y-6">
           {testimonials.map((testimonial, index) => {
             const isClient = testimonial.role === 'client';
@@ -87,37 +96,32 @@ export default function Testimonials() {
                 className={`flex ${isClient ? 'justify-start' : 'justify-end'}`}
               >
                 <div
-                  className={`max-w-md glass-strong rounded-3xl p-6 border ${
-                    isClient
-                      ? 'border-cyan-500/30 shadow-[0_0_12px_rgba(0,240,255,0.1)] rounded-tl-none'
-                      : 'border-violet-500/30 shadow-[0_0_12px_rgba(153,69,255,0.1)] rounded-tr-none'
+                  className={`max-w-md glass-strong rounded-3xl p-6 border border-white/20 ${
+                    isClient ? 'rounded-tl-none' : 'rounded-tr-none'
                   }`}
+                  style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.05)' }}
                 >
                   {/* Quote Icon */}
-                  <Quote
-                    className={`w-6 h-6 mb-3 ${
-                      isClient ? 'text-cyan-400' : 'text-violet-400'
-                    }`}
-                  />
+                  <Quote className="w-6 h-6 mb-3 text-white/60" />
 
                   {/* Message */}
-                  <p className="text-lg mb-4 leading-relaxed">
+                  <p className="text-lg mb-4 leading-relaxed text-white">
                     {testimonial.message}
                   </p>
 
                   {/* Author */}
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 rounded-full ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                         isClient
-                          ? 'bg-gradient-to-br from-cyan-500 to-blue-500'
-                          : 'bg-gradient-to-br from-violet-500 to-purple-500'
-                      } flex items-center justify-center text-sm font-bold`}
+                          ? 'bg-white text-black'
+                          : 'bg-gray-700 text-white'
+                      }`}
                     >
                       {testimonial.author.charAt(0)}
                     </div>
                     <div>
-                      <p className="font-semibold text-sm">{testimonial.author}</p>
+                      <p className="font-semibold text-sm text-white">{testimonial.author}</p>
                       <p className="text-xs text-gray-400">{testimonial.company}</p>
                     </div>
                   </div>

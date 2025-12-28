@@ -11,8 +11,6 @@ const plans = [
     price: 'Custom',
     desc: 'Perfect for small automations',
     icon: Zap,
-    gradient: 'from-cyan-500 to-blue-500',
-    hoverShadow: 'hover:shadow-[0_0_40px_rgba(0,240,255,0.25)]',
     features: [
       'Simple workflow automation',
       'Basic AI integration',
@@ -26,8 +24,6 @@ const plans = [
     price: 'Custom',
     desc: 'Custom AI agent for your business',
     icon: Rocket,
-    gradient: 'from-violet-500 via-pink-500 to-orange-500',
-    hoverShadow: 'hover:shadow-[0_0_40px_rgba(153,69,255,0.25)]',
     features: [
       'Custom voice/chat agent',
       'Advanced AI models',
@@ -44,8 +40,6 @@ const plans = [
     price: 'Custom',
     desc: 'End-to-end AI system',
     icon: Sparkles,
-    gradient: 'from-yellow-400 via-green-400 to-cyan-400',
-    hoverShadow: 'hover:shadow-[0_0_40px_rgba(255,215,0,0.25)]',
     features: [
       'Complete AI infrastructure',
       'Multiple agents & workflows',
@@ -64,11 +58,11 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="relative py-32 px-6 overflow-hidden">
-      {/* Static Background - no animation */}
+      {/* Static Background - Monochrome */}
       <div
         className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
         style={{ 
-          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -81,22 +75,31 @@ export default function Pricing() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/10">
-            <Sparkles className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm font-medium gradient-text">Pricing Plans</span>
+          <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
+            <Sparkles className="w-5 h-5 text-white" />
+            <span className="text-sm font-medium text-white">Pricing Plans</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block">Choose Your</span>
-            <span className="block gradient-text text-6xl md:text-8xl mt-2">Power Level</span>
+            <span className="block text-white">Choose Your</span>
+            <span 
+              className="block text-6xl md:text-8xl mt-2"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Power Level
+            </span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
             All plans are customized to your exact needs. No hidden fees, no surprises.
           </p>
         </motion.div>
 
-        {/* Pricing Cards - Pure CSS hover */}
+        {/* Pricing Cards - Monochrome */}
         <div className="grid md:grid-cols-3 gap-8">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
@@ -110,36 +113,40 @@ export default function Pricing() {
               >
                 {/* Popular Badge */}
                 {plan.popular && (
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full text-sm font-bold z-10 flex items-center gap-2">
+                  <div 
+                    className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-white text-black rounded-full text-sm font-bold z-10 flex items-center gap-2"
+                    style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
+                  >
                     <Sparkles className="w-4 h-4" fill="currentColor" />
                     MOST POPULAR
                   </div>
                 )}
 
-                {/* Card - CSS transitions only */}
+                {/* Card */}
                 <div
-                  className={`relative h-full p-8 glass-strong rounded-3xl overflow-hidden border-2 
-                    ${plan.popular ? 'border-violet-500/50' : 'border-white/10'}
+                  className={`relative h-full p-8 glass-strong rounded-3xl overflow-hidden border
+                    ${plan.popular ? 'border-white/40' : 'border-white/10'}
                     transform transition-all duration-300 ease-out
-                    hover:scale-[1.03] hover:-translate-y-2 ${plan.hoverShadow}`}
+                    hover:scale-[1.03] hover:-translate-y-2 hover:border-white/50 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)]`}
                 >
                   {/* Gradient Background */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                    className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
 
                   {/* Content */}
                   <div className="relative z-10">
                     {/* Icon */}
                     <div
-                      className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-gradient-to-br ${plan.gradient}
-                        transform transition-transform duration-300 group-hover:scale-110`}
+                      className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-white
+                        transform transition-transform duration-300 group-hover:scale-110"
+                      style={{ boxShadow: '0 0 25px rgba(255, 255, 255, 0.2)' }}
                     >
-                      <Icon className="w-8 h-8 text-white" />
+                      <Icon className="w-8 h-8 text-black" />
                     </div>
 
                     {/* Plan Name */}
-                    <h3 className="text-3xl font-bold font-heading mb-2">
+                    <h3 className="text-3xl font-bold font-heading mb-2 text-white">
                       {plan.name}
                     </h3>
 
@@ -148,7 +155,14 @@ export default function Pricing() {
 
                     {/* Price */}
                     <div className="mb-8">
-                      <span className="text-5xl font-bold gradient-text">
+                      <span 
+                        className="text-5xl font-bold"
+                        style={{
+                          background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                        }}
+                      >
                         {plan.price}
                       </span>
                     </div>
@@ -160,7 +174,7 @@ export default function Pricing() {
                           key={idx}
                           className="flex items-start gap-3"
                         >
-                          <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                          <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
                           <span className="text-gray-300">{feature}</span>
                         </li>
                       ))}
@@ -172,11 +186,12 @@ export default function Pricing() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`block w-full py-4 rounded-full font-bold text-center 
-                        transform transition-transform duration-300 hover:scale-105
+                        transform transition-all duration-300 hover:scale-105
                         ${plan.popular
-                          ? `bg-gradient-to-r ${plan.gradient}`
-                          : 'glass border border-white/20 hover:bg-white/10'
+                          ? 'bg-white text-black'
+                          : 'glass border border-white/30 text-white hover:bg-white/10'
                         }`}
+                      style={plan.popular ? { boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)' } : {}}
                     >
                       {plan.popular ? 'Start Now' : 'Get Started'}
                     </a>
@@ -195,20 +210,20 @@ export default function Pricing() {
           className="text-center mt-16"
         >
           <p className="text-gray-400 mb-6">
-            Need a custom solution? <a href="#contact" className="text-cyan-400 hover:underline font-semibold">Let's talk</a>
+            Need a custom solution? <a href="#contact" className="text-white hover:underline font-semibold">Let's talk</a>
           </p>
           
           <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-green-400" />
+              <Check className="w-4 h-4 text-white" />
               <span>No hidden fees</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-green-400" />
+              <Check className="w-4 h-4 text-white" />
               <span>Cancel anytime</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-green-400" />
+              <Check className="w-4 h-4 text-white" />
               <span>Swiss quality</span>
             </div>
           </div>

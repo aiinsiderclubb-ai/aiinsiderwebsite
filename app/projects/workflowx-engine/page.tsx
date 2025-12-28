@@ -70,10 +70,10 @@ export default function WorkflowXEnginePage() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-blue-600" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] rounded-full gpu-accelerated"
           style={{ 
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
@@ -96,13 +96,17 @@ export default function WorkflowXEnginePage() {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-blue-600/20 border border-indigo-500/30 mb-6">
-                <Zap className="w-4 h-4 text-indigo-400" />
-                <span className="text-sm font-medium text-indigo-400">Automation</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
+                <Zap className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Automation</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
+                <span style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   WorkflowX Engine
                 </span>
               </h1>
@@ -121,11 +125,11 @@ export default function WorkflowXEnginePage() {
               </div>
 
               {/* Connected Tools */}
-              <div className="glass-strong rounded-2xl p-6 border border-indigo-500/20">
+              <div className="glass-strong rounded-2xl p-6 border border-white/20">
                 <p className="text-sm text-gray-400 mb-4">Connected Systems</p>
                 <div className="flex flex-wrap gap-2">
                   {connectedTools.map((tool) => (
-                    <span key={tool} className="px-3 py-1 text-sm rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">
+                    <span key={tool} className="px-3 py-1 text-sm rounded-lg bg-white/5 border border-white/20 text-gray-300">
                       {tool}
                     </span>
                   ))}
@@ -139,8 +143,8 @@ export default function WorkflowXEnginePage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-indigo-500/30"
-                style={{ boxShadow: '0 0 60px rgba(99, 102, 241, 0.2)' }}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/20"
+                style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.1)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop"
                   alt="WorkflowX Engine"
@@ -162,8 +166,12 @@ export default function WorkflowXEnginePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Enterprise <span className="bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">Impact</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Enterprise <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Impact</span>
             </h2>
           </motion.div>
 
@@ -176,10 +184,14 @@ export default function WorkflowXEnginePage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6 rounded-2xl glass-strong border border-indigo-500/20"
+                  className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
-                  <Icon className="w-8 h-8 mx-auto mb-4 text-indigo-400" />
-                  <div className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent mb-2">
+                  <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
+                  <div className="text-4xl font-bold mb-2" style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
                     {result.value}
                   </div>
                   <div className="text-sm text-gray-400">{result.label}</div>
@@ -201,8 +213,12 @@ export default function WorkflowXEnginePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Platform <span className="bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">Features</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
+              Platform <span style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Features</span>
             </h2>
           </motion.div>
 
@@ -215,10 +231,10 @@ export default function WorkflowXEnginePage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-indigo-500/30 transition-colors"
+                  className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
-                  <Icon className="w-10 h-10 text-indigo-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <Icon className="w-10 h-10 text-white mb-4" />
+                  <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-400 text-sm">{feature.description}</p>
                 </motion.div>
               );
@@ -236,15 +252,16 @@ export default function WorkflowXEnginePage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
               Ready to Connect Your Enterprise?
             </h2>
-            <p className="text-xl text-gray-300 mb-10">
+            <p className="text-xl text-gray-400 mb-10">
               Let's build automation that scales with your business.
             </p>
             <Link href="/#bookcall" 
-              className="inline-block px-10 py-4 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/30">
+              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
+                transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
               Book a Consultation
             </Link>
           </motion.div>
