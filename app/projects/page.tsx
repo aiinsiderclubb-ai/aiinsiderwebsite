@@ -12,6 +12,7 @@ const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI', 'M
 const projects = [
   {
     title: 'VoiceFlow Pro',
+    slug: 'voiceflow-pro',
     category: 'Voice AI',
     description: 'AI-powered voice agent handling 10,000+ daily customer calls for a major insurance company. Reduced call center costs by 60%.',
     image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=500&fit=crop',
@@ -23,10 +24,10 @@ const projects = [
       { label: 'Cost Reduction', value: '60%' },
       { label: 'Response Time', value: '<1s' },
     ],
-    link: '#',
   },
   {
     title: 'AutoScale CRM',
+    slug: 'autoscale-crm',
     category: 'Automation',
     description: 'End-to-end sales automation pipeline integrating with HubSpot, Salesforce, and custom APIs. Automated 95% of lead qualification.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
@@ -38,10 +39,10 @@ const projects = [
       { label: 'Time Saved', value: '40h/week' },
       { label: 'Conversion', value: '+35%' },
     ],
-    link: '#',
   },
   {
     title: 'SupportBot 360',
+    slug: 'supportbot-360',
     category: 'Chatbots',
     description: 'Intelligent customer support chatbot with multi-language support and seamless human handoff. Handles 80% of inquiries autonomously.',
     image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=500&fit=crop',
@@ -53,10 +54,10 @@ const projects = [
       { label: 'Languages', value: '12' },
       { label: 'Satisfaction', value: '4.8/5' },
     ],
-    link: '#',
   },
   {
     title: 'PredictAI Analytics',
+    slug: 'predictai-analytics',
     category: 'Custom AI',
     description: 'Custom machine learning models for demand forecasting in retail. Improved inventory accuracy by 40% and reduced waste.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
@@ -68,10 +69,10 @@ const projects = [
       { label: 'Waste Reduced', value: '25%' },
       { label: 'ROI', value: '5x' },
     ],
-    link: '#',
   },
   {
     title: 'MeetingMaster AI',
+    slug: 'meetingmaster-ai',
     category: 'Voice AI',
     description: 'Voice agent that schedules, reschedules, and manages calendar appointments. Integrated with Google Calendar and Outlook.',
     image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=500&fit=crop',
@@ -83,10 +84,10 @@ const projects = [
       { label: 'No-shows', value: '-45%' },
       { label: 'Setup Time', value: '2 days' },
     ],
-    link: '#',
   },
   {
     title: 'WorkflowX Engine',
+    slug: 'workflowx-engine',
     category: 'Automation',
     description: 'Enterprise workflow automation platform connecting 50+ tools. Reduced manual data entry by 90% for a logistics company.',
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop',
@@ -98,7 +99,6 @@ const projects = [
       { label: 'Manual Work', value: '-90%' },
       { label: 'Error Rate', value: '-95%' },
     ],
-    link: '#',
   },
 ];
 
@@ -415,62 +415,64 @@ export default function ProjectsPage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group relative"
                 >
-                  <div className="glass-strong rounded-3xl overflow-hidden border border-white/10 
-                    transition-all duration-300 hover:border-white/20 hover:-translate-y-2">
-                    {/* Image */}
-                    <div className="relative h-48 overflow-hidden">
-                      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-40`} />
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      
-                      {/* Category Badge */}
-                      <div className="absolute top-4 left-4">
-                        <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold 
-                          bg-gradient-to-r ${project.gradient} text-white`}>
-                          <Icon className="w-3.5 h-3.5" />
-                          {project.category}
-                        </span>
-                      </div>
-
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <span className="flex items-center gap-2 text-white font-semibold">
-                          View Project <ArrowRight className="w-4 h-4" />
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                      <p className="text-gray-400 text-sm leading-relaxed mb-4">{project.description}</p>
-
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="px-2 py-1 text-xs rounded-md bg-white/5 text-gray-400 border border-white/10">
-                            {tag}
+                  <Link href={`/projects/${project.slug}`} className="block">
+                    <div className="glass-strong rounded-3xl overflow-hidden border border-white/10 
+                      transition-all duration-300 hover:border-white/20 hover:-translate-y-2">
+                      {/* Image */}
+                      <div className="relative h-48 overflow-hidden">
+                        <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-40`} />
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        
+                        {/* Category Badge */}
+                        <div className="absolute top-4 left-4">
+                          <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold 
+                            bg-gradient-to-r ${project.gradient} text-white`}>
+                            <Icon className="w-3.5 h-3.5" />
+                            {project.category}
                           </span>
-                        ))}
+                        </div>
+
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
+                          opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                          <span className="flex items-center gap-2 text-white font-semibold">
+                            View Project <ArrowRight className="w-4 h-4" />
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Metrics */}
-                      <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10">
-                        {project.metrics.map((metric, i) => (
-                          <div key={i} className="text-center">
-                            <div className={`text-lg font-bold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
-                              {metric.value}
+                      {/* Content */}
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed mb-4">{project.description}</p>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag) => (
+                            <span key={tag} className="px-2 py-1 text-xs rounded-md bg-white/5 text-gray-400 border border-white/10">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Metrics */}
+                        <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10">
+                          {project.metrics.map((metric, i) => (
+                            <div key={i} className="text-center">
+                              <div className={`text-lg font-bold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
+                                {metric.value}
+                              </div>
+                              <div className="text-xs text-gray-500">{metric.label}</div>
                             </div>
-                            <div className="text-xs text-gray-500">{metric.label}</div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </motion.div>
               );
             })}
