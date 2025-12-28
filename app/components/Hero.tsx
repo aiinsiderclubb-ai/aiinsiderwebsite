@@ -276,46 +276,43 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* CTA Buttons - Elegant Black & White */}
+        {/* CTA Buttons + Scroll Indicator */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col items-center gap-8"
         >
-          <motion.a
-            href={SCHEDULING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300"
-            style={{
-              boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)',
-            }}
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Book an Intro Call
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </span>
-          </motion.a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <motion.a
+              href={SCHEDULING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300"
+              style={{
+                boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)',
+              }}
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                Book an Intro Call
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </span>
+            </motion.a>
 
-          <motion.a
-            href="#solutions"
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.95 }}
-            className="group px-10 py-5 glass-strong border border-white/30 rounded-full font-bold text-lg hover:border-white/60 hover:bg-white/5 transition-all duration-300"
-          >
-            <span className="flex items-center gap-3 text-white">
-              Explore Solutions
-              <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
-            </span>
-          </motion.a>
-        </motion.div>
+            <motion.a
+              href="#solutions"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="group px-10 py-5 glass-strong border border-white/30 rounded-full font-bold text-lg hover:border-white/60 hover:bg-white/5 transition-all duration-300"
+            >
+              <span className="flex items-center gap-3 text-white">
+                Explore Solutions
+                <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
+              </span>
+            </motion.a>
+          </div>
 
-        {/* Bottom Indicator */}
-        <motion.div
-          variants={itemVariants}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
+          {/* Scroll Indicator centered under buttons */}
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
