@@ -26,8 +26,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'About', href: '/about' },
+    { name: 'Cases', href: '/cases' },
     { name: 'Solutions', href: isHomePage ? '#solutions' : '/#solutions' },
-    { name: 'Projects', href: '/projects' },
     { name: 'Pricing', href: isHomePage ? '#pricing' : '/#pricing' },
     { name: 'Book Call', href: isHomePage ? '#bookcall' : '/#bookcall' },
   ];
@@ -83,7 +83,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const isExternal = link.href.startsWith('#');
-            const isActive = pathname === link.href || (link.href === '/about' && pathname === '/about') || (link.href === '/projects' && pathname === '/projects');
+            const isActive = pathname === link.href || (link.href === '/about' && pathname === '/about') || (link.href === '/cases' && pathname.startsWith('/cases'));
             
             if (isExternal) {
               return (

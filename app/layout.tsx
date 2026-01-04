@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import ChatWidget from './components/ChatWidget';
+import { ChatProvider } from './context/ChatContext';
 
 export const metadata: Metadata = {
   title: 'AI Insider | AI Automation & Voice Agent Studio',
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
-        <ChatWidget />
+        <ChatProvider>
+          {children}
+          <ChatWidget />
+        </ChatProvider>
       </body>
     </html>
   );

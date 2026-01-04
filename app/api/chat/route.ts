@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { systemPrompts, Industry, CONVERSION_MESSAGE } from '@/app/lib/chatPrompts';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI only when API key is available
+const getOpenAIClient = () => {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY is not configured');
+  }
+  return new OpenAI({ apiKey });
+};
 
 export interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -44,6 +49,7 @@ export async function POST(request: NextRequest) {
 
     const conversationMessages = [systemMessage, ...messages];
 
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: conversationMessages,

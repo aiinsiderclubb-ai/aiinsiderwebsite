@@ -1,15 +1,16 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MessageCircle, X, Send, Bot, User, Sparkles, 
-  ArrowRight, Loader2, Phone, MessageSquare, DollarSign 
+  MessageCircle, X, Send, Bot, User, 
+  Loader2, Phone, MessageSquare, DollarSign 
 } from 'lucide-react';
 import { 
   Industry, industryLabels, industryEmojis, 
   WELCOME_MESSAGE, CONVERSION_BUTTONS, LEAD_CAPTURE_PROMPT 
 } from '../lib/chatPrompts';
+import { useChatContext } from '../context/ChatContext';
 
 interface Message {
   id: string;
@@ -31,7 +32,8 @@ interface ConversionButton {
 }
 
 export default function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, openChat, closeChat, pendingIndustry, clearPendingIndustry } = useChatContext();
+  
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -56,25 +58,8 @@ export default function ChatWidget() {
     }
   }, [isOpen, selectedIndustry]);
 
-  // Initialize chat with welcome message
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      const industryButtons: IndustryButton[] = (Object.keys(industryLabels) as Industry[]).map(key => ({
-        id: key,
-        label: industryLabels[key],
-      }));
-
-      setMessages([{
-        id: '1',
-        role: 'assistant',
-        content: WELCOME_MESSAGE,
-        timestamp: new Date(),
-        buttons: industryButtons,
-      }]);
-    }
-  }, [isOpen, messages.length]);
-
-  const handleIndustrySelect = async (industry: Industry) => {
+  // Handle industry selection
+  const handleIndustrySelect = useCallback(async (industry: Industry) => {
     setSelectedIndustry(industry);
     
     // Add user selection message
@@ -85,7 +70,7 @@ export default function ChatWidget() {
       timestamp: new Date(),
     };
     
-    setMessages(prev => [...prev.map(m => ({ ...m, buttons: undefined })), userMessage]);
+    setMessages(prev => [...prev.filter(m => !m.buttons), userMessage]);
     setIsLoading(true);
 
     // Get initial response for selected industry
@@ -116,14 +101,43 @@ export default function ChatWidget() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Извини, произошла ошибка. Попробуй ещё раз.',
+        content: 'Sorry, an error occurred. Please try again.',
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  // Initialize chat with welcome message
+  useEffect(() => {
+    if (isOpen && messages.length === 0 && !pendingIndustry) {
+      const industryButtons: IndustryButton[] = (Object.keys(industryLabels) as Industry[]).map(key => ({
+        id: key,
+        label: industryLabels[key],
+      }));
+
+      setMessages([{
+        id: '1',
+        role: 'assistant',
+        content: WELCOME_MESSAGE,
+        timestamp: new Date(),
+        buttons: industryButtons,
+      }]);
+    }
+  }, [isOpen, messages.length, pendingIndustry]);
+
+  // Handle pending industry from context (when opened from Cases page)
+  useEffect(() => {
+    if (isOpen && pendingIndustry && !selectedIndustry) {
+      // Clear existing messages first
+      setMessages([]);
+      // Then select the industry
+      handleIndustrySelect(pendingIndustry);
+      clearPendingIndustry();
+    }
+  }, [isOpen, pendingIndustry, selectedIndustry, clearPendingIndustry, handleIndustrySelect]);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading || !selectedIndustry) return;
@@ -183,9 +197,9 @@ export default function ChatWidget() {
           const conversionMessage: Message = {
             id: (Date.now() + 2).toString(),
             role: 'assistant',
-            content: `💡 Кстати, если тебе понравилось как работает AI-бот — мы можем создать такого же для твоего бизнеса.
+            content: `💡 By the way, if you liked how this AI bot works — we can create one just like it for your business.
 
-Хочешь узнать подробнее?`,
+Would you like to learn more?`,
             timestamp: new Date(),
             buttons: CONVERSION_BUTTONS as ConversionButton[],
           };
@@ -199,7 +213,7 @@ export default function ChatWidget() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Извини, произошла ошибка связи. Попробуй ещё раз.',
+        content: 'Sorry, a connection error occurred. Please try again.',
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -256,7 +270,7 @@ export default function ChatWidget() {
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(true)}
+            onClick={openChat}
             className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl"
             style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.3)' }}
           >
@@ -305,11 +319,11 @@ export default function ChatWidget() {
                     onClick={resetChat}
                     className="text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded"
                   >
-                    Сменить нишу
+                    Switch demo
                   </button>
                 )}
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeChat}
                   className="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors"
                 >
                   <X className="w-5 h-5 text-gray-400" />
@@ -401,7 +415,7 @@ export default function ChatWidget() {
                   <div className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
-                      <span className="text-sm text-gray-400">Печатает...</span>
+                      <span className="text-sm text-gray-400">Typing...</span>
                     </div>
                   </div>
                 </motion.div>
@@ -420,7 +434,7 @@ export default function ChatWidget() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Напиши сообщение..."
+                    placeholder="Type a message..."
                     className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white 
                       placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                     disabled={isLoading}
@@ -435,7 +449,7 @@ export default function ChatWidget() {
                   </button>
                 </div>
                 <p className="text-[10px] text-gray-500 text-center mt-2">
-                  Демо AI-бота от AI Insider • Powered by GPT-4
+                  AI Demo by AI Insider • Powered by GPT-4
                 </p>
               </div>
             )}
@@ -445,4 +459,3 @@ export default function ChatWidget() {
     </>
   );
 }
-

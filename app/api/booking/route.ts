@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only when API key is available
+const getResendClient = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+  return new Resend(apiKey);
+};
 
 // Your email for receiving booking notifications
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@aiinsider.club';
@@ -301,6 +308,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Send confirmation email to client
+    const resend = getResendClient();
     const clientEmailResult = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
