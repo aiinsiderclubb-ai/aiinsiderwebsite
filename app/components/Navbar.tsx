@@ -25,11 +25,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '/about' },
-    { name: 'Cases', href: '/cases' },
-    { name: 'Solutions', href: isHomePage ? '#solutions' : '/#solutions' },
-    { name: 'Pricing', href: isHomePage ? '#pricing' : '/#pricing' },
-    { name: 'Book Call', href: isHomePage ? '#bookcall' : '/#bookcall' },
+    { name: 'Про нас', href: '/about' },
+    { name: 'Кейси', href: '/cases' },
+    { name: 'Рішення', href: isHomePage ? '#solutions' : '/#solutions' },
+    { name: 'Ціни', href: isHomePage ? '#pricing' : '/#pricing' },
+    { name: 'Контакт', href: isHomePage ? '#bookcall' : '/#bookcall' },
   ];
 
   return (
@@ -124,7 +124,7 @@ export default function Navbar() {
               boxShadow: '0 0 25px rgba(255, 255, 255, 0.3)',
             }}
           >
-            <span className="relative z-10">Book a Call</span>
+            <span className="relative z-10">Замовити дзвінок</span>
           </a>
         </div>
 
@@ -202,7 +202,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="block mt-4 px-6 py-3 bg-white text-black rounded-full font-bold text-center"
             >
-              Book a Call
+              Замовити дзвінок
             </motion.a>
           </div>
         </motion.div>

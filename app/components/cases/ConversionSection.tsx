@@ -10,10 +10,10 @@ interface ConversionSectionProps {
 
 export default function ConversionSection({ onOpenChat }: ConversionSectionProps) {
   const benefits = [
-    { icon: Bot, text: 'Custom AI logic tailored to your business' },
-    { icon: MessageCircle, text: 'Chat + Voice agent integration' },
-    { icon: Settings, text: 'CRM and tools integration' },
-    { icon: Zap, text: 'Scalable solution that grows with you' },
+    { icon: Bot, text: 'Кастомна AI-логіка під ваш бізнес' },
+    { icon: MessageCircle, text: 'Інтеграція чат + голосового агента' },
+    { icon: Settings, text: 'Інтеграція CRM та інструментів' },
+    { icon: Zap, text: 'Масштабоване рішення що росте з вами' },
   ];
 
   return (
@@ -43,20 +43,20 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
           >
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-gray-300">Ready to Transform?</span>
+            <span className="text-sm text-gray-300">Готові до трансформації?</span>
           </motion.div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
-            Want the same results
+            Хочете такі самі результати
             <br />
-            <span className="gradient-text">for your business?</span>
+            <span className="gradient-text">для свого бізнесу?</span>
           </h2>
 
           {/* Description */}
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            We build custom AI solutions that automate your workflows, 
-            engage your customers, and grow your revenue.
+            Ми будуємо кастомні AI-рішення, що автоматизують ваші процеси, 
+            залучають клієнтів та збільшують дохід.
           </p>
 
           {/* Benefits Grid */}
@@ -86,7 +86,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
             >
               <Phone className="w-5 h-5" />
-              Book a Demo
+              Замовити демо
               <ArrowRight className="w-5 h-5" />
             </Link>
             
@@ -96,13 +96,13 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
             >
               <MessageCircle className="w-5 h-5" />
-              Discuss My Business
+              Обговорити мій бізнес
             </button>
           </div>
 
           {/* Trust text */}
           <p className="mt-8 text-sm text-gray-500">
-            Free consultation • No commitment • Response within 24 hours
+            Безкоштовна консультація • Без зобов&apos;язань • Відповідь протягом 24 годин
           </p>
         </motion.div>
       </div>

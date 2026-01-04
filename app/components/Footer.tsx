@@ -51,22 +51,22 @@ export default function Footer() {
                 AI Insider
               </h2>
               <p className="text-gray-400 leading-relaxed max-w-md">
-                We build AI systems that think, speak, and act — transforming businesses with intelligent automation and voice agents.
+                Ми створюємо AI-системи, що думають, говорять і діють — трансформуючи бізнес за допомогою інтелектуальної автоматизації та голосових агентів.
               </p>
             </motion.div>
 
             {/* Location */}
             <div className="flex items-center gap-3 text-sm text-gray-400">
               <MapPin className="w-5 h-5 text-white" />
-              <span>Based in <span className="text-white font-semibold">Switzerland</span> — Working globally</span>
+              <span>Базуємось у <span className="text-white font-semibold">Швейцарії</span> — Працюємо глобально</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold font-heading mb-4 text-white">Quick Links</h3>
+            <h3 className="text-lg font-bold font-heading mb-4 text-white">Швидкі посилання</h3>
             <ul className="space-y-3">
-              {['About', 'Solutions', 'Case Studies', 'Pricing', 'Contact'].map((link) => (
+              {['Про нас', 'Рішення', 'Кейси', 'Ціни', 'Контакт'].map((link) => (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase().replace(' ', '')}`}
@@ -81,7 +81,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-bold font-heading mb-4 text-white">Get in Touch</h3>
+            <h3 className="text-lg font-bold font-heading mb-4 text-white">Зв&apos;яжіться з нами</h3>
             <div className="space-y-3">
               <a
                 href="mailto:hello@aiinsider.com"
@@ -132,10 +132,10 @@ export default function Footer() {
         {/* Copyright */}
         <div className="text-center text-sm text-gray-500">
           <p className="mb-2">
-            © 2025 AI Insider — <span className="text-white font-semibold">Built with intelligence, not templates.</span>
+            © 2025 AI Insider — <span className="text-white font-semibold">Створено з інтелектом, а не шаблонами.</span>
           </p>
           <p className="text-xs">
-            All rights reserved. Made with ❤️ in Switzerland.
+            Всі права захищено. Зроблено з ❤️ у Швейцарії.
           </p>
         </div>
       </div>

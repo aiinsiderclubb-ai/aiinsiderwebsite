@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, redirect } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
@@ -15,6 +15,12 @@ import { useChatContext } from '../../context/ChatContext';
 export default function CaseDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
+  
+  // Redirect to dedicated Sweezy page
+  if (slug === 'sweezy') {
+    redirect('/cases/sweezy');
+  }
+  
   const caseData = getCaseBySlug(slug);
   const { openChat, openWithIndustry } = useChatContext();
 

@@ -9,10 +9,10 @@ import Link from 'next/link';
 
 const teamMembers = [
   {
-    name: 'Alex Morrison',
-    role: 'CEO & Founder',
+    name: 'Олексій Мориссон',
+    role: 'CEO та засновник',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-    bio: 'Visionary leader with 15+ years in AI and tech. Former ML Lead at Google, now building the future of intelligent automation.',
+    bio: 'Візіонер з 15+ роками досвіду в AI та технологіях. Колишній ML Lead в Google, зараз будує майбутнє інтелектуальної автоматизації.',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -20,10 +20,10 @@ const teamMembers = [
     },
   },
   {
-    name: 'Sarah Chen',
-    role: 'Co-Founder & CTO',
+    name: 'Сара Чен',
+    role: 'Співзасновник та CTO',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
-    bio: 'Technical genius behind our AI architecture. PhD in Machine Learning from MIT, passionate about ethical AI development.',
+    bio: 'Технічний геній за нашою AI-архітектурою. PhD в Machine Learning з MIT, пристрасна до етичного розвитку AI.',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -31,10 +31,10 @@ const teamMembers = [
     },
   },
   {
-    name: 'Marcus Johnson',
-    role: 'Head of Product',
+    name: 'Маркус Джонсон',
+    role: 'Керівник продукту',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-    bio: 'Product strategist with a knack for user-centric design. Previously led product teams at Stripe and Figma.',
+    bio: 'Продуктовий стратег з талантом до user-centric дизайну. Раніше керував продуктовими командами в Stripe та Figma.',
     social: {
       linkedin: 'https://linkedin.com',
       twitter: 'https://twitter.com',
@@ -46,23 +46,23 @@ const teamMembers = [
 const values = [
   {
     icon: Zap,
-    title: 'Innovation First',
-    description: 'We push boundaries and embrace cutting-edge technology to deliver solutions that redefine what\'s possible.',
+    title: 'Інновації передусім',
+    description: 'Ми розширюємо межі та використовуємо передові технології для створення рішень, що переосмислюють можливе.',
   },
   {
     icon: Target,
-    title: 'Results Driven',
-    description: 'Every solution we build is measured by its impact. We\'re obsessed with delivering tangible ROI for our clients.',
+    title: 'Орієнтація на результат',
+    description: 'Кожне рішення вимірюється його впливом. Ми одержимі досягненням відчутного ROI для клієнтів.',
   },
   {
     icon: Rocket,
-    title: 'Speed & Excellence',
-    description: 'We move fast without sacrificing quality. Our agile approach ensures rapid deployment with precision.',
+    title: 'Швидкість та якість',
+    description: 'Ми рухаємось швидко без втрати якості. Наш agile-підхід забезпечує швидке впровадження з точністю.',
   },
   {
     icon: Users,
-    title: 'Client Partnership',
-    description: 'We don\'t just deliver projects — we become strategic partners invested in your long-term success.',
+    title: 'Партнерство з клієнтами',
+    description: 'Ми не просто виконуємо проекти — ми стаємо стратегічними партнерами, інвестованими у ваш довгостроковий успіх.',
   },
 ];
 
@@ -104,11 +104,11 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">About Us</span>
+              <span className="text-sm font-medium text-white">Про нас</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight text-white">
-              Building the Future of
+              Будуємо майбутнє
               <span 
                 className="block mt-2"
                 style={{
@@ -117,13 +117,13 @@ export default function AboutPage() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Intelligent Automation
+                Інтелектуальної автоматизації
               </span>
             </h1>
 
             <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              We're a team of AI enthusiasts, engineers, and visionaries dedicated to transforming 
-              businesses through intelligent automation and voice AI technology.
+              Ми — команда ентузіастів AI, інженерів та візіонерів, що трансформують 
+              бізнес через інтелектуальну автоматизацію та голосові AI-технології.
             </p>
           </motion.div>
         </div>
@@ -139,25 +139,25 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-                Our <span style={{
+                Наша <span style={{
                   background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                }}>Story</span>
+                }}>історія</span>
               </h2>
               <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
-                  Founded in 2023, AI Insider emerged from a simple observation: businesses were drowning 
-                  in repetitive tasks while AI technology remained locked in research labs.
+                  Заснований у 2023 році, AI Insider з&apos;явився з простого спостереження: бізнеси потопали 
+                  в рутинних завданнях, поки AI-технології залишались замкненими в дослідницьких лабораторіях.
                 </p>
                 <p>
-                  We saw an opportunity to bridge this gap — to bring enterprise-grade AI capabilities 
-                  to companies of all sizes, making intelligent automation accessible and affordable.
+                  Ми побачили можливість подолати цей розрив — принести AI-можливості корпоративного рівня 
+                  компаніям будь-якого розміру, зробивши інтелектуальну автоматизацію доступною.
                 </p>
                 <p>
-                  Today, we've helped over 50 businesses automate their workflows, deploy voice agents, 
-                  and unlock new levels of efficiency. Our mission remains unchanged: democratize AI 
-                  and empower businesses to focus on what truly matters.
+                  Сьогодні ми допомогли понад 50 бізнесам автоматизувати процеси, впровадити голосових агентів 
+                  та досягти нових рівнів ефективності. Наша місія незмінна: демократизувати AI 
+                  та дати бізнесам змогу фокусуватись на тому, що справді важливо.
                 </p>
               </div>
             </motion.div>
@@ -171,10 +171,10 @@ export default function AboutPage() {
               <div className="glass-strong rounded-3xl p-8 border border-white/10">
                 <div className="grid grid-cols-2 gap-6">
                   {[
-                    { number: '50+', label: 'Projects Delivered' },
-                    { number: '95%', label: 'Client Satisfaction' },
-                    { number: '24/7', label: 'AI Uptime' },
-                    { number: '3x', label: 'Avg. ROI Increase' },
+                    { number: '50+', label: 'Проектів виконано' },
+                    { number: '95%', label: 'Задоволеність клієнтів' },
+                    { number: '24/7', label: 'Доступність AI' },
+                    { number: '3x', label: 'Середнє зростання ROI' },
                   ].map((stat, index) => (
                     <div key={index} className="text-center p-4">
                       <div 
@@ -209,14 +209,14 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Our <span style={{
+              Наші <span style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>Values</span>
+              }}>цінності</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              The principles that guide everything we do.
+              Принципи, що керують усім, що ми робимо.
             </p>
           </motion.div>
 
@@ -257,17 +257,17 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">The Team</span>
+              <span className="text-sm font-medium text-white">Команда</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Meet the <span style={{
+              Познайомтесь з <span style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>Minds</span> Behind AI Insider
+              }}>командою</span> AI Insider
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              A passionate team of innovators dedicated to transforming your business.
+              Пристрасна команда інноваторів, що трансформують ваш бізнес.
             </p>
           </motion.div>
 
@@ -349,10 +349,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Ready to Work with Us?
+              Готові працювати з нами?
             </h2>
             <p className="text-xl text-gray-400 mb-10">
-              Let's discuss how we can transform your business with AI.
+              Обговоримо як ми можемо трансформувати ваш бізнес за допомогою AI.
             </p>
             <Link
               href="/#bookcall"
@@ -360,7 +360,7 @@ export default function AboutPage() {
                 font-bold text-lg transition-all duration-300 hover:scale-105"
               style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
             >
-              Book a Free Consultation
+              Замовити безкоштовну консультацію
             </Link>
           </motion.div>
         </div>

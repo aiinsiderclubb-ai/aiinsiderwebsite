@@ -10,18 +10,18 @@ import {
 
 // Simulated campaign data
 const campaigns = [
-  { id: 1, name: 'Real Estate Agents', status: 'active', progress: 73, sent: 146, groups: 12 },
-  { id: 2, name: 'Marketing Agencies', status: 'completed', progress: 100, sent: 250, groups: 15 },
-  { id: 3, name: 'Local Businesses', status: 'paused', progress: 45, sent: 89, groups: 8 },
+  { id: 1, name: 'Агенти нерухомості', status: 'active', progress: 73, sent: 146, groups: 12 },
+  { id: 2, name: 'Маркетингові агенції', status: 'completed', progress: 100, sent: 250, groups: 15 },
+  { id: 3, name: 'Локальний бізнес', status: 'paused', progress: 45, sent: 89, groups: 8 },
 ];
 
 const logs = [
-  { time: '14:32:15', type: 'success', message: 'Message sent to "Digital Marketing Pros" group' },
-  { time: '14:32:10', type: 'info', message: 'Navigating to next group...' },
-  { time: '14:31:58', type: 'success', message: 'Message sent to "Small Business Network" group' },
-  { time: '14:31:45', type: 'warning', message: 'Rate limit detected, waiting 30s...' },
-  { time: '14:31:12', type: 'success', message: 'Message sent to "Entrepreneurs Hub" group' },
-  { time: '14:30:55', type: 'info', message: 'AI personalizing message for context...' },
+  { time: '14:32:15', type: 'success', message: 'Повідомлення відправлено в групу "Digital Marketing Pros"' },
+  { time: '14:32:10', type: 'info', message: 'Перехід до наступної групи...' },
+  { time: '14:31:58', type: 'success', message: 'Повідомлення відправлено в групу "Small Business Network"' },
+  { time: '14:31:45', type: 'warning', message: 'Виявлено rate limit, очікування 30с...' },
+  { time: '14:31:12', type: 'success', message: 'Повідомлення відправлено в групу "Entrepreneurs Hub"' },
+  { time: '14:30:55', type: 'info', message: 'AI персоналізує повідомлення під контекст...' },
 ];
 
 export default function OutreachUIDemo() {
@@ -58,8 +58,8 @@ export default function OutreachUIDemo() {
           <Zap className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h4 className="text-lg font-bold text-white">How it looks in action</h4>
-          <p className="text-sm text-gray-400">Live preview of the automation dashboard</p>
+          <h4 className="text-lg font-bold text-white">Як це виглядає в дії</h4>
+          <p className="text-sm text-gray-400">Живий попередній перегляд панелі автоматизації</p>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export default function OutreachUIDemo() {
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
               <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-            <span className="text-xs text-gray-400 ml-3">Outreach Control Panel</span>
+            <span className="text-xs text-gray-400 ml-3">Панель керування Outreach</span>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -85,7 +85,7 @@ export default function OutreachUIDemo() {
                 }`}
             >
               {isAnimating ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-              {isAnimating ? 'Running' : 'Paused'}
+              {isAnimating ? 'Працює' : 'Пауза'}
             </button>
           </div>
         </div>
@@ -117,10 +117,10 @@ export default function OutreachUIDemo() {
               {/* Stats Grid */}
               <div className="grid grid-cols-4 gap-4">
                 {[
-                  { icon: Send, label: 'Messages Sent', value: messagesSent, color: 'text-green-400' },
-                  { icon: Users, label: 'Groups Targeted', value: 35, color: 'text-blue-400' },
-                  { icon: MessageCircle, label: 'Responses', value: 47, color: 'text-purple-400' },
-                  { icon: BarChart3, label: 'Conversion', value: '9.7%', color: 'text-yellow-400' },
+                  { icon: Send, label: 'Надіслано', value: messagesSent, color: 'text-green-400' },
+                  { icon: Users, label: 'Груп охоплено', value: 35, color: 'text-blue-400' },
+                  { icon: MessageCircle, label: 'Відповідей', value: 47, color: 'text-purple-400' },
+                  { icon: BarChart3, label: 'Конверсія', value: '9.7%', color: 'text-yellow-400' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/5">
                     <div className="flex items-center gap-2 mb-2">
@@ -137,9 +137,9 @@ export default function OutreachUIDemo() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-sm font-medium text-white">Real Estate Agents Campaign</span>
+                    <span className="text-sm font-medium text-white">Кампанія: Агенти нерухомості</span>
                   </div>
-                  <span className="text-xs text-gray-400">{currentProgress}% complete</span>
+                  <span className="text-xs text-gray-400">{currentProgress}% завершено</span>
                 </div>
                 <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                   <motion.div
@@ -148,8 +148,8 @@ export default function OutreachUIDemo() {
                   />
                 </div>
                 <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
-                  <span>146 of 200 groups</span>
-                  <span>Est. completion: 2h 15m</span>
+                  <span>146 з 200 груп</span>
+                  <span>До завершення: 2г 15хв</span>
                 </div>
               </div>
 
@@ -157,7 +157,7 @@ export default function OutreachUIDemo() {
               <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div className="flex items-center gap-2 mb-3">
                   <RefreshCw className="w-4 h-4 text-gray-400" />
-                  <span className="text-sm font-medium text-white">Live Activity</span>
+                  <span className="text-sm font-medium text-white">Активність в реальному часі</span>
                 </div>
                 <div className="space-y-2">
                   {logs.slice(0, 3).map((log, i) => (
@@ -207,9 +207,9 @@ export default function OutreachUIDemo() {
                     />
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <span>{campaign.sent} messages sent</span>
-                    <span>{campaign.groups} groups</span>
-                    <span>{campaign.progress}% complete</span>
+                    <span>{campaign.sent} надіслано</span>
+                    <span>{campaign.groups} груп</span>
+                    <span>{campaign.progress}% завершено</span>
                   </div>
                 </div>
               ))}
@@ -218,7 +218,7 @@ export default function OutreachUIDemo() {
               <button className="w-full p-4 rounded-xl border border-dashed border-white/10 text-gray-500 text-sm
                 hover:border-white/20 hover:text-gray-400 transition-colors flex items-center justify-center gap-2">
                 <Settings className="w-4 h-4" />
-                Configure New Campaign
+                Налаштувати нову кампанію
               </button>
             </div>
           )}
@@ -227,7 +227,7 @@ export default function OutreachUIDemo() {
             <div className="space-y-1 font-mono text-xs">
               <div className="flex items-center gap-2 mb-4 text-gray-500">
                 <Clock className="w-4 h-4" />
-                <span>Live system logs (last 24 hours)</span>
+                <span>Системні логи в реальному часі (останні 24 години)</span>
               </div>
               {logs.map((log, i) => (
                 <motion.div
@@ -248,7 +248,7 @@ export default function OutreachUIDemo() {
               ))}
               <div className="flex items-center gap-2 pt-4 text-gray-600">
                 <AlertCircle className="w-4 h-4" />
-                <span>All systems operational • No errors in the last 24h</span>
+                <span>Усі системи працюють • Жодних помилок за останні 24г</span>
               </div>
             </div>
           )}
@@ -258,15 +258,15 @@ export default function OutreachUIDemo() {
         <div className="px-6 py-3 bg-white/5 border-t border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span>System Online</span>
+            <span>Система онлайн</span>
             <span className="mx-2">•</span>
-            <span>Session: Active</span>
+            <span>Сесія: Активна</span>
             <span className="mx-2">•</span>
-            <span>Last sync: Just now</span>
+            <span>Синхронізація: Щойно</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-500" />
-            <span className="text-xs text-green-400">All checks passed</span>
+            <span className="text-xs text-green-400">Усі перевірки пройдено</span>
           </div>
         </div>
       </div>

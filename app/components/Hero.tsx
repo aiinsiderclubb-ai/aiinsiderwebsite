@@ -202,7 +202,7 @@ export default function Hero() {
             <Zap className="w-5 h-5 text-white" fill="currentColor" />
           </motion.div>
           <span className="text-sm font-semibold text-white">
-            AI-Powered Automation
+            AI-автоматизація
           </span>
           <span className="text-xs px-2 py-1 bg-white/10 text-white rounded-full border border-white/20">
             Live
@@ -218,7 +218,7 @@ export default function Hero() {
             className="block text-white"
             style={{ textShadow: '0 0 60px rgba(255, 255, 255, 0.3)' }}
           >
-            Automation
+            Автоматизація
           </span>
           <span 
             className="block text-7xl md:text-9xl lg:text-[12rem]"
@@ -229,7 +229,7 @@ export default function Hero() {
               backgroundClip: 'text',
             }}
           >
-            Reimagined
+            Майбутнього
           </span>
         </motion.h1>
 
@@ -238,15 +238,15 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-wrap items-center justify-center gap-4 text-xl md:text-3xl text-gray-400 mb-12 max-w-4xl mx-auto"
         >
-          <span>AI systems that</span>
+          <span>AI системи які</span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            think
+            думають
           </span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            speak
+            говорять
           </span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            act
+            діють
           </span>
         </motion.div>
 
@@ -256,9 +256,9 @@ export default function Hero() {
           className="flex flex-wrap items-center justify-center gap-8 mb-12"
         >
           {[
-            { value: '70%', label: 'Time Saved' },
-            { value: '24/7', label: 'AI Availability' },
-            { value: '10x', label: 'Faster Response' },
+            { value: '70%', label: 'Економія часу' },
+            { value: '24/7', label: 'AI доступність' },
+            { value: '10x', label: 'Швидша відповідь' },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div 
@@ -294,7 +294,7 @@ export default function Hero() {
               }}
             >
               <span className="relative z-10 flex items-center gap-3">
-                Book an Intro Call
+                Замовити дзвінок
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
               </span>
             </motion.a>
@@ -306,7 +306,7 @@ export default function Hero() {
               className="group px-10 py-5 glass-strong border border-white/30 rounded-full font-bold text-lg hover:border-white/60 hover:bg-white/5 transition-all duration-300"
             >
               <span className="flex items-center gap-3 text-white">
-                Explore Solutions
+                Дивитися рішення
                 <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
               </span>
             </motion.a>
@@ -318,7 +318,7 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity }}
             className="flex flex-col items-center gap-2"
           >
-            <span className="text-xs text-gray-500 uppercase tracking-wider">Scroll to explore</span>
+            <span className="text-xs text-gray-500 uppercase tracking-wider">Гортайте далі</span>
             <div className="w-6 h-10 border-2 border-white/30 rounded-full p-1 relative">
               <motion.div
                 animate={{ 

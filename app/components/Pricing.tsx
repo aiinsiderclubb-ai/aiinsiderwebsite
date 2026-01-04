@@ -8,46 +8,46 @@ import { SCHEDULING_URL } from '../lib/config';
 const plans = [
   {
     name: 'Starter',
-    price: 'Custom',
-    desc: 'Perfect for small automations',
+    price: 'Індивідуально',
+    desc: 'Ідеально для малих автоматизацій',
     icon: Zap,
     features: [
-      'Simple workflow automation',
-      'Basic AI integration',
-      'Email support',
-      '30-day setup',
-      'Up to 1,000 operations/mo',
+      'Проста автоматизація процесів',
+      'Базова інтеграція AI',
+      'Підтримка по email',
+      'Налаштування за 30 днів',
+      'До 1,000 операцій/міс',
     ],
   },
   {
     name: 'Pro',
-    price: 'Custom',
-    desc: 'Custom AI agent for your business',
+    price: 'Індивідуально',
+    desc: 'Кастомний AI-агент для вашого бізнесу',
     icon: Rocket,
     features: [
-      'Custom voice/chat agent',
-      'Advanced AI models',
-      'Priority support',
-      'Full integration',
-      '14-day setup',
-      'Unlimited operations',
-      'Dedicated account manager',
+      'Голосовий/чат агент на замовлення',
+      'Просунуті AI-моделі',
+      'Пріоритетна підтримка',
+      'Повна інтеграція',
+      'Налаштування за 14 днів',
+      'Необмежені операції',
+      'Персональний менеджер',
     ],
     popular: true,
   },
   {
     name: 'Enterprise',
-    price: 'Custom',
-    desc: 'End-to-end AI system',
+    price: 'Індивідуально',
+    desc: 'Комплексна AI-система',
     icon: Sparkles,
     features: [
-      'Complete AI infrastructure',
-      'Multiple agents & workflows',
-      'Dedicated support team',
-      'Custom model training',
-      'SLA guarantee',
-      'White-label solution',
-      'Advanced analytics',
+      'Повна AI-інфраструктура',
+      'Багато агентів та процесів',
+      'Виділена команда підтримки',
+      'Навчання кастомних моделей',
+      'Гарантія SLA',
+      'White-label рішення',
+      'Розширена аналітика',
     ],
   },
 ];
@@ -77,11 +77,11 @@ export default function Pricing() {
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
             <Sparkles className="w-5 h-5 text-white" />
-            <span className="text-sm font-medium text-white">Pricing Plans</span>
+            <span className="text-sm font-medium text-white">Тарифи</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block text-white">Choose Your</span>
+            <span className="block text-white">Оберіть ваш</span>
             <span 
               className="block text-6xl md:text-8xl mt-2"
               style={{
@@ -90,12 +90,12 @@ export default function Pricing() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Power Level
+              Рівень
             </span>
           </h2>
 
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
-            All plans are customized to your exact needs. No hidden fees, no surprises.
+            Усі плани адаптовані під ваші потреби. Без прихованих комісій.
           </p>
         </motion.div>
 
@@ -118,7 +118,7 @@ export default function Pricing() {
                     style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
                   >
                     <Sparkles className="w-4 h-4" fill="currentColor" />
-                    MOST POPULAR
+                    НАЙПОПУЛЯРНІШИЙ
                   </div>
                 )}
 
@@ -193,7 +193,7 @@ export default function Pricing() {
                         }`}
                       style={plan.popular ? { boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)' } : {}}
                     >
-                      {plan.popular ? 'Start Now' : 'Get Started'}
+                      {plan.popular ? 'Почати зараз' : 'Дізнатися більше'}
                     </a>
                   </div>
                 </div>
@@ -210,21 +210,21 @@ export default function Pricing() {
           className="text-center mt-16"
         >
           <p className="text-gray-400 mb-6">
-            Need a custom solution? <a href="#contact" className="text-white hover:underline font-semibold">Let's talk</a>
+            Потрібне індивідуальне рішення? <a href="#contact" className="text-white hover:underline font-semibold">Зв&apos;яжіться з нами</a>
           </p>
           
           <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>No hidden fees</span>
+              <span>Без прихованих комісій</span>
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>Cancel anytime</span>
+              <span>Скасувати будь-коли</span>
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>Swiss quality</span>
+              <span>Швейцарська якість</span>
             </div>
           </div>
         </motion.div>

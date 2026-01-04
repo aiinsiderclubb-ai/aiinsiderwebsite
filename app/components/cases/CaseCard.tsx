@@ -52,7 +52,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
         <div className="absolute top-4 right-4 z-10">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
             <Zap className="w-3.5 h-3.5 text-yellow-400" />
-            <span className="text-xs font-medium text-white">Featured</span>
+            <span className="text-xs font-medium text-white">Виділений</span>
           </div>
         </div>
       )}
@@ -87,7 +87,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
           <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/10">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-4 h-4 text-red-400" />
-              <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Problem</span>
+              <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Проблема</span>
             </div>
             <ul className="space-y-2">
               {caseData.problem.points.slice(0, 3).map((point, i) => (
@@ -103,7 +103,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
           <div className="p-4 rounded-2xl bg-green-500/5 border border-green-500/10">
             <div className="flex items-center gap-2 mb-3">
               <CheckCircle2 className="w-4 h-4 text-green-400" />
-              <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">Solution</span>
+              <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">Рішення</span>
             </div>
             <ul className="space-y-2">
               {caseData.solution.points.slice(0, 3).map((point, i) => (
@@ -120,7 +120,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Zap className="w-4 h-4 text-white" />
-            <span className="text-xs font-semibold text-white uppercase tracking-wider">Results</span>
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">Результати</span>
           </div>
           <div className="grid grid-cols-4 gap-2">
             {caseData.results.map((result, i) => (
@@ -182,7 +182,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
               transition-all duration-200 hover:scale-[1.02]"
           >
             <ExternalLink className="w-4 h-4" />
-            Read More
+            Детальніше
           </Link>
         </div>
       </div>

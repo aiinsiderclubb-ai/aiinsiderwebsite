@@ -72,10 +72,10 @@ export default function BookCall() {
   const [formError, setFormError] = useState<string | null>(null);
 
   const benefits = [
-    { icon: '💬', title: 'Q&A', desc: 'Get answers to all your questions' },
-    { icon: '🎯', title: 'Customized marketing', desc: 'Suggestions and follow up with key highlights' },
-    { icon: '📈', title: 'Product growth discussion', desc: 'Strategy for scaling your business' },
-    { icon: '🚀', title: 'Essential guidance', desc: 'On the quickest way to reach point B' },
+    { icon: '💬', title: 'Відповіді', desc: 'Отримайте відповіді на всі ваші питання' },
+    { icon: '🎯', title: 'Індивідуальний підхід', desc: 'Пропозиції та рекомендації для вашого бізнесу' },
+    { icon: '📈', title: 'Стратегія росту', desc: 'План масштабування вашого бізнесу' },
+    { icon: '🚀', title: 'Експертна консультація', desc: 'Найшвидший шлях до ваших цілей' },
   ];
 
   const getDaysInMonth = (date: Date) => {
@@ -216,16 +216,16 @@ export default function BookCall() {
             transition={{ duration: 0.8 }}
           >
             <p className="text-gray-400 uppercase tracking-wider text-sm mb-4">
-              Want to know more?
+              Хочете дізнатися більше?
             </p>
 
             <h2 className="text-6xl md:text-7xl font-bold font-heading mb-6 leading-tight">
-              BOOK<br />
-              <span className="gradient-text">INTRO CALL</span>
+              ЗАМОВИТИ<br />
+              <span className="gradient-text">ДЗВІНОК</span>
             </h2>
 
             <p className="text-xl text-gray-300 mb-12">
-              What do you get on this free meeting?
+              Що ви отримаєте на безкоштовній зустрічі?
             </p>
 
             {/* Benefits Grid */}
@@ -253,7 +253,7 @@ export default function BookCall() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="glass-strong rounded-3xl p-8 border border-white/10"
           >
-            <h3 className="text-2xl font-bold mb-6 text-center">Select a Day</h3>
+            <h3 className="text-2xl font-bold mb-6 text-center">Оберіть день</h3>
 
             {/* Calendar Header */}
             <div className="flex items-center justify-between mb-6">
@@ -325,7 +325,7 @@ export default function BookCall() {
             {selectedDate && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-gray-400">Select a time</span>
+                  <span className="text-sm text-gray-400">Оберіть час</span>
                   <span className="text-xs text-gray-500">{monthName.split(' ')[0]} {selectedDate}</span>
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
@@ -369,7 +369,7 @@ export default function BookCall() {
             {/* Time Zone */}
             <div className="pt-6 border-t border-white/10">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Time zone</span>
+                <span className="text-sm text-gray-400">Часовий пояс</span>
                 <button className="flex items-center gap-2 px-4 py-2 glass rounded-lg transition-colors duration-200 hover:bg-white/10">
                   <Clock className="w-4 h-4 text-gray-400" />
                   <span className="text-sm">Central European Time</span>
@@ -386,7 +386,7 @@ export default function BookCall() {
                 className="w-full mt-6 px-6 py-4 bg-white text-black rounded-full font-bold 
                   transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30 active:scale-[0.98]"
               >
-                Continue with {monthName.split(' ')[0]} {selectedDate} at {selectedTime}
+                Продовжити: {selectedDate} {monthName.split(' ')[0]} о {selectedTime}
               </button>
             )}
 
@@ -419,7 +419,7 @@ export default function BookCall() {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
-                <h3 className="text-xl font-bold text-white">Complete Your Booking</h3>
+                <h3 className="text-xl font-bold text-white">Завершіть бронювання</h3>
                 <p className="text-sm text-gray-400 mt-1">
                   {formatDateForEmail(currentMonth, selectedDate!)} at {selectedTime}
                 </p>
@@ -438,7 +438,7 @@ export default function BookCall() {
                 {/* Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Your Name *
+                    Ваше ім&apos;я *
                   </label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -446,7 +446,7 @@ export default function BookCall() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="John Doe"
+                      placeholder="Іван Петренко"
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                       required
                     />
@@ -456,7 +456,7 @@ export default function BookCall() {
                 {/* Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address *
+                    Email *
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -464,7 +464,7 @@ export default function BookCall() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="john@company.com"
+                      placeholder="ivan@company.com"
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                       required
                     />
@@ -474,7 +474,7 @@ export default function BookCall() {
                 {/* Company */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Company (optional)
+                    Компанія (необов&apos;язково)
                   </label>
                   <div className="relative">
                     <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -482,7 +482,7 @@ export default function BookCall() {
                       type="text"
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                      placeholder="Your Company"
+                      placeholder="Ваша компанія"
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                     />
                   </div>
@@ -491,14 +491,14 @@ export default function BookCall() {
                 {/* Message */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    What would you like to discuss? (optional)
+                    Що б ви хотіли обговорити? (необов&apos;язково)
                   </label>
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
                     <textarea
                       value={formData.message}
                       onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                      placeholder="Tell us about your project or questions..."
+                      placeholder="Розкажіть про ваш проект або питання..."
                       rows={3}
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors resize-none"
                     />
@@ -523,18 +523,18 @@ export default function BookCall() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      Booking...
+                      Бронюємо...
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      Confirm Booking
+                      Підтвердити бронювання
                     </>
                   )}
                 </button>
 
                 <p className="text-xs text-gray-500 text-center">
-                  By booking, you agree to receive a confirmation email from AI Insider.
+                  Бронюючи, ви погоджуєтесь отримати лист-підтвердження від AI Insider.
                 </p>
               </form>
             ) : (
@@ -547,16 +547,16 @@ export default function BookCall() {
                 >
                   <CheckCircle2 className="w-10 h-10 text-green-400" />
                 </motion.div>
-                <h4 className="text-2xl font-bold text-white mb-2">Booking Confirmed! ✨</h4>
+                <h4 className="text-2xl font-bold text-white mb-2">Бронювання підтверджено! ✨</h4>
                 <p className="text-gray-400 mb-4">
-                  Check your email for confirmation details.
+                  Перевірте вашу пошту для отримання деталей.
                 </p>
                 <div className="glass rounded-xl p-4 text-left">
                   <p className="text-sm text-gray-300">
-                    <strong className="text-white">Date:</strong> {formatDateForEmail(currentMonth, selectedDate!)}
+                    <strong className="text-white">Дата:</strong> {formatDateForEmail(currentMonth, selectedDate!)}
                   </p>
                   <p className="text-sm text-gray-300 mt-1">
-                    <strong className="text-white">Time:</strong> {selectedTime} (CET)
+                    <strong className="text-white">Час:</strong> {selectedTime} (CET)
                   </p>
                 </div>
               </div>

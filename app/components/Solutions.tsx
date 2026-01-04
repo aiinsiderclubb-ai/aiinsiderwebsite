@@ -6,23 +6,23 @@ import { Mic, Workflow, LineChart, Sparkles } from 'lucide-react';
 
 const solutions = [
   {
-    title: 'Voice & Chat Agents',
-    desc: 'Humanized AI that talks to your customers and books meetings in real-time.',
+    title: 'Голосові та чат-агенти',
+    desc: 'Людяний AI, який спілкується з клієнтами та бронює зустрічі в реальному часі.',
     icon: Mic,
   },
   {
-    title: 'Workflow Automations',
-    desc: 'From lead capture to CRM integration — fully automated workflows.',
+    title: 'Автоматизація процесів',
+    desc: 'Від захоплення лідів до інтеграції з CRM — повністю автоматизовані процеси.',
     icon: Workflow,
   },
   {
-    title: 'Analytics Assistants',
-    desc: 'AI that analyzes data and delivers weekly reports with insights.',
+    title: 'AI-аналітика',
+    desc: 'AI, який аналізує дані та надає щотижневі звіти з інсайтами.',
     icon: LineChart,
   },
   {
-    title: 'Custom AI Models',
-    desc: 'Tailor-made GPT and RAG systems integrated with your stack.',
+    title: 'Кастомні AI-моделі',
+    desc: 'GPT та RAG системи на замовлення, інтегровані з вашим стеком.',
     icon: Sparkles,
   },
 ];
@@ -60,11 +60,11 @@ export default function Solutions() {
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
             <Sparkles className="w-5 h-5 text-white" />
-            <span className="text-sm font-medium text-white">Our Solutions</span>
+            <span className="text-sm font-medium text-white">Наші рішення</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block text-white">Build Smarter,</span>
+            <span className="block text-white">Будуй розумніше,</span>
             <span 
               className="block text-6xl md:text-8xl mt-2"
               style={{
@@ -73,7 +73,7 @@ export default function Solutions() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Ship Faster
+              Запускай швидше
             </span>
           </h2>
 
