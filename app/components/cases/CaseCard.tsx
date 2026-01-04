@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, AlertTriangle, CheckCircle2, Wrench } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Zap, AlertTriangle, CheckCircle2, Wrench, ExternalLink } from 'lucide-react';
 import { CaseStudy } from '@/app/lib/casesData';
 
 interface CaseCardProps {
@@ -12,6 +13,9 @@ interface CaseCardProps {
 }
 
 export default function CaseCard({ caseData, index, onDemoClick, onContactClick }: CaseCardProps) {
+  // Special styling for Sweezy
+  const isSweezy = caseData.id === 'case-sweezy';
+  const accentBg = isSweezy ? 'bg-gradient-to-br from-blue-500/10 to-yellow-500/10' : 'bg-white/5';
   const handleCTAClick = (action: string) => {
     switch (action) {
       case 'demo':
@@ -55,20 +59,22 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
 
       {/* Card Content */}
       <div className="p-8">
-        {/* Header */}
-        <div className="flex items-start gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl flex-shrink-0">
-            {caseData.icon}
+        {/* Header - Clickable */}
+        <Link href={`/cases/${caseData.slug}`} className="block mb-6 group/header">
+          <div className="flex items-start gap-4">
+            <div className={`w-14 h-14 rounded-2xl ${accentBg} border ${isSweezy ? 'border-blue-500/20' : 'border-white/10'} flex items-center justify-center text-2xl flex-shrink-0 group-hover/header:scale-105 transition-transform`}>
+              {caseData.icon}
+            </div>
+            <div>
+              <span className={`text-xs font-medium uppercase tracking-wider ${isSweezy ? 'text-blue-400' : 'text-gray-400'}`}>
+                {caseData.industryName}
+              </span>
+              <h3 className="text-xl font-bold text-white mt-1 leading-tight group-hover/header:text-gray-200 transition-colors">
+                {caseData.title}
+              </h3>
+            </div>
           </div>
-          <div>
-            <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-              {caseData.industryName}
-            </span>
-            <h3 className="text-xl font-bold text-white mt-1 leading-tight">
-              {caseData.title}
-            </h3>
-          </div>
-        </div>
+        </Link>
 
         {/* Short Description */}
         <p className="text-gray-400 text-sm mb-6 leading-relaxed">
@@ -147,7 +153,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
 
         {/* CTAs */}
         <div className="flex flex-wrap gap-3">
-          {caseData.ctas.map((cta) => (
+          {caseData.ctas.slice(0, 2).map((cta) => (
             <button
               key={cta.id}
               onClick={() => handleCTAClick(cta.action)}
@@ -155,7 +161,9 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
                 flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold
                 transition-all duration-200 hover:scale-[1.02]
                 ${cta.primary 
-                  ? 'bg-white text-black hover:shadow-lg hover:shadow-white/20' 
+                  ? isSweezy
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/20'
+                    : 'bg-white text-black hover:shadow-lg hover:shadow-white/20' 
                   : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
                 }
               `}
@@ -165,6 +173,17 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
               {cta.primary && <ArrowRight className="w-4 h-4" />}
             </button>
           ))}
+          
+          {/* Read More Link */}
+          <Link
+            href={`/cases/${caseData.slug}`}
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold
+              bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20
+              transition-all duration-200 hover:scale-[1.02]"
+          >
+            <ExternalLink className="w-4 h-4" />
+            Read More
+          </Link>
         </div>
       </div>
 

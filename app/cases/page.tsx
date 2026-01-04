@@ -39,6 +39,7 @@ export default function CasesPage() {
       realestate: 0,
       voice: 0,
       automation: 0,
+      social: 0,
     };
     
     casesData.forEach(c => {

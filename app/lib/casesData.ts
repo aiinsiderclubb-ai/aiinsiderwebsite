@@ -1,7 +1,7 @@
 // Cases data structure for AI Insider Cases Page
 import { Industry } from './chatPrompts';
 
-export type CaseCategory = 'ecommerce' | 'beauty' | 'realestate' | 'voice' | 'automation';
+export type CaseCategory = 'ecommerce' | 'beauty' | 'realestate' | 'voice' | 'automation' | 'social';
 
 export interface CaseResult {
   value: string;
@@ -48,6 +48,7 @@ export const categoryLabels: Record<CaseCategory, string> = {
   realestate: '🏠 Real Estate',
   voice: '🎧 Voice Agents',
   automation: '⚙️ Automation',
+  social: '💙 Social Impact',
 };
 
 export const categoryFilters: { id: CaseCategory | 'all'; label: string; icon: string }[] = [
@@ -57,6 +58,7 @@ export const categoryFilters: { id: CaseCategory | 'all'; label: string; icon: s
   { id: 'realestate', label: 'Real Estate', icon: '🏠' },
   { id: 'voice', label: 'Voice Agents', icon: '🎧' },
   { id: 'automation', label: 'Automation', icon: '⚙️' },
+  { id: 'social', label: 'Social Impact', icon: '💙' },
 ];
 
 export const casesData: CaseStudy[] = [
@@ -366,6 +368,52 @@ export const casesData: CaseStudy[] = [
       { id: 'demo', label: 'Try Flower AI Demo', icon: '🌸', action: 'demo', primary: true },
       { id: 'contact', label: 'Get this for my shop', icon: '💬', action: 'contact' },
     ],
+  },
+
+  // CASE 8: SWEEZY - SOCIAL IMPACT (FEATURED)
+  {
+    id: 'case-sweezy',
+    slug: 'sweezy',
+    category: 'social',
+    industry: 'general',
+    icon: '🇺🇦',
+    industryName: 'Social Impact',
+    title: 'Sweezy — AI-Powered App for Ukrainian Refugees',
+    shortDescription: 'Mobile app helping 10,000+ Ukrainian refugees integrate into Swiss society with AI assistance',
+    problem: {
+      title: 'The Challenge',
+      points: [
+        'Thousands of refugees arriving with no local knowledge',
+        'Language barriers preventing access to services',
+        'Complex bureaucratic processes for permits and documents',
+        'Difficulty finding housing, jobs, and education',
+        'Limited resources for 24/7 support',
+      ],
+    },
+    solution: {
+      title: 'What We Built',
+      points: [
+        'Multilingual AI chatbot (Ukrainian, Russian, German, French, English)',
+        'Housing search with verified listings and host families',
+        'Step-by-step document and permit guidance',
+        'Job opportunities with CV translation help',
+        'Free language courses and school integration',
+        'Community connection and cultural events',
+      ],
+    },
+    results: [
+      { value: '10K+', label: 'Users helped', prefix: '', suffix: '' },
+      { value: '24/7', label: 'AI support', prefix: '', suffix: '' },
+      { value: '5', label: 'Languages', prefix: '', suffix: '' },
+      { value: '💙', label: 'Lives changed', prefix: '', suffix: '' },
+    ],
+    technologies: ['React Native', 'GPT-4', 'Firebase', 'Node.js', 'Google Maps API', 'Push Notifications'],
+    ctas: [
+      { id: 'demo', label: 'Learn About Sweezy', icon: '💙', action: 'demo', primary: true },
+      { id: 'contact', label: 'Partner With Us', icon: '🤝', action: 'contact' },
+    ],
+    featured: true,
+    hasUIDemo: false,
   },
 ];
 
