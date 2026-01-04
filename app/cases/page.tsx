@@ -3,24 +3,31 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, MessageCircle, Phone, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, Phone, Zap, AlertTriangle, CheckCircle2, Wrench, Rocket } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CaseCard from '../components/cases/CaseCard';
 import CaseFilters from '../components/cases/CaseFilters';
 import ConversionSection from '../components/cases/ConversionSection';
+import OutreachUIDemo from '../components/cases/OutreachUIDemo';
 import { casesData, CaseCategory, CaseStudy, categoryFilters } from '../lib/casesData';
 import { useChatContext } from '../context/ChatContext';
-import { Industry } from '../lib/chatPrompts';
 
 export default function CasesPage() {
   const [activeFilter, setActiveFilter] = useState<CaseCategory | 'all'>('all');
   const { openChat, openWithIndustry } = useChatContext();
 
-  // Filter cases based on active filter
+  // Get the featured outreach case
+  const outreachCase = useMemo(() => {
+    return casesData.find(c => c.id === 'case-facebook-outreach');
+  }, []);
+
+  // Filter cases based on active filter (excluding the featured outreach case from regular grid when showing all)
   const filteredCases = useMemo(() => {
-    if (activeFilter === 'all') return casesData;
-    return casesData.filter(c => c.category === activeFilter);
+    const cases = activeFilter === 'all' 
+      ? casesData.filter(c => c.id !== 'case-facebook-outreach')
+      : casesData.filter(c => c.category === activeFilter);
+    return cases;
   }, [activeFilter]);
 
   // Count cases per category
@@ -160,6 +167,156 @@ export default function CasesPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Featured Case: Facebook Outreach Automation */}
+      {(activeFilter === 'all' || activeFilter === 'automation') && outreachCase && (
+        <section className="py-20 px-6 border-b border-white/5">
+          <div className="max-w-6xl mx-auto">
+            {/* Featured Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30">
+                <Rocket className="w-4 h-4 text-orange-400" />
+                <span className="text-sm font-semibold text-orange-400">Featured Case • Advanced Automation</span>
+              </div>
+            </motion.div>
+
+            {/* Main Featured Card */}
+            <motion.article
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02]"
+              style={{ boxShadow: '0 0 80px rgba(255, 255, 255, 0.03)' }}
+            >
+              <div className="p-8 md:p-12">
+                {/* Header */}
+                <div className="flex flex-col lg:flex-row lg:items-start gap-8 mb-10">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 flex items-center justify-center text-3xl">
+                        {outreachCase.icon}
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-orange-400 uppercase tracking-wider">
+                          {outreachCase.industryName}
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mt-1">
+                          {outreachCase.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <p className="text-lg text-gray-400 leading-relaxed">
+                      {outreachCase.shortDescription}
+                    </p>
+                  </div>
+
+                  {/* Results Cards */}
+                  <div className="grid grid-cols-2 gap-3 lg:w-80">
+                    {outreachCase.results.map((result, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+                        <div className="text-2xl font-bold text-white">
+                          {result.prefix}{result.value}{result.suffix}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">{result.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Problem & Solution Grid */}
+                <div className="grid md:grid-cols-2 gap-6 mb-10">
+                  {/* Problem */}
+                  <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/10">
+                    <div className="flex items-center gap-2 mb-4">
+                      <AlertTriangle className="w-5 h-5 text-red-400" />
+                      <span className="text-sm font-bold text-red-400 uppercase tracking-wider">
+                        {outreachCase.problem.title}
+                      </span>
+                    </div>
+                    <ul className="space-y-3">
+                      {outreachCase.problem.points.map((point, i) => (
+                        <li key={i} className="text-sm text-gray-400 flex items-start gap-3">
+                          <span className="text-red-400/60 mt-0.5">×</span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Solution */}
+                  <div className="p-6 rounded-2xl bg-green-500/5 border border-green-500/10">
+                    <div className="flex items-center gap-2 mb-4">
+                      <CheckCircle2 className="w-5 h-5 text-green-400" />
+                      <span className="text-sm font-bold text-green-400 uppercase tracking-wider">
+                        {outreachCase.solution.title}
+                      </span>
+                    </div>
+                    <ul className="space-y-3">
+                      {outreachCase.solution.points.map((point, i) => (
+                        <li key={i} className="text-sm text-gray-400 flex items-start gap-3">
+                          <span className="text-green-400/60 mt-0.5">✓</span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Technologies */}
+                <div className="flex flex-wrap items-center gap-3 mb-10">
+                  <Wrench className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-500 mr-2">Tech Stack:</span>
+                  {outreachCase.technologies.map((tech, i) => (
+                    <span 
+                      key={i} 
+                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-gray-400 border border-white/10"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-wrap gap-4">
+                  {outreachCase.ctas.map((cta) => (
+                    <button
+                      key={cta.id}
+                      onClick={() => {
+                        if (cta.action === 'demo' || cta.action === 'flow') {
+                          handleDemoClick(outreachCase);
+                        } else {
+                          handleContactClick();
+                        }
+                      }}
+                      className={`
+                        flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold
+                        transition-all duration-200 hover:scale-[1.02]
+                        ${cta.primary 
+                          ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/30' 
+                          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
+                        }
+                      `}
+                    >
+                      <span>{cta.icon}</span>
+                      {cta.label}
+                      {cta.primary && <ArrowRight className="w-4 h-4" />}
+                    </button>
+                  ))}
+                </div>
+
+                {/* UI Demo Section */}
+                <OutreachUIDemo />
+              </div>
+            </motion.article>
+          </div>
+        </section>
+      )}
 
       {/* Cases Grid */}
       <section className="py-20 px-6">

@@ -31,6 +31,7 @@ export interface CaseStudy {
   technologies: string[];
   ctas: CaseCTA[];
   featured?: boolean;
+  hasUIDemo?: boolean; // Show UI demo section
 }
 
 export interface CaseCTA {
@@ -277,7 +278,54 @@ export const casesData: CaseStudy[] = [
     ],
   },
 
-  // CASE 6: FLOWERS (bonus case)
+  // CASE 6: FACEBOOK OUTREACH AUTOMATION (FEATURED ADVANCED)
+  {
+    id: 'case-facebook-outreach',
+    slug: 'facebook-outreach-automation',
+    category: 'automation',
+    industry: 'outreach',
+    icon: '🚀',
+    industryName: 'Lead Generation',
+    title: 'Automated Facebook Outreach System with AI Personalization',
+    shortDescription: 'Enterprise-grade outreach automation that generates leads at scale while you sleep',
+    problem: {
+      title: 'Before Automation',
+      points: [
+        'Manual outreach in Facebook groups — slow and tedious',
+        'Low volume: only 10-20 messages per day possible',
+        'Human errors and inconsistent messaging',
+        'Impossible to scale without hiring more people',
+        'Risk of account restrictions with manual work',
+      ],
+    },
+    solution: {
+      title: 'What We Built',
+      points: [
+        'Fully automated Facebook outreach system',
+        'AI-powered message personalization for each prospect',
+        'Headless browser automation with 2FA support',
+        'UI Dashboard for campaign management',
+        'Real-time logs and progress monitoring',
+        'Smart session management and safety features',
+      ],
+    },
+    results: [
+      { value: '15x', label: 'Outreach speed increase', prefix: '', suffix: '' },
+      { value: '40+', label: 'Hours saved monthly', prefix: '', suffix: 'hrs' },
+      { value: '24/7', label: 'Lead generation', prefix: '', suffix: '' },
+      { value: '∞', label: 'Scalability', prefix: '', suffix: '' },
+    ],
+    technologies: ['Flask API', 'Headless Browser', 'Facebook Groups', 'Campaign Logic', 'Session Management', 'UI Dashboard', 'Logging'],
+    ctas: [
+      { id: 'demo', label: 'Get this Outreach System', icon: '🚀', action: 'demo', primary: true },
+      { id: 'contact', label: 'Discuss Outreach Strategy', icon: '💬', action: 'contact' },
+      { id: 'flow', label: 'See Automation Logic', icon: '📊', action: 'flow' },
+    ],
+    featured: true,
+    hasUIDemo: true,
+  },
+
+  // CASE 7: FLOWERS (bonus case)
   {
     id: 'case-flowers',
     slug: 'flower-shop-ai-sales',
