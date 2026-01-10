@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { Youtube, Linkedin, MessageCircle, Mail, MapPin } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const socialLinks = [
     {
       name: 'Telegram',
@@ -51,28 +53,34 @@ export default function Footer() {
                 AI Insider
               </h2>
               <p className="text-gray-400 leading-relaxed max-w-md">
-                Ми створюємо AI-системи, що думають, говорять і діють — трансформуючи бізнес за допомогою інтелектуальної автоматизації та голосових агентів.
+                {t('footer.description')}
               </p>
             </motion.div>
 
             {/* Location */}
             <div className="flex items-center gap-3 text-sm text-gray-400">
               <MapPin className="w-5 h-5 text-white" />
-              <span>Базуємось у <span className="text-white font-semibold">Швейцарії</span> — Працюємо глобально</span>
+              <span>{t('footer.location')} <span className="text-white font-semibold">{t('footer.switzerland')}</span> {t('footer.workingGlobally')}</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold font-heading mb-4 text-white">Швидкі посилання</h3>
+            <h3 className="text-lg font-bold font-heading mb-4 text-white">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
-              {['Про нас', 'Рішення', 'Кейси', 'Ціни', 'Контакт'].map((link) => (
-                <li key={link}>
+              {[
+                { key: 'footer.linkAbout', href: '/about' },
+                { key: 'footer.linkSolutions', href: '#solutions' },
+                { key: 'footer.linkCases', href: '/cases' },
+                { key: 'footer.linkPricing', href: '#pricing' },
+                { key: 'footer.linkContact', href: '#bookcall' },
+              ].map((link) => (
+                <li key={link.key}>
                   <a
-                    href={`#${link.toLowerCase().replace(' ', '')}`}
+                    href={link.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
-                    {link}
+                    {t(link.key)}
                   </a>
                 </li>
               ))}
@@ -81,7 +89,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-bold font-heading mb-4 text-white">Зв&apos;яжіться з нами</h3>
+            <h3 className="text-lg font-bold font-heading mb-4 text-white">{t('footer.getInTouch')}</h3>
             <div className="space-y-3">
               <a
                 href="mailto:hello@aiinsider.com"
@@ -132,10 +140,10 @@ export default function Footer() {
         {/* Copyright */}
         <div className="text-center text-sm text-gray-500">
           <p className="mb-2">
-            © 2025 AI Insider — <span className="text-white font-semibold">Створено з інтелектом, а не шаблонами.</span>
+            © 2025 AI Insider — <span className="text-white font-semibold">{t('footer.copyright')}</span>
           </p>
           <p className="text-xs">
-            Всі права захищено. Зроблено з ❤️ у Швейцарії.
+            {t('footer.rights')}
           </p>
         </div>
       </div>

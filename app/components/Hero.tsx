@@ -4,10 +4,12 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (typeof window === 'undefined' || shouldReduceMotion) return;
@@ -202,7 +204,7 @@ export default function Hero() {
             <Zap className="w-5 h-5 text-white" fill="currentColor" />
           </motion.div>
           <span className="text-sm font-semibold text-white">
-            AI-автоматизація
+            {t('hero.badge')}
           </span>
           <span className="text-xs px-2 py-1 bg-white/10 text-white rounded-full border border-white/20">
             Live
@@ -218,7 +220,7 @@ export default function Hero() {
             className="block text-white"
             style={{ textShadow: '0 0 60px rgba(255, 255, 255, 0.3)' }}
           >
-            Автоматизація
+            {t('hero.title1')}
           </span>
           <span 
             className="block text-7xl md:text-9xl lg:text-[12rem]"
@@ -229,7 +231,7 @@ export default function Hero() {
               backgroundClip: 'text',
             }}
           >
-            Майбутнього
+            {t('hero.title2')}
           </span>
         </motion.h1>
 
@@ -238,15 +240,15 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-wrap items-center justify-center gap-4 text-xl md:text-3xl text-gray-400 mb-12 max-w-4xl mx-auto"
         >
-          <span>AI системи які</span>
+          <span>{t('hero.subtitle')}</span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            думають
+            {t('hero.tag1')}
           </span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            говорять
+            {t('hero.tag2')}
           </span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
-            діють
+            {t('hero.tag3')}
           </span>
         </motion.div>
 
@@ -256,9 +258,9 @@ export default function Hero() {
           className="flex flex-wrap items-center justify-center gap-8 mb-12"
         >
           {[
-            { value: '70%', label: 'Економія часу' },
-            { value: '24/7', label: 'AI доступність' },
-            { value: '10x', label: 'Швидша відповідь' },
+            { value: '70%', labelKey: 'hero.stat1Label' },
+            { value: '24/7', labelKey: 'hero.stat2Label' },
+            { value: '10x', labelKey: 'hero.stat3Label' },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div 
@@ -271,7 +273,7 @@ export default function Hero() {
               >
                 {stat.value}
               </div>
-              <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+              <div className="text-sm text-gray-500 mt-1">{t(stat.labelKey)}</div>
             </div>
           ))}
         </motion.div>
@@ -294,7 +296,7 @@ export default function Hero() {
               }}
             >
               <span className="relative z-10 flex items-center gap-3">
-                Замовити дзвінок
+                {t('hero.cta1')}
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
               </span>
             </motion.a>
@@ -306,7 +308,7 @@ export default function Hero() {
               className="group px-10 py-5 glass-strong border border-white/30 rounded-full font-bold text-lg hover:border-white/60 hover:bg-white/5 transition-all duration-300"
             >
               <span className="flex items-center gap-3 text-white">
-                Дивитися рішення
+                {t('hero.cta2')}
                 <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
               </span>
             </motion.a>
@@ -318,7 +320,7 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity }}
             className="flex flex-col items-center gap-2"
           >
-            <span className="text-xs text-gray-500 uppercase tracking-wider">Гортайте далі</span>
+            <span className="text-xs text-gray-500 uppercase tracking-wider">{t('hero.scroll')}</span>
             <div className="w-6 h-10 border-2 border-white/30 rounded-full p-1 relative">
               <motion.div
                 animate={{ 

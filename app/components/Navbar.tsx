@@ -6,6 +6,8 @@ import { SCHEDULING_URL } from '../lib/config';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLanguage } from '../context/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +17,7 @@ export default function Navbar() {
   const blur = useTransform(scrollY, [0, 100], [0, 20]);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +28,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Про нас', href: '/about' },
-    { name: 'Кейси', href: '/cases' },
-    { name: 'Рішення', href: isHomePage ? '#solutions' : '/#solutions' },
-    { name: 'Ціни', href: isHomePage ? '#pricing' : '/#pricing' },
-    { name: 'Контакт', href: isHomePage ? '#bookcall' : '/#bookcall' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.cases'), href: '/cases' },
+    { name: t('nav.solutions'), href: isHomePage ? '#solutions' : '/#solutions' },
+    { name: t('nav.pricing'), href: isHomePage ? '#pricing' : '/#pricing' },
+    { name: t('nav.contact'), href: isHomePage ? '#bookcall' : '/#bookcall' },
   ];
 
   return (
@@ -113,6 +116,9 @@ export default function Navbar() {
             );
           })}
           
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+          
           {/* CTA Button - Monochrome */}
           <a
             href={SCHEDULING_URL}
@@ -124,7 +130,7 @@ export default function Navbar() {
               boxShadow: '0 0 25px rgba(255, 255, 255, 0.3)',
             }}
           >
-            <span className="relative z-10">Замовити дзвінок</span>
+            <span className="relative z-10">{t('nav.bookCall')}</span>
           </a>
         </div>
 
@@ -192,6 +198,16 @@ export default function Navbar() {
                 </motion.div>
               );
             })}
+            {/* Mobile Language Switcher */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35 }}
+              className="py-3 border-b border-white/5"
+            >
+              <LanguageSwitcher />
+            </motion.div>
+            
             <motion.a
               href={SCHEDULING_URL}
               target="_blank"
@@ -202,7 +218,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="block mt-4 px-6 py-3 bg-white text-black rounded-full font-bold text-center"
             >
-              Замовити дзвінок
+              {t('nav.bookCall')}
             </motion.a>
           </div>
         </motion.div>
