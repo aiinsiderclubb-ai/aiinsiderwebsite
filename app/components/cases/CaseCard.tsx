@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Zap, AlertTriangle, CheckCircle2, Wrench, ExternalLink } from 'lucide-react';
-import { CaseStudy } from '@/app/lib/casesData';
+import { CaseStudy, getLocalizedText } from '@/app/lib/casesData';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 interface CaseCardProps {
   caseData: CaseStudy;
@@ -13,20 +14,21 @@ interface CaseCardProps {
 }
 
 export default function CaseCard({ caseData, index, onDemoClick, onContactClick }: CaseCardProps) {
+  const { lang, t } = useLanguage();
+  
   // Special styling for Sweezy
   const isSweezy = caseData.id === 'case-sweezy';
   const accentBg = isSweezy ? 'bg-gradient-to-br from-blue-500/10 to-yellow-500/10' : 'bg-white/5';
+  
   const handleCTAClick = (action: string) => {
     switch (action) {
       case 'demo':
         onDemoClick(caseData);
         break;
       case 'voice':
-        // For voice demo, we'll open a modal or play audio
         onDemoClick(caseData);
         break;
       case 'flow':
-        // For automation flow, open demo
         onDemoClick(caseData);
         break;
       case 'contact':
@@ -52,7 +54,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
         <div className="absolute top-4 right-4 z-10">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
             <Zap className="w-3.5 h-3.5 text-yellow-400" />
-            <span className="text-xs font-medium text-white">Виділений</span>
+            <span className="text-xs font-medium text-white">{t('cases.featured')}</span>
           </div>
         </div>
       )}
@@ -67,10 +69,10 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
             </div>
             <div>
               <span className={`text-xs font-medium uppercase tracking-wider ${isSweezy ? 'text-blue-400' : 'text-gray-400'}`}>
-                {caseData.industryName}
+                {getLocalizedText(caseData.industryName, lang)}
               </span>
               <h3 className="text-xl font-bold text-white mt-1 leading-tight group-hover/header:text-gray-200 transition-colors">
-                {caseData.title}
+                {getLocalizedText(caseData.title, lang)}
               </h3>
             </div>
           </div>
@@ -78,7 +80,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
 
         {/* Short Description */}
         <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-          {caseData.shortDescription}
+          {getLocalizedText(caseData.shortDescription, lang)}
         </p>
 
         {/* Problem & Solution Grid */}
@@ -87,13 +89,13 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
           <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/10">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-4 h-4 text-red-400" />
-              <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Проблема</span>
+              <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">{t('cases.problem')}</span>
             </div>
             <ul className="space-y-2">
               {caseData.problem.points.slice(0, 3).map((point, i) => (
                 <li key={i} className="text-xs text-gray-400 flex items-start gap-2">
                   <span className="text-red-400/60 mt-0.5">×</span>
-                  {point}
+                  {getLocalizedText(point, lang)}
                 </li>
               ))}
             </ul>
@@ -103,13 +105,13 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
           <div className="p-4 rounded-2xl bg-green-500/5 border border-green-500/10">
             <div className="flex items-center gap-2 mb-3">
               <CheckCircle2 className="w-4 h-4 text-green-400" />
-              <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">Рішення</span>
+              <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">{t('cases.solution')}</span>
             </div>
             <ul className="space-y-2">
               {caseData.solution.points.slice(0, 3).map((point, i) => (
                 <li key={i} className="text-xs text-gray-400 flex items-start gap-2">
                   <span className="text-green-400/60 mt-0.5">✓</span>
-                  {point}
+                  {getLocalizedText(point, lang)}
                 </li>
               ))}
             </ul>
@@ -120,7 +122,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Zap className="w-4 h-4 text-white" />
-            <span className="text-xs font-semibold text-white uppercase tracking-wider">Результати</span>
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">{t('cases.results')}</span>
           </div>
           <div className="grid grid-cols-4 gap-2">
             {caseData.results.map((result, i) => (
@@ -131,7 +133,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
                   {result.suffix}
                 </div>
                 <div className="text-[10px] text-gray-500 leading-tight mt-1">
-                  {result.label}
+                  {getLocalizedText(result.label, lang)}
                 </div>
               </div>
             ))}
@@ -169,7 +171,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
               `}
             >
               <span>{cta.icon}</span>
-              {cta.label}
+              {getLocalizedText(cta.label, lang)}
               {cta.primary && <ArrowRight className="w-4 h-4" />}
             </button>
           ))}
@@ -182,7 +184,7 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
               transition-all duration-200 hover:scale-[1.02]"
           >
             <ExternalLink className="w-4 h-4" />
-            Детальніше
+            {t('cases.readMore')}
           </Link>
         </div>
       </div>
@@ -197,4 +199,3 @@ export default function CaseCard({ caseData, index, onDemoClick, onContactClick 
     </motion.article>
   );
 }
-

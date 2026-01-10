@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Clock, X, Loader2, Send, User, Mail, Building2, MessageSquare } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 type BookingsMap = Record<string, string[]>;
 
@@ -52,6 +53,7 @@ const formatDateForEmail = (monthDate: Date, day: number) => {
 export default function BookCall() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t, lang } = useLanguage();
   
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
@@ -72,10 +74,10 @@ export default function BookCall() {
   const [formError, setFormError] = useState<string | null>(null);
 
   const benefits = [
-    { icon: '💬', title: 'Відповіді', desc: 'Отримайте відповіді на всі ваші питання' },
-    { icon: '🎯', title: 'Індивідуальний підхід', desc: 'Пропозиції та рекомендації для вашого бізнесу' },
-    { icon: '📈', title: 'Стратегія росту', desc: 'План масштабування вашого бізнесу' },
-    { icon: '🚀', title: 'Експертна консультація', desc: 'Найшвидший шлях до ваших цілей' },
+    { icon: '💬', titleKey: 'bookCall.benefit1Title', descKey: 'bookCall.benefit1Desc' },
+    { icon: '🎯', titleKey: 'bookCall.benefit2Title', descKey: 'bookCall.benefit2Desc' },
+    { icon: '📈', titleKey: 'bookCall.benefit3Title', descKey: 'bookCall.benefit3Desc' },
+    { icon: '🚀', titleKey: 'bookCall.benefit4Title', descKey: 'bookCall.benefit4Desc' },
   ];
 
   const getDaysInMonth = (date: Date) => {
@@ -87,7 +89,7 @@ export default function BookCall() {
   };
 
   const { firstDay, daysInMonth } = getDaysInMonth(currentMonth);
-  const monthName = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const monthName = currentMonth.toLocaleDateString(lang === 'uk' ? 'uk-UA' : 'en-US', { month: 'long', year: 'numeric' });
 
   const previousMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
@@ -101,7 +103,9 @@ export default function BookCall() {
     setSelectedTime(null);
   };
 
-  const weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const weekDays = lang === 'uk' 
+    ? ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД']
+    : ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -216,16 +220,16 @@ export default function BookCall() {
             transition={{ duration: 0.8 }}
           >
             <p className="text-gray-400 uppercase tracking-wider text-sm mb-4">
-              Хочете дізнатися більше?
+              {t('bookCall.question')}
             </p>
 
             <h2 className="text-6xl md:text-7xl font-bold font-heading mb-6 leading-tight">
-              ЗАМОВИТИ<br />
-              <span className="gradient-text">ДЗВІНОК</span>
+              {t('bookCall.title1')}<br />
+              <span className="gradient-text">{t('bookCall.title2')}</span>
             </h2>
 
             <p className="text-xl text-gray-300 mb-12">
-              Що ви отримаєте на безкоштовній зустрічі?
+              {t('bookCall.subtitle')}
             </p>
 
             {/* Benefits Grid */}
@@ -238,8 +242,8 @@ export default function BookCall() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold mb-1">{benefit.title}</h4>
-                    <p className="text-sm text-gray-400">{benefit.desc}</p>
+                    <h4 className="font-bold mb-1">{t(benefit.titleKey)}</h4>
+                    <p className="text-sm text-gray-400">{t(benefit.descKey)}</p>
                   </div>
                 </div>
               ))}
@@ -253,7 +257,7 @@ export default function BookCall() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="glass-strong rounded-3xl p-8 border border-white/10"
           >
-            <h3 className="text-2xl font-bold mb-6 text-center">Оберіть день</h3>
+            <h3 className="text-2xl font-bold mb-6 text-center">{t('bookCall.selectDay')}</h3>
 
             {/* Calendar Header */}
             <div className="flex items-center justify-between mb-6">
@@ -325,7 +329,7 @@ export default function BookCall() {
             {selectedDate && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-gray-400">Оберіть час</span>
+                  <span className="text-sm text-gray-400">{t('bookCall.selectTime')}</span>
                   <span className="text-xs text-gray-500">{monthName.split(' ')[0]} {selectedDate}</span>
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
@@ -361,7 +365,9 @@ export default function BookCall() {
                   })}
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
-                  Slots are 30 minutes from 08:30 to 20:00. All times in Central European Time.
+                  {lang === 'uk' 
+                    ? 'Слоти по 30 хвилин з 08:30 до 20:00. Всі часи в центральноєвропейському часі.'
+                    : 'Slots are 30 minutes from 08:30 to 20:00. All times in Central European Time.'}
                 </p>
               </div>
             )}
@@ -369,7 +375,7 @@ export default function BookCall() {
             {/* Time Zone */}
             <div className="pt-6 border-t border-white/10">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Часовий пояс</span>
+                <span className="text-sm text-gray-400">{t('bookCall.timezone')}</span>
                 <button className="flex items-center gap-2 px-4 py-2 glass rounded-lg transition-colors duration-200 hover:bg-white/10">
                   <Clock className="w-4 h-4 text-gray-400" />
                   <span className="text-sm">Central European Time</span>
@@ -386,7 +392,7 @@ export default function BookCall() {
                 className="w-full mt-6 px-6 py-4 bg-white text-black rounded-full font-bold 
                   transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30 active:scale-[0.98]"
               >
-                Продовжити: {selectedDate} {monthName.split(' ')[0]} о {selectedTime}
+                {t('bookCall.continue')} {selectedDate} {monthName.split(' ')[0]} {lang === 'uk' ? 'о' : 'at'} {selectedTime}
               </button>
             )}
 
@@ -419,9 +425,9 @@ export default function BookCall() {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
-                <h3 className="text-xl font-bold text-white">Завершіть бронювання</h3>
+                <h3 className="text-xl font-bold text-white">{t('bookCall.completeBooking')}</h3>
                 <p className="text-sm text-gray-400 mt-1">
-                  {formatDateForEmail(currentMonth, selectedDate!)} at {selectedTime}
+                  {formatDateForEmail(currentMonth, selectedDate!)} {lang === 'uk' ? 'о' : 'at'} {selectedTime}
                 </p>
               </div>
               <button
@@ -438,7 +444,7 @@ export default function BookCall() {
                 {/* Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Ваше ім&apos;я *
+                    {t('bookCall.yourName')}
                   </label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -446,7 +452,7 @@ export default function BookCall() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Іван Петренко"
+                      placeholder={lang === 'uk' ? 'Іван Петренко' : 'John Smith'}
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                       required
                     />
@@ -456,7 +462,7 @@ export default function BookCall() {
                 {/* Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email *
+                    {t('bookCall.email')}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -464,7 +470,7 @@ export default function BookCall() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="ivan@company.com"
+                      placeholder={lang === 'uk' ? 'ivan@company.com' : 'john@company.com'}
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                       required
                     />
@@ -474,7 +480,7 @@ export default function BookCall() {
                 {/* Company */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Компанія (необов&apos;язково)
+                    {t('bookCall.company')}
                   </label>
                   <div className="relative">
                     <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -482,7 +488,7 @@ export default function BookCall() {
                       type="text"
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                      placeholder="Ваша компанія"
+                      placeholder={t('bookCall.yourCompany')}
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                     />
                   </div>
@@ -491,14 +497,14 @@ export default function BookCall() {
                 {/* Message */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Що б ви хотіли обговорити? (необов&apos;язково)
+                    {t('bookCall.whatDiscuss')}
                   </label>
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
                     <textarea
                       value={formData.message}
                       onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                      placeholder="Розкажіть про ваш проект або питання..."
+                      placeholder={t('bookCall.tellUs')}
                       rows={3}
                       className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors resize-none"
                     />
@@ -523,18 +529,18 @@ export default function BookCall() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      Бронюємо...
+                      {t('bookCall.booking')}
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      Підтвердити бронювання
+                      {t('bookCall.confirmBooking')}
                     </>
                   )}
                 </button>
 
                 <p className="text-xs text-gray-500 text-center">
-                  Бронюючи, ви погоджуєтесь отримати лист-підтвердження від AI Insider.
+                  {t('bookCall.byBooking')}
                 </p>
               </form>
             ) : (
@@ -547,16 +553,16 @@ export default function BookCall() {
                 >
                   <CheckCircle2 className="w-10 h-10 text-green-400" />
                 </motion.div>
-                <h4 className="text-2xl font-bold text-white mb-2">Бронювання підтверджено! ✨</h4>
+                <h4 className="text-2xl font-bold text-white mb-2">{t('bookCall.confirmed')}</h4>
                 <p className="text-gray-400 mb-4">
-                  Перевірте вашу пошту для отримання деталей.
+                  {t('bookCall.checkEmail')}
                 </p>
                 <div className="glass rounded-xl p-4 text-left">
                   <p className="text-sm text-gray-300">
-                    <strong className="text-white">Дата:</strong> {formatDateForEmail(currentMonth, selectedDate!)}
+                    <strong className="text-white">{t('bookCall.date')}</strong> {formatDateForEmail(currentMonth, selectedDate!)}
                   </p>
                   <p className="text-sm text-gray-300 mt-1">
-                    <strong className="text-white">Час:</strong> {selectedTime} (CET)
+                    <strong className="text-white">{t('bookCall.time')}</strong> {selectedTime} (CET)
                   </p>
                 </div>
               </div>

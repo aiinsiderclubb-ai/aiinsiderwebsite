@@ -4,57 +4,59 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Check, Sparkles, Zap, Rocket } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
-
-const plans = [
-  {
-    name: 'Starter',
-    price: 'Індивідуально',
-    desc: 'Ідеально для малих автоматизацій',
-    icon: Zap,
-    features: [
-      'Проста автоматизація процесів',
-      'Базова інтеграція AI',
-      'Підтримка по email',
-      'Налаштування за 30 днів',
-      'До 1,000 операцій/міс',
-    ],
-  },
-  {
-    name: 'Pro',
-    price: 'Індивідуально',
-    desc: 'Кастомний AI-агент для вашого бізнесу',
-    icon: Rocket,
-    features: [
-      'Голосовий/чат агент на замовлення',
-      'Просунуті AI-моделі',
-      'Пріоритетна підтримка',
-      'Повна інтеграція',
-      'Налаштування за 14 днів',
-      'Необмежені операції',
-      'Персональний менеджер',
-    ],
-    popular: true,
-  },
-  {
-    name: 'Enterprise',
-    price: 'Індивідуально',
-    desc: 'Комплексна AI-система',
-    icon: Sparkles,
-    features: [
-      'Повна AI-інфраструктура',
-      'Багато агентів та процесів',
-      'Виділена команда підтримки',
-      'Навчання кастомних моделей',
-      'Гарантія SLA',
-      'White-label рішення',
-      'Розширена аналітика',
-    ],
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Pricing() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
+
+  const plans = [
+    {
+      name: 'Starter',
+      priceKey: 'pricing.custom',
+      descKey: 'pricing.starterDesc',
+      icon: Zap,
+      featureKeys: [
+        'pricing.starterF1',
+        'pricing.starterF2',
+        'pricing.starterF3',
+        'pricing.starterF4',
+        'pricing.starterF5',
+      ],
+    },
+    {
+      name: 'Pro',
+      priceKey: 'pricing.custom',
+      descKey: 'pricing.proDesc',
+      icon: Rocket,
+      featureKeys: [
+        'pricing.proF1',
+        'pricing.proF2',
+        'pricing.proF3',
+        'pricing.proF4',
+        'pricing.proF5',
+        'pricing.proF6',
+        'pricing.proF7',
+      ],
+      popular: true,
+    },
+    {
+      name: 'Enterprise',
+      priceKey: 'pricing.custom',
+      descKey: 'pricing.enterpriseDesc',
+      icon: Sparkles,
+      featureKeys: [
+        'pricing.entF1',
+        'pricing.entF2',
+        'pricing.entF3',
+        'pricing.entF4',
+        'pricing.entF5',
+        'pricing.entF6',
+        'pricing.entF7',
+      ],
+    },
+  ];
 
   return (
     <section id="pricing" className="relative py-32 px-6 overflow-hidden">
@@ -77,11 +79,11 @@ export default function Pricing() {
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
             <Sparkles className="w-5 h-5 text-white" />
-            <span className="text-sm font-medium text-white">Тарифи</span>
+            <span className="text-sm font-medium text-white">{t('pricing.badge')}</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block text-white">Оберіть ваш</span>
+            <span className="block text-white">{t('pricing.title1')}</span>
             <span 
               className="block text-6xl md:text-8xl mt-2"
               style={{
@@ -90,12 +92,12 @@ export default function Pricing() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Рівень
+              {t('pricing.title2')}
             </span>
           </h2>
 
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
-            Усі плани адаптовані під ваші потреби. Без прихованих комісій.
+            {t('pricing.subtitle')}
           </p>
         </motion.div>
 
@@ -118,7 +120,7 @@ export default function Pricing() {
                     style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
                   >
                     <Sparkles className="w-4 h-4" fill="currentColor" />
-                    НАЙПОПУЛЯРНІШИЙ
+                    {t('pricing.popular')}
                   </div>
                 )}
 
@@ -151,7 +153,7 @@ export default function Pricing() {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-400 mb-6">{plan.desc}</p>
+                    <p className="text-gray-400 mb-6">{t(plan.descKey)}</p>
 
                     {/* Price */}
                     <div className="mb-8">
@@ -163,19 +165,19 @@ export default function Pricing() {
                           WebkitTextFillColor: 'transparent',
                         }}
                       >
-                        {plan.price}
+                        {t(plan.priceKey)}
                       </span>
                     </div>
 
                     {/* Features */}
                     <ul className="space-y-4 mb-8">
-                      {plan.features.map((feature, idx) => (
+                      {plan.featureKeys.map((featureKey, idx) => (
                         <li
                           key={idx}
                           className="flex items-start gap-3"
                         >
                           <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-300">{feature}</span>
+                          <span className="text-gray-300">{t(featureKey)}</span>
                         </li>
                       ))}
                     </ul>
@@ -193,7 +195,7 @@ export default function Pricing() {
                         }`}
                       style={plan.popular ? { boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)' } : {}}
                     >
-                      {plan.popular ? 'Почати зараз' : 'Дізнатися більше'}
+                      {plan.popular ? t('pricing.startNow') : t('pricing.getStarted')}
                     </a>
                   </div>
                 </div>
@@ -210,21 +212,21 @@ export default function Pricing() {
           className="text-center mt-16"
         >
           <p className="text-gray-400 mb-6">
-            Потрібне індивідуальне рішення? <a href="#contact" className="text-white hover:underline font-semibold">Зв&apos;яжіться з нами</a>
+            {t('pricing.needCustom')} <a href="#contact" className="text-white hover:underline font-semibold">{t('pricing.letsTalk')}</a>
           </p>
           
           <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>Без прихованих комісій</span>
+              <span>{t('pricing.noHiddenFees')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>Скасувати будь-коли</span>
+              <span>{t('pricing.cancelAnytime')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-white" />
-              <span>Швейцарська якість</span>
+              <span>{t('pricing.swissQuality')}</span>
             </div>
           </div>
         </motion.div>

@@ -6,76 +6,78 @@ import { Linkedin, Twitter, Mail, Zap, Target, Rocket, Users } from 'lucide-reac
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
-
-const teamMembers = [
-  {
-    name: 'Олексій Мориссон',
-    role: 'CEO та засновник',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-    bio: 'Візіонер з 15+ роками досвіду в AI та технологіях. Колишній ML Lead в Google, зараз будує майбутнє інтелектуальної автоматизації.',
-    social: {
-      linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
-      email: 'alex@aiinsider.com',
-    },
-  },
-  {
-    name: 'Сара Чен',
-    role: 'Співзасновник та CTO',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
-    bio: 'Технічний геній за нашою AI-архітектурою. PhD в Machine Learning з MIT, пристрасна до етичного розвитку AI.',
-    social: {
-      linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
-      email: 'sarah@aiinsider.com',
-    },
-  },
-  {
-    name: 'Маркус Джонсон',
-    role: 'Керівник продукту',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-    bio: 'Продуктовий стратег з талантом до user-centric дизайну. Раніше керував продуктовими командами в Stripe та Figma.',
-    social: {
-      linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
-      email: 'marcus@aiinsider.com',
-    },
-  },
-];
-
-const values = [
-  {
-    icon: Zap,
-    title: 'Інновації передусім',
-    description: 'Ми розширюємо межі та використовуємо передові технології для створення рішень, що переосмислюють можливе.',
-  },
-  {
-    icon: Target,
-    title: 'Орієнтація на результат',
-    description: 'Кожне рішення вимірюється його впливом. Ми одержимі досягненням відчутного ROI для клієнтів.',
-  },
-  {
-    icon: Rocket,
-    title: 'Швидкість та якість',
-    description: 'Ми рухаємось швидко без втрати якості. Наш agile-підхід забезпечує швидке впровадження з точністю.',
-  },
-  {
-    icon: Users,
-    title: 'Партнерство з клієнтами',
-    description: 'Ми не просто виконуємо проекти — ми стаємо стратегічними партнерами, інвестованими у ваш довгостроковий успіх.',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AboutPage() {
   const heroRef = useRef(null);
   const teamRef = useRef(null);
   const valuesRef = useRef(null);
   const storyRef = useRef(null);
+  const { t } = useLanguage();
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
   const valuesInView = useInView(valuesRef, { once: true, margin: '-100px' });
   const storyInView = useInView(storyRef, { once: true, margin: '-100px' });
+
+  const teamMembers = [
+    {
+      nameKey: 'about.member1Name',
+      roleKey: 'about.member1Role',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
+      bioKey: 'about.member1Bio',
+      social: {
+        linkedin: 'https://linkedin.com',
+        twitter: 'https://twitter.com',
+        email: 'alex@aiinsider.com',
+      },
+    },
+    {
+      nameKey: 'about.member2Name',
+      roleKey: 'about.member2Role',
+      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
+      bioKey: 'about.member2Bio',
+      social: {
+        linkedin: 'https://linkedin.com',
+        twitter: 'https://twitter.com',
+        email: 'sarah@aiinsider.com',
+      },
+    },
+    {
+      nameKey: 'about.member3Name',
+      roleKey: 'about.member3Role',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+      bioKey: 'about.member3Bio',
+      social: {
+        linkedin: 'https://linkedin.com',
+        twitter: 'https://twitter.com',
+        email: 'marcus@aiinsider.com',
+      },
+    },
+  ];
+
+  const values = [
+    {
+      icon: Zap,
+      titleKey: 'about.value1Title',
+      descKey: 'about.value1Desc',
+    },
+    {
+      icon: Target,
+      titleKey: 'about.value2Title',
+      descKey: 'about.value2Desc',
+    },
+    {
+      icon: Rocket,
+      titleKey: 'about.value3Title',
+      descKey: 'about.value3Desc',
+    },
+    {
+      icon: Users,
+      titleKey: 'about.value4Title',
+      descKey: 'about.value4Desc',
+    },
+  ];
 
   return (
     <main className="min-h-screen">
@@ -104,11 +106,11 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">Про нас</span>
+              <span className="text-sm font-medium text-white">{t('about.badge')}</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 leading-tight text-white">
-              Будуємо майбутнє
+              {t('about.title1')}
               <span 
                 className="block mt-2"
                 style={{
@@ -117,13 +119,12 @@ export default function AboutPage() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Інтелектуальної автоматизації
+                {t('about.title2')}
               </span>
             </h1>
 
             <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Ми — команда ентузіастів AI, інженерів та візіонерів, що трансформують 
-              бізнес через інтелектуальну автоматизацію та голосові AI-технології.
+              {t('about.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -139,26 +140,16 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-                Наша <span style={{
+                {t('about.ourStory')} <span style={{
                   background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                }}>історія</span>
+                }}>{t('about.story')}</span>
               </h2>
               <div className="space-y-4 text-gray-400 leading-relaxed">
-                <p>
-                  Заснований у 2023 році, AI Insider з&apos;явився з простого спостереження: бізнеси потопали 
-                  в рутинних завданнях, поки AI-технології залишались замкненими в дослідницьких лабораторіях.
-                </p>
-                <p>
-                  Ми побачили можливість подолати цей розрив — принести AI-можливості корпоративного рівня 
-                  компаніям будь-якого розміру, зробивши інтелектуальну автоматизацію доступною.
-                </p>
-                <p>
-                  Сьогодні ми допомогли понад 50 бізнесам автоматизувати процеси, впровадити голосових агентів 
-                  та досягти нових рівнів ефективності. Наша місія незмінна: демократизувати AI 
-                  та дати бізнесам змогу фокусуватись на тому, що справді важливо.
-                </p>
+                <p>{t('about.storyP1')}</p>
+                <p>{t('about.storyP2')}</p>
+                <p>{t('about.storyP3')}</p>
               </div>
             </motion.div>
 
@@ -171,10 +162,10 @@ export default function AboutPage() {
               <div className="glass-strong rounded-3xl p-8 border border-white/10">
                 <div className="grid grid-cols-2 gap-6">
                   {[
-                    { number: '50+', label: 'Проектів виконано' },
-                    { number: '95%', label: 'Задоволеність клієнтів' },
-                    { number: '24/7', label: 'Доступність AI' },
-                    { number: '3x', label: 'Середнє зростання ROI' },
+                    { number: '50+', labelKey: 'about.stat1' },
+                    { number: '95%', labelKey: 'about.stat2' },
+                    { number: '24/7', labelKey: 'about.stat3' },
+                    { number: '3x', labelKey: 'about.stat4' },
                   ].map((stat, index) => (
                     <div key={index} className="text-center p-4">
                       <div 
@@ -187,7 +178,7 @@ export default function AboutPage() {
                       >
                         {stat.number}
                       </div>
-                      <div className="text-sm text-gray-400">{stat.label}</div>
+                      <div className="text-sm text-gray-400">{t(stat.labelKey)}</div>
                     </div>
                   ))}
                 </div>
@@ -209,14 +200,14 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Наші <span style={{
+              {t('about.ourValues')} <span style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>цінності</span>
+              }}>{t('about.values')}</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Принципи, що керують усім, що ми робимо.
+              {t('about.valuesSubtitle')}
             </p>
           </motion.div>
 
@@ -238,8 +229,8 @@ export default function AboutPage() {
                   >
                     <Icon className="w-7 h-7 text-black" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">{value.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{value.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-white">{t(value.titleKey)}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{t(value.descKey)}</p>
                 </motion.div>
               );
             })}
@@ -257,17 +248,17 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">Команда</span>
+              <span className="text-sm font-medium text-white">{t('about.theTeam')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Познайомтесь з <span style={{
+              {t('about.meetThe')} <span style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>командою</span> AI Insider
+              }}>{t('about.minds')}</span> {t('about.behindAI')}
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Пристрасна команда інноваторів, що трансформують ваш бізнес.
+              {t('about.teamSubtitle')}
             </p>
           </motion.div>
 
@@ -288,18 +279,18 @@ export default function AboutPage() {
                       transition-opacity duration-300 group-hover:opacity-10" />
                     <img
                       src={member.image}
-                      alt={member.name}
+                      alt={t(member.nameKey)}
                       className="relative w-full aspect-square object-cover rounded-2xl border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
 
                   {/* Info */}
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold mb-1 text-white">{member.name}</h3>
+                    <h3 className="text-2xl font-bold mb-1 text-white">{t(member.nameKey)}</h3>
                     <p className="text-white/70 font-semibold mb-4">
-                      {member.role}
+                      {t(member.roleKey)}
                     </p>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6">{member.bio}</p>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6">{t(member.bioKey)}</p>
 
                     {/* Social Links */}
                     <div className="flex justify-center gap-4">
@@ -349,10 +340,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Готові працювати з нами?
+              {t('about.readyToWork')}
             </h2>
             <p className="text-xl text-gray-400 mb-10">
-              Обговоримо як ми можемо трансформувати ваш бізнес за допомогою AI.
+              {t('about.letsDiscuss')}
             </p>
             <Link
               href="/#bookcall"
@@ -360,7 +351,7 @@ export default function AboutPage() {
                 font-bold text-lg transition-all duration-300 hover:scale-105"
               style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
             >
-              Замовити безкоштовну консультацію
+              {t('about.bookFreeConsult')}
             </Link>
           </motion.div>
         </div>

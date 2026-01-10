@@ -4,10 +4,12 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Send, MessageCircle, Mail } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,11 +40,11 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-            <span className="text-sm font-medium text-white">Get in Touch</span>
+            <span className="text-sm font-medium text-white">{t('contact.badge')}</span>
           </div>
 
           <h2 className="text-5xl md:text-6xl font-bold font-heading mb-6 text-white">
-            Let's Build Something
+            {t('contact.title1')}
             <span 
               className="block mt-2"
               style={{
@@ -51,12 +53,12 @@ export default function Contact() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Extraordinary
+              {t('contact.title2')}
             </span>
           </h2>
 
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Ready to transform your business with AI? Let's talk.
+            {t('contact.subtitle')}
           </p>
         </motion.div>
 
@@ -71,7 +73,7 @@ export default function Contact() {
               {/* Name Input */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-white">
-                  Name
+                  {t('contact.nameLabel')}
                 </label>
                 <input
                   type="text"
@@ -79,7 +81,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 glass-strong rounded-xl border border-white/10 focus:border-white/50 focus:outline-none transition-colors duration-200 text-white placeholder-gray-500"
-                  placeholder="Your name"
+                  placeholder={t('contact.namePlaceholder')}
                   required
                 />
               </div>
@@ -87,7 +89,7 @@ export default function Contact() {
               {/* Email Input */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2 text-white">
-                  Email
+                  {t('contact.emailLabel')}
                 </label>
                 <input
                   type="email"
@@ -95,7 +97,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 glass-strong rounded-xl border border-white/10 focus:border-white/50 focus:outline-none transition-colors duration-200 text-white placeholder-gray-500"
-                  placeholder="your@email.com"
+                  placeholder={t('contact.emailPlaceholder')}
                   required
                 />
               </div>
@@ -103,7 +105,7 @@ export default function Contact() {
               {/* Message Textarea */}
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2 text-white">
-                  Message
+                  {t('contact.messageLabel')}
                 </label>
                 <textarea
                   id="message"
@@ -111,7 +113,7 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={5}
                   className="w-full px-4 py-3 glass-strong rounded-xl border border-white/10 focus:border-white/50 focus:outline-none transition-colors duration-200 resize-none text-white placeholder-gray-500"
-                  placeholder="Tell us about your project..."
+                  placeholder={t('contact.messagePlaceholder')}
                   required
                 />
               </div>
@@ -123,7 +125,7 @@ export default function Contact() {
                   transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                 style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
               >
-                <span>Send Message</span>
+                <span>{t('contact.sendMessage')}</span>
                 <Send className="w-5 h-5" />
               </button>
 
@@ -135,7 +137,7 @@ export default function Contact() {
                 className="mt-3 block text-center w-full px-8 py-4 glass-strong border border-white/30 rounded-full font-semibold text-lg text-white
                   transition-all duration-200 hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98]"
               >
-                Book a Call
+                {t('contact.bookCall')}
               </a>
             </form>
           </motion.div>
@@ -154,8 +156,8 @@ export default function Contact() {
                   <MessageCircle className="w-6 h-6 text-black" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Telegram</h3>
-                  <p className="text-sm text-gray-400">Instant messaging</p>
+                  <h3 className="font-semibold text-white">{t('contact.telegram')}</h3>
+                  <p className="text-sm text-gray-400">{t('contact.instantMessaging')}</p>
                 </div>
               </div>
               <a
@@ -175,8 +177,8 @@ export default function Contact() {
                   <Mail className="w-6 h-6 text-black" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Email</h3>
-                  <p className="text-sm text-gray-400">For detailed inquiries</p>
+                  <h3 className="font-semibold text-white">{t('contact.email')}</h3>
+                  <p className="text-sm text-gray-400">{t('contact.forDetailed')}</p>
                 </div>
               </div>
               <a
@@ -189,13 +191,13 @@ export default function Contact() {
 
             {/* Info Box */}
             <div className="glass p-6 rounded-2xl border border-white/10">
-              <h3 className="text-xl font-bold mb-3 text-white">Quick Response</h3>
+              <h3 className="text-xl font-bold mb-3 text-white">{t('contact.quickResponse')}</h3>
               <p className="text-gray-400 mb-4">
-                We typically respond within 24 hours. For urgent matters, reach out on Telegram.
+                {t('contact.responseTime')}
               </p>
               <div className="flex items-center gap-2 text-sm text-gray-400">
                 <div className="w-2 h-2 bg-white rounded-full" />
-                <span>Usually online</span>
+                <span>{t('contact.usuallyOnline')}</span>
               </div>
             </div>
           </motion.div>

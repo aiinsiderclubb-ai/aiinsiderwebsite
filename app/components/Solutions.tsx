@@ -3,33 +3,35 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Mic, Workflow, LineChart, Sparkles } from 'lucide-react';
-
-const solutions = [
-  {
-    title: 'Голосові та чат-агенти',
-    desc: 'Людяний AI, який спілкується з клієнтами та бронює зустрічі в реальному часі.',
-    icon: Mic,
-  },
-  {
-    title: 'Автоматизація процесів',
-    desc: 'Від захоплення лідів до інтеграції з CRM — повністю автоматизовані процеси.',
-    icon: Workflow,
-  },
-  {
-    title: 'AI-аналітика',
-    desc: 'AI, який аналізує дані та надає щотижневі звіти з інсайтами.',
-    icon: LineChart,
-  },
-  {
-    title: 'Кастомні AI-моделі',
-    desc: 'GPT та RAG системи на замовлення, інтегровані з вашим стеком.',
-    icon: Sparkles,
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Solutions() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
+
+  const solutions = [
+    {
+      titleKey: 'solutions.solution1Title',
+      descKey: 'solutions.solution1Desc',
+      icon: Mic,
+    },
+    {
+      titleKey: 'solutions.solution2Title',
+      descKey: 'solutions.solution2Desc',
+      icon: Workflow,
+    },
+    {
+      titleKey: 'solutions.solution3Title',
+      descKey: 'solutions.solution3Desc',
+      icon: LineChart,
+    },
+    {
+      titleKey: 'solutions.solution4Title',
+      descKey: 'solutions.solution4Desc',
+      icon: Sparkles,
+    },
+  ];
 
   return (
     <section id="solutions" className="relative py-32 px-6 overflow-hidden">
@@ -60,11 +62,11 @@ export default function Solutions() {
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
             <Sparkles className="w-5 h-5 text-white" />
-            <span className="text-sm font-medium text-white">Наші рішення</span>
+            <span className="text-sm font-medium text-white">{t('solutions.badge')}</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
-            <span className="block text-white">Будуй розумніше,</span>
+            <span className="block text-white">{t('solutions.title1')}</span>
             <span 
               className="block text-6xl md:text-8xl mt-2"
               style={{
@@ -73,12 +75,12 @@ export default function Solutions() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Запускай швидше
+              {t('solutions.title2')}
             </span>
           </h2>
 
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
-            Revolutionary AI solutions that transform how you work.
+            {t('solutions.subtitle')}
           </p>
         </motion.div>
 
@@ -119,17 +121,17 @@ export default function Solutions() {
 
                     {/* Title */}
                     <h3 className="text-3xl font-bold font-heading mb-4 text-white">
-                      {solution.title}
+                      {t(solution.titleKey)}
                     </h3>
 
                     {/* Description */}
                     <p className="text-lg text-gray-400 leading-relaxed mb-6">
-                      {solution.desc}
+                      {t(solution.descKey)}
                     </p>
 
                     {/* Learn More Link */}
                     <div className="flex items-center gap-3 text-lg font-semibold text-white transition-transform duration-300 group-hover:translate-x-2">
-                      <span>Explore</span>
+                      <span>{t('solutions.explore')}</span>
                       <span className="text-2xl transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </div>
                   </div>
@@ -152,7 +154,7 @@ export default function Solutions() {
               transform transition-all duration-300 hover:scale-105"
             style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
           >
-            Request Custom Solution
+            {t('solutions.cta')}
             <Sparkles className="w-5 h-5" />
           </a>
         </motion.div>

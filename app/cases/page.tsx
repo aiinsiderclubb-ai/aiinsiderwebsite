@@ -10,12 +10,14 @@ import CaseCard from '../components/cases/CaseCard';
 import CaseFilters from '../components/cases/CaseFilters';
 import ConversionSection from '../components/cases/ConversionSection';
 import OutreachUIDemo from '../components/cases/OutreachUIDemo';
-import { casesData, CaseCategory, CaseStudy, categoryFilters } from '../lib/casesData';
+import { casesData, CaseCategory, CaseStudy, categoryFilters, getLocalizedText } from '../lib/casesData';
 import { useChatContext } from '../context/ChatContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CasesPage() {
   const [activeFilter, setActiveFilter] = useState<CaseCategory | 'all'>('all');
   const { openChat, openWithIndustry } = useChatContext();
+  const { lang, t } = useLanguage();
 
   // Get the featured outreach case
   const outreachCase = useMemo(() => {
@@ -96,7 +98,7 @@ export default function CasesPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
           >
             <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-gray-300">Реальні AI впровадження</span>
+            <span className="text-sm text-gray-300">{t('cases.badge')}</span>
           </motion.div>
 
           {/* Heading */}
@@ -106,9 +108,9 @@ export default function CasesPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6"
           >
-            Реальні кейси AI-автоматизації.
+            {t('cases.title1')}
             <br />
-            <span className="gradient-text">Реальні бізнес-результати.</span>
+            <span className="gradient-text">{t('cases.title2')}</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -118,8 +120,7 @@ export default function CasesPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12"
           >
-            Дивіться як AI-чатботи та голосові агенти замінюють ручну роботу 
-            та генерують ліди для бізнесів як ваш.
+            {t('cases.subtitle')}
           </motion.p>
 
           {/* CTAs */}
@@ -135,7 +136,7 @@ export default function CasesPage() {
                 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
             >
               <MessageCircle className="w-5 h-5" />
-              Спробувати AI демо
+              {t('cases.tryDemo')}
               <ArrowRight className="w-5 h-5" />
             </button>
             
@@ -145,7 +146,7 @@ export default function CasesPage() {
                 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
             >
               <Phone className="w-5 h-5" />
-              Замовити демо
+              {t('cases.bookDemo')}
             </Link>
           </motion.div>
         </div>
@@ -182,7 +183,7 @@ export default function CasesPage() {
             >
               <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30">
                 <Rocket className="w-4 h-4 text-orange-400" />
-                <span className="text-sm font-semibold text-orange-400">Виділений кейс • Просунута автоматизація</span>
+                <span className="text-sm font-semibold text-orange-400">{t('cases.featuredCase')}</span>
               </div>
             </motion.div>
 
@@ -205,15 +206,15 @@ export default function CasesPage() {
                       </div>
                       <div>
                         <span className="text-sm font-medium text-orange-400 uppercase tracking-wider">
-                          {outreachCase.industryName}
+                          {getLocalizedText(outreachCase.industryName, lang)}
                         </span>
                         <h3 className="text-2xl md:text-3xl font-bold text-white mt-1">
-                          {outreachCase.title}
+                          {getLocalizedText(outreachCase.title, lang)}
                         </h3>
                       </div>
                     </div>
                     <p className="text-lg text-gray-400 leading-relaxed">
-                      {outreachCase.shortDescription}
+                      {getLocalizedText(outreachCase.shortDescription, lang)}
                     </p>
                   </div>
 
@@ -224,7 +225,7 @@ export default function CasesPage() {
                         <div className="text-2xl font-bold text-white">
                           {result.prefix}{result.value}{result.suffix}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">{result.label}</div>
+                        <div className="text-xs text-gray-500 mt-1">{getLocalizedText(result.label, lang)}</div>
                       </div>
                     ))}
                   </div>
@@ -237,14 +238,14 @@ export default function CasesPage() {
                     <div className="flex items-center gap-2 mb-4">
                       <AlertTriangle className="w-5 h-5 text-red-400" />
                       <span className="text-sm font-bold text-red-400 uppercase tracking-wider">
-                        {outreachCase.problem.title}
+                        {getLocalizedText(outreachCase.problem.title, lang)}
                       </span>
                     </div>
                     <ul className="space-y-3">
                       {outreachCase.problem.points.map((point, i) => (
                         <li key={i} className="text-sm text-gray-400 flex items-start gap-3">
                           <span className="text-red-400/60 mt-0.5">×</span>
-                          {point}
+                          {getLocalizedText(point, lang)}
                         </li>
                       ))}
                     </ul>
@@ -255,14 +256,14 @@ export default function CasesPage() {
                     <div className="flex items-center gap-2 mb-4">
                       <CheckCircle2 className="w-5 h-5 text-green-400" />
                       <span className="text-sm font-bold text-green-400 uppercase tracking-wider">
-                        {outreachCase.solution.title}
+                        {getLocalizedText(outreachCase.solution.title, lang)}
                       </span>
                     </div>
                     <ul className="space-y-3">
                       {outreachCase.solution.points.map((point, i) => (
                         <li key={i} className="text-sm text-gray-400 flex items-start gap-3">
                           <span className="text-green-400/60 mt-0.5">✓</span>
-                          {point}
+                          {getLocalizedText(point, lang)}
                         </li>
                       ))}
                     </ul>
@@ -272,7 +273,7 @@ export default function CasesPage() {
                 {/* Technologies */}
                 <div className="flex flex-wrap items-center gap-3 mb-10">
                   <Wrench className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-500 mr-2">Технології:</span>
+                  <span className="text-sm text-gray-500 mr-2">{t('cases.technologies')}</span>
                   {outreachCase.technologies.map((tech, i) => (
                     <span 
                       key={i} 
@@ -305,7 +306,7 @@ export default function CasesPage() {
                       `}
                     >
                       <span>{cta.icon}</span>
-                      {cta.label}
+                      {getLocalizedText(cta.label, lang)}
                       {cta.primary && <ArrowRight className="w-4 h-4" />}
                     </button>
                   ))}
@@ -328,9 +329,9 @@ export default function CasesPage() {
             animate={{ opacity: 1 }}
             className="text-sm text-gray-500 mb-8"
           >
-            Показано {filteredCases.length} кейс{filteredCases.length !== 1 ? 'ів' : ''}
+            {t('cases.showing')} {filteredCases.length} {t('cases.caseWord')}
             {activeFilter !== 'all' && (
-              <span> в категорії {categoryFilters.find(f => f.id === activeFilter)?.label}</span>
+              <span> {t('cases.inCategory')} {getLocalizedText(categoryFilters.find(f => f.id === activeFilter)?.label || { uk: '', en: '' }, lang)}</span>
             )}
           </motion.p>
 
@@ -355,8 +356,8 @@ export default function CasesPage() {
               className="text-center py-20"
             >
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-white mb-2">Кейсів не знайдено</h3>
-              <p className="text-gray-400">Спробуйте вибрати іншу категорію</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t('cases.noCases')}</h3>
+              <p className="text-gray-400">{t('cases.tryDifferent')}</p>
             </motion.div>
           )}
         </div>
@@ -373,10 +374,10 @@ export default function CasesPage() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {[
-              { value: '50+', label: 'Бізнесів автоматизовано', icon: '🏢' },
-              { value: '70%', label: 'Середня економія часу', icon: '⏱️' },
-              { value: '24/7', label: 'Доступність AI', icon: '🤖' },
-              { value: '3x', label: 'Зростання лідів', icon: '📈' },
+              { value: '50+', labelKey: 'cases.stat1', icon: '🏢' },
+              { value: '70%', labelKey: 'cases.stat2', icon: '⏱️' },
+              { value: '24/7', labelKey: 'cases.stat3', icon: '🤖' },
+              { value: '3x', labelKey: 'cases.stat4', icon: '📈' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -388,7 +389,7 @@ export default function CasesPage() {
               >
                 <div className="text-3xl mb-2">{stat.icon}</div>
                 <div className="text-4xl md:text-5xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <div className="text-sm text-gray-400">{t(stat.labelKey)}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -402,4 +403,3 @@ export default function CasesPage() {
     </main>
   );
 }
-

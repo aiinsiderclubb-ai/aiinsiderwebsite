@@ -3,17 +3,20 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Bot, Phone, Zap, Settings, MessageCircle } from 'lucide-react';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 interface ConversionSectionProps {
   onOpenChat: () => void;
 }
 
 export default function ConversionSection({ onOpenChat }: ConversionSectionProps) {
+  const { t } = useLanguage();
+  
   const benefits = [
-    { icon: Bot, text: 'Кастомна AI-логіка під ваш бізнес' },
-    { icon: MessageCircle, text: 'Інтеграція чат + голосового агента' },
-    { icon: Settings, text: 'Інтеграція CRM та інструментів' },
-    { icon: Zap, text: 'Масштабоване рішення що росте з вами' },
+    { icon: Bot, textKey: 'conversion.benefit1' },
+    { icon: MessageCircle, textKey: 'conversion.benefit2' },
+    { icon: Settings, textKey: 'conversion.benefit3' },
+    { icon: Zap, textKey: 'conversion.benefit4' },
   ];
 
   return (
@@ -43,20 +46,19 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
           >
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-gray-300">Готові до трансформації?</span>
+            <span className="text-sm text-gray-300">{t('conversion.badge')}</span>
           </motion.div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
-            Хочете такі самі результати
+            {t('conversion.title1')}
             <br />
-            <span className="gradient-text">для свого бізнесу?</span>
+            <span className="gradient-text">{t('conversion.title2')}</span>
           </h2>
 
           {/* Description */}
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Ми будуємо кастомні AI-рішення, що автоматизують ваші процеси, 
-            залучають клієнтів та збільшують дохід.
+            {t('conversion.subtitle')}
           </p>
 
           {/* Benefits Grid */}
@@ -73,7 +75,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
                   <benefit.icon className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-sm text-gray-300 text-left">{benefit.text}</span>
+                <span className="text-sm text-gray-300 text-left">{t(benefit.textKey)}</span>
               </motion.div>
             ))}
           </div>
@@ -86,7 +88,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
             >
               <Phone className="w-5 h-5" />
-              Замовити демо
+              {t('conversion.bookDemo')}
               <ArrowRight className="w-5 h-5" />
             </Link>
             
@@ -96,17 +98,16 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
             >
               <MessageCircle className="w-5 h-5" />
-              Обговорити мій бізнес
+              {t('conversion.discussBusiness')}
             </button>
           </div>
 
           {/* Trust text */}
           <p className="mt-8 text-sm text-gray-500">
-            Безкоштовна консультація • Без зобов&apos;язань • Відповідь протягом 24 годин
+            {t('conversion.trust')}
           </p>
         </motion.div>
       </div>
     </section>
   );
 }
-

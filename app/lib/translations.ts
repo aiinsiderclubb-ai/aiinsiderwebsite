@@ -35,6 +35,7 @@ export const translations = {
     badge: { uk: 'Наші рішення', en: 'Our Solutions' },
     title1: { uk: 'Будуй розумніше,', en: 'Build Smarter,' },
     title2: { uk: 'Запускай швидше', en: 'Ship Faster' },
+    subtitle: { uk: 'Революційні AI-рішення, що трансформують вашу роботу.', en: 'Revolutionary AI solutions that transform how you work.' },
     solution1Title: { uk: 'Голосові та чат-агенти', en: 'Voice & Chat Agents' },
     solution1Desc: { uk: 'Людяний AI, який спілкується з клієнтами та бронює зустрічі в реальному часі.', en: 'Humanized AI that talks to your customers and books meetings in real-time.' },
     solution2Title: { uk: 'Автоматизація процесів', en: 'Workflow Automations' },
@@ -43,6 +44,8 @@ export const translations = {
     solution3Desc: { uk: 'AI, який аналізує дані та надає щотижневі звіти з інсайтами.', en: 'AI that analyzes data and delivers weekly reports with insights.' },
     solution4Title: { uk: 'Кастомні AI-моделі', en: 'Custom AI Models' },
     solution4Desc: { uk: 'GPT та RAG системи на замовлення, інтегровані з вашим стеком.', en: 'Tailor-made GPT and RAG systems integrated with your stack.' },
+    explore: { uk: 'Дізнатися більше', en: 'Explore' },
+    cta: { uk: 'Замовити індивідуальне рішення', en: 'Request Custom Solution' },
   },
   
   // Pricing Section
@@ -259,6 +262,29 @@ export const translations = {
   lang: {
     switchTo: { uk: 'EN', en: 'UA' },
     current: { uk: 'UA', en: 'EN' },
+  },
+  
+  // Contact Section
+  contact: {
+    badge: { uk: 'Зв\'яжіться з нами', en: 'Get in Touch' },
+    title1: { uk: 'Давайте створимо щось', en: 'Let\'s Build Something' },
+    title2: { uk: 'Неймовірне', en: 'Extraordinary' },
+    subtitle: { uk: 'Готові трансформувати ваш бізнес з AI? Давайте поговоримо.', en: 'Ready to transform your business with AI? Let\'s talk.' },
+    nameLabel: { uk: 'Ім\'я', en: 'Name' },
+    namePlaceholder: { uk: 'Ваше ім\'я', en: 'Your name' },
+    emailLabel: { uk: 'Email', en: 'Email' },
+    emailPlaceholder: { uk: 'ваш@email.com', en: 'your@email.com' },
+    messageLabel: { uk: 'Повідомлення', en: 'Message' },
+    messagePlaceholder: { uk: 'Розкажіть про ваш проект...', en: 'Tell us about your project...' },
+    sendMessage: { uk: 'Надіслати повідомлення', en: 'Send Message' },
+    bookCall: { uk: 'Замовити дзвінок', en: 'Book a Call' },
+    telegram: { uk: 'Telegram', en: 'Telegram' },
+    instantMessaging: { uk: 'Миттєві повідомлення', en: 'Instant messaging' },
+    email: { uk: 'Email', en: 'Email' },
+    forDetailed: { uk: 'Для детальних запитів', en: 'For detailed inquiries' },
+    quickResponse: { uk: 'Швидка відповідь', en: 'Quick Response' },
+    responseTime: { uk: 'Зазвичай відповідаємо протягом 24 годин. Для термінових питань — пишіть в Telegram.', en: 'We typically respond within 24 hours. For urgent matters, reach out on Telegram.' },
+    usuallyOnline: { uk: 'Зазвичай онлайн', en: 'Usually online' },
   },
 };
 

@@ -9,12 +9,14 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { getCaseBySlug, casesData } from '../../lib/casesData';
+import { getCaseBySlug, casesData, getLocalizedText } from '../../lib/casesData';
 import { useChatContext } from '../../context/ChatContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function CaseDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const { lang, t } = useLanguage();
   
   // Redirect to dedicated Sweezy page
   if (slug === 'sweezy') {
@@ -29,14 +31,14 @@ export default function CaseDetailPage() {
       <main className="min-h-screen bg-background text-foreground">
         <Navbar />
         <div className="pt-32 pb-20 px-6 text-center">
-          <h1 className="text-4xl font-bold mb-4">Case Not Found</h1>
-          <p className="text-gray-400 mb-8">The case study you're looking for doesn't exist.</p>
+          <h1 className="text-4xl font-bold mb-4">{lang === 'uk' ? 'Кейс не знайдено' : 'Case Not Found'}</h1>
+          <p className="text-gray-400 mb-8">{lang === 'uk' ? 'Кейс, який ви шукаєте, не існує.' : 'The case study you\'re looking for doesn\'t exist.'}</p>
           <Link 
             href="/cases"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-bold"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Cases
+            {lang === 'uk' ? 'Повернутися до кейсів' : 'Back to Cases'}
           </Link>
         </div>
         <Footer />
@@ -63,7 +65,6 @@ export default function CaseDetailPage() {
 
   // Special styling for Sweezy (Ukrainian theme)
   const isSweezy = caseData.id === 'case-sweezy';
-  const accentColor = isSweezy ? 'from-blue-500 to-yellow-400' : 'from-white/20 to-white/10';
   const accentBg = isSweezy ? 'bg-gradient-to-r from-blue-500/20 to-yellow-500/20' : 'bg-white/5';
 
   return (
@@ -101,9 +102,9 @@ export default function CaseDetailPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 text-sm text-gray-400 mb-8"
           >
-            <Link href="/cases" className="hover:text-white transition-colors">Cases</Link>
+            <Link href="/cases" className="hover:text-white transition-colors">{lang === 'uk' ? 'Кейси' : 'Cases'}</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-white">{caseData.industryName}</span>
+            <span className="text-white">{getLocalizedText(caseData.industryName, lang)}</span>
           </motion.div>
 
           {/* Header */}
@@ -118,10 +119,10 @@ export default function CaseDetailPage() {
             </div>
             <div>
               <span className={`text-sm font-medium uppercase tracking-wider ${isSweezy ? 'text-blue-400' : 'text-gray-400'}`}>
-                {caseData.industryName}
+                {getLocalizedText(caseData.industryName, lang)}
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-heading mt-2 leading-tight">
-                {caseData.title}
+                {getLocalizedText(caseData.title, lang)}
               </h1>
             </div>
           </motion.div>
@@ -133,7 +134,7 @@ export default function CaseDetailPage() {
             transition={{ delay: 0.2 }}
             className="text-xl text-gray-400 mb-12 leading-relaxed"
           >
-            {caseData.shortDescription}
+            {getLocalizedText(caseData.shortDescription, lang)}
           </motion.p>
 
           {/* Results Grid */}
@@ -151,7 +152,7 @@ export default function CaseDetailPage() {
                 <div className={`text-3xl font-bold ${isSweezy && i === 3 ? 'text-blue-400' : 'text-white'}`}>
                   {result.prefix}{result.value}{result.suffix}
                 </div>
-                <div className="text-sm text-gray-400 mt-2">{result.label}</div>
+                <div className="text-sm text-gray-400 mt-2">{getLocalizedText(result.label, lang)}</div>
               </div>
             ))}
           </motion.div>
@@ -185,7 +186,7 @@ export default function CaseDetailPage() {
                 `}
               >
                 <span>{cta.icon}</span>
-                {cta.label}
+                {getLocalizedText(cta.label, lang)}
                 {cta.primary && <ArrowRight className="w-4 h-4" />}
               </button>
             ))}
@@ -208,13 +209,13 @@ export default function CaseDetailPage() {
                 <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-red-400" />
                 </div>
-                <h2 className="text-xl font-bold text-red-400">{caseData.problem.title}</h2>
+                <h2 className="text-xl font-bold text-red-400">{getLocalizedText(caseData.problem.title, lang)}</h2>
               </div>
               <ul className="space-y-4">
                 {caseData.problem.points.map((point, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-400">
                     <span className="text-red-400 mt-1">×</span>
-                    {point}
+                    {getLocalizedText(point, lang)}
                   </li>
                 ))}
               </ul>
@@ -231,13 +232,13 @@ export default function CaseDetailPage() {
                 <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6 text-green-400" />
                 </div>
-                <h2 className="text-xl font-bold text-green-400">{caseData.solution.title}</h2>
+                <h2 className="text-xl font-bold text-green-400">{getLocalizedText(caseData.solution.title, lang)}</h2>
               </div>
               <ul className="space-y-4">
                 {caseData.solution.points.map((point, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-400">
                     <span className="text-green-400 mt-1">✓</span>
-                    {point}
+                    {getLocalizedText(point, lang)}
                   </li>
                 ))}
               </ul>
@@ -257,7 +258,7 @@ export default function CaseDetailPage() {
           >
             <div className="flex items-center justify-center gap-2 mb-6">
               <Wrench className="w-5 h-5 text-gray-400" />
-              <h2 className="text-2xl font-bold">Technologies Used</h2>
+              <h2 className="text-2xl font-bold">{lang === 'uk' ? 'Використані технології' : 'Technologies Used'}</h2>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
               {caseData.technologies.map((tech, i) => (
@@ -283,16 +284,18 @@ export default function CaseDetailPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
               <Zap className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm text-gray-300">Want Similar Results?</span>
+              <span className="text-sm text-gray-300">{lang === 'uk' ? 'Хочете такі самі результати?' : 'Want Similar Results?'}</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Let's build something
-              <span className="gradient-text"> amazing together</span>
+              {lang === 'uk' ? 'Давайте створимо щось' : 'Let\'s build something'}
+              <span className="gradient-text"> {lang === 'uk' ? 'неймовірне разом' : 'amazing together'}</span>
             </h2>
             
             <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-              We can create a custom AI solution tailored to your specific business needs and goals.
+              {lang === 'uk' 
+                ? 'Ми можемо створити кастомне AI-рішення під ваші конкретні потреби та цілі.' 
+                : 'We can create a custom AI solution tailored to your specific business needs and goals.'}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -302,7 +305,7 @@ export default function CaseDetailPage() {
                   transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
               >
                 <Phone className="w-5 h-5" />
-                Book a Demo
+                {lang === 'uk' ? 'Замовити демо' : 'Book a Demo'}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               
@@ -312,7 +315,7 @@ export default function CaseDetailPage() {
                   border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
               >
                 <MessageCircle className="w-5 h-5" />
-                Try AI Demo
+                {lang === 'uk' ? 'Спробувати AI демо' : 'Try AI Demo'}
               </button>
             </div>
           </motion.div>
@@ -328,10 +331,10 @@ export default function CaseDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-2xl font-bold mb-8 text-center">Related Cases</h2>
+              <h2 className="text-2xl font-bold mb-8 text-center">{lang === 'uk' ? 'Схожі кейси' : 'Related Cases'}</h2>
               
               <div className="grid md:grid-cols-3 gap-6">
-                {relatedCases.map((relatedCase, index) => (
+                {relatedCases.map((relatedCase) => (
                   <Link
                     key={relatedCase.id}
                     href={`/cases/${relatedCase.slug}`}
@@ -342,15 +345,15 @@ export default function CaseDetailPage() {
                         {relatedCase.icon}
                       </div>
                       <div>
-                        <span className="text-xs text-gray-500">{relatedCase.industryName}</span>
+                        <span className="text-xs text-gray-500">{getLocalizedText(relatedCase.industryName, lang)}</span>
                         <h3 className="text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
-                          {relatedCase.title}
+                          {getLocalizedText(relatedCase.title, lang)}
                         </h3>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400 line-clamp-2">{relatedCase.shortDescription}</p>
+                    <p className="text-xs text-gray-400 line-clamp-2">{getLocalizedText(relatedCase.shortDescription, lang)}</p>
                     <div className="flex items-center gap-1 mt-4 text-xs text-gray-500 group-hover:text-white transition-colors">
-                      <span>View Case</span>
+                      <span>{lang === 'uk' ? 'Переглянути кейс' : 'View Case'}</span>
                       <ExternalLink className="w-3 h-3" />
                     </div>
                   </Link>
@@ -369,7 +372,7 @@ export default function CaseDetailPage() {
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to All Cases
+            {lang === 'uk' ? 'Повернутися до всіх кейсів' : 'Back to All Cases'}
           </Link>
         </div>
       </section>
@@ -378,4 +381,3 @@ export default function CaseDetailPage() {
     </main>
   );
 }
-

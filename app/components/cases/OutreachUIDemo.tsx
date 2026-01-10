@@ -7,28 +7,73 @@ import {
   BarChart3, Settings, Send, RefreshCw, AlertCircle, Zap,
   ChevronRight
 } from 'lucide-react';
-
-// Simulated campaign data
-const campaigns = [
-  { id: 1, name: 'Агенти нерухомості', status: 'active', progress: 73, sent: 146, groups: 12 },
-  { id: 2, name: 'Маркетингові агенції', status: 'completed', progress: 100, sent: 250, groups: 15 },
-  { id: 3, name: 'Локальний бізнес', status: 'paused', progress: 45, sent: 89, groups: 8 },
-];
-
-const logs = [
-  { time: '14:32:15', type: 'success', message: 'Повідомлення відправлено в групу "Digital Marketing Pros"' },
-  { time: '14:32:10', type: 'info', message: 'Перехід до наступної групи...' },
-  { time: '14:31:58', type: 'success', message: 'Повідомлення відправлено в групу "Small Business Network"' },
-  { time: '14:31:45', type: 'warning', message: 'Виявлено rate limit, очікування 30с...' },
-  { time: '14:31:12', type: 'success', message: 'Повідомлення відправлено в групу "Entrepreneurs Hub"' },
-  { time: '14:30:55', type: 'info', message: 'AI персоналізує повідомлення під контекст...' },
-];
+import { useLanguage } from '@/app/context/LanguageContext';
 
 export default function OutreachUIDemo() {
+  const { lang } = useLanguage();
   const [activeTab, setActiveTab] = useState<'dashboard' | 'campaigns' | 'logs'>('dashboard');
   const [isAnimating, setIsAnimating] = useState(true);
   const [currentProgress, setCurrentProgress] = useState(0);
   const [messagesSent, setMessagesSent] = useState(485);
+
+  // Localized data
+  const campaigns = lang === 'uk' ? [
+    { id: 1, name: 'Агенти нерухомості', status: 'active', progress: 73, sent: 146, groups: 12 },
+    { id: 2, name: 'Маркетингові агенції', status: 'completed', progress: 100, sent: 250, groups: 15 },
+    { id: 3, name: 'Локальний бізнес', status: 'paused', progress: 45, sent: 89, groups: 8 },
+  ] : [
+    { id: 1, name: 'Real Estate Agents', status: 'active', progress: 73, sent: 146, groups: 12 },
+    { id: 2, name: 'Marketing Agencies', status: 'completed', progress: 100, sent: 250, groups: 15 },
+    { id: 3, name: 'Local Business', status: 'paused', progress: 45, sent: 89, groups: 8 },
+  ];
+
+  const logs = lang === 'uk' ? [
+    { time: '14:32:15', type: 'success', message: 'Повідомлення відправлено в групу "Digital Marketing Pros"' },
+    { time: '14:32:10', type: 'info', message: 'Перехід до наступної групи...' },
+    { time: '14:31:58', type: 'success', message: 'Повідомлення відправлено в групу "Small Business Network"' },
+    { time: '14:31:45', type: 'warning', message: 'Виявлено rate limit, очікування 30с...' },
+    { time: '14:31:12', type: 'success', message: 'Повідомлення відправлено в групу "Entrepreneurs Hub"' },
+    { time: '14:30:55', type: 'info', message: 'AI персоналізує повідомлення під контекст...' },
+  ] : [
+    { time: '14:32:15', type: 'success', message: 'Message sent to group "Digital Marketing Pros"' },
+    { time: '14:32:10', type: 'info', message: 'Moving to next group...' },
+    { time: '14:31:58', type: 'success', message: 'Message sent to group "Small Business Network"' },
+    { time: '14:31:45', type: 'warning', message: 'Rate limit detected, waiting 30s...' },
+    { time: '14:31:12', type: 'success', message: 'Message sent to group "Entrepreneurs Hub"' },
+    { time: '14:30:55', type: 'info', message: 'AI personalizing message for context...' },
+  ];
+
+  const texts = {
+    howItLooks: { uk: 'Як це виглядає в дії', en: 'How it looks in action' },
+    livePreview: { uk: 'Живий попередній перегляд панелі автоматизації', en: 'Live preview of the automation dashboard' },
+    outreachDashboard: { uk: 'Панель керування Outreach', en: 'Outreach Dashboard' },
+    running: { uk: 'Працює', en: 'Running' },
+    paused: { uk: 'Пауза', en: 'Paused' },
+    sent: { uk: 'Надіслано', en: 'Sent' },
+    groupsReached: { uk: 'Груп охоплено', en: 'Groups Reached' },
+    replies: { uk: 'Відповідей', en: 'Replies' },
+    conversion: { uk: 'Конверсія', en: 'Conversion' },
+    campaign: { uk: 'Кампанія', en: 'Campaign' },
+    completed: { uk: 'завершено', en: 'completed' },
+    ofGroups: { uk: 'з 200 груп', en: 'of 200 groups' },
+    timeRemaining: { uk: 'До завершення: 2г 15хв', en: 'Time remaining: 2h 15m' },
+    realTimeActivity: { uk: 'Активність в реальному часі', en: 'Real-time activity' },
+    sentLabel: { uk: 'надіслано', en: 'sent' },
+    groupsLabel: { uk: 'груп', en: 'groups' },
+    completedLabel: { uk: 'завершено', en: 'completed' },
+    configureNew: { uk: 'Налаштувати нову кампанію', en: 'Configure new campaign' },
+    systemLogs: { uk: 'Системні логи в реальному часі (останні 24 години)', en: 'Real-time system logs (last 24 hours)' },
+    allSystemsOk: { uk: 'Усі системи працюють • Жодних помилок за останні 24г', en: 'All systems operational • No errors in last 24h' },
+    systemOnline: { uk: 'Система онлайн', en: 'System online' },
+    sessionActive: { uk: 'Сесія: Активна', en: 'Session: Active' },
+    syncJustNow: { uk: 'Синхронізація: Щойно', en: 'Sync: Just now' },
+    allChecksPassed: { uk: 'Усі перевірки пройдено', en: 'All checks passed' },
+    tabDashboard: { uk: 'Dashboard', en: 'Dashboard' },
+    tabCampaigns: { uk: 'Кампанії', en: 'Campaigns' },
+    tabLogs: { uk: 'Логи', en: 'Logs' },
+  };
+
+  const t = (key: keyof typeof texts): string => texts[key][lang] || texts[key].en;
 
   // Simulate progress animation
   useEffect(() => {
@@ -44,6 +89,12 @@ export default function OutreachUIDemo() {
     return () => clearInterval(interval);
   }, [isAnimating]);
 
+  const tabLabels = {
+    dashboard: t('tabDashboard'),
+    campaigns: t('tabCampaigns'),
+    logs: t('tabLogs'),
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -58,8 +109,8 @@ export default function OutreachUIDemo() {
           <Zap className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h4 className="text-lg font-bold text-white">Як це виглядає в дії</h4>
-          <p className="text-sm text-gray-400">Живий попередній перегляд панелі автоматизації</p>
+          <h4 className="text-lg font-bold text-white">{t('howItLooks')}</h4>
+          <p className="text-sm text-gray-400">{t('livePreview')}</p>
         </div>
       </div>
 
@@ -73,7 +124,7 @@ export default function OutreachUIDemo() {
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
               <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-            <span className="text-xs text-gray-400 ml-3">Панель керування Outreach</span>
+            <span className="text-xs text-gray-400 ml-3">{t('outreachDashboard')}</span>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -85,7 +136,7 @@ export default function OutreachUIDemo() {
                 }`}
             >
               {isAnimating ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-              {isAnimating ? 'Працює' : 'Пауза'}
+              {isAnimating ? t('running') : t('paused')}
             </button>
           </div>
         </div>
@@ -99,7 +150,7 @@ export default function OutreachUIDemo() {
               className={`px-6 py-3 text-sm font-medium transition-colors relative
                 ${activeTab === tab ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tabLabels[tab]}
               {activeTab === tab && (
                 <motion.div
                   layoutId="activeTabIndicator"
@@ -117,10 +168,10 @@ export default function OutreachUIDemo() {
               {/* Stats Grid */}
               <div className="grid grid-cols-4 gap-4">
                 {[
-                  { icon: Send, label: 'Надіслано', value: messagesSent, color: 'text-green-400' },
-                  { icon: Users, label: 'Груп охоплено', value: 35, color: 'text-blue-400' },
-                  { icon: MessageCircle, label: 'Відповідей', value: 47, color: 'text-purple-400' },
-                  { icon: BarChart3, label: 'Конверсія', value: '9.7%', color: 'text-yellow-400' },
+                  { icon: Send, label: t('sent'), value: messagesSent, color: 'text-green-400' },
+                  { icon: Users, label: t('groupsReached'), value: 35, color: 'text-blue-400' },
+                  { icon: MessageCircle, label: t('replies'), value: 47, color: 'text-purple-400' },
+                  { icon: BarChart3, label: t('conversion'), value: '9.7%', color: 'text-yellow-400' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/5">
                     <div className="flex items-center gap-2 mb-2">
@@ -137,9 +188,9 @@ export default function OutreachUIDemo() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-sm font-medium text-white">Кампанія: Агенти нерухомості</span>
+                    <span className="text-sm font-medium text-white">{t('campaign')}: {campaigns[0].name}</span>
                   </div>
-                  <span className="text-xs text-gray-400">{currentProgress}% завершено</span>
+                  <span className="text-xs text-gray-400">{currentProgress}% {t('completed')}</span>
                 </div>
                 <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                   <motion.div
@@ -148,8 +199,8 @@ export default function OutreachUIDemo() {
                   />
                 </div>
                 <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
-                  <span>146 з 200 груп</span>
-                  <span>До завершення: 2г 15хв</span>
+                  <span>146 {t('ofGroups')}</span>
+                  <span>{t('timeRemaining')}</span>
                 </div>
               </div>
 
@@ -157,7 +208,7 @@ export default function OutreachUIDemo() {
               <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div className="flex items-center gap-2 mb-3">
                   <RefreshCw className="w-4 h-4 text-gray-400" />
-                  <span className="text-sm font-medium text-white">Активність в реальному часі</span>
+                  <span className="text-sm font-medium text-white">{t('realTimeActivity')}</span>
                 </div>
                 <div className="space-y-2">
                   {logs.slice(0, 3).map((log, i) => (
@@ -207,9 +258,9 @@ export default function OutreachUIDemo() {
                     />
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <span>{campaign.sent} надіслано</span>
-                    <span>{campaign.groups} груп</span>
-                    <span>{campaign.progress}% завершено</span>
+                    <span>{campaign.sent} {t('sentLabel')}</span>
+                    <span>{campaign.groups} {t('groupsLabel')}</span>
+                    <span>{campaign.progress}% {t('completedLabel')}</span>
                   </div>
                 </div>
               ))}
@@ -218,7 +269,7 @@ export default function OutreachUIDemo() {
               <button className="w-full p-4 rounded-xl border border-dashed border-white/10 text-gray-500 text-sm
                 hover:border-white/20 hover:text-gray-400 transition-colors flex items-center justify-center gap-2">
                 <Settings className="w-4 h-4" />
-                Налаштувати нову кампанію
+                {t('configureNew')}
               </button>
             </div>
           )}
@@ -227,7 +278,7 @@ export default function OutreachUIDemo() {
             <div className="space-y-1 font-mono text-xs">
               <div className="flex items-center gap-2 mb-4 text-gray-500">
                 <Clock className="w-4 h-4" />
-                <span>Системні логи в реальному часі (останні 24 години)</span>
+                <span>{t('systemLogs')}</span>
               </div>
               {logs.map((log, i) => (
                 <motion.div
@@ -248,7 +299,7 @@ export default function OutreachUIDemo() {
               ))}
               <div className="flex items-center gap-2 pt-4 text-gray-600">
                 <AlertCircle className="w-4 h-4" />
-                <span>Усі системи працюють • Жодних помилок за останні 24г</span>
+                <span>{t('allSystemsOk')}</span>
               </div>
             </div>
           )}
@@ -258,15 +309,15 @@ export default function OutreachUIDemo() {
         <div className="px-6 py-3 bg-white/5 border-t border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span>Система онлайн</span>
+            <span>{t('systemOnline')}</span>
             <span className="mx-2">•</span>
-            <span>Сесія: Активна</span>
+            <span>{t('sessionActive')}</span>
             <span className="mx-2">•</span>
-            <span>Синхронізація: Щойно</span>
+            <span>{t('syncJustNow')}</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-500" />
-            <span className="text-xs text-green-400">Усі перевірки пройдено</span>
+            <span className="text-xs text-green-400">{t('allChecksPassed')}</span>
           </div>
         </div>
       </div>
@@ -285,4 +336,3 @@ export default function OutreachUIDemo() {
     </motion.div>
   );
 }
-
