@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, AlertTriangle, Zap, 
-  Wrench, MessageCircle, Phone, ExternalLink, ChevronRight
+  Clock, Wallet, ChevronRight, Star, Quote, MessageCircle, Phone, ExternalLink
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -16,7 +16,7 @@ import { useLanguage } from '../../context/LanguageContext';
 export default function CaseDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
   
   // Redirect to dedicated Sweezy page
   if (slug === 'sweezy') {
@@ -54,167 +54,193 @@ export default function CaseDetailPage() {
     }
   };
 
-  const handleContactClick = () => {
-    window.location.href = '/#bookcall';
-  };
-
-  // Get related cases (same category, exclude current)
+  // Get related cases
   const relatedCases = casesData
     .filter(c => c.category === caseData.category && c.id !== caseData.id)
     .slice(0, 3);
 
-  // Special styling for Sweezy (Ukrainian theme)
   const isSweezy = caseData.id === 'case-sweezy';
-  const accentBg = isSweezy ? 'bg-gradient-to-r from-blue-500/20 to-yellow-500/20' : 'bg-white/5';
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 pointer-events-none">
+      {/* Hero Section - Minimalist */}
+      <section className="relative pt-28 pb-16 px-6">
+        {/* Subtle background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div 
-            className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
             style={{
-              background: isSweezy 
-                ? 'radial-gradient(circle, rgba(0,87,184,0.15) 0%, transparent 60%)'
-                : 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 60%)',
-              filter: 'blur(80px)',
+              background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 70%)',
             }}
           />
-          {isSweezy && (
-            <div 
-              className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%)',
-                filter: 'blur(60px)',
-              }}
-            />
-          )}
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-5xl mx-auto">
           {/* Breadcrumb */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-sm text-gray-400 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center gap-2 text-xs text-gray-500 mb-10"
           >
             <Link href="/cases" className="hover:text-white transition-colors">{lang === 'uk' ? 'Кейси' : 'Cases'}</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-white">{getLocalizedText(caseData.industryName, lang)}</span>
+            <ChevronRight className="w-3 h-3" />
+            <span className="text-gray-400">{getLocalizedText(caseData.industryName, lang)}</span>
           </motion.div>
 
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex items-start gap-6 mb-8"
-          >
-            <div className={`w-20 h-20 rounded-2xl ${accentBg} border border-white/10 flex items-center justify-center text-4xl flex-shrink-0`}>
-              {caseData.icon}
-            </div>
-            <div>
-              <span className={`text-sm font-medium uppercase tracking-wider ${isSweezy ? 'text-blue-400' : 'text-gray-400'}`}>
-                {getLocalizedText(caseData.industryName, lang)}
-              </span>
-              <h1 className="text-4xl md:text-5xl font-bold font-heading mt-2 leading-tight">
+          {/* Main Hero Content */}
+          <div className="grid lg:grid-cols-[1fr,400px] gap-12 items-start">
+            {/* Left - Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {/* Icon + Label */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className={`
+                  w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
+                  ${isSweezy 
+                    ? 'bg-gradient-to-br from-blue-500/20 to-yellow-500/20 border border-blue-400/30' 
+                    : 'bg-white/5 border border-white/10'
+                  }
+                `}>
+                  {caseData.icon}
+                </div>
+                <div>
+                  <span className={`text-xs font-semibold uppercase tracking-wider ${isSweezy ? 'text-blue-400' : 'text-gray-500'}`}>
+                    {getLocalizedText(caseData.industryName, lang)}
+                  </span>
+                  {caseData.featured && (
+                    <span className="ml-3 inline-flex items-center gap-1 text-xs text-yellow-400">
+                      <Zap className="w-3 h-3" />
+                      {lang === 'uk' ? 'Виділений' : 'Featured'}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 {getLocalizedText(caseData.title, lang)}
               </h1>
-            </div>
-          </motion.div>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-400 mb-12 leading-relaxed"
-          >
-            {getLocalizedText(caseData.shortDescription, lang)}
-          </motion.p>
+              {/* Description */}
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl">
+                {getLocalizedText(caseData.fullDescription || caseData.shortDescription, lang)}
+              </p>
 
-          {/* Results Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-          >
-            {caseData.results.map((result, i) => (
-              <div 
-                key={i} 
-                className={`p-6 rounded-2xl ${accentBg} border border-white/10 text-center`}
-              >
-                <div className={`text-3xl font-bold ${isSweezy && i === 3 ? 'text-blue-400' : 'text-white'}`}>
-                  {result.prefix}{result.value}{result.suffix}
-                </div>
-                <div className="text-sm text-gray-400 mt-2">{getLocalizedText(result.label, lang)}</div>
+              {/* Quick Info Pills */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                {caseData.timeline && (
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                    <Clock className="w-4 h-4 text-gray-400" />
+                    <span className="text-sm text-gray-300">{getLocalizedText(caseData.timeline, lang)}</span>
+                  </div>
+                )}
+                {caseData.investment && (
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                    <Wallet className="w-4 h-4 text-gray-400" />
+                    <span className="text-sm text-gray-300">{getLocalizedText(caseData.investment, lang)}</span>
+                  </div>
+                )}
               </div>
-            ))}
-          </motion.div>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-wrap gap-4"
-          >
-            {caseData.ctas.map((cta) => (
-              <button
-                key={cta.id}
-                onClick={() => {
-                  if (cta.action === 'demo' || cta.action === 'flow' || cta.action === 'voice') {
-                    handleDemoClick();
-                  } else {
-                    handleContactClick();
-                  }
-                }}
-                className={`
-                  flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm
-                  transition-all duration-200 hover:scale-[1.02]
-                  ${cta.primary 
-                    ? isSweezy 
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/30' 
-                      : 'bg-white text-black hover:shadow-lg hover:shadow-white/30' 
-                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
-                  }
-                `}
-              >
-                <span>{cta.icon}</span>
-                {getLocalizedText(cta.label, lang)}
-                {cta.primary && <ArrowRight className="w-4 h-4" />}
-              </button>
-            ))}
-          </motion.div>
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={handleDemoClick}
+                  className={`
+                    flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm
+                    transition-all duration-200 hover:scale-[1.02]
+                    ${isSweezy 
+                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/25' 
+                      : 'bg-white text-black hover:shadow-lg hover:shadow-white/20'
+                    }
+                  `}
+                >
+                  {caseData.ctas[0]?.icon}
+                  <span>{getLocalizedText(caseData.ctas[0]?.label, lang)}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <Link
+                  href="/#bookcall"
+                  className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm
+                    bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
+                >
+                  <Phone className="w-4 h-4" />
+                  {lang === 'uk' ? 'Замовити демо' : 'Book Demo'}
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Right - Results Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="relative"
+            >
+              <div className={`
+                p-6 rounded-3xl border
+                ${isSweezy 
+                  ? 'bg-gradient-to-br from-blue-950/50 to-yellow-950/30 border-blue-500/20' 
+                  : 'bg-white/[0.02] border-white/10'
+                }
+              `}>
+                <div className="flex items-center gap-2 mb-5">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  <span className="text-sm font-semibold text-white">{lang === 'uk' ? 'Результати' : 'Results'}</span>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  {caseData.results.map((result, i) => (
+                    <div key={i} className="text-center p-4 rounded-2xl bg-black/20">
+                      <div className={`text-2xl font-bold ${isSweezy ? 'text-blue-300' : 'text-white'}`}>
+                        {result.prefix}{result.value}{result.suffix}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">{getLocalizedText(result.label, lang)}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech tags */}
+                <div className="mt-5 pt-5 border-t border-white/10">
+                  <div className="flex flex-wrap gap-2">
+                    {caseData.technologies.slice(0, 4).map((tech, i) => (
+                      <span key={i} className="text-[10px] px-2 py-1 rounded-md bg-white/5 text-gray-500">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Problem & Solution */}
-      <section className="py-20 px-6 border-y border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+      {/* Problem & Solution - Side by Side */}
+      <section className="py-16 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
             {/* Problem */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 rounded-3xl bg-red-500/5 border border-red-500/10"
+              className="p-6 rounded-2xl bg-gradient-to-br from-red-500/5 to-transparent border border-red-500/10"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-red-400" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
-                <h2 className="text-xl font-bold text-red-400">{getLocalizedText(caseData.problem.title, lang)}</h2>
+                <h3 className="text-lg font-bold text-red-400">{lang === 'uk' ? 'Проблема' : 'Problem'}</h3>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {caseData.problem.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-400">
-                    <span className="text-red-400 mt-1">×</span>
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-400">
+                    <span className="text-red-400/60 mt-0.5">×</span>
                     {getLocalizedText(point, lang)}
                   </li>
                 ))}
@@ -223,21 +249,22 @@ export default function CaseDetailPage() {
 
             {/* Solution */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 rounded-3xl bg-green-500/5 border border-green-500/10"
+              transition={{ delay: 0.1 }}
+              className="p-6 rounded-2xl bg-gradient-to-br from-green-500/5 to-transparent border border-green-500/10"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-green-400" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-green-400" />
                 </div>
-                <h2 className="text-xl font-bold text-green-400">{getLocalizedText(caseData.solution.title, lang)}</h2>
+                <h3 className="text-lg font-bold text-green-400">{lang === 'uk' ? 'Рішення' : 'Solution'}</h3>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {caseData.solution.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-400">
-                    <span className="text-green-400 mt-1">✓</span>
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-400">
+                    <span className="text-green-400/60 mt-0.5">✓</span>
                     {getLocalizedText(point, lang)}
                   </li>
                 ))}
@@ -247,75 +274,188 @@ export default function CaseDetailPage() {
         </div>
       </section>
 
-      {/* Technologies */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <Wrench className="w-5 h-5 text-gray-400" />
-              <h2 className="text-2xl font-bold">{lang === 'uk' ? 'Використані технології' : 'Technologies Used'}</h2>
+      {/* Process Timeline */}
+      {caseData.process && caseData.process.length > 0 && (
+        <section className="py-16 px-6 border-y border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold mb-3">
+                {lang === 'uk' ? 'Процес реалізації' : 'Implementation Process'}
+              </h2>
+              <p className="text-gray-400">
+                {lang === 'uk' ? 'Як ми працюємо від А до Я' : 'How we work from A to Z'}
+              </p>
+            </motion.div>
+
+            {/* Timeline */}
+            <div className="relative">
+              {/* Vertical Line */}
+              <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent hidden md:block" />
+
+              <div className="space-y-8">
+                {caseData.process.map((phase, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="relative flex gap-6"
+                  >
+                    {/* Number Circle */}
+                    <div className="relative z-10 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-2xl font-bold text-white">{phase.number}</span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 pb-8">
+                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-white">{getLocalizedText(phase.title, lang)}</h3>
+                        <span className="text-xs px-3 py-1 rounded-full bg-white/5 text-gray-400">
+                          {getLocalizedText(phase.duration, lang)}
+                        </span>
+                      </div>
+                      <p className="text-gray-400 mb-4">{getLocalizedText(phase.description, lang)}</p>
+                      
+                      {/* Deliverables */}
+                      <div className="flex flex-wrap gap-2">
+                        {phase.deliverables.map((d, j) => (
+                          <span key={j} className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-green-500/5 text-green-400 border border-green-500/10">
+                            <CheckCircle2 className="w-3 h-3" />
+                            {getLocalizedText(d, lang)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap justify-center gap-3">
-              {caseData.technologies.map((tech, i) => (
-                <span 
+          </div>
+        </section>
+      )}
+
+      {/* Features Grid */}
+      {caseData.features && caseData.features.length > 0 && (
+        <section className="py-16 px-6">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold mb-3">
+                {lang === 'uk' ? 'Ключові можливості' : 'Key Features'}
+              </h2>
+              <p className="text-gray-400">
+                {lang === 'uk' ? 'Що входить в рішення' : 'What\'s included in the solution'}
+              </p>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {caseData.features.map((feature, i) => (
+                <motion.div
                   key={i}
-                  className={`px-5 py-2.5 rounded-full text-sm font-medium ${accentBg} border border-white/10`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="group p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all"
                 >
-                  {tech}
-                </span>
+                  <div className="text-3xl mb-3">{feature.icon}</div>
+                  <h4 className="font-semibold text-white mb-1">{getLocalizedText(feature.title, lang)}</h4>
+                  <p className="text-xs text-gray-500">{getLocalizedText(feature.description, lang)}</p>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
+
+      {/* Testimonial */}
+      {caseData.testimonial && (
+        <section className="py-16 px-6">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative p-8 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10"
+            >
+              <Quote className="absolute top-6 left-6 w-8 h-8 text-white/10" />
+              
+              <div className="relative">
+                <p className="text-lg text-gray-300 italic mb-6 leading-relaxed">
+                  "{getLocalizedText(caseData.testimonial.quote, lang)}"
+                </p>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl">
+                    👤
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">{caseData.testimonial.author}</div>
+                    <div className="text-sm text-gray-500">{getLocalizedText(caseData.testimonial.role, lang)}</div>
+                  </div>
+                  <div className="ml-auto flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 px-6 border-t border-white/5">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
               <Zap className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm text-gray-300">{lang === 'uk' ? 'Хочете такі самі результати?' : 'Want Similar Results?'}</span>
+              <span className="text-sm text-gray-300">{lang === 'uk' ? 'Готові почати?' : 'Ready to Start?'}</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              {lang === 'uk' ? 'Давайте створимо щось' : 'Let\'s build something'}
-              <span className="gradient-text"> {lang === 'uk' ? 'неймовірне разом' : 'amazing together'}</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {lang === 'uk' ? 'Хочете такі самі результати?' : 'Want Similar Results?'}
             </h2>
             
-            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 mb-8">
               {lang === 'uk' 
-                ? 'Ми можемо створити кастомне AI-рішення під ваші конкретні потреби та цілі.' 
-                : 'We can create a custom AI solution tailored to your specific business needs and goals.'}
+                ? 'Ми створимо кастомне AI-рішення під ваші потреби' 
+                : 'We\'ll create a custom AI solution for your needs'}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/#bookcall"
-                className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                  transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
+                className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold
+                  transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20"
               >
                 <Phone className="w-5 h-5" />
-                {lang === 'uk' ? 'Замовити демо' : 'Book a Demo'}
+                {lang === 'uk' ? 'Замовити демо' : 'Book Demo'}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               
               <button
                 onClick={handleDemoClick}
-                className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                  border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
+                className="flex items-center gap-2 px-8 py-4 bg-white/5 text-white rounded-full font-bold
+                  border border-white/10 transition-all duration-200 hover:bg-white/10"
               >
                 <MessageCircle className="w-5 h-5" />
-                {lang === 'uk' ? 'Спробувати AI демо' : 'Try AI Demo'}
+                {lang === 'uk' ? 'AI Демо' : 'AI Demo'}
               </button>
             </div>
           </motion.div>
@@ -324,36 +464,31 @@ export default function CaseDetailPage() {
 
       {/* Related Cases */}
       {relatedCases.length > 0 && (
-        <section className="py-20 px-6 border-t border-white/5">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-16 px-6 border-t border-white/5">
+          <div className="max-w-5xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-2xl font-bold mb-8 text-center">{lang === 'uk' ? 'Схожі кейси' : 'Related Cases'}</h2>
+              <h3 className="text-xl font-bold mb-8 text-center">{lang === 'uk' ? 'Схожі кейси' : 'Related Cases'}</h3>
               
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-3 gap-4">
                 {relatedCases.map((relatedCase) => (
                   <Link
                     key={relatedCase.id}
                     href={`/cases/${relatedCase.slug}`}
-                    className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+                    className="group p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all"
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl">
-                        {relatedCase.icon}
-                      </div>
-                      <div>
-                        <span className="text-xs text-gray-500">{getLocalizedText(relatedCase.industryName, lang)}</span>
-                        <h3 className="text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
-                          {getLocalizedText(relatedCase.title, lang)}
-                        </h3>
-                      </div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-2xl">{relatedCase.icon}</span>
+                      <span className="text-xs text-gray-500">{getLocalizedText(relatedCase.industryName, lang)}</span>
                     </div>
-                    <p className="text-xs text-gray-400 line-clamp-2">{getLocalizedText(relatedCase.shortDescription, lang)}</p>
-                    <div className="flex items-center gap-1 mt-4 text-xs text-gray-500 group-hover:text-white transition-colors">
-                      <span>{lang === 'uk' ? 'Переглянути кейс' : 'View Case'}</span>
+                    <h4 className="font-semibold text-white text-sm line-clamp-2 group-hover:text-gray-300 transition-colors">
+                      {getLocalizedText(relatedCase.title, lang)}
+                    </h4>
+                    <div className="flex items-center gap-1 mt-3 text-xs text-gray-500 group-hover:text-white transition-colors">
+                      {lang === 'uk' ? 'Переглянути' : 'View'}
                       <ExternalLink className="w-3 h-3" />
                     </div>
                   </Link>
@@ -364,15 +499,15 @@ export default function CaseDetailPage() {
         </section>
       )}
 
-      {/* Back to Cases */}
-      <section className="py-12 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Back Link */}
+      <section className="py-10 px-6">
+        <div className="max-w-5xl mx-auto text-center">
           <Link
             href="/cases"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            {lang === 'uk' ? 'Повернутися до всіх кейсів' : 'Back to All Cases'}
+            {lang === 'uk' ? 'Всі кейси' : 'All Cases'}
           </Link>
         </div>
       </section>

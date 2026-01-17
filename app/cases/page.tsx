@@ -321,13 +321,13 @@ export default function CasesPage() {
       )}
 
       {/* Cases Grid */}
-      <section className="py-20 px-6">
+      <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           {/* Results count */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-sm text-gray-500 mb-8"
+            className="text-xs text-gray-500 mb-6"
           >
             {t('cases.showing')} {filteredCases.length} {t('cases.caseWord')}
             {activeFilter !== 'all' && (
@@ -335,8 +335,8 @@ export default function CasesPage() {
             )}
           </motion.p>
 
-          {/* Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* Grid - 3 columns on desktop */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredCases.map((caseData, index) => (
               <CaseCard
                 key={caseData.id}

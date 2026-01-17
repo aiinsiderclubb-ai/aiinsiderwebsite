@@ -11,15 +11,30 @@ export interface CaseResult {
   suffix?: string;
 }
 
+export interface ProcessPhase {
+  number: number;
+  title: { uk: string; en: string };
+  description: { uk: string; en: string };
+  duration: { uk: string; en: string };
+  deliverables: { uk: string; en: string }[];
+}
+
+export interface Testimonial {
+  quote: { uk: string; en: string };
+  author: string;
+  role: { uk: string; en: string };
+}
+
 export interface CaseStudy {
   id: string;
   slug: string;
   category: CaseCategory;
-  industry?: Industry; // For linking to chat demo
+  industry?: Industry;
   icon: string;
   industryName: { uk: string; en: string };
   title: { uk: string; en: string };
   shortDescription: { uk: string; en: string };
+  fullDescription?: { uk: string; en: string };
   problem: {
     title: { uk: string; en: string };
     points: { uk: string; en: string }[];
@@ -32,7 +47,13 @@ export interface CaseStudy {
   technologies: string[];
   ctas: CaseCTA[];
   featured?: boolean;
-  hasUIDemo?: boolean; // Show UI demo section
+  hasUIDemo?: boolean;
+  // Extended info
+  timeline?: { uk: string; en: string };
+  investment?: { uk: string; en: string };
+  process?: ProcessPhase[];
+  features?: { icon: string; title: { uk: string; en: string }; description: { uk: string; en: string } }[];
+  testimonial?: Testimonial;
 }
 
 export interface CaseCTA {
@@ -62,8 +83,8 @@ export const categoryFilters: { id: CaseCategory | 'all'; label: { uk: string; e
   { id: 'social', label: { uk: 'Соціальний проект', en: 'Social Impact' }, icon: '💙' },
 ];
 
-// Helper to get localized text
-export const getLocalizedText = (text: { uk: string; en: string }, lang: Language): string => {
+export const getLocalizedText = (text: { uk: string; en: string } | undefined, lang: Language): string => {
+  if (!text) return '';
   return text[lang] || text.en;
 };
 
@@ -84,6 +105,12 @@ export const casesData: CaseStudy[] = [
       uk: 'Автоматизована підтримка клієнтів, рекомендації товарів та відстеження замовлень з AI',
       en: 'Automated customer support, product recommendations and order tracking with AI'
     },
+    fullDescription: {
+      uk: 'Комплексне AI-рішення для інтернет-магазину, що включає інтелектуальний чатбот для підтримки клієнтів, систему рекомендацій товарів на основі поведінки користувача та голосового агента для обробки вхідних дзвінків. Система інтегрована з CRM та платформою електронної комерції.',
+      en: 'A comprehensive AI solution for an online store that includes an intelligent chatbot for customer support, a product recommendation system based on user behavior, and a voice agent for handling incoming calls. The system is integrated with CRM and e-commerce platform.'
+    },
+    timeline: { uk: '4-6 тижнів', en: '4-6 weeks' },
+    investment: { uk: 'від 5,000 CHF', en: 'from 5,000 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
@@ -111,6 +138,63 @@ export const casesData: CaseStudy[] = [
       { value: '24/7', label: { uk: 'Доступність', en: 'Availability' }, prefix: '', suffix: '' },
     ],
     technologies: ['GPT-4', 'Voice AI', 'Shopify', 'WhatsApp', 'CRM Integration'],
+    process: [
+      {
+        number: 1,
+        title: { uk: 'Аналіз та планування', en: 'Analysis & Planning' },
+        description: { uk: 'Глибокий аналіз бізнес-процесів, визначення точок автоматизації та створення технічного завдання', en: 'Deep analysis of business processes, identifying automation points and creating technical specifications' },
+        duration: { uk: '3-5 днів', en: '3-5 days' },
+        deliverables: [
+          { uk: 'Карта користувацьких сценаріїв', en: 'User journey map' },
+          { uk: 'Технічне завдання', en: 'Technical specification' },
+          { uk: 'План інтеграцій', en: 'Integration plan' },
+        ],
+      },
+      {
+        number: 2,
+        title: { uk: 'Розробка AI-агента', en: 'AI Agent Development' },
+        description: { uk: 'Створення та навчання AI-моделі, налаштування промптів та логіки розмов', en: 'Creating and training AI model, setting up prompts and conversation logic' },
+        duration: { uk: '2-3 тижні', en: '2-3 weeks' },
+        deliverables: [
+          { uk: 'Навчена AI-модель', en: 'Trained AI model' },
+          { uk: 'База знань продуктів', en: 'Product knowledge base' },
+          { uk: 'Сценарії діалогів', en: 'Dialogue scenarios' },
+        ],
+      },
+      {
+        number: 3,
+        title: { uk: 'Інтеграція та тестування', en: 'Integration & Testing' },
+        description: { uk: 'Підключення до CRM, платформи магазину та тестування всіх сценаріїв', en: 'Connecting to CRM, store platform and testing all scenarios' },
+        duration: { uk: '1 тиждень', en: '1 week' },
+        deliverables: [
+          { uk: 'Інтеграція з Shopify/WooCommerce', en: 'Shopify/WooCommerce integration' },
+          { uk: 'CRM синхронізація', en: 'CRM synchronization' },
+          { uk: 'QA тестування', en: 'QA testing' },
+        ],
+      },
+      {
+        number: 4,
+        title: { uk: 'Запуск та оптимізація', en: 'Launch & Optimization' },
+        description: { uk: 'Поступовий запуск, моніторинг та оптимізація на основі реальних даних', en: 'Gradual launch, monitoring and optimization based on real data' },
+        duration: { uk: '1 тиждень', en: '1 week' },
+        deliverables: [
+          { uk: 'Живий AI-агент на сайті', en: 'Live AI agent on site' },
+          { uk: 'Дашборд аналітики', en: 'Analytics dashboard' },
+          { uk: 'Документація та навчання', en: 'Documentation & training' },
+        ],
+      },
+    ],
+    features: [
+      { icon: '💬', title: { uk: 'Миттєві відповіді', en: 'Instant Responses' }, description: { uk: 'AI відповідає за <3 секунди на будь-яке питання', en: 'AI responds in <3 seconds to any question' } },
+      { icon: '🎯', title: { uk: 'Персоналізація', en: 'Personalization' }, description: { uk: 'Рекомендації на основі історії покупок', en: 'Recommendations based on purchase history' } },
+      { icon: '📦', title: { uk: 'Трекінг замовлень', en: 'Order Tracking' }, description: { uk: 'Автоматичні оновлення статусу в реальному часі', en: 'Automatic real-time status updates' } },
+      { icon: '🔄', title: { uk: 'Омніканальність', en: 'Omnichannel' }, description: { uk: 'Єдиний досвід через сайт, WhatsApp, Telegram', en: 'Unified experience across site, WhatsApp, Telegram' } },
+    ],
+    testimonial: {
+      quote: { uk: 'AI-чатбот зменшив навантаження на підтримку на 35% вже в перший місяць. Клієнти отримують відповіді миттєво, і ми бачимо реальне зростання конверсії.', en: 'The AI chatbot reduced support load by 35% in the first month. Customers get instant answers, and we see real conversion growth.' },
+      author: 'E-commerce Owner',
+      role: { uk: 'Власник інтернет-магазину', en: 'E-commerce Store Owner' },
+    },
     ctas: [
       { id: 'demo', label: { uk: 'Спробувати E-commerce AI', en: 'Try E-commerce AI' }, icon: '🤖', action: 'demo', primary: true },
       { id: 'contact', label: { uk: 'Отримати для мого магазину', en: 'Get for My Store' }, icon: '💬', action: 'contact' },
@@ -127,13 +211,19 @@ export const casesData: CaseStudy[] = [
     icon: '💄',
     industryName: { uk: 'Салон краси', en: 'Beauty Salon' },
     title: { 
-      uk: 'AI Адміністратор для салону краси (WhatsApp + Чат)', 
-      en: 'AI Admin for Beauty Salon (WhatsApp + Chat)' 
+      uk: 'AI Адміністратор для салону краси', 
+      en: 'AI Admin for Beauty Salon' 
     },
     shortDescription: { 
-      uk: 'Автоматизоване бронювання, нагадування та робота з клієнтами для б\'юті-бізнесу',
-      en: 'Automated booking, reminders and customer engagement for beauty business'
+      uk: 'Автоматизоване бронювання та робота з клієнтами для б\'юті-бізнесу',
+      en: 'Automated booking and customer engagement for beauty business'
     },
+    fullDescription: {
+      uk: 'Повноцінний AI-адміністратор для салону краси, що працює через WhatsApp та веб-чат. Система автоматично приймає записи, нагадує про візити, рекомендує додаткові послуги та відповідає на запитання клієнтів 24/7.',
+      en: 'A full-fledged AI administrator for a beauty salon that works through WhatsApp and web chat. The system automatically accepts appointments, sends visit reminders, recommends additional services, and answers customer questions 24/7.'
+    },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    investment: { uk: 'від 3,000 CHF', en: 'from 3,000 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
@@ -148,10 +238,10 @@ export const casesData: CaseStudy[] = [
       title: { uk: 'Що ми автоматизували', en: 'What We Automated' },
       points: [
         { uk: 'AI-асистент для бронювання 24/7', en: '24/7 AI booking assistant' },
-        { uk: 'Автоматичні відповіді на FAQ (ціни, послуги, наявність)', en: 'Automated FAQ responses (prices, services, availability)' },
-        { uk: 'Розумні нагадування про записи через WhatsApp', en: 'Smart appointment reminders via WhatsApp' },
-        { uk: 'Персоналізовані рекомендації та upsell послуг', en: 'Personalized recommendations and service upselling' },
-        { uk: 'Відстеження історії та переваг клієнтів', en: 'Client history and preferences tracking' },
+        { uk: 'Автоматичні відповіді на FAQ', en: 'Automated FAQ responses' },
+        { uk: 'Розумні нагадування про записи', en: 'Smart appointment reminders' },
+        { uk: 'Персоналізовані рекомендації послуг', en: 'Personalized service recommendations' },
+        { uk: 'Відстеження історії клієнтів', en: 'Client history tracking' },
       ],
     },
     results: [
@@ -160,7 +250,48 @@ export const casesData: CaseStudy[] = [
       { value: '0', label: { uk: 'Пропущених повідомлень', en: 'Missed Messages' }, prefix: '', suffix: '' },
       { value: '3x', label: { uk: 'Швидша відповідь', en: 'Faster Response' }, prefix: '', suffix: '' },
     ],
-    technologies: ['GPT-4', 'WhatsApp API', 'Booking System', 'CRM', 'SMS Notifications'],
+    technologies: ['GPT-4', 'WhatsApp API', 'Booking System', 'CRM', 'SMS'],
+    process: [
+      {
+        number: 1,
+        title: { uk: 'Онбординг', en: 'Onboarding' },
+        description: { uk: 'Збір інформації про послуги, ціни, графік роботи та особливості салону', en: 'Gathering information about services, prices, schedule and salon specifics' },
+        duration: { uk: '2-3 дні', en: '2-3 days' },
+        deliverables: [
+          { uk: 'Каталог послуг', en: 'Service catalog' },
+          { uk: 'Прайс-лист', en: 'Price list' },
+          { uk: 'Графік майстрів', en: 'Masters schedule' },
+        ],
+      },
+      {
+        number: 2,
+        title: { uk: 'Налаштування AI', en: 'AI Setup' },
+        description: { uk: 'Створення AI-асистента з унікальною особистістю та знаннями вашого салону', en: 'Creating an AI assistant with unique personality and knowledge of your salon' },
+        duration: { uk: '1 тиждень', en: '1 week' },
+        deliverables: [
+          { uk: 'Персоналізований AI-асистент', en: 'Personalized AI assistant' },
+          { uk: 'База відповідей на FAQ', en: 'FAQ response database' },
+          { uk: 'Логіка бронювання', en: 'Booking logic' },
+        ],
+      },
+      {
+        number: 3,
+        title: { uk: 'Запуск', en: 'Launch' },
+        description: { uk: 'Підключення до WhatsApp, інтеграція з календарем та запуск в роботу', en: 'Connecting to WhatsApp, calendar integration and going live' },
+        duration: { uk: '3-5 днів', en: '3-5 days' },
+        deliverables: [
+          { uk: 'Робочий AI-бот', en: 'Working AI bot' },
+          { uk: 'Синхронізація з календарем', en: 'Calendar sync' },
+          { uk: 'Система нагадувань', en: 'Reminder system' },
+        ],
+      },
+    ],
+    features: [
+      { icon: '📅', title: { uk: 'Онлайн бронювання', en: 'Online Booking' }, description: { uk: 'Клієнти записуються в зручний час без дзвінків', en: 'Clients book at convenient time without calls' } },
+      { icon: '⏰', title: { uk: 'Нагадування', en: 'Reminders' }, description: { uk: 'Автоматичні SMS/WhatsApp за 24 та 2 години', en: 'Auto SMS/WhatsApp 24h and 2h before' } },
+      { icon: '💅', title: { uk: 'Upsell', en: 'Upselling' }, description: { uk: 'AI пропонує додаткові послуги за контекстом', en: 'AI suggests additional services contextually' } },
+      { icon: '📊', title: { uk: 'Аналітика', en: 'Analytics' }, description: { uk: 'Статистика завантаженості та популярних послуг', en: 'Statistics on load and popular services' } },
+    ],
     ctas: [
       { id: 'demo', label: { uk: 'Спробувати Beauty AI', en: 'Try Beauty AI' }, icon: '💄', action: 'demo', primary: true },
       { id: 'contact', label: { uk: 'Отримати для мого салону', en: 'Get for My Salon' }, icon: '💬', action: 'contact' },
@@ -184,6 +315,12 @@ export const casesData: CaseStudy[] = [
       uk: 'Інтелектуальна фільтрація та кваліфікація лідів до участі агента',
       en: 'Intelligent lead filtering and qualification before agent involvement'
     },
+    fullDescription: {
+      uk: 'Система AI-кваліфікації лідів для агентства нерухомості. AI-бот кваліфікує потенційних клієнтів за бюджетом, термінами, вподобаннями та передає тільки гарячі ліди агентам, економлячи десятки годин щотижня.',
+      en: 'AI lead qualification system for real estate agency. The AI bot qualifies potential clients by budget, timeline, preferences and passes only hot leads to agents, saving dozens of hours weekly.'
+    },
+    timeline: { uk: '3-4 тижні', en: '3-4 weeks' },
+    investment: { uk: 'від 4,000 CHF', en: 'from 4,000 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
@@ -197,20 +334,43 @@ export const casesData: CaseStudy[] = [
     solution: {
       title: { uk: 'Що ми автоматизували', en: 'What We Automated' },
       points: [
-        { uk: 'AI-чатбот кваліфікації на об\'єктах нерухомості', en: 'AI qualification chatbot on property listings' },
-        { uk: 'Фільтр по бюджету та термінах до контакту з людиною', en: 'Budget and timeline filter before human contact' },
-        { uk: 'Автоматична передача в CRM з оцінкою лідів', en: 'Automatic CRM handoff with lead scoring' },
+        { uk: 'AI-чатбот кваліфікації на об\'єктах', en: 'AI qualification chatbot on listings' },
+        { uk: 'Фільтр по бюджету та термінах', en: 'Budget and timeline filter' },
+        { uk: 'Автоматична передача в CRM', en: 'Automatic CRM handoff' },
         { uk: 'Персоналізовані рекомендації об\'єктів', en: 'Personalized property recommendations' },
-        { uk: 'Захоплення лідів та первинний контакт 24/7', en: '24/7 lead capture and initial contact' },
+        { uk: 'Захоплення лідів 24/7', en: '24/7 lead capture' },
       ],
     },
     results: [
-      { value: '50', label: { uk: 'Неякісних лідів відфільтровано', en: 'Bad Leads Filtered' }, prefix: '-', suffix: '%' },
+      { value: '50', label: { uk: 'Неякісних лідів', en: 'Bad Leads Filtered' }, prefix: '-', suffix: '%' },
       { value: '2x', label: { uk: 'Вищий close rate', en: 'Higher Close Rate' }, prefix: '', suffix: '' },
-      { value: '10+', label: { uk: 'Годин збережено щотижня', en: 'Hours Saved Weekly' }, prefix: '', suffix: 'h' },
-      { value: '95', label: { uk: 'Response rate лідів', en: 'Lead Response Rate' }, prefix: '', suffix: '%' },
+      { value: '10+', label: { uk: 'Годин збережено', en: 'Hours Saved' }, prefix: '', suffix: 'h' },
+      { value: '95', label: { uk: 'Response rate', en: 'Response Rate' }, prefix: '', suffix: '%' },
     ],
-    technologies: ['GPT-4', 'CRM Integration', 'Lead Scoring', 'WhatsApp', 'Email Automation'],
+    technologies: ['GPT-4', 'CRM Integration', 'Lead Scoring', 'WhatsApp', 'Email'],
+    process: [
+      {
+        number: 1,
+        title: { uk: 'Аналіз воронки', en: 'Funnel Analysis' },
+        description: { uk: 'Вивчення поточного процесу роботи з лідами та визначення критеріїв кваліфікації', en: 'Studying current lead process and defining qualification criteria' },
+        duration: { uk: '3-5 днів', en: '3-5 days' },
+        deliverables: [{ uk: 'Критерії кваліфікації', en: 'Qualification criteria' }, { uk: 'Скорингова модель', en: 'Scoring model' }],
+      },
+      {
+        number: 2,
+        title: { uk: 'Розробка бота', en: 'Bot Development' },
+        description: { uk: 'Створення AI-бота з логікою кваліфікації та інтеграцією з CRM', en: 'Creating AI bot with qualification logic and CRM integration' },
+        duration: { uk: '2 тижні', en: '2 weeks' },
+        deliverables: [{ uk: 'AI-бот', en: 'AI bot' }, { uk: 'CRM інтеграція', en: 'CRM integration' }],
+      },
+      {
+        number: 3,
+        title: { uk: 'Запуск та навчання', en: 'Launch & Training' },
+        description: { uk: 'Запуск системи та навчання команди роботі з кваліфікованими лідами', en: 'System launch and team training on working with qualified leads' },
+        duration: { uk: '1 тиждень', en: '1 week' },
+        deliverables: [{ uk: 'Робоча система', en: 'Working system' }, { uk: 'Навчання команди', en: 'Team training' }],
+      },
+    ],
     ctas: [
       { id: 'demo', label: { uk: 'Спробувати Real Estate AI', en: 'Try Real Estate AI' }, icon: '🏠', action: 'demo', primary: true },
       { id: 'contact', label: { uk: 'Кваліфікувати мої ліди', en: 'Qualify My Leads' }, icon: '💬', action: 'contact' },
@@ -226,43 +386,49 @@ export const casesData: CaseStudy[] = [
     icon: '🎧',
     industryName: { uk: 'Голосовий агент', en: 'Voice Agent' },
     title: { 
-      uk: 'AI Голосовий агент для вхідних дзвінків', 
-      en: 'AI Voice Agent for Incoming Calls' 
+      uk: 'AI Голосовий агент для дзвінків', 
+      en: 'AI Voice Agent for Calls' 
     },
     shortDescription: { 
-      uk: 'Більше ніколи не пропустите дзвінок з інтелектуальним голосовим AI',
-      en: 'Never miss a call again with intelligent voice AI'
+      uk: 'Більше ніколи не пропустите дзвінок з AI',
+      en: 'Never miss a call again with AI'
     },
+    fullDescription: {
+      uk: 'Інтелектуальний голосовий AI-агент, який відповідає на всі вхідні дзвінки, записує на прийом, відповідає на FAQ та передає складні питання людям. Повна транскрипція та логування в CRM.',
+      en: 'Intelligent voice AI agent that answers all incoming calls, books appointments, responds to FAQs and escalates complex issues to humans. Full transcription and CRM logging.'
+    },
+    timeline: { uk: '3-5 тижнів', en: '3-5 weeks' },
+    investment: { uk: 'від 6,000 CHF', en: 'from 6,000 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
-        { uk: 'Пропущені дзвінки у завантажені години та неробочий час', en: 'Missed calls during busy hours and after hours' },
-        { uk: 'Обмежений робочий час для телефонної підтримки', en: 'Limited business hours for phone support' },
-        { uk: 'Персонал перевантажений рутинними дзвінками', en: 'Staff overwhelmed with routine calls' },
-        { uk: 'Відсутність логування дзвінків та інтеграції з CRM', en: 'No call logging and CRM integration' },
-        { uk: 'Довге очікування на лінії розчаровує клієнтів', en: 'Long hold times frustrate customers' },
+        { uk: 'Пропущені дзвінки у завантажені години', en: 'Missed calls during busy hours' },
+        { uk: 'Обмежений робочий час', en: 'Limited business hours' },
+        { uk: 'Персонал перевантажений', en: 'Staff overwhelmed' },
+        { uk: 'Відсутність логування дзвінків', en: 'No call logging' },
+        { uk: 'Довге очікування', en: 'Long hold times' },
       ],
     },
     solution: {
       title: { uk: 'Що ми автоматизували', en: 'What We Automated' },
       points: [
-        { uk: 'AI голосовий агент відповідає на кожен дзвінок', en: 'AI voice agent answers every call' },
-        { uk: 'Інтелектуальне бронювання записів голосом', en: 'Intelligent voice-based appointment booking' },
-        { uk: 'Обробка FAQ в природній розмові', en: 'Natural conversation FAQ handling' },
-        { uk: 'Плавна передача людині при потребі', en: 'Seamless handoff to human when needed' },
-        { uk: 'Повна транскрипція дзвінків та логування в CRM', en: 'Full call transcription and CRM logging' },
+        { uk: 'AI відповідає на кожен дзвінок', en: 'AI answers every call' },
+        { uk: 'Голосове бронювання записів', en: 'Voice appointment booking' },
+        { uk: 'FAQ в природній розмові', en: 'Natural conversation FAQ' },
+        { uk: 'Передача людині при потребі', en: 'Human handoff when needed' },
+        { uk: 'Транскрипція та CRM', en: 'Transcription & CRM' },
       ],
     },
     results: [
       { value: '0', label: { uk: 'Пропущених дзвінків', en: 'Missed Calls' }, prefix: '', suffix: '' },
       { value: '<3s', label: { uk: 'Час відповіді', en: 'Response Time' }, prefix: '', suffix: '' },
-      { value: '85', label: { uk: 'Дзвінків обробляє AI', en: 'Calls Handled by AI' }, prefix: '', suffix: '%' },
-      { value: '↑', label: { uk: 'Довіра клієнтів', en: 'Customer Trust' }, prefix: '', suffix: '' },
+      { value: '85', label: { uk: 'Обробляє AI', en: 'AI Handled' }, prefix: '', suffix: '%' },
+      { value: '↑', label: { uk: 'Довіра', en: 'Trust' }, prefix: '', suffix: '' },
     ],
     technologies: ['Voice AI', 'Telephony API', 'Speech-to-Text', 'CRM', 'Call Analytics'],
     ctas: [
-      { id: 'voice', label: { uk: 'Послухати голосове демо', en: 'Listen to Voice Demo' }, icon: '🎧', action: 'voice', primary: true },
-      { id: 'book', label: { uk: 'Замовити демо-дзвінок', en: 'Book Demo Call' }, icon: '📞', action: 'book' },
+      { id: 'voice', label: { uk: 'Послухати демо', en: 'Listen to Demo' }, icon: '🎧', action: 'voice', primary: true },
+      { id: 'book', label: { uk: 'Замовити демо', en: 'Book Demo' }, icon: '📞', action: 'book' },
     ],
     featured: true,
   },
@@ -274,49 +440,49 @@ export const casesData: CaseStudy[] = [
     category: 'automation',
     industry: 'general',
     icon: '⚙️',
-    industryName: { uk: 'Автоматизація процесів', en: 'Workflow Automation' },
+    industryName: { uk: 'Автоматизація', en: 'Automation' },
     title: { 
-      uk: 'Наскрізна автоматизація бізнес-процесів', 
-      en: 'End-to-End Business Workflow Automation' 
+      uk: 'Автоматизація бізнес-процесів', 
+      en: 'Business Workflow Automation' 
     },
     shortDescription: { 
-      uk: 'З\'єднайте ваші інструменти та автоматизуйте рутинні завдання з AI',
-      en: 'Connect your tools and automate repetitive tasks with AI'
+      uk: 'З\'єднайте інструменти та автоматизуйте рутину',
+      en: 'Connect tools and automate routine tasks'
     },
+    timeline: { uk: '2-6 тижнів', en: '2-6 weeks' },
+    investment: { uk: 'від 2,500 CHF', en: 'from 2,500 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
-        { uk: 'Ручне введення даних у різні системи', en: 'Manual data entry across systems' },
-        { uk: 'Людські помилки в повторюваних процесах', en: 'Human errors in repetitive processes' },
-        { uk: 'Повільна передача між відділами', en: 'Slow handoffs between departments' },
-        { uk: 'Відсутність видимості bottleneck\'ів', en: 'No visibility into bottlenecks' },
-        { uk: 'Час витрачається на рутинні завдання', en: 'Time wasted on routine tasks' },
+        { uk: 'Ручне введення даних', en: 'Manual data entry' },
+        { uk: 'Людські помилки', en: 'Human errors' },
+        { uk: 'Повільна передача між відділами', en: 'Slow handoffs' },
+        { uk: 'Час на рутинні завдання', en: 'Time on routine tasks' },
       ],
     },
     solution: {
       title: { uk: 'Що ми автоматизували', en: 'What We Automated' },
       points: [
-        { uk: 'AI-powered витяг та введення даних', en: 'AI-powered data extraction and entry' },
-        { uk: 'Автоматична маршрутизація завдань за правилами', en: 'Automatic task routing based on rules' },
-        { uk: 'Інтеграція між CRM, email та інструментами', en: 'Integration between CRM, email and tools' },
-        { uk: 'Сповіщення та алерти в реальному часі', en: 'Real-time notifications and alerts' },
-        { uk: 'Кастомна AI-логіка для прийняття рішень', en: 'Custom AI logic for decision making' },
+        { uk: 'AI-powered введення даних', en: 'AI-powered data entry' },
+        { uk: 'Автоматична маршрутизація', en: 'Automatic routing' },
+        { uk: 'Інтеграція CRM та email', en: 'CRM & email integration' },
+        { uk: 'Сповіщення в реальному часі', en: 'Real-time notifications' },
       ],
     },
     results: [
-      { value: '80', label: { uk: 'Зменшення ручної роботи', en: 'Manual Work Reduced' }, prefix: '-', suffix: '%' },
-      { value: '0', label: { uk: 'Людських помилок', en: 'Human Errors' }, prefix: '', suffix: '' },
-      { value: '5x', label: { uk: 'Швидша обробка', en: 'Faster Processing' }, prefix: '', suffix: '' },
-      { value: '24/7', label: { uk: 'Автоматична робота', en: 'Auto Operation' }, prefix: '', suffix: '' },
+      { value: '80', label: { uk: 'Менше ручної роботи', en: 'Less Manual Work' }, prefix: '-', suffix: '%' },
+      { value: '0', label: { uk: 'Помилок', en: 'Errors' }, prefix: '', suffix: '' },
+      { value: '5x', label: { uk: 'Швидше', en: 'Faster' }, prefix: '', suffix: '' },
+      { value: '24/7', label: { uk: 'Автоматизація', en: 'Automation' }, prefix: '', suffix: '' },
     ],
     technologies: ['AI Agents', 'Zapier', 'Make', 'CRM', 'Custom Integrations'],
     ctas: [
-      { id: 'flow', label: { uk: 'Дивитись потік автоматизації', en: 'View Automation Flow' }, icon: '📊', action: 'flow', primary: true },
-      { id: 'contact', label: { uk: 'Автоматизувати мій бізнес', en: 'Automate My Business' }, icon: '💬', action: 'contact' },
+      { id: 'flow', label: { uk: 'Дивитись потік', en: 'View Flow' }, icon: '📊', action: 'flow', primary: true },
+      { id: 'contact', label: { uk: 'Автоматизувати', en: 'Automate' }, icon: '💬', action: 'contact' },
     ],
   },
 
-  // CASE 6: FACEBOOK OUTREACH AUTOMATION (FEATURED ADVANCED)
+  // CASE 6: FACEBOOK OUTREACH
   {
     id: 'case-facebook-outreach',
     slug: 'facebook-outreach-automation',
@@ -325,51 +491,49 @@ export const casesData: CaseStudy[] = [
     icon: '🚀',
     industryName: { uk: 'Лідогенерація', en: 'Lead Generation' },
     title: { 
-      uk: 'Автоматизована система Facebook Outreach з AI персоналізацією', 
-      en: 'Automated Facebook Outreach System with AI Personalization' 
+      uk: 'Facebook Outreach з AI', 
+      en: 'Facebook Outreach with AI' 
     },
     shortDescription: { 
-      uk: 'Enterprise-рівня автоматизація outreach, що генерує ліди в масштабі поки ви спите',
-      en: 'Enterprise-level outreach automation that generates leads at scale while you sleep'
+      uk: 'Автоматизація outreach з AI персоналізацією',
+      en: 'Outreach automation with AI personalization'
     },
+    timeline: { uk: '4-6 тижнів', en: '4-6 weeks' },
+    investment: { uk: 'від 8,000 CHF', en: 'from 8,000 CHF' },
     problem: {
       title: { uk: 'До автоматизації', en: 'Before Automation' },
       points: [
-        { uk: 'Ручний outreach у Facebook-групах — повільно та втомливо', en: 'Manual outreach in Facebook groups — slow and tedious' },
-        { uk: 'Низький об\'єм: лише 10-20 повідомлень на день', en: 'Low volume: only 10-20 messages per day' },
-        { uk: 'Людські помилки та непослідовний messaging', en: 'Human errors and inconsistent messaging' },
-        { uk: 'Неможливо масштабувати без найму людей', en: 'Cannot scale without hiring people' },
-        { uk: 'Ризик обмежень акаунту при ручній роботі', en: 'Account restriction risk with manual work' },
+        { uk: 'Ручний outreach — повільно', en: 'Manual outreach — slow' },
+        { uk: 'Лише 10-20 повідомлень/день', en: 'Only 10-20 messages/day' },
+        { uk: 'Людські помилки', en: 'Human errors' },
+        { uk: 'Неможливо масштабувати', en: 'Cannot scale' },
       ],
     },
     solution: {
       title: { uk: 'Що ми побудували', en: 'What We Built' },
       points: [
-        { uk: 'Повністю автоматизована система Facebook outreach', en: 'Fully automated Facebook outreach system' },
-        { uk: 'AI-персоналізація повідомлень для кожного prospect', en: 'AI message personalization for each prospect' },
-        { uk: 'Headless browser автоматизація з підтримкою 2FA', en: 'Headless browser automation with 2FA support' },
-        { uk: 'UI Dashboard для управління кампаніями', en: 'UI Dashboard for campaign management' },
-        { uk: 'Логи та моніторинг прогресу в реальному часі', en: 'Real-time logs and progress monitoring' },
-        { uk: 'Розумне управління сесіями та функції безпеки', en: 'Smart session management and security features' },
+        { uk: 'Автоматизована система outreach', en: 'Automated outreach system' },
+        { uk: 'AI-персоналізація повідомлень', en: 'AI message personalization' },
+        { uk: 'UI Dashboard для кампаній', en: 'Campaign UI Dashboard' },
+        { uk: 'Логи та моніторинг', en: 'Logs & monitoring' },
       ],
     },
     results: [
-      { value: '15x', label: { uk: 'Збільшення швидкості outreach', en: 'Outreach Speed Increase' }, prefix: '', suffix: '' },
-      { value: '40+', label: { uk: 'Годин збережено щомісяця', en: 'Hours Saved Monthly' }, prefix: '', suffix: 'h' },
-      { value: '24/7', label: { uk: 'Лідогенерація', en: 'Lead Generation' }, prefix: '', suffix: '' },
-      { value: '∞', label: { uk: 'Масштабованість', en: 'Scalability' }, prefix: '', suffix: '' },
+      { value: '15x', label: { uk: 'Швидкість outreach', en: 'Outreach Speed' }, prefix: '', suffix: '' },
+      { value: '40+', label: { uk: 'Годин збережено', en: 'Hours Saved' }, prefix: '', suffix: 'h' },
+      { value: '24/7', label: { uk: 'Лідогенерація', en: 'Lead Gen' }, prefix: '', suffix: '' },
+      { value: '∞', label: { uk: 'Масштаб', en: 'Scale' }, prefix: '', suffix: '' },
     ],
-    technologies: ['Flask API', 'Headless Browser', 'Facebook Groups', 'Campaign Logic', 'Session Management', 'UI Dashboard', 'Logging'],
+    technologies: ['Flask API', 'Headless Browser', 'Facebook Groups', 'Campaign Logic', 'UI Dashboard'],
     ctas: [
-      { id: 'demo', label: { uk: 'Отримати цю Outreach систему', en: 'Get this Outreach System' }, icon: '🚀', action: 'demo', primary: true },
-      { id: 'contact', label: { uk: 'Обговорити стратегію Outreach', en: 'Discuss Outreach Strategy' }, icon: '💬', action: 'contact' },
-      { id: 'flow', label: { uk: 'Дивитись логіку автоматизації', en: 'See Automation Logic' }, icon: '📊', action: 'flow' },
+      { id: 'demo', label: { uk: 'Отримати систему', en: 'Get System' }, icon: '🚀', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Обговорити', en: 'Discuss' }, icon: '💬', action: 'contact' },
     ],
     featured: true,
     hasUIDemo: true,
   },
 
-  // CASE 7: FLOWERS (bonus case)
+  // CASE 7: FLOWERS
   {
     id: 'case-flowers',
     slug: 'flower-shop-ai-sales',
@@ -378,47 +542,45 @@ export const casesData: CaseStudy[] = [
     icon: '🌸',
     industryName: { uk: 'Магазин квітів', en: 'Flower Shop' },
     title: { 
-      uk: 'AI Асистент продажів для доставки квітів', 
-      en: 'AI Sales Assistant for Flower Delivery' 
+      uk: 'AI Асистент для доставки квітів', 
+      en: 'AI Assistant for Flower Delivery' 
     },
     shortDescription: { 
-      uk: 'Персоналізовані рекомендації букетів та безшовний досвід замовлення',
-      en: 'Personalized bouquet recommendations and seamless ordering experience'
+      uk: 'Персоналізовані рекомендації букетів',
+      en: 'Personalized bouquet recommendations'
     },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    investment: { uk: 'від 2,500 CHF', en: 'from 2,500 CHF' },
     problem: {
       title: { uk: 'До впровадження AI', en: 'Before AI' },
       points: [
-        { uk: 'Клієнти не впевнені який букет обрати', en: 'Customers unsure which bouquet to choose' },
-        { uk: 'Довгий процес прийняття рішення без допомоги', en: 'Long decision process without guidance' },
-        { uk: 'Втрачені можливості upsell', en: 'Lost upsell opportunities' },
-        { uk: 'Ручний прийом замовлень через дзвінки/повідомлення', en: 'Manual order taking via calls/messages' },
-        { uk: 'Відсутність персоналізованих рекомендацій', en: 'No personalized recommendations' },
+        { uk: 'Клієнти не впевнені що обрати', en: 'Customers unsure what to choose' },
+        { uk: 'Довгий процес рішення', en: 'Long decision process' },
+        { uk: 'Втрачені upsell можливості', en: 'Lost upsell opportunities' },
       ],
     },
     solution: {
       title: { uk: 'Що ми автоматизували', en: 'What We Automated' },
       points: [
-        { uk: 'AI асистент питає про привід та переваги', en: 'AI assistant asks about occasion and preferences' },
-        { uk: 'Розумні рекомендації букетів з фото', en: 'Smart bouquet recommendations with photos' },
-        { uk: 'Автоматичні upsell (листівки, цукерки, вази)', en: 'Automatic upsells (cards, chocolates, vases)' },
-        { uk: 'Миттєве планування доставки', en: 'Instant delivery scheduling' },
-        { uk: 'Follow-up для повторних приводів', en: 'Follow-up for recurring occasions' },
+        { uk: 'AI питає про привід', en: 'AI asks about occasion' },
+        { uk: 'Розумні рекомендації', en: 'Smart recommendations' },
+        { uk: 'Автоматичні upsell', en: 'Automatic upsells' },
       ],
     },
     results: [
-      { value: '35', label: { uk: 'Середній чек', en: 'Avg Order Value' }, prefix: '+', suffix: '%' },
-      { value: '50', label: { uk: 'Швидше замовлення', en: 'Faster Ordering' }, prefix: '', suffix: '%' },
-      { value: '2x', label: { uk: 'Повторних клієнтів', en: 'Repeat Customers' }, prefix: '', suffix: '' },
-      { value: '90', label: { uk: 'Задоволеність клієнтів', en: 'Customer Satisfaction' }, prefix: '', suffix: '%' },
+      { value: '35', label: { uk: 'Середній чек', en: 'Avg Order' }, prefix: '+', suffix: '%' },
+      { value: '50', label: { uk: 'Швидше', en: 'Faster' }, prefix: '', suffix: '%' },
+      { value: '2x', label: { uk: 'Повторних', en: 'Repeat' }, prefix: '', suffix: '' },
+      { value: '90', label: { uk: 'Задоволені', en: 'Satisfied' }, prefix: '', suffix: '%' },
     ],
-    technologies: ['GPT-4', 'E-commerce Integration', 'WhatsApp', 'Delivery API'],
+    technologies: ['GPT-4', 'E-commerce', 'WhatsApp', 'Delivery API'],
     ctas: [
       { id: 'demo', label: { uk: 'Спробувати Flower AI', en: 'Try Flower AI' }, icon: '🌸', action: 'demo', primary: true },
-      { id: 'contact', label: { uk: 'Отримати для мого магазину', en: 'Get for My Store' }, icon: '💬', action: 'contact' },
+      { id: 'contact', label: { uk: 'Отримати для магазину', en: 'Get for Store' }, icon: '💬', action: 'contact' },
     ],
   },
 
-  // CASE 8: SWEEZY - SOCIAL IMPACT (FEATURED)
+  // CASE 8: SWEEZY
   {
     id: 'case-sweezy',
     slug: 'sweezy',
@@ -427,32 +589,28 @@ export const casesData: CaseStudy[] = [
     icon: '🇺🇦',
     industryName: { uk: 'Соціальний проект', en: 'Social Impact' },
     title: { 
-      uk: 'Sweezy — Розумний цифровий помічник', 
-      en: 'Sweezy — Smart Digital Assistant' 
+      uk: 'Sweezy — Цифровий помічник', 
+      en: 'Sweezy — Digital Assistant' 
     },
     shortDescription: { 
-      uk: 'Мобільний застосунок з практичними гайдами, чеклістами та AI-асистентом для українців',
-      en: 'Mobile app with practical guides, checklists and AI assistant for Ukrainians'
+      uk: 'Мобільний застосунок з гайдами та AI',
+      en: 'Mobile app with guides and AI'
     },
+    timeline: { uk: '3-4 місяці', en: '3-4 months' },
     problem: {
       title: { uk: 'Виклик', en: 'Challenge' },
       points: [
-        { uk: 'Розрізнена інформація в різних джерелах', en: 'Scattered information across sources' },
-        { uk: 'Складність пошуку актуальних та перевірених даних', en: 'Difficulty finding current and verified data' },
-        { uk: 'Відсутність структурованих покрокових інструкцій', en: 'No structured step-by-step guides' },
-        { uk: 'Мовні бар\'єри при пошуку інформації', en: 'Language barriers when searching' },
-        { uk: 'Немає єдиної точки доступу до всіх сервісів', en: 'No single access point for all services' },
+        { uk: 'Розрізнена інформація', en: 'Scattered information' },
+        { uk: 'Складність пошуку даних', en: 'Difficulty finding data' },
+        { uk: 'Мовні бар\'єри', en: 'Language barriers' },
       ],
     },
     solution: {
       title: { uk: 'Що ми створили', en: 'What We Built' },
       points: [
-        { uk: 'Практичні гайди та покрокові інструкції', en: 'Practical guides and step-by-step instructions' },
-        { uk: 'Чеклісти та шаблони для повсякденних завдань', en: 'Checklists and templates for daily tasks' },
-        { uk: 'Багатомовний контент', en: 'Multilingual content' },
-        { uk: 'Особистий кабінет з персоналізацією', en: 'Personal account with customization' },
-        { uk: 'AI-асистент що відповідає 24/7', en: '24/7 AI assistant' },
-        { uk: 'Простий та інтуїтивний інтерфейс', en: 'Simple and intuitive interface' },
+        { uk: 'Практичні гайди', en: 'Practical guides' },
+        { uk: 'Чеклісти та шаблони', en: 'Checklists & templates' },
+        { uk: 'AI-асистент 24/7', en: '24/7 AI assistant' },
       ],
     },
     results: [
@@ -461,28 +619,24 @@ export const casesData: CaseStudy[] = [
       { value: '50+', label: { uk: 'Гайдів', en: 'Guides' }, prefix: '', suffix: '' },
       { value: '4.8', label: { uk: 'Рейтинг', en: 'Rating' }, prefix: '⭐', suffix: '' },
     ],
-    technologies: ['React Native', 'GPT-4', 'Firebase', 'Node.js', 'Push Notifications', 'App Store'],
+    technologies: ['React Native', 'GPT-4', 'Firebase', 'Node.js', 'App Store'],
     ctas: [
       { id: 'demo', label: { uk: 'Дізнатися більше', en: 'Learn More' }, icon: '💙', action: 'demo', primary: true },
-      { id: 'contact', label: { uk: 'Стати партнером', en: 'Become a Partner' }, icon: '🤝', action: 'contact' },
+      { id: 'contact', label: { uk: 'Стати партнером', en: 'Become Partner' }, icon: '🤝', action: 'contact' },
     ],
     featured: true,
-    hasUIDemo: false,
   },
 ];
 
-// Helper to get case by slug
 export const getCaseBySlug = (slug: string): CaseStudy | undefined => {
   return casesData.find(c => c.slug === slug);
 };
 
-// Helper to get cases by category
 export const getCasesByCategory = (category: CaseCategory | 'all'): CaseStudy[] => {
   if (category === 'all') return casesData;
   return casesData.filter(c => c.category === category);
 };
 
-// Helper to get featured cases
 export const getFeaturedCases = (): CaseStudy[] => {
   return casesData.filter(c => c.featured);
 };
