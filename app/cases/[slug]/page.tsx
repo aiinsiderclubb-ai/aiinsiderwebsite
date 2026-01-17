@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, AlertTriangle, Zap, 
-  Clock, Wallet, ChevronRight, Star, Quote, MessageCircle, Phone, ExternalLink,
-  Shield, Headphones, RefreshCw, BarChart3, Gift
+  Clock, ChevronRight, Star, Quote, MessageCircle, Phone, ExternalLink,
+  Shield, Headphones, RefreshCw, BarChart3, Gift, Trophy, Cpu
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -153,20 +153,14 @@ export default function CaseDetailPage() {
               </p>
 
               {/* Quick Info Pills */}
-              <div className="flex flex-wrap gap-3 mb-8">
-                {caseData.timeline && (
+              {caseData.timeline && (
+                <div className="flex flex-wrap gap-3 mb-8">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
                     <Clock className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-300">{getLocalizedText(caseData.timeline, lang)}</span>
+                    <span className="text-sm text-gray-300">{lang === 'uk' ? 'Термін реалізації:' : 'Timeline:'} {getLocalizedText(caseData.timeline, lang)}</span>
                   </div>
-                )}
-                {caseData.investment && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                    <Wallet className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-300">{getLocalizedText(caseData.investment, lang)}</span>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* CTAs */}
               <div className="flex flex-wrap gap-3">
@@ -295,6 +289,84 @@ export default function CaseDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* System Capabilities */}
+      {caseData.systemCapabilities && caseData.systemCapabilities.length > 0 && (
+        <section className="py-16 px-6 border-t border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-4">
+                <Cpu className="w-4 h-4 text-blue-400" />
+                <span className="text-sm text-gray-300">{lang === 'uk' ? 'Як це працює' : 'How It Works'}</span>
+              </div>
+              <h2 className="text-3xl font-bold mb-3">
+                {lang === 'uk' ? 'Що робить система' : 'What the System Does'}
+              </h2>
+            </motion.div>
+
+            <div className="space-y-6">
+              {caseData.systemCapabilities.map((cap, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-6 rounded-2xl bg-gradient-to-r from-white/[0.03] to-transparent border border-white/10"
+                >
+                  <h4 className="text-xl font-bold text-white mb-3">{getLocalizedText(cap.title, lang)}</h4>
+                  <p className="text-gray-400 leading-relaxed">{getLocalizedText(cap.description, lang)}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Achievements */}
+      {caseData.achievements && caseData.achievements.length > 0 && (
+        <section className="py-16 px-6">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-4">
+                <Trophy className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm text-yellow-300">{lang === 'uk' ? 'Реальні досягнення' : 'Real Achievements'}</span>
+              </div>
+              <h2 className="text-3xl font-bold mb-3">
+                {lang === 'uk' ? 'Чого ми досягли' : 'What We Achieved'}
+              </h2>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {caseData.achievements.map((achievement, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5"
+                >
+                  <div className="w-8 h-8 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  </div>
+                  <p className="text-gray-300">{getLocalizedText(achievement, lang)}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Dashboard Preview */}
       {dashboardType && (
