@@ -290,37 +290,101 @@ export default function CaseDetailPage() {
         </div>
       </section>
 
-      {/* System Capabilities */}
+      {/* System Capabilities - WOW Design */}
       {caseData.systemCapabilities && caseData.systemCapabilities.length > 0 && (
-        <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+        <section className="py-20 px-6 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 60%)',
+                filter: 'blur(60px)',
+              }}
+            />
+          </div>
+
+          <div className="relative max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-4">
-                <Cpu className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-gray-300">{lang === 'uk' ? 'Як це працює' : 'How It Works'}</span>
-              </div>
-              <h2 className="text-3xl font-bold mb-3">
-                {lang === 'uk' ? 'Що робить система' : 'What the System Does'}
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6"
+              >
+                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                <span className="text-sm font-medium text-blue-300">{lang === 'uk' ? 'Як це працює' : 'How It Works'}</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                {lang === 'uk' ? 'Що робить ' : 'What the '}
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  {lang === 'uk' ? 'система' : 'System Does'}
+                </span>
               </h2>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="grid gap-6">
               {caseData.systemCapabilities.map((cap, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="p-6 rounded-2xl bg-gradient-to-r from-white/[0.03] to-transparent border border-white/10"
+                  transition={{ delay: i * 0.15, duration: 0.5 }}
+                  className="group relative"
                 >
-                  <h4 className="text-xl font-bold text-white mb-3">{getLocalizedText(cap.title, lang)}</h4>
-                  <p className="text-gray-400 leading-relaxed">{getLocalizedText(cap.description, lang)}</p>
+                  {/* Card */}
+                  <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
+                    {/* Gradient line on left */}
+                    <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${
+                      i === 0 ? 'from-blue-500 to-blue-600' : 
+                      i === 1 ? 'from-purple-500 to-purple-600' : 
+                      'from-pink-500 to-pink-600'
+                    }`} />
+                    
+                    {/* Number badge */}
+                    <div className={`absolute top-6 right-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${
+                      i === 0 ? 'from-blue-500/20 to-blue-600/10' : 
+                      i === 1 ? 'from-purple-500/20 to-purple-600/10' : 
+                      'from-pink-500/20 to-pink-600/10'
+                    } border ${
+                      i === 0 ? 'border-blue-500/30' : 
+                      i === 1 ? 'border-purple-500/30' : 
+                      'border-pink-500/30'
+                    } flex items-center justify-center`}>
+                      <span className={`text-lg font-bold ${
+                        i === 0 ? 'text-blue-400' : 
+                        i === 1 ? 'text-purple-400' : 
+                        'text-pink-400'
+                      }`}>0{i + 1}</span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="pr-16">
+                      <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-gray-100 transition-colors">
+                        {getLocalizedText(cap.title, lang)}
+                      </h4>
+                      <p className="text-gray-400 leading-relaxed text-lg">
+                        {getLocalizedText(cap.description, lang)}
+                      </p>
+                    </div>
+
+                    {/* Hover glow */}
+                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl`}
+                      style={{
+                        background: `radial-gradient(circle at 50% 100%, ${
+                          i === 0 ? 'rgba(59, 130, 246, 0.1)' : 
+                          i === 1 ? 'rgba(168, 85, 247, 0.1)' : 
+                          'rgba(236, 72, 153, 0.1)'
+                        } 0%, transparent 70%)`,
+                      }}
+                    />
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -328,42 +392,102 @@ export default function CaseDetailPage() {
         </section>
       )}
 
-      {/* Achievements */}
+      {/* Achievements - WOW Design */}
       {caseData.achievements && caseData.achievements.length > 0 && (
-        <section className="py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section className="py-20 px-6 relative overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div 
+              className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, transparent 60%)',
+                filter: 'blur(80px)',
+              }}
+            />
+          </div>
+
+          <div className="relative max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-4">
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 mb-6"
+              >
                 <Trophy className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm text-yellow-300">{lang === 'uk' ? 'Реальні досягнення' : 'Real Achievements'}</span>
-              </div>
-              <h2 className="text-3xl font-bold mb-3">
-                {lang === 'uk' ? 'Чого ми досягли' : 'What We Achieved'}
+                <span className="text-sm font-medium text-yellow-300">{lang === 'uk' ? 'Реальні досягнення' : 'Real Achievements'}</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                {lang === 'uk' ? 'Чого ми ' : 'What We '}
+                <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+                  {lang === 'uk' ? 'досягли' : 'Achieved'}
+                </span>
               </h2>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            {/* Bento Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {caseData.achievements.map((achievement, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5"
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  className={`group relative p-6 rounded-2xl overflow-hidden ${
+                    i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''
+                  }`}
                 >
-                  <div className="w-8 h-8 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  {/* Background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 rounded-2xl group-hover:border-yellow-500/30 transition-all duration-300" />
+                  
+                  {/* Success indicator */}
+                  <div className="absolute top-4 right-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <CheckCircle2 className="w-5 h-5 text-green-400" />
+                    </div>
                   </div>
-                  <p className="text-gray-300">{getLocalizedText(achievement, lang)}</p>
+
+                  {/* Content */}
+                  <div className="relative pr-14">
+                    <div className="w-1 h-8 rounded-full bg-gradient-to-b from-yellow-400 to-orange-500 mb-4" />
+                    <p className="text-white font-medium text-lg leading-relaxed">
+                      {getLocalizedText(achievement, lang)}
+                    </p>
+                  </div>
+
+                  {/* Hover effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.1) 0%, transparent 50%)',
+                    }}
+                  />
                 </motion.div>
               ))}
             </div>
+
+            {/* Stats summary */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-yellow-500/5 via-transparent to-orange-500/5 border border-yellow-500/10"
+            >
+              <div className="flex items-center justify-center gap-3 text-center">
+                <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-gray-400">
+                  {lang === 'uk' 
+                    ? 'Усі досягнення підтверджені реальними даними та метриками' 
+                    : 'All achievements backed by real data and metrics'}
+                </span>
+              </div>
+            </motion.div>
           </div>
         </section>
       )}
