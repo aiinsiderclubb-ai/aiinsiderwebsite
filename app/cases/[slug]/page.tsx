@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, AlertTriangle, Zap, 
-  Clock, Wallet, ChevronRight, Star, Quote, MessageCircle, Phone, ExternalLink
+  Clock, Wallet, ChevronRight, Star, Quote, MessageCircle, Phone, ExternalLink,
+  Shield, Headphones, RefreshCw, BarChart3, Gift
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import DashboardPreview from '../../components/cases/DashboardPreview';
 import { getCaseBySlug, casesData, getLocalizedText } from '../../lib/casesData';
 import { useChatContext } from '../../context/ChatContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -60,6 +62,26 @@ export default function CaseDetailPage() {
     .slice(0, 3);
 
   const isSweezy = caseData.id === 'case-sweezy';
+
+  // Determine dashboard type based on case category
+  const getDashboardType = () => {
+    if (caseData.category === 'ecommerce' && caseData.id !== 'case-flowers') return 'ecommerce';
+    if (caseData.category === 'beauty') return 'beauty';
+    if (caseData.category === 'voice') return 'voice';
+    if (caseData.category === 'realestate') return 'realestate';
+    return null;
+  };
+  
+  const dashboardType = getDashboardType();
+
+  // What's included items
+  const whatsIncluded = [
+    { icon: <Shield className="w-5 h-5" />, label: lang === 'uk' ? 'Безкоштовна підтримка 30 днів' : '30-day free support' },
+    { icon: <RefreshCw className="w-5 h-5" />, label: lang === 'uk' ? 'Безкоштовні оновлення' : 'Free updates' },
+    { icon: <BarChart3 className="w-5 h-5" />, label: lang === 'uk' ? 'Аналітика та звіти' : 'Analytics & reports' },
+    { icon: <Headphones className="w-5 h-5" />, label: lang === 'uk' ? 'Навчання команди' : 'Team training' },
+    { icon: <Gift className="w-5 h-5" />, label: lang === 'uk' ? 'Документація' : 'Documentation' },
+  ];
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -274,6 +296,15 @@ export default function CaseDetailPage() {
         </div>
       </section>
 
+      {/* Dashboard Preview */}
+      {dashboardType && (
+        <section className="py-16 px-6 border-y border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <DashboardPreview type={dashboardType} />
+          </div>
+        </section>
+      )}
+
       {/* Process Timeline */}
       {caseData.process && caseData.process.length > 0 && (
         <section className="py-16 px-6 border-y border-white/5">
@@ -377,6 +408,40 @@ export default function CaseDetailPage() {
           </div>
         </section>
       )}
+
+      {/* What's Included */}
+      <section className="py-16 px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-8 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10"
+          >
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">
+              {lang === 'uk' ? 'Що включено в кожне рішення' : 'Included with Every Solution'}
+            </h3>
+            
+            <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
+              {whatsIncluded.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex flex-col items-center text-center p-4"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-green-400 mb-3">
+                    {item.icon}
+                  </div>
+                  <span className="text-sm text-gray-400">{item.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Testimonial */}
       {caseData.testimonial && (
