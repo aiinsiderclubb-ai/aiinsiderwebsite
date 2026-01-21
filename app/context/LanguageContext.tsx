@@ -25,6 +25,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Keep <html lang="..."> in sync (useful for accessibility and SEO hints)
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
+
   // Save language to localStorage when it changes
   const setLang = (newLang: Language) => {
     setLangState(newLang);
