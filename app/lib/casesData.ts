@@ -822,6 +822,646 @@ export const casesData: CaseStudy[] = [
     ],
     featured: true,
   },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // REAL ESTATE AI SOLUTIONS SUITE
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  // CASE RE-1: AI Operations OS for Real Estate Agencies
+  {
+    id: 'case-realestate-ops-os',
+    slug: 'real-estate-operations-os',
+    category: 'realestate',
+    industry: 'general',
+    icon: '🏢',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'AI Operations OS для агентств нерухомості', 
+      en: 'AI Operations OS for Real Estate Agencies' 
+    },
+    shortDescription: { 
+      uk: 'Централізована AI-система управління всіма операціями агентства — від лідів до закриття угод',
+      en: 'Centralized AI system managing all agency operations — from leads to deal closings'
+    },
+    fullDescription: {
+      uk: 'Операційна система для агентств нерухомості, яка об\'єднує всі бізнес-процеси в єдину AI-керовану платформу. Автоматизація рутини, прозора аналітика для власника, контроль ефективності агентів — все в одному місці. Власник бачить повну картину бізнесу в реальному часі.',
+      en: 'Operating system for real estate agencies that unifies all business processes into a single AI-driven platform. Routine automation, transparent analytics for owner, agent efficiency control — all in one place. Owner sees complete business picture in real-time.'
+    },
+    timeline: { uk: '6-8 тижнів', en: '6-8 weeks' },
+    problem: {
+      title: { uk: 'Проблеми власника агентства', en: 'Agency Owner Problems' },
+      points: [
+        { uk: 'Інформація розкидана по 5+ різних системах та табличках', en: 'Information scattered across 5+ different systems and spreadsheets' },
+        { uk: 'Немає прозорості — власник не бачить реальної ефективності агентів', en: 'No transparency — owner doesn\'t see real agent efficiency' },
+        { uk: 'Ліди губляться між етапами воронки', en: 'Leads get lost between funnel stages' },
+        { uk: 'Важко масштабувати: наймаєш агента — хаосу більше', en: 'Hard to scale: hire an agent — more chaos' },
+        { uk: 'Фінансова аналітика вручну в кінці місяця', en: 'Financial analytics manually at month end' },
+        { uk: 'Немає системи контролю якості комунікації', en: 'No communication quality control system' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Що дає система', en: 'What the System Provides' },
+      points: [
+        { uk: 'Єдиний дашборд з усіма метриками агентства в реальному часі', en: 'Single dashboard with all agency metrics in real-time' },
+        { uk: 'Автоматичний розподіл лідів по агентах за завантаженістю та компетенціями', en: 'Automatic lead distribution by agent workload and competencies' },
+        { uk: 'AI-контроль якості: система аналізує всі комунікації та сигналізує про проблеми', en: 'AI quality control: system analyzes all communications and signals problems' },
+        { uk: 'Автоматизовані звіти для власника щодня, щотижня, щомісяця', en: 'Automated reports for owner daily, weekly, monthly' },
+        { uk: 'Pipeline management з AI-прогнозуванням закриття угод', en: 'Pipeline management with AI deal closure forecasting' },
+        { uk: 'Інтеграція з порталами нерухомості, CRM, бухгалтерією', en: 'Integration with real estate portals, CRM, accounting' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'AI Pipeline Manager', en: 'AI Pipeline Manager' },
+        description: { uk: 'Система автоматично рухає ліди по воронці, нагадує агентам про наступні кроки, прогнозує ймовірність закриття кожної угоди.', en: 'System automatically moves leads through funnel, reminds agents of next steps, predicts each deal closure probability.' }
+      },
+      { 
+        title: { uk: 'Контроль комунікацій', en: 'Communication Control' },
+        description: { uk: 'AI аналізує всі листи, дзвінки та повідомлення. Виявляє незадоволених клієнтів, пропущені follow-up, проблеми в скриптах.', en: 'AI analyzes all emails, calls and messages. Identifies unhappy clients, missed follow-ups, script issues.' }
+      },
+      { 
+        title: { uk: 'Фінансова аналітика', en: 'Financial Analytics' },
+        description: { uk: 'Автоматичний розрахунок комісій, прогноз доходів, аналіз рентабельності по агентах та типах угод.', en: 'Automatic commission calculation, revenue forecast, profitability analysis by agents and deal types.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Час на адміністрування скоротився на 60%', en: 'Admin time reduced by 60%' },
+      { uk: 'Власник економить 10+ годин на тиждень на звітності', en: 'Owner saves 10+ hours weekly on reporting' },
+      { uk: 'Жоден лід не губиться — система контролює кожен етап', en: 'No lead gets lost — system controls every stage' },
+      { uk: 'Прозорість: власник бачить все в реальному часі', en: 'Transparency: owner sees everything in real-time' },
+    ],
+    results: [
+      { value: '60', label: { uk: 'Менше адмін роботи', en: 'Less Admin Work' }, prefix: '-', suffix: '%' },
+      { value: '25', label: { uk: 'Зростання закриття угод', en: 'Deal Closing Growth' }, prefix: '+', suffix: '%' },
+      { value: '0', label: { uk: 'Втрачених лідів', en: 'Lost Leads' }, prefix: '', suffix: '' },
+      { value: '24/7', label: { uk: 'Контроль операцій', en: 'Operations Control' }, prefix: '', suffix: '' },
+    ],
+    technologies: ['GPT-4', 'Custom Dashboard', 'CRM Integration', 'Analytics Engine', 'Workflow Automation', 'Real Estate Portal API'],
+    features: [
+      { icon: '📊', title: { uk: 'Owner Dashboard', en: 'Owner Dashboard' }, description: { uk: 'Всі метрики бізнесу на одному екрані', en: 'All business metrics on one screen' } },
+      { icon: '🔄', title: { uk: 'Auto Pipeline', en: 'Auto Pipeline' }, description: { uk: 'AI рухає ліди по воронці автоматично', en: 'AI moves leads through funnel automatically' } },
+      { icon: '🎯', title: { uk: 'Agent Scoring', en: 'Agent Scoring' }, description: { uk: 'Об\'єктивна оцінка ефективності кожного агента', en: 'Objective efficiency score for each agent' } },
+      { icon: '📈', title: { uk: 'Revenue Forecast', en: 'Revenue Forecast' }, description: { uk: 'AI прогнозує дохід на місяць вперед', en: 'AI forecasts revenue month ahead' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Запросити демо', en: 'Request Demo' }, icon: '🏢', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Обговорити впровадження', en: 'Discuss Implementation' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-2: AI Realtor Productivity System
+  {
+    id: 'case-realestate-realtor-productivity',
+    slug: 'realtor-productivity-system',
+    category: 'realestate',
+    industry: 'general',
+    icon: '👔',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'AI система продуктивності рієлтора', 
+      en: 'AI Realtor Productivity System' 
+    },
+    shortDescription: { 
+      uk: 'Особистий AI-асистент для кожного агента — автоматизує рутину, нагадує про задачі, готує документи',
+      en: 'Personal AI assistant for each agent — automates routine, reminds of tasks, prepares documents'
+    },
+    fullDescription: {
+      uk: 'Кожен агент отримує персонального AI-помічника, який знає його клієнтів, об\'єкти та розклад. Система автоматично готує листи, нагадує про follow-up, генерує описи об\'єктів, відповідає на типові питання клієнтів. Агент фокусується на угодах — рутину робить AI.',
+      en: 'Each agent gets a personal AI assistant that knows their clients, properties and schedule. System automatically prepares emails, reminds about follow-ups, generates property descriptions, answers typical client questions. Agent focuses on deals — AI handles routine.'
+    },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    problem: {
+      title: { uk: 'Що забирає час рієлтора', en: 'What Takes Realtor Time' },
+      points: [
+        { uk: 'Написання листів та відповідей — 2+ години щодня', en: 'Writing emails and replies — 2+ hours daily' },
+        { uk: 'Підготовка описів об\'єктів для порталів', en: 'Preparing property descriptions for portals' },
+        { uk: 'Постійне перемикання між клієнтами — легко забути follow-up', en: 'Constant switching between clients — easy to forget follow-up' },
+        { uk: 'Пошук інформації про об\'єкти для відповіді клієнту', en: 'Searching property info to answer client' },
+        { uk: 'Координація показів та зустрічей', en: 'Coordinating viewings and meetings' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Як AI допомагає агенту', en: 'How AI Helps Agent' },
+      points: [
+        { uk: 'AI генерує персоналізовані листи за секунди — агент лише перевіряє', en: 'AI generates personalized emails in seconds — agent just reviews' },
+        { uk: 'Автоматичні нагадування про кожен follow-up та дедлайн', en: 'Automatic reminders for each follow-up and deadline' },
+        { uk: 'Генерація описів об\'єктів на 3 мовах одним кліком', en: 'Property description generation in 3 languages with one click' },
+        { uk: 'AI відповідає на типові питання клієнтів від імені агента', en: 'AI answers typical client questions on agent\'s behalf' },
+        { uk: 'Автоматичне логування всіх комунікацій в CRM', en: 'Automatic logging of all communications in CRM' },
+        { uk: 'Daily brief: AI зранку показує пріоритетні задачі на день', en: 'Daily brief: AI shows priority tasks for the day each morning' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Smart Email Assistant', en: 'Smart Email Assistant' },
+        description: { uk: 'AI розуміє контекст листа та генерує відповідь у стилі агента. Враховує історію комунікації з клієнтом та деталі об\'єктів.', en: 'AI understands email context and generates reply in agent\'s style. Considers communication history and property details.' }
+      },
+      { 
+        title: { uk: 'Property Description Generator', en: 'Property Description Generator' },
+        description: { uk: 'Завантажте фото та характеристики — AI створить привабливий опис для порталів на будь-якій мові.', en: 'Upload photos and specs — AI creates compelling portal description in any language.' }
+      },
+      { 
+        title: { uk: 'Follow-up Engine', en: 'Follow-up Engine' },
+        description: { uk: 'Система відстежує кожен контакт і нагадує про наступний крок. Жоден клієнт не буде забутий.', en: 'System tracks every contact and reminds of next step. No client will be forgotten.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Агенти економлять 15+ годин на тиждень на рутині', en: 'Agents save 15+ hours weekly on routine' },
+      { uk: 'Швидкість відповіді клієнтам зросла в 5 разів', en: 'Client response speed increased 5x' },
+      { uk: '100% follow-up — жоден клієнт не забутий', en: '100% follow-up — no client forgotten' },
+      { uk: 'Якість описів об\'єктів помітно зросла', en: 'Property description quality noticeably improved' },
+    ],
+    results: [
+      { value: '15', label: { uk: 'Годин збережено/тиждень', en: 'Hours Saved/Week' }, prefix: '+', suffix: 'h' },
+      { value: '5x', label: { uk: 'Швидше відповіді', en: 'Faster Responses' }, prefix: '', suffix: '' },
+      { value: '100%', label: { uk: 'Follow-up rate', en: 'Follow-up Rate' }, prefix: '', suffix: '' },
+      { value: '30', label: { uk: 'Більше угод', en: 'More Deals' }, prefix: '+', suffix: '%' },
+    ],
+    technologies: ['GPT-4', 'Email Integration', 'CRM Sync', 'Calendar API', 'Multi-language NLP', 'Notification System'],
+    features: [
+      { icon: '✉️', title: { uk: 'AI Email Writer', en: 'AI Email Writer' }, description: { uk: 'Генерує листи за секунди', en: 'Generates emails in seconds' } },
+      { icon: '🔔', title: { uk: 'Smart Reminders', en: 'Smart Reminders' }, description: { uk: 'Ніколи не пропустите follow-up', en: 'Never miss a follow-up' } },
+      { icon: '📝', title: { uk: 'Description AI', en: 'Description AI' }, description: { uk: 'Описи об\'єктів на 3 мовах', en: 'Property descriptions in 3 languages' } },
+      { icon: '📋', title: { uk: 'Daily Brief', en: 'Daily Brief' }, description: { uk: 'Пріоритети на день щоранку', en: 'Daily priorities every morning' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Спробувати AI-асистента', en: 'Try AI Assistant' }, icon: '👔', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Впровадити в команду', en: 'Deploy to Team' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-3: Owner Analytics & Control Dashboard
+  {
+    id: 'case-realestate-owner-dashboard',
+    slug: 'owner-analytics-dashboard',
+    category: 'realestate',
+    industry: 'general',
+    icon: '📊',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'Аналітика та контроль для власника агентства', 
+      en: 'Owner Analytics & Control Dashboard' 
+    },
+    shortDescription: { 
+      uk: 'Повна прозорість бізнесу: від ефективності агентів до прогнозу доходів — все в одному дашборді',
+      en: 'Full business transparency: from agent efficiency to revenue forecast — all in one dashboard'
+    },
+    fullDescription: {
+      uk: 'Дашборд, розроблений спеціально для власників агентств нерухомості. Показує реальну картину бізнесу без прикрас: скільки лідів обробляється, яка конверсія по агентах, де губляться угоди, який прогнозований дохід. Власник приймає рішення на основі даних, а не інтуїції.',
+      en: 'Dashboard designed specifically for real estate agency owners. Shows real business picture without embellishment: how many leads processed, conversion by agent, where deals are lost, projected revenue. Owner makes decisions based on data, not intuition.'
+    },
+    timeline: { uk: '3-4 тижні', en: '3-4 weeks' },
+    problem: {
+      title: { uk: 'Що не бачить власник', en: 'What Owner Doesn\'t See' },
+      points: [
+        { uk: 'Скільки реально лідів обробляє кожен агент', en: 'How many leads each agent actually processes' },
+        { uk: 'Чому певні ліди не конвертуються в угоди', en: 'Why certain leads don\'t convert to deals' },
+        { uk: 'Яка реальна ефективність рекламних каналів', en: 'What\'s the real efficiency of ad channels' },
+        { uk: 'Прогноз доходів на наступний місяць', en: 'Revenue forecast for next month' },
+        { uk: 'Де в процесі найбільше втрат', en: 'Where in the process most losses occur' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Що показує дашборд', en: 'What Dashboard Shows' },
+      points: [
+        { uk: 'Real-time воронка: від ліда до закритої угоди з конверсією на кожному етапі', en: 'Real-time funnel: from lead to closed deal with conversion at each stage' },
+        { uk: 'Порівняння ефективності агентів за ключовими метриками', en: 'Agent efficiency comparison by key metrics' },
+        { uk: 'AI-прогноз доходів на основі поточного pipeline', en: 'AI revenue forecast based on current pipeline' },
+        { uk: 'Аналітика по джерелах лідів: які канали працюють', en: 'Lead source analytics: which channels work' },
+        { uk: 'Alerts: система сигналізує про проблеми до того, як вони стануть критичними', en: 'Alerts: system signals problems before they become critical' },
+        { uk: 'Автоматичні звіти на email щотижня', en: 'Automatic weekly email reports' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Revenue Intelligence', en: 'Revenue Intelligence' },
+        description: { uk: 'AI аналізує pipeline та історичні дані, прогнозуючи очікуваний дохід на 30-60-90 днів вперед з точністю 85%+.', en: 'AI analyzes pipeline and historical data, forecasting expected revenue 30-60-90 days ahead with 85%+ accuracy.' }
+      },
+      { 
+        title: { uk: 'Agent Performance Matrix', en: 'Agent Performance Matrix' },
+        description: { uk: 'Об\'єктивна оцінка кожного агента: швидкість обробки лідів, конверсія, середній чек, клієнтська задоволеність.', en: 'Objective assessment of each agent: lead processing speed, conversion, average deal size, client satisfaction.' }
+      },
+      { 
+        title: { uk: 'Smart Alerts', en: 'Smart Alerts' },
+        description: { uk: 'Система автоматично сигналізує: лід завис без активності 3+ дні, агент не виконує план, канал показує аномальну конверсію.', en: 'System automatically signals: lead stuck without activity 3+ days, agent underperforming, channel showing abnormal conversion.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Власник бачить повну картину за 5 хвилин замість годин звітів', en: 'Owner sees full picture in 5 minutes instead of hours of reports' },
+      { uk: 'Виявлено та усунуто bottleneck, який коштував 20% угод', en: 'Identified and fixed bottleneck that cost 20% of deals' },
+      { uk: 'Прогноз доходів дозволяє планувати витрати наперед', en: 'Revenue forecast allows planning expenses ahead' },
+      { uk: 'Неефективні рекламні канали відключено — бюджет оптимізовано', en: 'Ineffective ad channels disabled — budget optimized' },
+    ],
+    results: [
+      { value: '85', label: { uk: 'Точність прогнозу', en: 'Forecast Accuracy' }, prefix: '', suffix: '%' },
+      { value: '5', label: { uk: 'Хвилин на огляд бізнесу', en: 'Minutes to Review Business' }, prefix: '', suffix: 'min' },
+      { value: '20', label: { uk: 'Зростання ефективності', en: 'Efficiency Growth' }, prefix: '+', suffix: '%' },
+      { value: '0', label: { uk: 'Сюрпризів в кінці місяця', en: 'Month-end Surprises' }, prefix: '', suffix: '' },
+    ],
+    technologies: ['Custom BI Dashboard', 'AI Forecasting', 'CRM Integration', 'Real-time Analytics', 'Automated Reporting', 'Alert System'],
+    features: [
+      { icon: '📈', title: { uk: 'Revenue Forecast', en: 'Revenue Forecast' }, description: { uk: 'AI прогнозує дохід на 90 днів', en: 'AI forecasts revenue 90 days out' } },
+      { icon: '👥', title: { uk: 'Agent Leaderboard', en: 'Agent Leaderboard' }, description: { uk: 'Рейтинг ефективності агентів', en: 'Agent efficiency ranking' } },
+      { icon: '🚨', title: { uk: 'Smart Alerts', en: 'Smart Alerts' }, description: { uk: 'Попередження про проблеми', en: 'Problem warnings' } },
+      { icon: '📧', title: { uk: 'Auto Reports', en: 'Auto Reports' }, description: { uk: 'Щотижневі звіти на email', en: 'Weekly email reports' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Подивитися демо дашборду', en: 'See Dashboard Demo' }, icon: '📊', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Отримати для мого агентства', en: 'Get for My Agency' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-4: Ad & Lead Analytics
+  {
+    id: 'case-realestate-ad-analytics',
+    slug: 'real-estate-ad-lead-analytics',
+    category: 'realestate',
+    industry: 'general',
+    icon: '📢',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'Аналітика реклами та лідів для нерухомості', 
+      en: 'Ad & Lead Analytics for Real Estate' 
+    },
+    shortDescription: { 
+      uk: 'Зрозумійте, які рекламні канали реально приносять угоди, а не просто ліди',
+      en: 'Understand which ad channels actually bring deals, not just leads'
+    },
+    fullDescription: {
+      uk: 'Система наскрізної аналітики для агентств нерухомості. Відстежуємо шлях клієнта від першого кліку на рекламу до закритої угоди. Ви бачите справжній ROI кожного каналу: Facebook, Google, портали нерухомості, referrals. Приймайте рішення про бюджети на основі реальних даних про угоди.',
+      en: 'End-to-end analytics system for real estate agencies. Track client journey from first ad click to closed deal. See true ROI of each channel: Facebook, Google, real estate portals, referrals. Make budget decisions based on real deal data.'
+    },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    problem: {
+      title: { uk: 'Типові проблеми з аналітикою', en: 'Typical Analytics Problems' },
+      points: [
+        { uk: 'Багато лідів з Facebook, але скільки з них стали угодами?', en: 'Lots of Facebook leads, but how many became deals?' },
+        { uk: 'Неможливо порівняти ефективність порталів нерухомості', en: 'Impossible to compare real estate portal efficiency' },
+        { uk: 'Referrals не відстежуються — незрозуміло, звідки вони', en: 'Referrals not tracked — unclear where they come from' },
+        { uk: 'Рішення про бюджети приймаються інтуїтивно', en: 'Budget decisions made intuitively' },
+        { uk: 'Немає розуміння, який тип об\'єктів краще продається через який канал', en: 'No understanding which property types sell better through which channel' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Що дає система', en: 'What System Provides' },
+      points: [
+        { uk: 'Повний tracking: від кліку на рекламу до закритої угоди', en: 'Full tracking: from ad click to closed deal' },
+        { uk: 'True ROI: скільки витрачено vs скільки зароблено по кожному каналу', en: 'True ROI: spend vs earned per channel' },
+        { uk: 'Аналітика по типах нерухомості: що краще продається через який канал', en: 'Property type analytics: what sells better through which channel' },
+        { uk: 'Автоматична UTM-розмітка та інтеграція з CRM', en: 'Automatic UTM tagging and CRM integration' },
+        { uk: 'Weekly reports з рекомендаціями по оптимізації бюджету', en: 'Weekly reports with budget optimization recommendations' },
+        { uk: 'Порівняння: ліди vs qualified leads vs deals по кожному каналу', en: 'Comparison: leads vs qualified leads vs deals per channel' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Full Funnel Attribution', en: 'Full Funnel Attribution' },
+        description: { uk: 'Система відстежує весь шлях клієнта, навіть якщо він прийшов через один канал, а конвертувався через інший.', en: 'System tracks entire client journey, even if they came through one channel but converted through another.' }
+      },
+      { 
+        title: { uk: 'Deal-based ROI', en: 'Deal-based ROI' },
+        description: { uk: 'Розраховуємо ROI не по лідах, а по закритих угодах. Це єдина метрика, що має сенс для бізнесу.', en: 'Calculate ROI not by leads, but by closed deals. This is the only metric that matters for business.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Виявлено, що 70% бюджету йшло на канал з найгіршою конверсією в угоди', en: 'Discovered 70% of budget went to channel with worst deal conversion' },
+      { uk: 'Оптимізація бюджету дала +35% угод при тому ж бюджеті', en: 'Budget optimization gave +35% deals with same budget' },
+      { uk: 'Referral program виявилася найефективнішим каналом', en: 'Referral program turned out to be most effective channel' },
+    ],
+    results: [
+      { value: '35', label: { uk: 'Більше угод', en: 'More Deals' }, prefix: '+', suffix: '%' },
+      { value: '40', label: { uk: 'Оптимізація бюджету', en: 'Budget Optimization' }, prefix: '-', suffix: '%' },
+      { value: '100%', label: { uk: 'Tracking лідів', en: 'Lead Tracking' }, prefix: '', suffix: '' },
+      { value: '3x', label: { uk: 'ROI найкращого каналу', en: 'Best Channel ROI' }, prefix: '', suffix: '' },
+    ],
+    technologies: ['Analytics Platform', 'UTM Tracking', 'CRM Integration', 'Facebook Ads API', 'Google Ads API', 'Portal API'],
+    features: [
+      { icon: '🎯', title: { uk: 'Full Attribution', en: 'Full Attribution' }, description: { uk: 'Від кліку до угоди', en: 'From click to deal' } },
+      { icon: '💰', title: { uk: 'True ROI', en: 'True ROI' }, description: { uk: 'По угодах, не по лідах', en: 'By deals, not leads' } },
+      { icon: '📊', title: { uk: 'Channel Compare', en: 'Channel Compare' }, description: { uk: 'Порівняння ефективності', en: 'Efficiency comparison' } },
+      { icon: '📧', title: { uk: 'Weekly Insights', en: 'Weekly Insights' }, description: { uk: 'Рекомендації щотижня', en: 'Weekly recommendations' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Побачити свою аналітику', en: 'See Your Analytics' }, icon: '📢', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Підключити аналітику', en: 'Connect Analytics' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-5: CRM → Instagram Content Automation
+  {
+    id: 'case-realestate-instagram-automation',
+    slug: 'crm-instagram-automation',
+    category: 'realestate',
+    industry: 'general',
+    icon: '📸',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'Автоматизація контенту CRM → Instagram', 
+      en: 'CRM → Instagram Content Automation' 
+    },
+    shortDescription: { 
+      uk: 'Нові об\'єкти автоматично перетворюються на готові пости для Instagram з описами та hashtags',
+      en: 'New properties automatically become ready Instagram posts with descriptions and hashtags'
+    },
+    fullDescription: {
+      uk: 'Система автоматично бере нові об\'єкти з вашої CRM, генерує привабливі описи за допомогою AI, підбирає hashtags, форматує фото для Instagram та готує пост до публікації. Вам залишається лише натиснути "Опублікувати" або навіть це можна автоматизувати.',
+      en: 'System automatically takes new properties from your CRM, generates compelling descriptions using AI, selects hashtags, formats photos for Instagram and prepares post for publishing. You just click "Publish" or even that can be automated.'
+    },
+    timeline: { uk: '1-2 тижні', en: '1-2 weeks' },
+    problem: {
+      title: { uk: 'Чому контент — це біль', en: 'Why Content is Pain' },
+      points: [
+        { uk: 'SMM-менеджер вручну створює пост для кожного об\'єкта', en: 'SMM manager manually creates post for each property' },
+        { uk: 'Написання описів займає 15-30 хвилин на об\'єкт', en: 'Writing descriptions takes 15-30 minutes per property' },
+        { uk: 'Затримка між появою об\'єкта та постом — дні або тижні', en: 'Delay between property listing and post — days or weeks' },
+        { uk: 'Немає часу на регулярний постинг — Instagram пустий', en: 'No time for regular posting — Instagram is empty' },
+        { uk: 'Inconsistent якість та стиль контенту', en: 'Inconsistent content quality and style' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Як працює автоматизація', en: 'How Automation Works' },
+      points: [
+        { uk: 'Новий об\'єкт з\'являється в CRM → система автоматично бере дані', en: 'New property appears in CRM → system automatically takes data' },
+        { uk: 'AI генерує опис у вашому tone of voice (3 мови)', en: 'AI generates description in your tone of voice (3 languages)' },
+        { uk: 'Фото обробляються та форматуються для Instagram', en: 'Photos processed and formatted for Instagram' },
+        { uk: 'Підбираються релевантні hashtags для максимального reach', en: 'Relevant hashtags selected for maximum reach' },
+        { uk: 'Пост готовий до публікації або публікується автоматично', en: 'Post ready for publishing or publishes automatically' },
+        { uk: 'Stories та Reels генеруються автоматично', en: 'Stories and Reels generated automatically' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'AI Content Writer', en: 'AI Content Writer' },
+        description: { uk: 'AI вивчає ваш стиль та генерує описи, що звучать природно. Підтримує українську, англійську, німецьку мови.', en: 'AI learns your style and generates naturally sounding descriptions. Supports Ukrainian, English, German.' }
+      },
+      { 
+        title: { uk: 'Auto Photo Processing', en: 'Auto Photo Processing' },
+        description: { uk: 'Система обирає найкращі фото, кадрує для Instagram формату, додає водяний знак за потреби.', en: 'System selects best photos, crops for Instagram format, adds watermark if needed.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Час на створення поста: з 30 хвилин до 2 хвилин', en: 'Post creation time: from 30 minutes to 2 minutes' },
+      { uk: '100% об\'єктів тепер мають пост в Instagram протягом 24 годин', en: '100% of properties now have Instagram post within 24 hours' },
+      { uk: 'Engagement виріс на 40% завдяки регулярному постингу', en: 'Engagement grew 40% thanks to regular posting' },
+      { uk: 'SMM-менеджер вивільнив час для інших задач', en: 'SMM manager freed time for other tasks' },
+    ],
+    results: [
+      { value: '90', label: { uk: 'Менше часу на контент', en: 'Less Time on Content' }, prefix: '-', suffix: '%' },
+      { value: '2', label: { uk: 'Хвилини на пост', en: 'Minutes per Post' }, prefix: '', suffix: 'min' },
+      { value: '40', label: { uk: 'Зростання engagement', en: 'Engagement Growth' }, prefix: '+', suffix: '%' },
+      { value: '24h', label: { uk: 'Від об\'єкта до поста', en: 'Listing to Post' }, prefix: '<', suffix: '' },
+    ],
+    technologies: ['CRM Integration', 'GPT-4', 'Instagram API', 'Image Processing', 'Hashtag AI', 'Scheduling System'],
+    features: [
+      { icon: '🤖', title: { uk: 'AI Descriptions', en: 'AI Descriptions' }, description: { uk: 'Автоматичні описи на 3 мовах', en: 'Auto descriptions in 3 languages' } },
+      { icon: '📷', title: { uk: 'Photo Formatting', en: 'Photo Formatting' }, description: { uk: 'Обробка та форматування фото', en: 'Photo processing and formatting' } },
+      { icon: '#️⃣', title: { uk: 'Smart Hashtags', en: 'Smart Hashtags' }, description: { uk: 'AI підбирає релевантні теги', en: 'AI selects relevant tags' } },
+      { icon: '📅', title: { uk: 'Auto Scheduling', en: 'Auto Scheduling' }, description: { uk: 'Планування публікацій', en: 'Publication scheduling' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Побачити приклади постів', en: 'See Post Examples' }, icon: '📸', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Автоматизувати мій контент', en: 'Automate My Content' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-6: AI Voice Agent - Real Estate Concierge
+  {
+    id: 'case-realestate-voice-concierge',
+    slug: 'real-estate-voice-concierge',
+    category: 'realestate',
+    industry: 'general',
+    icon: '🎧',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'AI голосовий консьєрж для нерухомості', 
+      en: 'AI Voice Concierge for Real Estate' 
+    },
+    shortDescription: { 
+      uk: 'Голосовий агент приймає дзвінки 24/7, кваліфікує ліди, записує на перегляди та відповідає на питання',
+      en: 'Voice agent takes calls 24/7, qualifies leads, books viewings and answers questions'
+    },
+    fullDescription: {
+      uk: 'AI-агент, який розмовляє як досвідчений рієлтор. Приймає всі вхідні дзвінки, відповідає на питання про об\'єкти, кваліфікує потенційних покупців, записує на перегляди. Складні питання передає живим агентам з повним контекстом розмови. Працює 24/7 на трьох мовах.',
+      en: 'AI agent that speaks like an experienced realtor. Takes all incoming calls, answers property questions, qualifies potential buyers, books viewings. Escalates complex questions to live agents with full conversation context. Works 24/7 in three languages.'
+    },
+    timeline: { uk: '4-5 тижнів', en: '4-5 weeks' },
+    problem: {
+      title: { uk: 'Проблеми з телефонними дзвінками', en: 'Phone Call Problems' },
+      points: [
+        { uk: 'Пропущені дзвінки = втрачені ліди', en: 'Missed calls = lost leads' },
+        { uk: 'Агенти на показах не можуть відповісти на дзвінки', en: 'Agents at viewings can\'t answer calls' },
+        { uk: 'Вночі та у вихідні ніхто не відповідає', en: 'No one answers at night and weekends' },
+        { uk: 'Багато часу на некваліфіковані дзвінки', en: 'Much time on unqualified calls' },
+        { uk: 'Клієнти хочуть відповіді зараз, а не через годину', en: 'Clients want answers now, not in an hour' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Що робить голосовий агент', en: 'What Voice Agent Does' },
+      points: [
+        { uk: 'Відповідає на всі дзвінки протягом 3 секунд, 24/7', en: 'Answers all calls within 3 seconds, 24/7' },
+        { uk: 'Знає всі деталі кожного об\'єкта з бази', en: 'Knows all details of each property from database' },
+        { uk: 'Кваліфікує ліда: бюджет, терміни, вподобання', en: 'Qualifies lead: budget, timeline, preferences' },
+        { uk: 'Записує на перегляди, синхронізуючись з календарем агентів', en: 'Books viewings, syncing with agent calendars' },
+        { uk: 'Передає гарячі ліди агентам миттєво', en: 'Passes hot leads to agents instantly' },
+        { uk: 'Розмовляє українською, англійською та німецькою', en: 'Speaks Ukrainian, English and German' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Natural Conversation', en: 'Natural Conversation' },
+        description: { uk: 'AI розмовляє природно, розуміє контекст, перепитує якщо не зрозумів, витримує паузи як людина.', en: 'AI speaks naturally, understands context, asks clarifying questions, maintains pauses like a human.' }
+      },
+      { 
+        title: { uk: 'Property Knowledge', en: 'Property Knowledge' },
+        description: { uk: 'Система знає всі об\'єкти з вашої бази та може детально розповісти про кожен: площа, локація, ціна, особливості.', en: 'System knows all properties from your database and can detail each: size, location, price, features.' }
+      },
+      { 
+        title: { uk: 'Instant Escalation', en: 'Instant Escalation' },
+        description: { uk: 'Якщо клієнт наполягає на розмові з людиною або питання складне — миттєвий трансфер агенту з summary розмови.', en: 'If client insists on human or question is complex — instant transfer to agent with conversation summary.' }
+      },
+    ],
+    achievements: [
+      { uk: '0 пропущених дзвінків — система відповідає завжди', en: '0 missed calls — system always answers' },
+      { uk: '60% дзвінків повністю оброблені без участі людини', en: '60% of calls fully handled without human involvement' },
+      { uk: 'Конверсія дзвінків у перегляди зросла на 45%', en: 'Call to viewing conversion increased 45%' },
+      { uk: 'Агенти фокусуються на угодах, а не на телефоні', en: 'Agents focus on deals, not phone' },
+    ],
+    results: [
+      { value: '0', label: { uk: 'Пропущених дзвінків', en: 'Missed Calls' }, prefix: '', suffix: '' },
+      { value: '60', label: { uk: 'Автоматично оброблено', en: 'Automatically Handled' }, prefix: '', suffix: '%' },
+      { value: '45', label: { uk: 'Зростання конверсії', en: 'Conversion Growth' }, prefix: '+', suffix: '%' },
+      { value: '24/7', label: { uk: 'Доступність', en: 'Availability' }, prefix: '', suffix: '' },
+    ],
+    technologies: ['Voice AI', 'Speech-to-Text', 'Text-to-Speech', 'CRM Integration', 'Calendar API', 'Property Database', 'Multi-language NLP'],
+    features: [
+      { icon: '📞', title: { uk: '24/7 Availability', en: '24/7 Availability' }, description: { uk: 'Завжди на лінії', en: 'Always on the line' } },
+      { icon: '🏠', title: { uk: 'Property Expert', en: 'Property Expert' }, description: { uk: 'Знає всі об\'єкти', en: 'Knows all properties' } },
+      { icon: '📅', title: { uk: 'Viewing Booking', en: 'Viewing Booking' }, description: { uk: 'Записує на перегляди', en: 'Books viewings' } },
+      { icon: '🌍', title: { uk: '3 Languages', en: '3 Languages' }, description: { uk: 'UA, EN, DE', en: 'UA, EN, DE' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Зателефонувати AI-агенту', en: 'Call AI Agent' }, icon: '📞', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Впровадити в агентство', en: 'Deploy to Agency' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-7: Task & Reminder Control System
+  {
+    id: 'case-realestate-task-control',
+    slug: 'real-estate-task-control',
+    category: 'realestate',
+    industry: 'general',
+    icon: '✅',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'Система контролю задач та нагадувань', 
+      en: 'Task & Reminder Control System' 
+    },
+    shortDescription: { 
+      uk: 'AI контролює виконання задач кожним агентом та автоматично нагадує про дедлайни',
+      en: 'AI controls task execution by each agent and automatically reminds of deadlines'
+    },
+    fullDescription: {
+      uk: 'Централізована система управління задачами для агентств нерухомості. Кожен лід генерує автоматичні задачі для агента. Система відстежує виконання, нагадує про дедлайни, ескалює прострочені задачі керівнику. Власник бачить, хто що робить і де затримки.',
+      en: 'Centralized task management system for real estate agencies. Each lead generates automatic tasks for agent. System tracks execution, reminds of deadlines, escalates overdue tasks to manager. Owner sees who does what and where delays are.'
+    },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    problem: {
+      title: { uk: 'Проблеми з контролем задач', en: 'Task Control Problems' },
+      points: [
+        { uk: 'Агенти забувають про follow-up — ліди втрачаються', en: 'Agents forget follow-ups — leads get lost' },
+        { uk: 'Немає прозорості: хто над чим працює', en: 'No transparency: who works on what' },
+        { uk: 'Затримки виявляються занадто пізно', en: 'Delays discovered too late' },
+        { uk: 'Важко контролювати віддалених агентів', en: 'Hard to control remote agents' },
+        { uk: 'Немає єдиного місця для всіх задач', en: 'No single place for all tasks' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Як працює система', en: 'How System Works' },
+      points: [
+        { uk: 'Кожен новий лід автоматично створює задачі: зв\'язатися, кваліфікувати, запросити на перегляд', en: 'Each new lead automatically creates tasks: contact, qualify, invite to viewing' },
+        { uk: 'AI-нагадування перед кожним дедлайном (email, push, SMS)', en: 'AI reminders before each deadline (email, push, SMS)' },
+        { uk: 'Прострочені задачі ескалюються керівнику', en: 'Overdue tasks escalate to manager' },
+        { uk: 'Дашборд для власника: всі агенти, всі задачі, всі статуси', en: 'Dashboard for owner: all agents, all tasks, all statuses' },
+        { uk: 'Автоматичні звіти про продуктивність агентів', en: 'Automatic agent productivity reports' },
+        { uk: 'Інтеграція з CRM — задачі синхронізовані з лідами', en: 'CRM integration — tasks synced with leads' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Auto Task Generation', en: 'Auto Task Generation' },
+        description: { uk: 'Система автоматично створює задачі на основі етапу воронки. Новий лід = задача "зателефонувати". Зацікавлений = задача "показ".', en: 'System automatically creates tasks based on funnel stage. New lead = "call" task. Interested = "viewing" task.' }
+      },
+      { 
+        title: { uk: 'Smart Escalation', en: 'Smart Escalation' },
+        description: { uk: 'Якщо задача прострочена на годину — нагадування агенту. На день — ескалація керівнику. На 3 дні — alert власнику.', en: 'If task overdue by hour — agent reminder. By day — manager escalation. By 3 days — owner alert.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Жоден follow-up не пропущений — 100% задач виконуються', en: 'No follow-up missed — 100% tasks completed' },
+      { uk: 'Прострочені задачі виявляються миттєво, а не через тижні', en: 'Overdue tasks detected instantly, not after weeks' },
+      { uk: 'Власник має повну прозорість роботи команди', en: 'Owner has full transparency of team work' },
+      { uk: 'Продуктивність агентів зросла на 25%', en: 'Agent productivity increased 25%' },
+    ],
+    results: [
+      { value: '100', label: { uk: 'Follow-up rate', en: 'Follow-up Rate' }, prefix: '', suffix: '%' },
+      { value: '25', label: { uk: 'Зростання продуктивності', en: 'Productivity Growth' }, prefix: '+', suffix: '%' },
+      { value: '0', label: { uk: 'Забутих лідів', en: 'Forgotten Leads' }, prefix: '', suffix: '' },
+      { value: '1h', label: { uk: 'Виявлення затримок', en: 'Delay Detection' }, prefix: '<', suffix: '' },
+    ],
+    technologies: ['Task Management Engine', 'CRM Integration', 'Notification System', 'Analytics Dashboard', 'Escalation Logic', 'Mobile App'],
+    features: [
+      { icon: '🔔', title: { uk: 'Smart Reminders', en: 'Smart Reminders' }, description: { uk: 'Нагадування по всіх каналах', en: 'Reminders across all channels' } },
+      { icon: '⚠️', title: { uk: 'Auto Escalation', en: 'Auto Escalation' }, description: { uk: 'Ескалація прострочених задач', en: 'Overdue task escalation' } },
+      { icon: '📊', title: { uk: 'Team Dashboard', en: 'Team Dashboard' }, description: { uk: 'Всі агенти на одному екрані', en: 'All agents on one screen' } },
+      { icon: '📱', title: { uk: 'Mobile Alerts', en: 'Mobile Alerts' }, description: { uk: 'Push-нотифікації для агентів', en: 'Push notifications for agents' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Подивитися систему', en: 'See the System' }, icon: '✅', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Впровадити контроль задач', en: 'Implement Task Control' }, icon: '💬', action: 'contact' },
+    ],
+  },
+
+  // CASE RE-8: Listing Performance Intelligence
+  {
+    id: 'case-realestate-listing-intelligence',
+    slug: 'listing-performance-intelligence',
+    category: 'realestate',
+    industry: 'general',
+    icon: '🏆',
+    industryName: { uk: 'Нерухомість', en: 'Real Estate' },
+    title: { 
+      uk: 'Аналітика ефективності об\'єктів', 
+      en: 'Listing Performance Intelligence' 
+    },
+    shortDescription: { 
+      uk: 'Зрозумійте, чому одні об\'єкти продаються швидко, а інші — місяцями стоять',
+      en: 'Understand why some listings sell fast while others sit for months'
+    },
+    fullDescription: {
+      uk: 'Система аналітики для розуміння ефективності кожного об\'єкта. AI аналізує перегляди, запити, час на ринку, порівнює з аналогами. Дає рекомендації: змінити ціну, оновити фото, змінити опис. Власник бачить, які об\'єкти потребують уваги, а не здогадується.',
+      en: 'Analytics system for understanding each listing\'s performance. AI analyzes views, inquiries, time on market, compares with similar properties. Gives recommendations: adjust price, update photos, change description. Owner sees which listings need attention, instead of guessing.'
+    },
+    timeline: { uk: '2-3 тижні', en: '2-3 weeks' },
+    problem: {
+      title: { uk: 'Що власник не розуміє', en: 'What Owner Doesn\'t Understand' },
+      points: [
+        { uk: 'Чому об\'єкт стоїть 3 місяці без запитів', en: 'Why listing sits 3 months without inquiries' },
+        { uk: 'Чи правильна ціна для цього об\'єкта', en: 'Is the price right for this property' },
+        { uk: 'Які фото та описи працюють краще', en: 'Which photos and descriptions work better' },
+        { uk: 'На яких порталах об\'єкт показується добре, а де — ні', en: 'On which portals listing performs well and where not' },
+        { uk: 'Коли найкращий час для зниження ціни', en: 'When is the best time to reduce price' },
+      ],
+    },
+    solution: {
+      title: { uk: 'Що дає система', en: 'What System Provides' },
+      points: [
+        { uk: 'Performance score для кожного об\'єкта: наскільки він "здоровий"', en: 'Performance score for each listing: how "healthy" it is' },
+        { uk: 'Порівняння з аналогічними об\'єктами: ціна, час продажу, конверсія', en: 'Comparison with similar properties: price, sale time, conversion' },
+        { uk: 'AI-рекомендації: що зробити для покращення продажів', en: 'AI recommendations: what to do to improve sales' },
+        { uk: 'Аналітика по порталах: де об\'єкт показується добре', en: 'Portal analytics: where listing performs well' },
+        { uk: 'Alerts: система сигналізує коли об\'єкт потребує уваги', en: 'Alerts: system signals when listing needs attention' },
+        { uk: 'Історична аналітика: що працювало для схожих об\'єктів', en: 'Historical analytics: what worked for similar properties' },
+      ],
+    },
+    systemCapabilities: [
+      { 
+        title: { uk: 'Health Score', en: 'Health Score' },
+        description: { uk: 'Кожен об\'єкт отримує score від 1 до 100: перегляди, запити, час на ринку, порівняння з конкурентами.', en: 'Each listing gets score from 1 to 100: views, inquiries, time on market, competitor comparison.' }
+      },
+      { 
+        title: { uk: 'AI Recommendations', en: 'AI Recommendations' },
+        description: { uk: 'Система аналізує проблеми та дає конкретні рекомендації: "Знизьте ціну на 5%" або "Оновіть головне фото".', en: 'System analyzes issues and gives specific recommendations: "Reduce price by 5%" or "Update main photo".' }
+      },
+      { 
+        title: { uk: 'Competitive Analysis', en: 'Competitive Analysis' },
+        description: { uk: 'AI порівнює ваш об\'єкт з аналогами на ринку: ціна за м², час продажу, якість презентації.', en: 'AI compares your listing with market analogs: price per sqm, sale time, presentation quality.' }
+      },
+    ],
+    achievements: [
+      { uk: 'Середній час продажу скоротився на 30%', en: 'Average sale time reduced 30%' },
+      { uk: 'Проблемні об\'єкти виявляються через 2 тижні, а не 3 місяці', en: 'Problem listings detected in 2 weeks, not 3 months' },
+      { uk: 'Оптимізація цін на основі даних, а не інтуїції', en: 'Price optimization based on data, not intuition' },
+      { uk: 'Конверсія з переглядів зросла на 20%', en: 'View to inquiry conversion increased 20%' },
+    ],
+    results: [
+      { value: '30', label: { uk: 'Швидше продаж', en: 'Faster Sales' }, prefix: '', suffix: '%' },
+      { value: '20', label: { uk: 'Зростання конверсії', en: 'Conversion Growth' }, prefix: '+', suffix: '%' },
+      { value: '2w', label: { uk: 'Виявлення проблем', en: 'Problem Detection' }, prefix: '', suffix: '' },
+      { value: '100%', label: { uk: 'Об\'єктів аналізовано', en: 'Listings Analyzed' }, prefix: '', suffix: '' },
+    ],
+    technologies: ['Analytics Engine', 'AI Recommendations', 'Portal Integration', 'Competitive Intelligence', 'Alert System', 'Data Visualization'],
+    features: [
+      { icon: '📈', title: { uk: 'Health Score', en: 'Health Score' }, description: { uk: 'Оцінка ефективності 1-100', en: 'Performance score 1-100' } },
+      { icon: '💡', title: { uk: 'AI Insights', en: 'AI Insights' }, description: { uk: 'Рекомендації що покращити', en: 'Recommendations what to improve' } },
+      { icon: '🏘️', title: { uk: 'Market Compare', en: 'Market Compare' }, description: { uk: 'Порівняння з конкурентами', en: 'Competitor comparison' } },
+      { icon: '⚡', title: { uk: 'Quick Alerts', en: 'Quick Alerts' }, description: { uk: 'Сигнали про проблеми', en: 'Problem signals' } },
+    ],
+    ctas: [
+      { id: 'demo', label: { uk: 'Аналізувати мої об\'єкти', en: 'Analyze My Listings' }, icon: '🏆', action: 'demo', primary: true },
+      { id: 'contact', label: { uk: 'Підключити аналітику', en: 'Connect Analytics' }, icon: '💬', action: 'contact' },
+    ],
+  },
 ];
 
 export const getCaseBySlug = (slug: string): CaseStudy | undefined => {

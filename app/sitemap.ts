@@ -7,14 +7,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
-  const staticPaths = ['/', '/about', '/cases', '/projects', '/solutions/real-estate'] as const;
+  const staticPaths = ['/', '/about', '/cases', '/projects'] as const;
 
   const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
     staticPaths.map((path) => ({
       url: new URL(withLang(lang, path), siteUrl).toString(),
       lastModified: now,
-      changeFrequency: path === '/' || path === '/cases' || path === '/solutions/real-estate' ? 'weekly' : 'monthly',
-      priority: path === '/' ? 1 : path === '/cases' || path === '/solutions/real-estate' ? 0.9 : 0.8,
+      changeFrequency: path === '/' || path === '/cases' ? 'weekly' : 'monthly',
+      priority: path === '/' ? 1 : path === '/cases' ? 0.9 : 0.8,
     }))
   );
 
