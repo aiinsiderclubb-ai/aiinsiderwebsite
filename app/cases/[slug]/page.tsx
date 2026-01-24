@@ -19,10 +19,11 @@ export default function CaseDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const { lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   // Redirect to dedicated Sweezy page
   if (slug === 'sweezy') {
-    redirect('/cases/sweezy');
+    redirect(`${basePath}/cases/sweezy`);
   }
   
   const caseData = getCaseBySlug(slug);
@@ -36,7 +37,7 @@ export default function CaseDetailPage() {
           <h1 className="text-4xl font-bold mb-4">{lang === 'uk' ? 'Кейс не знайдено' : 'Case Not Found'}</h1>
           <p className="text-gray-400 mb-8">{lang === 'uk' ? 'Кейс, який ви шукаєте, не існує.' : 'The case study you\'re looking for doesn\'t exist.'}</p>
           <Link 
-            href="/cases"
+            href={`${basePath}/cases`}
             className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-bold"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -106,7 +107,7 @@ export default function CaseDetailPage() {
             animate={{ opacity: 1 }}
             className="flex items-center gap-2 text-xs text-gray-500 mb-10"
           >
-            <Link href="/cases" className="hover:text-white transition-colors">{lang === 'uk' ? 'Кейси' : 'Cases'}</Link>
+            <Link href={`${basePath}/cases`} className="hover:text-white transition-colors">{lang === 'uk' ? 'Кейси' : 'Cases'}</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-gray-400">{getLocalizedText(caseData.industryName, lang)}</span>
           </motion.div>
@@ -180,7 +181,7 @@ export default function CaseDetailPage() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <Link
-                  href="/#bookcall"
+                  href={`${basePath}#bookcall`}
                   className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm
                     bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
                 >
@@ -701,7 +702,7 @@ export default function CaseDetailPage() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/#bookcall"
+                href={`${basePath}#bookcall`}
                 className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold
                   transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20"
               >
@@ -738,7 +739,7 @@ export default function CaseDetailPage() {
                 {relatedCases.map((relatedCase) => (
                   <Link
                     key={relatedCase.id}
-                    href={`/cases/${relatedCase.slug}`}
+                    href={`${basePath}/cases/${relatedCase.slug}`}
                     className="group p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all"
                   >
                     <div className="flex items-center gap-3 mb-3">
@@ -764,7 +765,7 @@ export default function CaseDetailPage() {
       <section className="py-10 px-6">
         <div className="max-w-5xl mx-auto text-center">
           <Link
-            href="/cases"
+            href={`${basePath}/cases`}
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

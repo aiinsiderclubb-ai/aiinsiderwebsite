@@ -9,6 +9,7 @@ import {
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 const features = [
   {
@@ -58,6 +59,8 @@ export default function AutoScaleCRMPage() {
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const resultsRef = useRef(null);
+  const { lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' });
@@ -83,7 +86,7 @@ export default function AutoScaleCRMPage() {
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <Link href="/projects" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
+            <Link href={`${basePath}/projects`} className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to Projects</span>
             </Link>
@@ -257,7 +260,7 @@ export default function AutoScaleCRMPage() {
             <p className="text-xl text-gray-400 mb-10">
               Let's build an automation system that scales with your business.
             </p>
-            <Link href="/#bookcall" 
+            <Link href={`${basePath}#bookcall`} 
               className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
                 transition-all duration-300 hover:scale-105"
               style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>

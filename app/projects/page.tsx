@@ -6,6 +6,7 @@ import { ArrowRight, Bot, Mic, Workflow, Brain, MessageSquare, Zap, Heart, Users
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
+import { useLanguage } from '../context/LanguageContext';
 
 const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI', 'Mobile'];
 
@@ -101,6 +102,8 @@ export default function ProjectsPage() {
   const heroRef = useRef(null);
   const featuredRef = useRef(null);
   const projectsRef = useRef(null);
+  const { lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const featuredInView = useInView(featuredRef, { once: true, margin: '-100px' });
@@ -203,7 +206,7 @@ export default function ProjectsPage() {
             animate={featuredInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Link href="/projects/sweezy" className="block group">
+            <Link href={`${basePath}/projects/sweezy`} className="block group">
               <div className="relative rounded-3xl overflow-hidden border-2 transition-all duration-500 hover:-translate-y-2"
                 style={{ 
                   borderImage: 'linear-gradient(90deg, #0057B8 0%, #FFD700 100%) 1',
@@ -419,7 +422,7 @@ export default function ProjectsPage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group relative"
                 >
-                  <Link href={`/projects/${project.slug}`} className="block">
+                  <Link href={`${basePath}/projects/${project.slug}`} className="block">
                     <div className="glass-strong rounded-3xl overflow-hidden border border-white/10 
                       transition-all duration-300 hover:border-white/30 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]">
                       {/* Image */}
@@ -514,7 +517,7 @@ export default function ProjectsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/#bookcall"
+                href={`${basePath}#bookcall`}
                 className="inline-block px-10 py-4 bg-white text-black rounded-full 
                   font-bold text-lg transition-all duration-300 hover:scale-105"
                 style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
@@ -522,7 +525,7 @@ export default function ProjectsPage() {
                 Start Your Project
               </Link>
               <Link
-                href="/#contact"
+                href={`${basePath}#contact`}
                 className="inline-block px-10 py-4 glass-strong border border-white/30 rounded-full 
                   font-bold text-lg text-white transition-all duration-300 hover:bg-white/10 hover:scale-105"
               >

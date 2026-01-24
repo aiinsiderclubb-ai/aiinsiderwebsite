@@ -12,18 +12,19 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Language>('uk');
+export function LanguageProvider({
+  children,
+  initialLang,
+}: {
+  children: ReactNode;
+  initialLang: Language;
+}) {
+  const [lang, setLangState] = useState<Language>(initialLang);
 
-  // Load language from localStorage on mount
+  // Keep state in sync with route-based initialLang
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedLang = localStorage.getItem('aiinsider-lang') as Language | null;
-      if (savedLang && (savedLang === 'uk' || savedLang === 'en')) {
-        setLangState(savedLang);
-      }
-    }
-  }, []);
+    setLangState(initialLang);
+  }, [initialLang]);
 
   // Keep <html lang="..."> in sync (useful for accessibility and SEO hints)
   useEffect(() => {

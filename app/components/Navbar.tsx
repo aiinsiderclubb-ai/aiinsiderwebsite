@@ -16,8 +16,9 @@ export default function Navbar() {
   const opacity = useTransform(scrollY, [0, 100], [0, 1]);
   const blur = useTransform(scrollY, [0, 100], [0, 20]);
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
+  const isHomePage = pathname === basePath;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,11 +29,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: t('nav.about'), href: '/about' },
-    { name: t('nav.cases'), href: '/cases' },
-    { name: t('nav.solutions'), href: isHomePage ? '#solutions' : '/#solutions' },
-    { name: t('nav.pricing'), href: isHomePage ? '#pricing' : '/#pricing' },
-    { name: t('nav.contact'), href: isHomePage ? '#bookcall' : '/#bookcall' },
+    { name: t('nav.about'), href: `${basePath}/about` },
+    { name: t('nav.cases'), href: `${basePath}/cases` },
+    { name: t('nav.solutions'), href: isHomePage ? '#solutions' : `${basePath}#solutions` },
+    { name: t('nav.pricing'), href: isHomePage ? '#pricing' : `${basePath}#pricing` },
+    { name: t('nav.contact'), href: isHomePage ? '#bookcall' : `${basePath}#bookcall` },
   ];
 
   return (
@@ -66,7 +67,7 @@ export default function Navbar() {
       <div className="relative max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo - Monochrome */}
         <Link
-          href="/"
+          href={basePath}
           className="flex items-center gap-3 group"
         >
           <div
@@ -86,7 +87,10 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const isExternal = link.href.startsWith('#');
-            const isActive = pathname === link.href || (link.href === '/about' && pathname === '/about') || (link.href === '/cases' && pathname.startsWith('/cases'));
+            const isActive =
+              (!isExternal && pathname === link.href) ||
+              (!isExternal && link.href.endsWith('/about') && pathname === `${basePath}/about`) ||
+              (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`));
             
             if (isExternal) {
               return (

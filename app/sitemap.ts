@@ -1,30 +1,40 @@
 import type { MetadataRoute } from 'next';
 import { casesData } from './lib/casesData';
 import { getSiteUrl } from './lib/site';
+import { SUPPORTED_LANGS, withLang } from './lib/i18n';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: new URL('/', siteUrl).toString(), lastModified: now, changeFrequency: 'weekly', priority: 1 },
-    { url: new URL('/about', siteUrl).toString(), lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: new URL('/cases', siteUrl).toString(), lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
-    { url: new URL('/projects', siteUrl).toString(), lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-  ];
+  const staticPaths = ['/', '/about', '/cases', '/projects', '/solutions/real-estate'] as const;
 
-  const caseRoutes: MetadataRoute.Sitemap = casesData
-    .filter((c) => c.slug !== 'sweezy') // dedicated page exists at /cases/sweezy
-    .map((c) => ({
-      url: new URL(`/cases/${c.slug}`, siteUrl).toString(),
+  const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    staticPaths.map((path) => ({
+      url: new URL(withLang(lang, path), siteUrl).toString(),
       lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    }));
+      changeFrequency: path === '/' || path === '/cases' || path === '/solutions/real-estate' ? 'weekly' : 'monthly',
+      priority: path === '/' ? 1 : path === '/cases' || path === '/solutions/real-estate' ? 0.9 : 0.8,
+    }))
+  );
 
-  const dedicatedCaseRoutes: MetadataRoute.Sitemap = [
-    { url: new URL('/cases/sweezy', siteUrl).toString(), lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-  ];
+  const caseRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    casesData
+      .filter((c) => c.slug !== 'sweezy') // dedicated page exists at /cases/sweezy
+      .map((c) => ({
+        url: new URL(withLang(lang, `/cases/${c.slug}`), siteUrl).toString(),
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      }))
+  );
+
+  const dedicatedCaseRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.map((lang) => ({
+    url: new URL(withLang(lang, '/cases/sweezy'), siteUrl).toString(),
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
 
   const projectSlugs = [
     'voiceflow-pro',
@@ -36,12 +46,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'sweezy',
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = projectSlugs.map((slug) => ({
-    url: new URL(`/projects/${slug}`, siteUrl).toString(),
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.6,
-  }));
+  const projectRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    projectSlugs.map((slug) => ({
+      url: new URL(withLang(lang, `/projects/${slug}`), siteUrl).toString(),
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }))
+  );
 
   return [...staticRoutes, ...dedicatedCaseRoutes, ...caseRoutes, ...projectRoutes];
 }

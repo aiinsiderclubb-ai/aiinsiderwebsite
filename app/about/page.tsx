@@ -13,7 +13,8 @@ export default function AboutPage() {
   const teamRef = useRef(null);
   const valuesRef = useRef(null);
   const storyRef = useRef(null);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
@@ -346,7 +347,7 @@ export default function AboutPage() {
               {t('about.letsDiscuss')}
             </p>
             <Link
-              href="/#bookcall"
+              href={`${basePath}#bookcall`}
               className="inline-block px-10 py-4 bg-white text-black rounded-full 
                 font-bold text-lg transition-all duration-300 hover:scale-105"
               style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}

@@ -10,7 +10,8 @@ interface ConversionSectionProps {
 }
 
 export default function ConversionSection({ onOpenChat }: ConversionSectionProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   const benefits = [
     { icon: Bot, textKey: 'conversion.benefit1' },
@@ -83,7 +84,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/#bookcall"
+              href={`${basePath}#bookcall`}
               className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
                 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
             >

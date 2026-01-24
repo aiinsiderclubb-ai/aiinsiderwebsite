@@ -10,6 +10,7 @@ import {
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 const features = [
   {
@@ -83,6 +84,8 @@ export default function SweezyPage() {
   const storyRef = useRef(null);
   const timelineRef = useRef(null);
   const testimonialsRef = useRef(null);
+  const { lang } = useLanguage();
+  const basePath = `/${lang}`;
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' });
@@ -125,7 +128,7 @@ export default function SweezyPage() {
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <Link href="/projects" 
+            <Link href={`${basePath}/projects`} 
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to Projects</span>
@@ -591,7 +594,7 @@ export default function SweezyPage() {
                 <Download className="w-5 h-5" />
                 Download Sweezy
               </a>
-              <Link href="/#contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg
+              <Link href={`${basePath}#contact`} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg
                 border-2 transition-all duration-300 hover:scale-105 hover:bg-white/5"
                 style={{ borderColor: '#FFD700', color: '#FFD700' }}>
                 Partner With Us

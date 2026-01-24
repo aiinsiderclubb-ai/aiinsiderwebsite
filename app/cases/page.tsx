@@ -18,6 +18,7 @@ export default function CasesPage() {
   const [activeFilter, setActiveFilter] = useState<CaseCategory | 'all'>('all');
   const { openChat, openWithIndustry } = useChatContext();
   const { lang, t } = useLanguage();
+  const basePath = `/${lang}`;
 
   // Get the featured outreach case
   const outreachCase = useMemo(() => {
@@ -62,7 +63,7 @@ export default function CasesPage() {
 
   // Handle contact click - scroll to booking
   const handleContactClick = () => {
-    window.location.href = '/#bookcall';
+    window.location.href = `${basePath}#bookcall`;
   };
 
   return (
@@ -141,7 +142,7 @@ export default function CasesPage() {
             </button>
             
             <Link
-              href="/#bookcall"
+              href={`${basePath}#bookcall`}
               className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
                 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
             >

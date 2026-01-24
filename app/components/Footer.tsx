@@ -3,9 +3,11 @@
 import { motion } from 'framer-motion';
 import { Youtube, Linkedin, MessageCircle, Mail, MapPin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import Link from 'next/link';
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
   const socialLinks = [
     {
       name: 'Telegram',
@@ -69,19 +71,19 @@ export default function Footer() {
             <h3 className="text-lg font-bold font-heading mb-4 text-white">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
               {[
-                { key: 'footer.linkAbout', href: '/about' },
-                { key: 'footer.linkSolutions', href: '#solutions' },
-                { key: 'footer.linkCases', href: '/cases' },
-                { key: 'footer.linkPricing', href: '#pricing' },
-                { key: 'footer.linkContact', href: '#bookcall' },
+                { key: 'footer.linkAbout', href: `${basePath}/about` },
+                { key: 'footer.linkSolutions', href: `${basePath}#solutions` },
+                { key: 'footer.linkCases', href: `${basePath}/cases` },
+                { key: 'footer.linkPricing', href: `${basePath}#pricing` },
+                { key: 'footer.linkContact', href: `${basePath}#bookcall` },
               ].map((link) => (
                 <li key={link.key}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
                     {t(link.key)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { useLanguage } from '../../context/LanguageContext';
 
 const features = [
   {
@@ -91,6 +92,9 @@ const reviews = [
 ];
 
 export default function SweezyAppPage() {
+  const { lang } = useLanguage();
+  const basePath = `/${lang}`;
+
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
@@ -127,7 +131,7 @@ export default function SweezyAppPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 text-sm text-gray-400 mb-8"
           >
-            <Link href="/cases" className="hover:text-white transition-colors">Кейси</Link>
+            <Link href={`${basePath}/cases`} className="hover:text-white transition-colors">Кейси</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-blue-400">Sweezy</span>
           </motion.div>
@@ -572,7 +576,7 @@ export default function SweezyAppPage() {
       <section className="py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <Link
-            href="/cases"
+            href={`${basePath}/cases`}
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

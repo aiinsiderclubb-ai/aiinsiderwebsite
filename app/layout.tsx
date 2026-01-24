@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import './globals.css';
 import ChatWidget from './components/ChatWidget';
 import { ChatProvider } from './context/ChatContext';
@@ -44,12 +45,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const siteUrl = getSiteUrl();
+  const hdrs = await headers();
+  const langHeader = hdrs.get('x-aiinsider-lang');
+  const lang = langHeader === 'en' || langHeader === 'uk' ? langHeader : 'uk';
 
   const organizationJsonLd = {
     '@context': 'https://schema.org',
@@ -57,7 +61,7 @@ export default function RootLayout({
     name: SITE_NAME,
     url: siteUrl.toString(),
     description: DEFAULT_DESCRIPTION,
-    areaServed: 'CH',
+    areaServed: ['Switzerland', 'Europe', 'United States'],
     sameAs: [],
   };
 
@@ -69,7 +73,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="uk" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <body className="antialiased">
         <script
           type="application/ld+json"
@@ -81,7 +85,7 @@ export default function RootLayout({
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <LanguageProvider>
+        <LanguageProvider initialLang={lang}>
           <ChatProvider>
             {children}
             <ChatWidget />

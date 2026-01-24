@@ -15,6 +15,7 @@ interface CaseCardProps {
 
 export default function CaseCard({ caseData, index, onDemoClick }: CaseCardProps) {
   const { lang, t } = useLanguage();
+  const basePath = `/${lang}`;
   
   // Special styling for Sweezy
   const isSweezy = caseData.id === 'case-sweezy';
@@ -30,7 +31,7 @@ export default function CaseCard({ caseData, index, onDemoClick }: CaseCardProps
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className="group relative"
     >
-      <Link href={`/cases/${caseData.slug}`} className="block">
+      <Link href={`${basePath}/cases/${caseData.slug}`} className="block">
         {/* Main Card */}
         <div 
           className={`
