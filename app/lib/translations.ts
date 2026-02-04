@@ -258,6 +258,50 @@ export const translations = {
     member3Bio: { uk: 'Продуктовий стратег з талантом до user-centric дизайну. Раніше керував продуктовими командами в Stripe та Figma.', en: 'Product strategist with a knack for user-centric design. Previously led product teams at Stripe and Figma.' },
   },
   
+  // Testimonials Section (Roadmap Style)
+  testimonials: {
+    badge: { uk: 'Шлях клієнта', en: 'Client Journey' },
+    title1: { uk: 'Від проблеми', en: 'From Problem' },
+    title2: { uk: 'до результату', en: 'to Results' },
+    subtitle: { uk: 'Подивіться як наші клієнти трансформували свій бізнес на кожному етапі.', en: 'See how our clients transformed their business at every stage.' },
+    // Phase labels
+    phase1: { uk: 'Виявлення потреби', en: 'Discovery' },
+    phase2: { uk: 'Впровадження', en: 'Implementation' },
+    phase3: { uk: 'Масштабування', en: 'Scaling' },
+    phase4: { uk: 'Результат', en: 'Results' },
+    // Testimonial quotes
+    quote1: { 
+      uk: 'Наша команда підтримки тонула в одних і тих же питаннях. AI Insider проаналізували наші процеси і знайшли ідеальне рішення.',
+      en: 'Our support team was drowning in repetitive questions. AI Insider analyzed our workflows and found the perfect solution.'
+    },
+    quote2: { 
+      uk: 'Голосовий агент бронює зустрічі швидше, ніж могла б наша команда продажів. Ми збільшили конверсії на 140%.',
+      en: 'The voice agent books meetings faster than our sales team ever could. We increased conversions by 140%.'
+    },
+    quote3: { 
+      uk: 'Інтеграція була бездоганною. Тепер наш AI обробляє 80% запитів автоматично, а команда фокусується на складних кейсах.',
+      en: 'Integration was seamless. Now our AI handles 80% of inquiries automatically, and the team focuses on complex cases.'
+    },
+    quote4: { 
+      uk: 'За 6 місяців AI-система повністю окупилась. ROI перевищив 400%. Це була найкраща інвестиція року.',
+      en: 'Within 6 months, the AI system paid for itself. ROI exceeded 400%. It was the best investment of the year.'
+    },
+    // Companies
+    company1: { uk: 'TechCorp', en: 'TechCorp' },
+    company2: { uk: 'SalesFlow', en: 'SalesFlow' },
+    company3: { uk: 'StartupXYZ', en: 'StartupXYZ' },
+    company4: { uk: 'Innovate AG', en: 'Innovate AG' },
+    // Results
+    result1: { uk: 'Зменшено час підтримки на 70%', en: 'Reduced support time by 70%' },
+    result2: { uk: '+140% конверсій за 3 місяці', en: '+140% conversions in 3 months' },
+    result3: { uk: '80% запитів автоматизовано', en: '80% of inquiries automated' },
+    result4: { uk: 'ROI 400%+ за 6 місяців', en: '400%+ ROI in 6 months' },
+    // CTA
+    ctaTitle: { uk: 'Готові почати свій шлях?', en: 'Ready to Start Your Journey?' },
+    ctaSubtitle: { uk: 'Приєднуйтесь до 50+ компаній, що вже трансформували свій бізнес з AI.', en: 'Join 50+ companies that have already transformed their business with AI.' },
+    ctaButton: { uk: 'Почати зараз', en: 'Start Your Journey' },
+  },
+
   // Language switcher
   lang: {
     switchTo: { uk: 'EN', en: 'UA' },
