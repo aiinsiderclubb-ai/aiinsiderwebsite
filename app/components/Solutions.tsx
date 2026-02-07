@@ -13,6 +13,13 @@ export default function Solutions() {
   const basePath = `/${lang}`;
   const MotionLink = motion(Link);
 
+  const seoPages = [
+    { href: `${basePath}/ai-automation-for-business`, label: 'AI automation for business' },
+    { href: `${basePath}/ai-chatbots-for-business`, label: 'AI chatbots for business' },
+    { href: `${basePath}/ai-voice-agents`, label: 'AI voice agents' },
+    { href: `${basePath}/custom-ai-agents`, label: 'Custom AI agents' },
+  ];
+
   const solutions = [
     {
       titleKey: 'solutions.solution1Title',
@@ -147,6 +154,27 @@ export default function Solutions() {
             );
           })}
         </div>
+
+        {/* SEO service pages quick links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="mt-10"
+        >
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {seoPages.map((p) => (
+              <Link
+                key={p.href}
+                href={p.href}
+                className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/5 text-gray-300 border border-white/10
+                  transition-colors hover:border-white/25 hover:text-white"
+              >
+                {p.label}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Bottom CTA - Monochrome */}
         <motion.div

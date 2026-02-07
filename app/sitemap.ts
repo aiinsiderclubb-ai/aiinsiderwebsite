@@ -8,7 +8,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
-  const staticPaths = ['/', '/about', '/cases', '/projects', '/services'] as const;
+  const staticPaths = [
+    '/',
+    '/about',
+    '/cases',
+    '/projects',
+    '/services',
+    '/ai-automation-for-business',
+    '/ai-chatbots-for-business',
+    '/ai-voice-agents',
+    '/custom-ai-agents',
+  ] as const;
 
   const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
     staticPaths.map((path) => ({
