@@ -30,6 +30,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: t('nav.about'), href: `${basePath}/about` },
+    { name: t('nav.services'), href: `${basePath}/services` },
     { name: t('nav.cases'), href: `${basePath}/cases` },
     { name: t('nav.solutions'), href: isHomePage ? '#solutions' : `${basePath}#solutions` },
     { name: t('nav.pricing'), href: isHomePage ? '#pricing' : `${basePath}#pricing` },
@@ -90,6 +91,7 @@ export default function Navbar() {
             const isActive =
               (!isExternal && pathname === link.href) ||
               (!isExternal && link.href.endsWith('/about') && pathname === `${basePath}/about`) ||
+              (!isExternal && link.href.endsWith('/services') && pathname?.startsWith(`${basePath}/services`)) ||
               (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`));
             
             if (isExternal) {

@@ -4,32 +4,39 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Mic, Workflow, LineChart, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import Link from 'next/link';
 
 export default function Solutions() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
+  const MotionLink = motion(Link);
 
   const solutions = [
     {
       titleKey: 'solutions.solution1Title',
       descKey: 'solutions.solution1Desc',
       icon: Mic,
+      href: `${basePath}/services/ai-voice-agent`,
     },
     {
       titleKey: 'solutions.solution2Title',
       descKey: 'solutions.solution2Desc',
       icon: Workflow,
+      href: `${basePath}/services/workflow-automation`,
     },
     {
       titleKey: 'solutions.solution3Title',
       descKey: 'solutions.solution3Desc',
       icon: LineChart,
+      href: `${basePath}/services/analytics-assistants`,
     },
     {
       titleKey: 'solutions.solution4Title',
       descKey: 'solutions.solution4Desc',
       icon: Sparkles,
+      href: `${basePath}/services/custom-ai-models`,
     },
   ];
 
@@ -89,13 +96,13 @@ export default function Solutions() {
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
-              <motion.a
+              <MotionLink
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: index * 0.15 }}
                 className="relative group cursor-pointer"
-                href="#contact"
+                href={solution.href}
               >
                 {/* Card */}
                 <div 
@@ -136,7 +143,7 @@ export default function Solutions() {
                     </div>
                   </div>
                 </div>
-              </motion.a>
+              </MotionLink>
             );
           })}
         </div>

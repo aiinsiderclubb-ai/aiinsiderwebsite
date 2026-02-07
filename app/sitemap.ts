@@ -2,12 +2,13 @@ import type { MetadataRoute } from 'next';
 import { casesData } from './lib/casesData';
 import { getSiteUrl } from './lib/site';
 import { SUPPORTED_LANGS, withLang } from './lib/i18n';
+import { servicesData } from './lib/servicesData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
-  const staticPaths = ['/', '/about', '/cases', '/projects'] as const;
+  const staticPaths = ['/', '/about', '/cases', '/projects', '/services'] as const;
 
   const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
     staticPaths.map((path) => ({
@@ -55,6 +56,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...staticRoutes, ...dedicatedCaseRoutes, ...caseRoutes, ...projectRoutes];
+  const serviceRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    servicesData.map((s) => ({
+      url: new URL(withLang(lang, `/services/${s.slug}`), siteUrl).toString(),
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }))
+  );
+
+  return [...staticRoutes, ...serviceRoutes, ...dedicatedCaseRoutes, ...caseRoutes, ...projectRoutes];
 }
 

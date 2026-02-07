@@ -72,6 +72,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { key: 'footer.linkAbout', href: `${basePath}/about` },
+                { key: 'footer.linkServices', href: `${basePath}/services` },
                 { key: 'footer.linkSolutions', href: `${basePath}#solutions` },
                 { key: 'footer.linkCases', href: `${basePath}/cases` },
                 { key: 'footer.linkPricing', href: `${basePath}#pricing` },

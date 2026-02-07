@@ -7,6 +7,10 @@ export const DEFAULT_DESCRIPTION =
 
 export const DEFAULT_KEYWORDS = [
   'AI automation',
+  'AI lead generation',
+  'AI voice agent',
+  'AI chatbot for business',
+  'AI automation for real estate',
   'voice agents',
   'AI chatbots',
   'workflow automation',
