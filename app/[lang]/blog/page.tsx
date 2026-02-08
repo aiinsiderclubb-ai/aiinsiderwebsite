@@ -5,6 +5,7 @@ import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { buildHubLinks } from '@/app/lib/internalLinks';
 
 type Params = { lang: string };
 
@@ -23,12 +24,12 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
     ? 'B2B playbooks on AI automation, chatbots, voice agents, and integrations \u2014 written for teams that care about measurable outcomes.'
     : 'B2B\u2011\u043f\u043b\u0435\u0439\u0431\u0443\u043a\u0438 \u043f\u0440\u043e AI\u2011\u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u044e, \u0447\u0430\u0442\u0431\u043e\u0442\u0438, \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0456 \u0430\u0433\u0435\u043d\u0442\u0438 \u0442\u0430 \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u0457 \u2014 \u0434\u043b\u044f \u043a\u043e\u043c\u0430\u043d\u0434, \u044f\u043a\u0438\u043c \u0432\u0430\u0436\u043b\u0438\u0432\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u0456 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0438.';
 
-  const servicePages = [
-    { href: '/ai-automation-for-business', label: 'AI automation for business' },
-    { href: '/ai-chatbots-for-business', label: 'AI chatbots for business' },
-    { href: '/ai-voice-agents', label: 'AI voice agents' },
-    { href: '/custom-ai-agents', label: 'Custom AI agents' },
-  ];
+  // Use centralized hub links with semantic anchors
+  const hubLinks = buildHubLinks(lang);
+  const servicePages = hubLinks.map((l) => ({
+    href: l.href,
+    label: l.label[lang],
+  }));
 
   const ctaBook = isEn ? 'Book a free AI consultation' : '\u0417\u0430\u043c\u043e\u0432\u0438\u0442\u0438 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0443 AI\u2011\u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u044e';
   const ctaAudit = isEn ? 'Get AI automation audit' : '\u041e\u0442\u0440\u0438\u043c\u0430\u0442\u0438 \u0430\u0443\u0434\u0438\u0442 AI\u2011\u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u0457';

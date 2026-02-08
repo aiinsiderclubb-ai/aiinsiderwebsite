@@ -163,6 +163,7 @@ export const blogArticles: BlogArticle[] = [
     relatedLinks: [
       { href: '/ai-automation-for-business', label: { en: 'AI automation for business', uk: 'AI automation for business' } },
       { href: '/ai-chatbots-for-business', label: { en: 'AI chatbots for business', uk: 'AI chatbots for business' } },
+      { href: '/services/ai-lead-generation', label: { en: 'AI lead generation services', uk: 'Послуги AI лідогенерації' } },
     ],
   },
 
@@ -265,6 +266,7 @@ export const blogArticles: BlogArticle[] = [
     relatedLinks: [
       { href: '/ai-chatbots-for-business', label: { en: 'AI chatbots for business', uk: 'AI chatbots for business' } },
       { href: '/custom-ai-agents', label: { en: 'Custom AI agents', uk: 'Custom AI agents' } },
+      { href: '/services/ai-chatbot-for-business', label: { en: 'AI chatbot development', uk: 'Розробка AI чатботів' } },
     ],
   },
 
@@ -354,6 +356,8 @@ export const blogArticles: BlogArticle[] = [
     relatedLinks: [
       { href: '/ai-voice-agents', label: { en: 'AI voice agents', uk: 'AI voice agents' } },
       { href: '/ai-automation-for-business', label: { en: 'AI automation for business', uk: 'AI automation for business' } },
+      { href: '/services/ai-automation-for-real-estate', label: { en: 'Real estate AI automation', uk: 'AI автоматизація для нерухомості' } },
+      { href: '/services/ai-voice-agent', label: { en: 'Voice agent implementation', uk: 'Впровадження голосових агентів' } },
     ],
   },
 
@@ -440,6 +444,7 @@ export const blogArticles: BlogArticle[] = [
     relatedLinks: [
       { href: '/ai-automation-for-business', label: { en: 'AI automation for business', uk: 'AI automation for business' } },
       { href: '/custom-ai-agents', label: { en: 'Custom AI agents', uk: 'Custom AI agents' } },
+      { href: '/services/workflow-automation', label: { en: 'Workflow automation services', uk: 'Послуги автоматизації процесів' } },
     ],
   },
 
@@ -521,8 +526,9 @@ export const blogArticles: BlogArticle[] = [
       getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
     },
     relatedLinks: [
-      { href: '/ai-automation-for-business', label: { en: 'AI automation for business', uk: 'AI automation for business' } },
-      { href: '/ai-chatbots-for-business', label: { en: 'AI chatbots for business', uk: 'AI chatbots for business' } },
+      { href: '/ai-automation-for-business', label: { en: 'Business process automation with AI', uk: 'Автоматизація бізнес-процесів з AI' } },
+      { href: '/ai-chatbots-for-business', label: { en: 'B2B chatbot solutions', uk: 'B2B чатбот рішення' } },
+      { href: '/services/ai-lead-generation', label: { en: 'AI lead generation', uk: 'AI лідогенерація' } },
     ],
   },
 
@@ -610,7 +616,9 @@ export const blogArticles: BlogArticle[] = [
     },
     relatedLinks: [
       { href: '/custom-ai-agents', label: { en: 'Custom AI agents', uk: 'Custom AI agents' } },
-      { href: '/ai-automation-for-business', label: { en: 'AI automation for business', uk: 'AI automation for business' } },
+      { href: '/ai-automation-for-business', label: { en: 'Intelligent automation solutions', uk: 'Інтелектуальна автоматизація' } },
+      { href: '/services/custom-ai-models', label: { en: 'Custom AI model development', uk: 'Розробка кастомних AI моделей' } },
+      { href: '/services/workflow-automation', label: { en: 'Enterprise workflow automation', uk: 'Автоматизація корпоративних процесів' } },
     ],
   },
 ];

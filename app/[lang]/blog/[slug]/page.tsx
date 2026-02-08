@@ -5,6 +5,8 @@ import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getBlogArticle, getBlogText, blogArticles } from '@/app/lib/blogData';
+import { getRelatedServicesForBlog, getSemanticAnchor } from '@/app/lib/internalLinks';
+import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
 
 type Params = { lang: string; slug: string };
 
@@ -243,6 +245,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
               {isEn ? 'Related services' : '\u041f\u043e\u0432\u02bc\u044f\u0437\u0430\u043d\u0456 \u043f\u043e\u0441\u043b\u0443\u0433\u0438'}
             </h3>
             <div className="flex flex-wrap gap-2">
+              {/* Existing article-defined links */}
               {article.relatedLinks.map((link) => (
                 <Link key={link.href} href={withLang(lang, link.href)}
                   className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
@@ -251,6 +254,21 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                   <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>
                 </Link>
               ))}
+              {/* Dynamically generated SEO service links */}
+              {getRelatedServicesForBlog(article)
+                .filter((slug) => !article.relatedLinks.some((l) => l.href === `/${slug}`))
+                .map((slug, idx) => {
+                  const page = SEO_SERVICE_PAGES[slug];
+                  if (!page) return null;
+                  return (
+                    <Link key={slug} href={withLang(lang, `/${slug}`)}
+                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                        transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]">
+                      <span>{getSemanticAnchor(slug, lang, idx + 1)}</span>
+                      <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>
+                    </Link>
+                  );
+                })}
             </div>
           </section>
 

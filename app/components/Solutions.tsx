@@ -173,6 +173,13 @@ export default function Solutions() {
                 {p.label}
               </Link>
             ))}
+            <Link
+              href={`${basePath}/blog`}
+              className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/5 text-gray-300 border border-white/10
+                transition-colors hover:border-white/25 hover:text-white"
+            >
+              {lang === 'en' ? 'AI insights & guides' : 'AI інсайти та гайди'}
+            </Link>
           </div>
         </motion.div>
 

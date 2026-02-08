@@ -6,6 +6,9 @@ import { getCaseBySlug, getLocalizedText as getCaseText, type CaseStudy } from '
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getLocalizedText, getServiceBySlug } from '@/app/lib/servicesData';
+import { getBlogArticlesForServiceDetail, getSeoServicesForServiceDetail, getSemanticAnchor } from '@/app/lib/internalLinks';
+import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
+import { getBlogText } from '@/app/lib/blogData';
 
 type Params = { lang: string; slug: string };
 
@@ -321,6 +324,74 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           </div>
         </section>
       )}
+
+      {/* Related blog articles */}
+      {(() => {
+        const relatedBlog = getBlogArticlesForServiceDetail(service.slug, 3);
+        if (relatedBlog.length === 0) return null;
+        return (
+          <section className="py-14 px-6 border-t border-white/5">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                {lang === 'en' ? 'From the blog' : 'З блогу'}
+              </h2>
+              <div className="grid md:grid-cols-3 gap-5">
+                {relatedBlog.map((a) => (
+                  <Link
+                    key={a.slug}
+                    href={withLang(lang, `/blog/${a.slug}`)}
+                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-lg">{a.icon}</span>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-white/50">
+                        {getBlogText(a.category, lang)}
+                      </span>
+                      <span className="text-xs text-gray-500 ml-auto">{a.readTime} {lang === 'en' ? 'min' : 'хв'}</span>
+                    </div>
+                    <h3 className="text-sm font-bold text-white leading-snug group-hover:text-white/80 transition-colors mb-2">
+                      {getBlogText(a.h1, lang)}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-2">{getBlogText(a.metaDescription, lang)}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* Related SEO service pages */}
+      {(() => {
+        const seoSlugs = getSeoServicesForServiceDetail(service.slug);
+        if (seoSlugs.length === 0) return null;
+        return (
+          <section className="py-10 px-6">
+            <div className="max-w-6xl mx-auto">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">
+                {lang === 'en' ? 'Related solutions' : 'Повʼязані рішення'}
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {seoSlugs.map((seoSlug, idx) => {
+                  const page = SEO_SERVICE_PAGES[seoSlug];
+                  if (!page) return null;
+                  return (
+                    <Link
+                      key={seoSlug}
+                      href={withLang(lang, `/${seoSlug}`)}
+                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                        transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]"
+                    >
+                      <span>{getSemanticAnchor(seoSlug, lang, idx)}</span>
+                      <span className="text-white/30 group-hover:text-white/60 transition-colors">→</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Final CTA */}
       <section className="py-14 px-6">

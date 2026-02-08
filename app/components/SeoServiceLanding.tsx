@@ -4,8 +4,10 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
-import { getLocalizedSeo, getSeoServicePage, type SeoServiceSlug } from '@/app/lib/seoServicePages';
+import { getLocalizedSeo, getSeoServicePage, SEO_SERVICE_PAGES, type SeoServiceSlug } from '@/app/lib/seoServicePages';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { getRelatedBlogForService, buildSiblingServiceLinks, getSemanticAnchor } from '@/app/lib/internalLinks';
+import { servicesData, getLocalizedText as getServiceText } from '@/app/lib/servicesData';
 
 type Props = {
   lang: string;
@@ -124,21 +126,28 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
     })),
   };
 
-  // Internal hub links (helps indexing + structure)
-  const hubLinks =
-    lang === 'en'
-      ? [
-          { href: '/ai-automation-for-business', label: 'AI automation for business' },
-          { href: '/ai-chatbots-for-business', label: 'AI chatbots for business' },
-          { href: '/ai-voice-agents', label: 'AI voice agents' },
-          { href: '/custom-ai-agents', label: 'Custom AI agents' },
-        ]
-      : [
-          { href: '/ai-automation-for-business', label: 'AI automation for business' },
-          { href: '/ai-chatbots-for-business', label: 'AI chatbots for business' },
-          { href: '/ai-voice-agents', label: 'AI voice agents' },
-          { href: '/custom-ai-agents', label: 'Custom AI agents' },
-        ];
+  // Internal hub links using semantic anchor variations
+  const hubLinks = (Object.keys(SEO_SERVICE_PAGES) as SeoServiceSlug[]).map((s, idx) => ({
+    href: `/${s}`,
+    label: getSemanticAnchor(s, lang, 0),
+  }));
+
+  // Related blog articles using the internal linking module
+  const relatedBlogArticles = getRelatedBlogForService(slug, 4);
+
+  // Sibling service pages for cross-linking
+  const siblingServices = buildSiblingServiceLinks(slug, lang);
+
+  // Related service detail pages based on topic mapping
+  const SERVICE_DETAIL_MAP: Record<SeoServiceSlug, string[]> = {
+    'ai-automation-for-business': ['workflow-automation', 'ai-lead-generation'],
+    'ai-chatbots-for-business': ['ai-chatbot-for-business', 'custom-ai-models'],
+    'ai-voice-agents': ['ai-voice-agent', 'ai-automation-for-real-estate'],
+    'custom-ai-agents': ['custom-ai-models', 'workflow-automation'],
+  };
+  const relatedServiceDetails = (SERVICE_DETAIL_MAP[slug] || [])
+    .map((s) => servicesData.find((svc) => svc.slug === s))
+    .filter(Boolean);
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -330,45 +339,74 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
             </div>
           </div>
 
-          {/* Related blog articles */}
-          {(() => {
-            const categoryMap: Record<string, string> = {
-              'ai-automation-for-business': 'Automation',
-              'ai-chatbots-for-business': 'Chatbots',
-              'ai-voice-agents': 'Voice Agents',
-              'custom-ai-agents': 'Custom AI',
-            };
-            const targetCat = categoryMap[slug] || '';
-            const related = blogArticles
-              .filter((a) => a.category.en === targetCat || a.relatedLinks.some((l) => l.href === `/${slug}`))
-              .slice(0, 3);
-            if (related.length === 0) return null;
-            return (
-              <div className="max-w-6xl mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
-                  {lang === 'en' ? 'From the blog' : 'З блогу'}
-                </h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {related.map((a) => (
-                    <Link
-                      key={a.slug}
-                      href={withLang(lang, `/blog/${a.slug}`)}
-                      className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-lg">{a.icon}</span>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-white/50">{getBlogText(a.category, lang)}</span>
-                        <span className="text-xs text-gray-500 ml-auto">{a.readTime} {lang === 'en' ? 'min' : 'хв'}</span>
-                      </div>
-                      <h3 className="text-sm font-bold text-white leading-snug group-hover:text-white/80 transition-colors">
-                        {getBlogText(a.h1, lang)}
-                      </h3>
-                    </Link>
-                  ))}
-                </div>
+          {/* Related blog articles — using internal linking module */}
+          {relatedBlogArticles.length > 0 && (
+            <div className="max-w-6xl mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
+                {lang === 'en' ? 'From the blog' : 'З блогу'}
+              </h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {relatedBlogArticles.map((a) => (
+                  <Link
+                    key={a.slug}
+                    href={withLang(lang, `/blog/${a.slug}`)}
+                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-lg">{a.icon}</span>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-white/50">{getBlogText(a.category, lang)}</span>
+                      <span className="text-xs text-gray-500 ml-auto">{a.readTime} {lang === 'en' ? 'min' : 'хв'}</span>
+                    </div>
+                    <h3 className="text-sm font-bold text-white leading-snug group-hover:text-white/80 transition-colors">
+                      {getBlogText(a.h1, lang)}
+                    </h3>
+                  </Link>
+                ))}
               </div>
-            );
-          })()}
+            </div>
+          )}
+
+          {/* Related service detail pages */}
+          {relatedServiceDetails.length > 0 && (
+            <div className="max-w-6xl mb-12">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">
+                {lang === 'en' ? 'Explore our services' : 'Дослідіть наші послуги'}
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {relatedServiceDetails.map((svc) => svc && (
+                  <Link
+                    key={svc.slug}
+                    href={withLang(lang, `/services/${svc.slug}`)}
+                    className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                      transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]"
+                  >
+                    <span>{getServiceText(svc.title, lang)}</span>
+                    <span className="text-white/30 group-hover:text-white/60 transition-colors">→</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sibling SEO service pages for cross-linking */}
+          <div className="max-w-6xl mb-12">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">
+              {lang === 'en' ? 'Related solutions' : 'Повʼязані рішення'}
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {siblingServices.map((link, idx) => (
+                <Link
+                  key={link.href}
+                  href={withLang(lang, link.href)}
+                  className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                    transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]"
+                >
+                  <span>{link.label[lang]}</span>
+                  <span className="text-white/30 group-hover:text-white/60 transition-colors">→</span>
+                </Link>
+              ))}
+            </div>
+          </div>
 
           {/* CTA */}
           <div className="max-w-6xl">
