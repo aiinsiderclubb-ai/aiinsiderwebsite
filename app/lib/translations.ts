@@ -145,6 +145,15 @@ export const translations = {
     linkCases: { uk: 'Кейси', en: 'Case Studies' },
     linkPricing: { uk: 'Ціни', en: 'Pricing' },
     linkContact: { uk: 'Контакт', en: 'Contact' },
+    // Footer sections
+    company: { uk: 'Компанія', en: 'Company' },
+    services: { uk: 'Послуги', en: 'Services' },
+    resources: { uk: 'Ресурси', en: 'Resources' },
+    // Service links
+    linkChatbots: { uk: 'AI чатботи', en: 'AI Chatbots' },
+    linkVoiceAgents: { uk: 'Голосові агенти', en: 'Voice Agents' },
+    linkAutomation: { uk: 'Автоматизація', en: 'Automation' },
+    linkCustomAgents: { uk: 'Кастомні агенти', en: 'Custom Agents' },
   },
   
   // Cases Page
