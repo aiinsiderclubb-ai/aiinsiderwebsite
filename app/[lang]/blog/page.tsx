@@ -109,38 +109,90 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
 
       {/* Articles Grid */}
       <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sorted.map((article, idx) => (
+        <div className="max-w-7xl mx-auto">
+          {/* Articles count badge */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="text-sm text-gray-400">
+                {sorted.length} {isEn ? 'articles' : 'статей'}
+              </span>
+            </div>
+            <div className="text-xs text-gray-500">
+              {isEn ? 'Sorted by newest' : 'Сортування за новизною'}
+            </div>
+          </div>
+
+          {/* Unified card grid */}
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {sorted.map((article) => (
               <Link
                 key={article.slug}
                 href={withLang(lang, `/blog/${article.slug}`)}
-                className="group relative rounded-3xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_0_60px_rgba(255,255,255,0.05)]"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}
+                className="group relative flex flex-col h-full rounded-3xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/25 hover:-translate-y-1.5 hover:shadow-[0_8px_60px_rgba(255,255,255,0.08)]"
+                style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' }}
               >
-                <div className="h-[2px] w-full" style={{ background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,${0.15 + idx * 0.04}) 50%, transparent 100%)` }} />
-                <div className="p-7">
+                {/* Top accent line */}
+                <div className="h-[2px] w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 50%, transparent)' }} />
+                
+                {/* Card content */}
+                <div className="flex flex-col flex-1 p-6">
+                  {/* Header: icon + date */}
                   <div className="flex items-start justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <div 
+                      className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-2xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                      style={{ boxShadow: '0 0 30px rgba(255,255,255,0.15)' }}
+                    >
                       {article.icon}
                     </div>
-                    <time className="text-[10px] font-medium text-gray-500" dateTime={article.publishedAt}>
-                      {new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'uk-UA', { month: 'short', day: 'numeric' })}
-                    </time>
+                    <div className="flex flex-col items-end gap-1">
+                      <time className="text-[10px] font-medium text-gray-500 uppercase tracking-wider" dateTime={article.publishedAt}>
+                        {new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'uk-UA', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </time>
+                      <span className="text-[10px] text-gray-600">{article.readTime} {isEn ? 'min' : 'хв'}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">{t(article.category)}</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20" />
-                    <span className="text-xs text-gray-500">{article.readTime} {isEn ? 'min read' : '\u0445\u0432'}</span>
+
+                  {/* Category badge */}
+                  <div className="mb-4">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/10 text-white/70 border border-white/10">
+                      {t(article.category)}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold text-white leading-snug mb-3 group-hover:text-white/90 transition-colors">{t(article.h1)}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{t(article.metaDescription)}</p>
-                  <div className="mt-5 text-sm font-semibold text-white transition-transform duration-200 group-hover:translate-x-1">
-                    {isEn ? 'Read article \u2192' : '\u0427\u0438\u0442\u0430\u0442\u0438 \u2192'}
+
+                  {/* Title */}
+                  <h3 className="text-lg font-bold text-white leading-snug mb-3 group-hover:text-white/90 transition-colors line-clamp-2">
+                    {t(article.h1)}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-400 leading-relaxed line-clamp-3 flex-1">
+                    {t(article.metaDescription)}
+                  </p>
+
+                  {/* Footer: read link */}
+                  <div className="mt-5 pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-white group-hover:text-white/80 transition-colors">
+                        {isEn ? 'Read article' : 'Читати статтю'}
+                      </span>
+                      <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm text-white/60 transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-white">
+                        →
+                      </span>
+                    </div>
                   </div>
                 </div>
               </Link>
             ))}
+          </div>
+
+          {/* View all note */}
+          <div className="mt-10 text-center">
+            <p className="text-sm text-gray-500">
+              {isEn 
+                ? `Showing all ${sorted.length} articles. New content published regularly.` 
+                : `Показано всі ${sorted.length} статей. Новий контент публікується регулярно.`}
+            </p>
           </div>
         </div>
       </section>

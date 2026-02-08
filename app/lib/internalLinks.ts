@@ -2,6 +2,7 @@ import type { Language } from './translations';
 import { blogArticles, type BlogArticle } from './blogData';
 import { SEO_SERVICE_PAGES, type SeoServiceSlug } from './seoServicePages';
 import { servicesData, type ServicePage } from './servicesData';
+import { PROGRAMMATIC_PAGES, type ProgrammaticPage, getLocalizedProgrammatic } from './programmaticSeo';
 
 /* ── Types ─────────────────────────────────────────────────── */
 
@@ -358,4 +359,66 @@ export function buildSiblingServiceLinks(
         uk: getSemanticAnchor(slug, 'uk', idx + 1),
       },
     }));
+}
+
+/* ── Programmatic Page Linking ────────────────────────────── */
+
+/**
+ * Get programmatic pages related to a service detail page.
+ */
+export function getProgrammaticPagesForService(serviceSlug: string, limit = 4): ProgrammaticPage[] {
+  return PROGRAMMATIC_PAGES.filter((p) => p.relatedServices.includes(serviceSlug)).slice(0, limit);
+}
+
+/**
+ * Get programmatic pages related to a blog article.
+ */
+export function getProgrammaticPagesForBlog(articleSlug: string, limit = 3): ProgrammaticPage[] {
+  return PROGRAMMATIC_PAGES.filter((p) => p.relatedBlogSlugs.includes(articleSlug)).slice(0, limit);
+}
+
+/**
+ * Get programmatic pages related to an SEO service page.
+ */
+export function getProgrammaticPagesForSeoService(seoSlug: SeoServiceSlug, limit = 4): ProgrammaticPage[] {
+  const topics = SERVICE_TO_TOPICS[seoSlug];
+  if (!topics) return [];
+
+  const scored = PROGRAMMATIC_PAGES.map((page) => {
+    let score = 0;
+
+    // Check if any related service matches the SEO service slug indirectly
+    page.relatedServices.forEach((rs) => {
+      const seoSlugs = SERVICE_DETAIL_TO_SEO[rs];
+      if (seoSlugs && seoSlugs.includes(seoSlug)) {
+        score += 5;
+      }
+    });
+
+    // Keyword matching in page keyword
+    const pageText = [page.keyword.en.toLowerCase(), page.h1.en.toLowerCase()].join(' ');
+    topics.keywords.forEach((kw) => {
+      if (pageText.includes(kw.toLowerCase())) {
+        score += 2;
+      }
+    });
+
+    return { page, score };
+  });
+
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => s.page);
+}
+
+/**
+ * Build links to programmatic solution pages for internal navigation.
+ */
+export function buildProgrammaticLinks(lang: Language, limit = 6): InternalLink[] {
+  return PROGRAMMATIC_PAGES.slice(0, limit).map((p) => ({
+    href: `/solutions/${p.slug}`,
+    label: p.h1,
+  }));
 }

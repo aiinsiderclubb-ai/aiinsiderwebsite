@@ -4,6 +4,7 @@ import { getSiteUrl } from './lib/site';
 import { SUPPORTED_LANGS, withLang } from './lib/i18n';
 import { servicesData } from './lib/servicesData';
 import { blogArticles } from './lib/blogData';
+import { PROGRAMMATIC_PAGES } from './lib/programmaticSeo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
@@ -17,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/projects', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/services', changeFrequency: 'monthly', priority: 0.8 },
     { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
+    { path: '/solutions', changeFrequency: 'weekly', priority: 0.8 },
     // SEO landing pages
     { path: '/ai-automation-for-business', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-chatbots-for-business', changeFrequency: 'monthly', priority: 0.9 },
@@ -92,10 +94,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  /* ── Programmatic SEO pages (solutions) ─────────────────────── */
+  const solutionRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    PROGRAMMATIC_PAGES.map((p) => ({
+      url: new URL(withLang(lang, `/solutions/${p.slug}`), siteUrl).toString(),
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+  );
+
   return [
     ...staticRoutes,
     ...serviceRoutes,
     ...blogRoutes,
+    ...solutionRoutes,
     ...dedicatedCaseRoutes,
     ...caseRoutes,
     ...projectRoutes,
