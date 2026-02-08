@@ -140,6 +140,7 @@ export const translations = {
     rights: { uk: 'Всі права захищено. Зроблено з ❤️ у Швейцарії.', en: 'All rights reserved. Made with ❤️ in Switzerland.' },
     linkAbout: { uk: 'Про нас', en: 'About' },
     linkServices: { uk: 'Послуги', en: 'Services' },
+    linkBlog: { uk: 'Блог', en: 'Blog' },
     linkSolutions: { uk: 'Рішення', en: 'Solutions' },
     linkCases: { uk: 'Кейси', en: 'Case Studies' },
     linkPricing: { uk: 'Ціни', en: 'Pricing' },

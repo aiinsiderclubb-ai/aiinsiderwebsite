@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/cases',
     '/projects',
     '/services',
+    '/blog',
     '/ai-automation-for-business',
     '/ai-chatbots-for-business',
     '/ai-voice-agents',
