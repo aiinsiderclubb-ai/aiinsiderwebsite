@@ -32,6 +32,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
     },
+    twitter: {
+      title: `${title} | AI Insider`,
+      description,
+    },
   };
 }
 

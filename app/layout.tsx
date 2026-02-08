@@ -58,22 +58,61 @@ export default async function RootLayout({
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${siteUrl}#organization`,
     name: SITE_NAME,
     url: siteUrl.toString(),
     description: DEFAULT_DESCRIPTION,
-    areaServed: ['Switzerland', 'Europe', 'United States'],
-    sameAs: [],
+    areaServed: [
+      { '@type': 'Country', name: 'Switzerland' },
+      { '@type': 'Continent', name: 'Europe' },
+      { '@type': 'Country', name: 'United States' },
+    ],
+    knowsAbout: [
+      'AI automation',
+      'AI chatbots',
+      'AI voice agents',
+      'Workflow automation',
+      'Lead generation automation',
+      'CRM automation',
+    ],
+    sameAs: [
+      'https://t.me/aiinsider',
+      'https://youtube.com/@aiinsider',
+      'https://linkedin.com/company/aiinsider',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'hello@aiinsider.com',
+      contactType: 'sales',
+      availableLanguage: ['English', 'Ukrainian'],
+    },
   };
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${siteUrl}#website`,
     name: SITE_NAME,
     url: siteUrl.toString(),
+    inLanguage: ['en', 'uk'],
+    publisher: { '@id': `${siteUrl}#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteUrl}${lang === 'en' ? '/en' : '/uk'}/cases?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 
   return (
     <html lang={lang} suppressHydrationWarning>
+      <head>
+        {/* Preconnect to Google Fonts for faster loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="antialiased">
         <script
           type="application/ld+json"
@@ -95,4 +134,3 @@ export default async function RootLayout({
     </html>
   );
 }
-

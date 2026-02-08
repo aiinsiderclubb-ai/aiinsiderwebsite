@@ -5,6 +5,7 @@ import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getLocalizedSeo, getSeoServicePage, type SeoServiceSlug } from '@/app/lib/seoServicePages';
+import { blogArticles, getBlogText } from '@/app/lib/blogData';
 
 type Props = {
   lang: string;
@@ -328,6 +329,46 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
               ))}
             </div>
           </div>
+
+          {/* Related blog articles */}
+          {(() => {
+            const categoryMap: Record<string, string> = {
+              'ai-automation-for-business': 'Automation',
+              'ai-chatbots-for-business': 'Chatbots',
+              'ai-voice-agents': 'Voice Agents',
+              'custom-ai-agents': 'Custom AI',
+            };
+            const targetCat = categoryMap[slug] || '';
+            const related = blogArticles
+              .filter((a) => a.category.en === targetCat || a.relatedLinks.some((l) => l.href === `/${slug}`))
+              .slice(0, 3);
+            if (related.length === 0) return null;
+            return (
+              <div className="max-w-6xl mb-12">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
+                  {lang === 'en' ? 'From the blog' : 'З блогу'}
+                </h2>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {related.map((a) => (
+                    <Link
+                      key={a.slug}
+                      href={withLang(lang, `/blog/${a.slug}`)}
+                      className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">{a.icon}</span>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-white/50">{getBlogText(a.category, lang)}</span>
+                        <span className="text-xs text-gray-500 ml-auto">{a.readTime} {lang === 'en' ? 'min' : 'хв'}</span>
+                      </div>
+                      <h3 className="text-sm font-bold text-white leading-snug group-hover:text-white/80 transition-colors">
+                        {getBlogText(a.h1, lang)}
+                      </h3>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* CTA */}
           <div className="max-w-6xl">

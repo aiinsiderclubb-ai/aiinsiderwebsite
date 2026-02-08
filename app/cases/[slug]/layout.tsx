@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getCaseBySlug, getLocalizedText } from '@/app/lib/casesData';
+import { buildHreflang } from '@/app/lib/i18n';
 
 type SegmentParams = { slug: string };
 
@@ -15,7 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<SegmentPara
     };
   }
 
-  // Default to Ukrainian text for SEO (site renders uk by default)
   const title = getLocalizedText(caseData.title, 'uk');
   const description = getLocalizedText(caseData.shortDescription, 'uk');
 
@@ -23,22 +23,22 @@ export async function generateMetadata({ params }: { params: Promise<SegmentPara
     title,
     description,
     alternates: {
-      canonical: `/cases/${caseData.slug}`,
+      canonical: `/uk/cases/${caseData.slug}`,
+      languages: buildHreflang(`/cases/${caseData.slug}`),
     },
     openGraph: {
-      title,
+      title: `${title} | AI Insider`,
       description,
-      url: `/cases/${caseData.slug}`,
+      url: `/uk/cases/${caseData.slug}`,
       type: 'article',
     },
     twitter: {
-      title,
+      title: `${title} | AI Insider`,
       description,
     },
   };
 }
 
-export default function CaseSlugLayout({ children }: { children: React.ReactNode; params: Promise<SegmentParams> }) {
+export default function CaseSlugLayout({ children }: { children: React.ReactNode }) {
   return children;
 }
-

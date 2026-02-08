@@ -3,40 +3,44 @@ import { casesData } from './lib/casesData';
 import { getSiteUrl } from './lib/site';
 import { SUPPORTED_LANGS, withLang } from './lib/i18n';
 import { servicesData } from './lib/servicesData';
+import { blogArticles } from './lib/blogData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
-  const staticPaths = [
-    '/',
-    '/about',
-    '/cases',
-    '/projects',
-    '/services',
-    '/blog',
-    '/ai-automation-for-business',
-    '/ai-chatbots-for-business',
-    '/ai-voice-agents',
-    '/custom-ai-agents',
-  ] as const;
+  /* ── Static pages ────────────────────────────────────────── */
+  const staticPages: { path: string; changeFrequency: MetadataRoute.Sitemap[0]['changeFrequency']; priority: number }[] = [
+    { path: '/', changeFrequency: 'weekly', priority: 1.0 },
+    { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/cases', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/projects', changeFrequency: 'monthly', priority: 0.7 },
+    { path: '/services', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
+    // SEO landing pages
+    { path: '/ai-automation-for-business', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-chatbots-for-business', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-voice-agents', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/custom-ai-agents', changeFrequency: 'monthly', priority: 0.9 },
+  ];
 
   const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
-    staticPaths.map((path) => ({
+    staticPages.map(({ path, changeFrequency, priority }) => ({
       url: new URL(withLang(lang, path), siteUrl).toString(),
       lastModified: now,
-      changeFrequency: path === '/' || path === '/cases' ? 'weekly' : 'monthly',
-      priority: path === '/' ? 1 : path === '/cases' ? 0.9 : 0.8,
+      changeFrequency,
+      priority,
     }))
   );
 
+  /* ── Cases ───────────────────────────────────────────────── */
   const caseRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
     casesData
-      .filter((c) => c.slug !== 'sweezy') // dedicated page exists at /cases/sweezy
+      .filter((c) => c.slug !== 'sweezy')
       .map((c) => ({
         url: new URL(withLang(lang, `/cases/${c.slug}`), siteUrl).toString(),
         lastModified: now,
-        changeFrequency: 'monthly',
+        changeFrequency: 'monthly' as const,
         priority: 0.7,
       }))
   );
@@ -44,10 +48,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const dedicatedCaseRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.map((lang) => ({
     url: new URL(withLang(lang, '/cases/sweezy'), siteUrl).toString(),
     lastModified: now,
-    changeFrequency: 'monthly',
+    changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
+  /* ── Projects ────────────────────────────────────────────── */
   const projectSlugs = [
     'voiceflow-pro',
     'autoscale-crm',
@@ -62,20 +67,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
     projectSlugs.map((slug) => ({
       url: new URL(withLang(lang, `/projects/${slug}`), siteUrl).toString(),
       lastModified: now,
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
     }))
   );
 
+  /* ── Service detail pages ────────────────────────────────── */
   const serviceRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
     servicesData.map((s) => ({
       url: new URL(withLang(lang, `/services/${s.slug}`), siteUrl).toString(),
       lastModified: now,
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     }))
   );
 
-  return [...staticRoutes, ...serviceRoutes, ...dedicatedCaseRoutes, ...caseRoutes, ...projectRoutes];
-}
+  /* ── Blog articles ─────────────────────────────────────────── */
+  const blogRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
+    blogArticles.map((a) => ({
+      url: new URL(withLang(lang, `/blog/${a.slug}`), siteUrl).toString(),
+      lastModified: new Date(a.publishedAt),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+  );
 
+  return [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...blogRoutes,
+    ...dedicatedCaseRoutes,
+    ...caseRoutes,
+    ...projectRoutes,
+  ];
+}
