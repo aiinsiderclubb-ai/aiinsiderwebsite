@@ -34,7 +34,7 @@ const SERVICE_TO_TOPICS: Record<SeoServiceSlug, { categories: string[]; keywords
   },
   'custom-ai-agents': {
     categories: ['Custom AI'],
-    keywords: ['agent', 'agentic', 'action', 'tool-use', 'CRM agent'],
+    keywords: ['agent', 'agentic', 'action', 'tool-use', 'CRM agent', 'avatar', 'influencer', 'ugc', 'creator'],
   },
 };
 
