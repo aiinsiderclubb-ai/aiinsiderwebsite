@@ -273,45 +273,126 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
           </section>
 
           {/* ═══════════ CTA ═══════════ */}
-          <div className="relative rounded-3xl overflow-hidden mb-16"
-            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)' }}>
-            {/* Glow */}
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 60%)', filter: 'blur(60px)' }} />
-            {/* Top accent */}
-            <div className="h-[2px] w-full"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3) 50%, transparent)' }} />
+          <div className="relative rounded-[2rem] overflow-hidden mb-16 border border-white/[0.08]">
+            {/* Animated gradient background */}
+            <div className="absolute inset-0"
+              style={{ 
+                background: 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.1) 25%, rgba(236,72,153,0.08) 50%, rgba(99,102,241,0.12) 75%, rgba(59,130,246,0.1) 100%)',
+              }} />
+            
+            {/* Mesh gradient overlay */}
+            <div className="absolute inset-0 opacity-60"
+              style={{
+                background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120,119,198,0.3), transparent), radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168,85,247,0.2), transparent)',
+              }} />
+            
+            {/* Animated orbs */}
+            <div className="absolute -top-20 -left-20 w-[300px] h-[300px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 60%)', filter: 'blur(60px)' }} />
+            <div className="absolute -bottom-20 -right-20 w-[350px] h-[350px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(236,72,153,0.3) 0%, transparent 60%)', filter: 'blur(80px)' }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%)', filter: 'blur(50px)' }} />
+            
+            {/* Noise texture overlay */}
+            <div className="absolute inset-0 opacity-[0.03]"
+              style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+            
+            {/* Top shine line */}
+            <div className="absolute top-0 left-0 right-0 h-px"
+              style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)' }} />
 
-            <div className="relative p-8 md:p-12">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-2xl"
-                  style={{ boxShadow: '0 0 40px rgba(255,255,255,0.2)' }}>
-                  \u26A1
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white">
-                    {isEn ? 'Ready to automate?' : '\u0413\u043e\u0442\u043e\u0432\u0456 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0443\u0432\u0430\u0442\u0438?'}
-                  </h2>
-                  <p className="text-gray-400 mt-1">
-                    {isEn
-                      ? 'Book a free consultation or request an AI automation audit.'
-                      : '\u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0443 \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u044e \u0430\u0431\u043e \u043e\u0442\u0440\u0438\u043c\u0430\u0439\u0442\u0435 \u0430\u0443\u0434\u0438\u0442 AI\u2011\u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u0457.'}
-                  </p>
+            <div className="relative px-8 py-12 md:px-16 md:py-16">
+              {/* Badge */}
+              <div className="flex justify-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  <span className="text-xs font-medium text-white/90">
+                    {isEn ? 'Free consultation available' : 'Безкоштовна консультація доступна'}
+                  </span>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link href={`${withLang(lang, '/')}#bookcall`}
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                    transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-                  {t(article.cta.bookConsultation)}
-                </Link>
-                <Link href={`${withLang(lang, '/')}#bookcall`}
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                    border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30">
-                  {t(article.cta.getAudit)}
-                </Link>
+
+              {/* Main content - centered */}
+              <div className="text-center max-w-2xl mx-auto">
+                {/* Icon cluster */}
+                <div className="flex justify-center items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/25 rotate-[-6deg]">
+                    🚀
+                  </div>
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white to-gray-100 flex items-center justify-center text-3xl shadow-xl shadow-white/20">
+                    ⚡
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-xl shadow-lg shadow-pink-500/25 rotate-[6deg]">
+                    🎯
+                  </div>
+                </div>
+
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                  {isEn ? 'Ready to automate with AI?' : 'Готові автоматизувати з AI?'}
+                </h2>
+                
+                <p className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed">
+                  {isEn
+                    ? 'Get a free strategy session and discover how AI can transform your business operations.'
+                    : 'Отримайте безкоштовну стратегічну сесію та дізнайтесь, як AI може трансформувати ваші бізнес-процеси.'}
+                </p>
+
+                {/* Stats row */}
+                <div className="flex flex-wrap justify-center gap-8 mb-10">
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white">50+</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'Projects' : 'Проєктів'}</div>
+                  </div>
+                  <div className="w-px h-12 bg-white/20 hidden sm:block" />
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white">80%</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'Cost reduction' : 'Зниження витрат'}</div>
+                  </div>
+                  <div className="w-px h-12 bg-white/20 hidden sm:block" />
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white">24/7</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'AI availability' : 'Доступність AI'}</div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                  <Link href={`${withLang(lang, '/')}#bookcall`}
+                    className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
+                      transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)] overflow-hidden">
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>{t(article.cta.bookConsultation)}</span>
+                  </Link>
+                  
+                  <Link href={`${withLang(lang, '/')}#bookcall`}
+                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg
+                      bg-white/10 backdrop-blur-sm text-white border border-white/20
+                      transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-[1.02]">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                    <span>{t(article.cta.getAudit)}</span>
+                  </Link>
+                </div>
+
+                {/* Trust text */}
+                <p className="mt-8 text-sm text-white/40">
+                  {isEn ? 'No commitment required. 30-minute call.' : 'Без зобовʼязань. 30-хвилинний дзвінок.'}
+                </p>
               </div>
             </div>
+            
+            {/* Bottom shine line */}
+            <div className="absolute bottom-0 left-0 right-0 h-px"
+              style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)' }} />
           </div>
 
           {/* ═══════════ READ NEXT ═══════════ */}
