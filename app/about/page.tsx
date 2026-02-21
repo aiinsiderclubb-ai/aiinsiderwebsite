@@ -25,12 +25,13 @@ export default function AboutPage() {
     {
       nameKey: 'about.member1Name',
       roleKey: 'about.member1Role',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
+      image: '/images/team/vladyslav-archer.jpg',
+      fallbackImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
       bioKey: 'about.member1Bio',
       social: {
         linkedin: 'https://linkedin.com',
         twitter: 'https://twitter.com',
-        email: 'alex@aiinsider.com',
+        email: 'hello@aiinsider.it.com',
       },
     },
     {
@@ -41,7 +42,7 @@ export default function AboutPage() {
       social: {
         linkedin: 'https://linkedin.com',
         twitter: 'https://twitter.com',
-        email: 'sarah@aiinsider.com',
+        email: 'hello@aiinsider.it.com',
       },
     },
     {
@@ -52,7 +53,7 @@ export default function AboutPage() {
       social: {
         linkedin: 'https://linkedin.com',
         twitter: 'https://twitter.com',
-        email: 'marcus@aiinsider.com',
+        email: 'hello@aiinsider.it.com',
       },
     },
   ];
@@ -281,6 +282,12 @@ export default function AboutPage() {
                     <img
                       src={member.image}
                       alt={t(member.nameKey)}
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        target.onerror = null;
+                        const fallback = (member as { fallbackImage?: string }).fallbackImage;
+                        if (fallback) target.src = fallback;
+                      }}
                       className="relative w-full aspect-square object-cover rounded-2xl border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>

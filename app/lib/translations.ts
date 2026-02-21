@@ -259,15 +259,24 @@ export const translations = {
     letsDiscuss: { uk: 'Обговоримо як ми можемо трансформувати ваш бізнес за допомогою AI.', en: 'Let\'s discuss how we can transform your business with AI.' },
     bookFreeConsult: { uk: 'Замовити безкоштовну консультацію', en: 'Book a Free Consultation' },
     // Team members
-    member1Name: { uk: 'Олексій Мориссон', en: 'Alex Morrison' },
-    member1Role: { uk: 'CEO та засновник', en: 'CEO & Founder' },
-    member1Bio: { uk: 'Візіонер з 15+ роками досвіду в AI та технологіях. Колишній ML Lead в Google, зараз будує майбутнє інтелектуальної автоматизації.', en: 'Visionary leader with 15+ years in AI and tech. Former ML Lead at Google, now building the future of intelligent automation.' },
-    member2Name: { uk: 'Сара Чен', en: 'Sarah Chen' },
-    member2Role: { uk: 'Співзасновник та CTO', en: 'Co-Founder & CTO' },
-    member2Bio: { uk: 'Технічний геній за нашою AI-архітектурою. PhD в Machine Learning з MIT, пристрасна до етичного розвитку AI.', en: 'Technical genius behind our AI architecture. PhD in Machine Learning from MIT, passionate about ethical AI development.' },
-    member3Name: { uk: 'Маркус Джонсон', en: 'Marcus Johnson' },
-    member3Role: { uk: 'Керівник продукту', en: 'Head of Product' },
-    member3Bio: { uk: 'Продуктовий стратег з талантом до user-centric дизайну. Раніше керував продуктовими командами в Stripe та Figma.', en: 'Product strategist with a knack for user-centric design. Previously led product teams at Stripe and Figma.' },
+    member1Name: { uk: 'Владислав Арчер', en: 'Vladyslav Archer' },
+    member1Role: { uk: 'CEO', en: 'CEO' },
+    member1Bio: {
+      uk: 'CEO AI Insider. Поєднує інженерне мислення з growth-підходом — від стратегії автоматизації до запуску production-ready AI систем, які реально знімають рутину з команди. Фокус: чисті процеси, зрозумілі метрики та швидкі ітерації.',
+      en: 'CEO at AI Insider. Blends engineering with growth thinking — from automation strategy to production-ready AI systems that remove bottlenecks and deliver measurable ROI. Focused on clean processes, clear metrics, and fast iteration.',
+    },
+    member2Name: { uk: 'Анастасія Коваль', en: 'Anastasiia Koval' },
+    member2Role: { uk: 'Product Designer (UI/UX)', en: 'Product Designer (UI/UX)' },
+    member2Bio: {
+      uk: 'Перетворює складні AI-процеси на зрозумілий UX, який хочеться використовувати. Відповідає за UI/UX, дизайн-систему та креативи для лендингів і performance-кампаній — з фокусом на ясність і конверсію.',
+      en: 'Turns complex AI workflows into clear, conversion-friendly UX. Owns UI/UX, design systems, and landing/ad creatives for performance campaigns — with a focus on clarity and conversion.',
+    },
+    member3Name: { uk: 'Володимир', en: 'Volodymyr' },
+    member3Role: { uk: 'Operations Manager', en: 'Operations Manager' },
+    member3Bio: {
+      uk: 'Відповідає за операційну частину: процеси, CRM-дисципліну, контроль якості та SLA. Також веде лідогенерацію — налаштовує воронки, тестує канали і забезпечує стабільний потік кваліфікованих лідів.',
+      en: 'Owns operations: processes, CRM hygiene, quality control, and SLA. Also runs lead generation — builds funnels, tests channels, and keeps a steady flow of qualified leads.',
+    },
   },
   
   // Testimonials Section (Roadmap Style)
