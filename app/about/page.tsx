@@ -26,8 +26,9 @@ function canLoadImage(src: string): Promise<boolean> {
 }
 
 function useResolvedImage(candidates: string[]): string {
-  const fallback = candidates[candidates.length - 1] ?? '';
-  const [src, setSrc] = useState<string>(fallback);
+  const initial = candidates[0] ?? '';
+  const fallback = candidates[candidates.length - 1] ?? initial;
+  const [src, setSrc] = useState<string>(initial);
 
   useEffect(() => {
     let cancelled = false;
@@ -73,6 +74,7 @@ export default function AboutPage() {
       nameKey: 'about.member1Name',
       roleKey: 'about.member1Role',
       imageCandidates: [
+        '/images/team/hf_20260220_083203_481eab3a-8c9b-4bcf-8416-dc13dd09d3d7.jpeg',
         '/images/team/vladyslav-archer.jpg',
         '/images/team/vladyslav-archer.jpeg',
         '/images/team/vladyslav-archer.png',
