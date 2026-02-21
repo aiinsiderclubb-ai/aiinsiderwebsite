@@ -265,7 +265,7 @@ export const translations = {
       uk: 'CEO AI Insider. Поєднує інженерне мислення з growth-підходом — від стратегії автоматизації до запуску production-ready AI систем, які реально знімають рутину з команди. Фокус: чисті процеси, зрозумілі метрики та швидкі ітерації.',
       en: 'CEO at AI Insider. Blends engineering with growth thinking — from automation strategy to production-ready AI systems that remove bottlenecks and deliver measurable ROI. Focused on clean processes, clear metrics, and fast iteration.',
     },
-    member2Name: { uk: 'Анастасія Коваль', en: 'Anastasiia Koval' },
+    member2Name: { uk: 'Дизайнер', en: 'Designer' },
     member2Role: { uk: 'Product Designer (UI/UX)', en: 'Product Designer (UI/UX)' },
     member2Bio: {
       uk: 'Перетворює складні AI-процеси на зрозумілий UX, який хочеться використовувати. Відповідає за UI/UX, дизайн-систему та креативи для лендингів і performance-кампаній — з фокусом на ясність і конверсію.',
