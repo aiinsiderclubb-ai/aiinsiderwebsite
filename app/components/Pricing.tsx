@@ -15,7 +15,8 @@ export default function Pricing() {
   const plans = [
     {
       name: 'Starter',
-      priceKey: 'pricing.custom',
+      price: '€399',
+      priceNote: t('pricing.perMonth'),
       descKey: 'pricing.starterDesc',
       icon: Zap,
       gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
@@ -31,12 +32,13 @@ export default function Pricing() {
     },
     {
       name: 'Pro',
-      priceKey: 'pricing.custom',
+      price: '€899',
+      priceNote: t('pricing.perMonth'),
       descKey: 'pricing.proDesc',
       icon: Rocket,
       gradient: 'from-purple-500/30 via-pink-500/20 to-transparent',
       accentColor: 'purple',
-      badge: isEn ? 'Most Value' : 'Найкраще',
+      badge: isEn ? 'Best Value' : 'Найкраще',
       featureKeys: [
         'pricing.proF1',
         'pricing.proF2',
@@ -50,7 +52,8 @@ export default function Pricing() {
     },
     {
       name: 'Enterprise',
-      priceKey: 'pricing.custom',
+      price: t('pricing.enterprisePrice'),
+      priceNote: '',
       descKey: 'pricing.enterpriseDesc',
       icon: Sparkles,
       gradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
@@ -220,9 +223,9 @@ export default function Pricing() {
 
                     {/* Price */}
                     <div className="mb-10">
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex items-baseline gap-1">
                         <span
-                          className="text-5xl md:text-6xl font-bold"
+                          className="text-4xl md:text-5xl font-bold"
                           style={{
                             background: plan.popular
                               ? 'linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #ffffff 100%)'
@@ -231,11 +234,16 @@ export default function Pricing() {
                             WebkitTextFillColor: 'transparent',
                           }}
                         >
-                          {t(plan.priceKey)}
+                          {plan.price}
                         </span>
+                        {plan.priceNote && (
+                          <span className="text-lg text-gray-400 font-medium">{plan.priceNote}</span>
+                        )}
                       </div>
                       <p className="text-sm text-gray-500 mt-2">
-                        {isEn ? 'Tailored to your needs' : 'Під ваші потреби'}
+                        {plan.name === 'Enterprise' 
+                          ? (isEn ? 'Custom pricing based on scope' : 'Індивідуальна ціна за обсягом')
+                          : (isEn ? 'Starting price' : 'Стартова ціна')}
                       </p>
                     </div>
 
