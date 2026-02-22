@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowRight, Sparkles, MessageCircle, Phone, Zap, AlertTriangle, CheckCircle2, Wrench, Rocket } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -19,6 +20,9 @@ export default function CasesPage() {
   const { openChat, openWithIndustry } = useChatContext();
   const { lang, t } = useLanguage();
   const basePath = `/${lang}`;
+  const searchParams = useSearchParams();
+  const qRaw = (searchParams.get('q') || '').trim();
+  const q = qRaw.toLowerCase();
 
   // Get the featured outreach case
   const outreachCase = useMemo(() => {
@@ -30,8 +34,23 @@ export default function CasesPage() {
     const cases = activeFilter === 'all' 
       ? casesData.filter(c => c.id !== 'case-facebook-outreach')
       : casesData.filter(c => c.category === activeFilter);
-    return cases;
-  }, [activeFilter]);
+
+    if (!q) return cases;
+
+    return cases.filter((c) => {
+      const haystack = [
+        getLocalizedText(c.title, lang),
+        getLocalizedText(c.shortDescription, lang),
+        getLocalizedText(c.industryName, lang),
+        c.technologies?.join(' ') || '',
+        c.slug,
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return haystack.includes(q);
+    });
+  }, [activeFilter, q, lang]);
 
   // Count cases per category
   const caseCounts = useMemo(() => {
@@ -124,6 +143,24 @@ export default function CasesPage() {
             {t('cases.subtitle')}
           </motion.p>
 
+          {qRaw && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.25 }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-10"
+            >
+              <span className="text-sm text-gray-400">{lang === 'en' ? 'Search' : 'Пошук'}:</span>
+              <span className="text-sm font-semibold text-white">{qRaw}</span>
+              <Link
+                href={`${basePath}/cases`}
+                className="text-xs font-semibold text-white/70 hover:text-white transition-colors"
+              >
+                {lang === 'en' ? 'Clear' : 'Очистити'}
+              </Link>
+            </motion.div>
+          )}
+
           {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -150,6 +187,46 @@ export default function CasesPage() {
               {t('cases.bookDemo')}
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Internal links: services / blog / about */}
+      <section className="py-10 px-6 -mt-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+              {lang === 'en' ? 'Explore AI services' : 'Дослідіть AI послуги'}
+            </h2>
+            <p className="text-sm md:text-base text-gray-400 mb-5 max-w-3xl">
+              {lang === 'en'
+                ? 'Want similar outcomes? Start with our core services and implementation playbooks.'
+                : 'Хочете подібні результати? Почніть з наших ключових послуг та практичних матеріалів.'}
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {[
+                { href: `${basePath}/services`, label: lang === 'en' ? 'All services' : 'Всі послуги' },
+                {
+                  href: `${basePath}/ai-automation-for-business`,
+                  label: lang === 'en' ? 'AI automation for business' : 'AI автоматизація для бізнесу',
+                },
+                { href: `${basePath}/ai-voice-agents`, label: lang === 'en' ? 'AI voice agents' : 'AI голосові агенти' },
+                { href: `${basePath}/ai-chatbots-for-business`, label: lang === 'en' ? 'AI chatbots' : 'AI чатботи' },
+                { href: `${basePath}/custom-ai-agents`, label: lang === 'en' ? 'Custom AI agents' : 'Кастомні AI агенти' },
+                { href: `${basePath}/blog`, label: lang === 'en' ? 'Blog' : 'Блог' },
+                { href: `${basePath}/about`, label: lang === 'en' ? 'About us' : 'Про нас' },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="text-xs md:text-sm px-4 py-2 rounded-full border border-white/10 bg-white/5 text-gray-300
+                    transition-all duration-200 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

@@ -12,28 +12,32 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/cases/sweezy';
   const title = 'Sweezy';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'Sweezy — a digital assistant app with practical guides, checklists, multilingual content and AI support.'
       : 'Sweezy — цифровий помічник з практичними гайдами, чеклістами, багатомовним контентом та AI підтримкою.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'article',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

@@ -1,0 +1,46 @@
+# AI Insider — AI automation & agents studio
+
+AI Insider builds production-ready AI automation for business: AI agents, chatbots (RAG), voice agents, and workflow automation (including n8n). The primary language is Ukrainian; English is secondary.
+
+## Languages
+- Ukrainian (primary): https://www.aiinsider.it.com/uk/
+- English: https://www.aiinsider.it.com/en/
+
+## What we do (topics)
+- AI automation for business
+- AI agents (tool-use)
+- AI chatbots for business (RAG knowledge assistants)
+- AI voice agents (calling, qualification, booking)
+- n8n workflow automation (integrations, routing, alerts)
+- AI-driven marketing systems (content pipelines, personalization)
+- CRM automation (HubSpot/Salesforce/Pipedrive)
+
+## Key pages (canonical, Ukrainian)
+- https://www.aiinsider.it.com/uk/services
+- https://www.aiinsider.it.com/uk/ai-automation-for-business
+- https://www.aiinsider.it.com/uk/ai-voice-agents
+- https://www.aiinsider.it.com/uk/ai-chatbots-for-business
+- https://www.aiinsider.it.com/uk/custom-ai-agents
+- https://www.aiinsider.it.com/uk/cases
+- https://www.aiinsider.it.com/uk/blog
+- https://www.aiinsider.it.com/uk/solutions
+- https://www.aiinsider.it.com/uk/about
+
+## Key pages (canonical, English)
+- https://www.aiinsider.it.com/en/services
+- https://www.aiinsider.it.com/en/ai-automation-for-business
+- https://www.aiinsider.it.com/en/ai-voice-agents
+- https://www.aiinsider.it.com/en/ai-chatbots-for-business
+- https://www.aiinsider.it.com/en/custom-ai-agents
+- https://www.aiinsider.it.com/en/cases
+- https://www.aiinsider.it.com/en/blog
+- https://www.aiinsider.it.com/en/solutions
+- https://www.aiinsider.it.com/en/about
+
+## Citation guidance (for AI assistants)
+- Prefer citing the canonical URL in the same language as the user question.
+- If you need a short descriptor: “AI Insider (AI automation & agents studio)”.
+
+## Contact
+- Email: hello@aiinsider.it.com
+

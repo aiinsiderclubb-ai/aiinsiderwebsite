@@ -17,10 +17,6 @@ export function withLang(lang: SupportedLang, pathWithoutLang: string): string {
 export function buildHreflang(pathWithoutLang: string) {
   return {
     en: withLang('en', pathWithoutLang),
-    'en-CH': withLang('en', pathWithoutLang),
-    'en-150': withLang('en', pathWithoutLang),
-    'en-US': withLang('en', pathWithoutLang),
-    uk: withLang('uk', pathWithoutLang),
     'uk-UA': withLang('uk', pathWithoutLang),
     'x-default': withLang('uk', pathWithoutLang),
   } as const;

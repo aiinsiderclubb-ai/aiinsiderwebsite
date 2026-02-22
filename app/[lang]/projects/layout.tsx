@@ -11,29 +11,33 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   }
 
   const path = '/projects';
-  const title = lang === 'en' ? 'Projects' : 'Проєкти';
+  const title = lang === 'en' ? 'AI Projects' : 'AI‑проєкти';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'Selected AI projects — voice agents, chatbots and automation systems built by AI Insider.'
       : 'Вибрані AI‑проєкти — голосові агенти, чатботи та системи автоматизації від AI Insider.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

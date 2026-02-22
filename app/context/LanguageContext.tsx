@@ -29,7 +29,7 @@ export function LanguageProvider({
   // Keep <html lang="..."> in sync (useful for accessibility and SEO hints)
   useEffect(() => {
     if (typeof document !== 'undefined') {
-      document.documentElement.lang = lang;
+      document.documentElement.lang = lang === 'uk' ? 'uk-UA' : 'en';
     }
   }, [lang]);
 

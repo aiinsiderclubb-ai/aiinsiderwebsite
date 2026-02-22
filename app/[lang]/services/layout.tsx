@@ -12,7 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/services';
 
-  const title = lang === 'en' ? 'Services' : 'Послуги';
+  const title = lang === 'en' ? 'AI Services' : 'AI‑послуги';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'AI services that drive measurable results: chatbots, voice agents, lead generation, real estate automation, workflow automation, and custom AI.'
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         ];
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     keywords,
     alternates: {
@@ -50,15 +51,18 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

@@ -12,7 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/blog';
 
-  const title = lang === 'en' ? 'Blog' : 'Блог';
+  const title = lang === 'en' ? 'AI Automation Blog' : 'Блог про AI автоматизацію';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'Practical B2B playbooks on AI automation, chatbots, voice agents, and integrations — focused on measurable results.'
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         ];
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     keywords,
     alternates: {
@@ -46,15 +47,18 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

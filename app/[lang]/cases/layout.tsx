@@ -12,29 +12,33 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/cases';
 
-  const title = lang === 'en' ? 'Cases' : 'Кейси';
+  const title = lang === 'en' ? 'AI Case Studies' : 'Кейси AI автоматизації';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'Real AI automation cases with measurable business results — chatbots, voice agents and workflow automation.'
       : 'Реальні кейси AI автоматизації з вимірюваними бізнес‑результатами — чатботи, голосові агенти та workflow автоматизації.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

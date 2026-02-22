@@ -221,6 +221,92 @@ export const translations = {
       uk: 'Ми — команда ентузіастів AI, інженерів та візіонерів, що трансформують бізнес через інтелектуальну автоматизацію та голосові AI-технології.',
       en: 'We\'re a team of AI enthusiasts, engineers, and visionaries dedicated to transforming businesses through intelligent automation and voice AI technology.'
     },
+    // GEO/AI-search summary (used in About structured data)
+    geoIntro: {
+      uk: 'AI Insider — студія AI‑автоматизації. Ми проєктуємо й впроваджуємо AI агентів, чатботів, голосових агентів і workflow‑автоматизацію (включно з n8n), щоб бізнес працював швидше, дешевше і стабільніше.',
+      en: 'AI Insider is an AI automation studio. We design and deploy AI agents, chatbots, voice agents, and workflow automation (including n8n) so businesses operate faster, cheaper, and more reliably.',
+    },
+    // Structured sections for AI search (GEO)
+    whoWeAreTitle: { uk: 'Хто ми', en: 'Who we are' },
+    whoWeAreSubtitle: {
+      uk: 'Сеньйорна команда, що будує production‑ready AI системи для бізнесу — з фокусом на результат, безпеку та вимірюваний ROI.',
+      en: 'A senior team building production-ready AI systems for business — focused on outcomes, safety, and measurable ROI.',
+    },
+    whatWeDoTitle: { uk: 'Що ми робимо', en: 'What we do' },
+    whatWeDoSubtitle: {
+      uk: 'Ми не продаємо “AI‑магію”. Ми будуємо системи, які виконують роботу: автоматизують процеси, відповідають клієнтам, бронюють зустрічі та рухають ліди по воронці.',
+      en: 'We don’t sell “AI magic”. We build systems that do work: automate operations, support customers, book meetings, and move leads through your funnel.',
+    },
+    whatWeDoP1: { uk: 'Типові рішення, які ми впроваджуємо:', en: 'Typical systems we ship:' },
+    whatWeDoPoint1: { uk: 'AI automation audit: карта процесів, вузькі місця, ROI‑модель', en: 'AI automation audit: process map, bottlenecks, ROI model' },
+    whatWeDoPoint2: { uk: 'AI агенти: виконують дії в CRM, helpdesk, календарі та інструментах', en: 'AI agents: take actions in CRM, helpdesk, calendars, and tools' },
+    whatWeDoPoint3: { uk: 'AI voice agents: дзвінки, кваліфікація, бронювання, нагадування', en: 'AI voice agents: calls, qualification, booking, reminders' },
+    whatWeDoPoint4: { uk: 'RAG / knowledge assistants: відповіді з ваших документів з посиланнями на джерела', en: 'RAG / knowledge assistants: source-grounded answers from your docs' },
+    whatWeDoPoint5: { uk: 'n8n workflow automation: інтеграції, webhooks, маршрутизація, SLA‑алерти', en: 'n8n workflow automation: integrations, webhooks, routing, SLA alerts' },
+    whatWeDoPoint6: { uk: 'AI‑маркетинг системи: контент‑пайплайн, repurposing, персоналізація, атрибуція', en: 'AI marketing systems: content pipeline, repurposing, personalization, attribution' },
+    howWeHelpTitle: { uk: 'Як ми допомагаємо бізнесу', en: 'How we help businesses' },
+    howWeHelpSubtitle: {
+      uk: 'Ви отримуєте чіткий план, швидкий запуск і контроль якості. Ніяких “впровадили і забули” — ми будуємо та ітеруємо.',
+      en: 'You get a clear plan, a fast launch, and quality control. No “ship and forget” — we build, measure, and iterate.',
+    },
+    howWeHelpStep1Title: { uk: 'Діагностика', en: 'Discovery' },
+    howWeHelpStep1Desc: { uk: 'Аудит процесів, даних і каналів. Визначаємо “де болить” і що дасть найбільший ROI.', en: 'We audit workflows, data, and channels to find the highest-ROI automation opportunities.' },
+    howWeHelpStep2Title: { uk: 'Дизайн системи', en: 'System design' },
+    howWeHelpStep2Desc: { uk: 'Архітектура, інтеграції, гардрейли, метрики якості, план запуску.', en: 'Architecture, integrations, guardrails, quality metrics, and a launch plan.' },
+    howWeHelpStep3Title: { uk: 'Впровадження', en: 'Implementation' },
+    howWeHelpStep3Desc: { uk: 'Збірка, тестування, запуск у production, навчання команди.', en: 'Build, test, deploy to production, and train your team.' },
+    howWeHelpStep4Title: { uk: 'Масштабування', en: 'Scaling' },
+    howWeHelpStep4Desc: { uk: 'Моніторинг, A/B тести, оптимізація промптів, розширення use cases.', en: 'Monitoring, A/B tests, prompt optimization, and expanding use cases.' },
+    industriesTitle: { uk: 'Індустрії, з якими ми працюємо', en: 'Industries we serve' },
+    industriesSubtitle: {
+      uk: 'Ми адаптуємо AI системи під конкретні процеси та дані — не під “універсальний шаблон”.',
+      en: 'We tailor AI systems to your workflows and data — not generic templates.',
+    },
+    industriesPoint1: { uk: 'E-commerce: підтримка, upsell, recovery, WhatsApp‑флоу', en: 'E-commerce: support, upsell, recovery, WhatsApp flows' },
+    industriesPoint2: { uk: 'Нерухомість: дзвінки, кваліфікація, запис на перегляд, CRM', en: 'Real estate: calls, qualification, viewing booking, CRM' },
+    industriesPoint3: { uk: 'Сервісні бізнеси: ліди, записи, нагадування, операційні процеси', en: 'Service businesses: leads, booking, reminders, operations' },
+    industriesPoint4: { uk: 'B2B/SaaS: RAG асистенти, onboarding, sales enablement', en: 'B2B/SaaS: RAG assistants, onboarding, sales enablement' },
+    industriesPoint5: { uk: 'Маркетинг/агенції: контент‑системи, VSL, креативи, атрибуція', en: 'Marketing/agencies: content systems, VSL, creatives, attribution' },
+    technologiesTitle: { uk: 'Технології, які ми використовуємо', en: 'Technologies we use' },
+    technologiesSubtitle: {
+      uk: 'Підбираємо стек під задачу: від швидких інтеграцій у n8n до кастомних агентів з tool‑use, RAG і оцінкою якості.',
+      en: 'We choose the stack per use case — from fast n8n integrations to custom tool-using agents with RAG and evaluation.',
+    },
+    whyDifferentTitle: { uk: 'Чим AI Insider відрізняється', en: 'Why AI Insider is different' },
+    whyDifferentSubtitle: {
+      uk: 'Ми мислимо як інженери та як growth‑команда: важливі не “відповіді AI”, а бізнес‑результат.',
+      en: 'We think like engineers and a growth team: not “AI responses”, but business outcomes.',
+    },
+    whyDifferentPoint1: { uk: 'Production‑ready: логування, моніторинг, контроль якості', en: 'Production-ready: logging, monitoring, quality control' },
+    whyDifferentPoint2: { uk: 'Guardrails: безпечні обмеження та ескалація на людину', en: 'Guardrails: safe boundaries and human escalation' },
+    whyDifferentPoint3: { uk: 'ROI‑підхід: чіткі KPI, вимірюваний вплив, швидкі ітерації', en: 'ROI-first: clear KPIs, measurable impact, fast iteration' },
+    whyDifferentPoint4: { uk: 'Bilingual: українська та англійська — для локальних і глобальних ринків', en: 'Bilingual: Ukrainian + English for local and global markets' },
+    // Q&A for GEO (shown on About page + FAQ schema)
+    geoFaqTitle: { uk: 'Питання та відповіді', en: 'Questions & answers' },
+    geoFaqSubtitle: {
+      uk: 'Короткі, прямі відповіді на питання, які зазвичай ставлять перед впровадженням AI.',
+      en: 'Short, direct answers to the questions people ask before deploying AI.',
+    },
+    geoQ1: { uk: 'Що робить AI Insider?', en: 'What does AI Insider do?' },
+    geoA1: {
+      uk: 'Ми проєктуємо та впроваджуємо AI‑автоматизацію для бізнесу: чатботи, голосові агенти, AI агенти з tool‑use та workflow‑інтеграції. Наша мета — зняти рутину з команди та підняти конверсії, швидкість і якість процесів.',
+      en: 'We design and deploy AI automation for business: chatbots, voice agents, tool-using AI agents, and workflow integrations. The goal is to remove repetitive work and improve conversion, speed, and process quality.',
+    },
+    geoQ2: { uk: 'Як AI автоматизація покращує мій бізнес?', en: 'How can AI automation improve my business?' },
+    geoA2: {
+      uk: 'AI автоматизація скорочує час відповіді, зменшує помилки, знижує витрати й дає 24/7 покриття для лідів та підтримки. Найкраще вона працює там, де є повторювані задачі, правила і дані (CRM, тікети, дзвінки, документи).',
+      en: 'AI automation reduces response time, lowers errors, cuts costs, and provides 24/7 coverage for leads and support. It works best for repetitive tasks with rules and data (CRM, tickets, calls, documents).',
+    },
+    geoQ3: { uk: 'Що таке AI voice agent?', en: 'What is an AI voice agent?' },
+    geoA3: {
+      uk: 'AI voice agent — це голосовий AI, який веде розмову телефоном, ставить кваліфікаційні питання, бронює слоти в календарі та фіксує результат у CRM. У production‑версії він має сценарії, обмеження тем, ескалацію на людину та аудит‑логи.',
+      en: 'An AI voice agent is a voice system that can handle phone conversations, ask qualification questions, book calendar slots, and log outcomes to your CRM. In production, it includes scripts, topic boundaries, human escalation, and audit logs.',
+    },
+    geoQ4: { uk: 'Як працює n8n автоматизація?', en: 'How does n8n automation work?' },
+    geoA4: {
+      uk: 'n8n — це інструмент для автоматизації воркфлоу через інтеграції та webhooks. Ми збираємо процес як ланцюжок кроків (тригери → перевірки → дії), підключаємо CRM/пошту/месенджери та додаємо моніторинг, retries і алерти.',
+      en: 'n8n is a workflow automation tool built around integrations and webhooks. We model your process as steps (triggers → checks → actions), connect CRM/email/messengers, and add monitoring, retries, and alerts.',
+    },
     ourStory: { uk: 'Наша', en: 'Our' },
     story: { uk: 'історія', en: 'Story' },
     storyP1: { 

@@ -9,12 +9,59 @@ import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
 
 type TeamMember = {
+  id?: string;
   nameKey: string;
   roleKey: string;
   imageCandidates: string[];
   bioKey: string;
   social: { linkedin?: string; twitter?: string; instagram?: string; email?: string };
 };
+
+const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 'vladyslav-archer',
+    nameKey: 'about.member1Name',
+    roleKey: 'about.member1Role',
+    imageCandidates: [
+      '/images/team/hf_20260220_083203_481eab3a-8c9b-4bcf-8416-dc13dd09d3d7.jpeg',
+      '/images/team/vladyslav-archer.jpg',
+      '/images/team/vladyslav-archer.jpeg',
+      '/images/team/vladyslav-archer.png',
+      '/images/team/vladyslav-archer.webp',
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
+    ],
+    bioKey: 'about.member1Bio',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/vladyslav-katash/',
+      instagram: 'https://www.instagram.com/vladyslav.archer?igsh=MXc1c3hkODU5dW9hMQ%3D%3D&utm_source=qr',
+      email: 'hello@aiinsider.it.com',
+    },
+  },
+  {
+    id: 'designer',
+    nameKey: 'about.member2Name',
+    roleKey: 'about.member2Role',
+    imageCandidates: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face'],
+    bioKey: 'about.member2Bio',
+    social: {
+      linkedin: 'https://linkedin.com',
+      twitter: 'https://twitter.com',
+      email: 'hello@aiinsider.it.com',
+    },
+  },
+  {
+    id: 'volodymyr',
+    nameKey: 'about.member3Name',
+    roleKey: 'about.member3Role',
+    imageCandidates: ['https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'],
+    bioKey: 'about.member3Bio',
+    social: {
+      linkedin: 'https://linkedin.com',
+      twitter: 'https://twitter.com',
+      email: 'hello@aiinsider.it.com',
+    },
+  },
+];
 
 function canLoadImage(src: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -34,6 +81,7 @@ function useResolvedImage(candidates: string[]): string {
     let cancelled = false;
 
     async function run() {
+      setSrc(initial);
       for (const candidate of candidates) {
         // Only check existence client-side.
         const ok = await canLoadImage(candidate);
@@ -51,7 +99,7 @@ function useResolvedImage(candidates: string[]): string {
     return () => {
       cancelled = true;
     };
-  }, [candidates.join('|')]);
+  }, [candidates, initial, fallback]);
 
   return src;
 }
@@ -63,55 +111,14 @@ export default function AboutPage() {
   const storyRef = useRef(null);
   const { t, lang } = useLanguage();
   const basePath = `/${lang}`;
+  const isEn = lang === 'en';
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
   const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
   const valuesInView = useInView(valuesRef, { once: true, margin: '-100px' });
   const storyInView = useInView(storyRef, { once: true, margin: '-100px' });
 
-  const teamMembers: TeamMember[] = [
-    {
-      nameKey: 'about.member1Name',
-      roleKey: 'about.member1Role',
-      imageCandidates: [
-        '/images/team/hf_20260220_083203_481eab3a-8c9b-4bcf-8416-dc13dd09d3d7.jpeg',
-        '/images/team/vladyslav-archer.jpg',
-        '/images/team/vladyslav-archer.jpeg',
-        '/images/team/vladyslav-archer.png',
-        '/images/team/vladyslav-archer.webp',
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-      ],
-      bioKey: 'about.member1Bio',
-      social: {
-        linkedin: 'https://www.linkedin.com/in/vladyslav-katash/',
-        instagram:
-          'https://www.instagram.com/vladyslav.archer?igsh=MXc1c3hkODU5dW9hMQ%3D%3D&utm_source=qr',
-        email: 'hello@aiinsider.it.com',
-      },
-    },
-    {
-      nameKey: 'about.member2Name',
-      roleKey: 'about.member2Role',
-      imageCandidates: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face'],
-      bioKey: 'about.member2Bio',
-      social: {
-        linkedin: 'https://linkedin.com',
-        twitter: 'https://twitter.com',
-        email: 'hello@aiinsider.it.com',
-      },
-    },
-    {
-      nameKey: 'about.member3Name',
-      roleKey: 'about.member3Role',
-      imageCandidates: ['https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'],
-      bioKey: 'about.member3Bio',
-      social: {
-        linkedin: 'https://linkedin.com',
-        twitter: 'https://twitter.com',
-        email: 'hello@aiinsider.it.com',
-      },
-    },
-  ];
+  const teamMembers = TEAM_MEMBERS;
 
   const TeamMemberCard = ({ member, index }: { member: TeamMember; index: number }) => {
     const imageSrc = useResolvedImage(member.imageCandidates);
@@ -128,6 +135,7 @@ export default function AboutPage() {
 
     return (
       <motion.div
+        id={member.id}
         initial={{ opacity: 0, y: 30 }}
         animate={teamInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: index * 0.15 }}
@@ -150,6 +158,7 @@ export default function AboutPage() {
                 src={imageSrc}
                 alt={name}
                 loading="lazy"
+                decoding="async"
                 onLoad={(e) => {
                   e.currentTarget.dataset.loaded = 'true';
                 }}
@@ -244,6 +253,101 @@ export default function AboutPage() {
       titleKey: 'about.value4Title',
       descKey: 'about.value4Desc',
     },
+  ];
+
+  const whatWeDoPoints = [
+    'about.whatWeDoPoint1',
+    'about.whatWeDoPoint2',
+    'about.whatWeDoPoint3',
+    'about.whatWeDoPoint4',
+    'about.whatWeDoPoint5',
+    'about.whatWeDoPoint6',
+  ];
+
+  const industriesPoints = [
+    'about.industriesPoint1',
+    'about.industriesPoint2',
+    'about.industriesPoint3',
+    'about.industriesPoint4',
+    'about.industriesPoint5',
+  ];
+
+  const whyDifferentPoints = [
+    'about.whyDifferentPoint1',
+    'about.whyDifferentPoint2',
+    'about.whyDifferentPoint3',
+    'about.whyDifferentPoint4',
+  ];
+
+  const howWeHelpSteps = [
+    { titleKey: 'about.howWeHelpStep1Title', descKey: 'about.howWeHelpStep1Desc' },
+    { titleKey: 'about.howWeHelpStep2Title', descKey: 'about.howWeHelpStep2Desc' },
+    { titleKey: 'about.howWeHelpStep3Title', descKey: 'about.howWeHelpStep3Desc' },
+    { titleKey: 'about.howWeHelpStep4Title', descKey: 'about.howWeHelpStep4Desc' },
+  ];
+
+  const geoFaq = [
+    { qKey: 'about.geoQ1', aKey: 'about.geoA1' },
+    { qKey: 'about.geoQ2', aKey: 'about.geoA2' },
+    { qKey: 'about.geoQ3', aKey: 'about.geoA3' },
+    { qKey: 'about.geoQ4', aKey: 'about.geoA4' },
+  ];
+
+  const definitions = isEn
+    ? [
+        {
+          term: 'AI automation',
+          desc: 'Automating business workflows with AI + integrations so routine work is handled end-to-end (not just answered in chat).',
+        },
+        {
+          term: 'AI agent',
+          desc: 'A system that can decide which tool to use (CRM, calendar, helpdesk) and execute actions with guardrails and logging.',
+        },
+        {
+          term: 'AI voice agent',
+          desc: 'A phone agent that speaks naturally, qualifies, books meetings, and writes outcomes to your CRM — with safe escalation.',
+        },
+        {
+          term: 'n8n automation',
+          desc: 'A workflow automation approach using triggers, webhooks, and integrations to connect tools, route leads, and enforce SLAs.',
+        },
+      ]
+    : [
+        {
+          term: 'AI автоматизація',
+          desc: 'Автоматизація бізнес‑процесів через AI + інтеграції, щоб рутинна робота виконувалась “під ключ”, а не лише в чаті.',
+        },
+        {
+          term: 'AI агент',
+          desc: 'Система, яка обирає інструменти (CRM, календар, підтримка) і виконує дії з гардрейлами та логуванням.',
+        },
+        {
+          term: 'AI voice agent',
+          desc: 'Голосовий агент, який веде дзвінок, кваліфікує, бронює зустрічі та пише результат у CRM — з безпечною ескалацією.',
+        },
+        {
+          term: 'n8n автоматизація',
+          desc: 'Побудова воркфлоу з тригерів, webhooks та інтеграцій для звʼязку інструментів, маршрутизації лідів і SLA‑контролю.',
+        },
+      ];
+
+  const technologyTags = [
+    'n8n',
+    'RAG',
+    'Tool-use agents',
+    'OpenAI / GPT',
+    'Whisper / STT',
+    'TTS',
+    'Webhooks',
+    'CRM',
+    'HubSpot',
+    'Salesforce',
+    'Pipedrive',
+    'Twilio',
+    'WhatsApp Business API',
+    'Next.js',
+    'TypeScript',
+    'PostgreSQL',
   ];
 
   return (
@@ -351,6 +455,312 @@ export default function AboutPage() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* GEO / AI Search Clarity */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
+              <span className="text-sm font-medium text-white">AI SEO / GEO</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.whoWeAreTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.whoWeAreSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div className="glass-strong rounded-3xl p-8 border border-white/10">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60 mb-4">
+                {isEn ? 'In one sentence' : 'В одному реченні'}
+              </h3>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                {t('about.geoIntro')}
+              </p>
+
+              <div className="mt-8">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">
+                  {isEn ? 'Explore' : 'Перейти'}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { href: `${basePath}/services`, label: isEn ? 'Services' : 'Послуги' },
+                    { href: `${basePath}/cases`, label: isEn ? 'Case studies' : 'Кейси' },
+                    { href: `${basePath}/blog`, label: isEn ? 'Blog' : 'Блог' },
+                    { href: `${basePath}/solutions`, label: isEn ? 'Solutions' : 'Рішення' },
+                    { href: `${basePath}/ai-automation-for-business`, label: isEn ? 'AI automation' : 'AI автоматизація' },
+                    { href: `${basePath}/ai-voice-agents`, label: isEn ? 'Voice agents' : 'Голосові агенти' },
+                    { href: `${basePath}/custom-ai-agents`, label: isEn ? 'AI agents' : 'AI агенти' },
+                  ].map((l) => (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300
+                        transition-all duration-200 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="glass-strong rounded-3xl p-8 border border-white/10">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60 mb-6">
+                {isEn ? 'Definitions' : 'Визначення'}
+              </h3>
+              <div className="space-y-3">
+                {definitions.map((d) => (
+                  <div key={d.term} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                    <div className="text-sm font-bold text-white">{d.term}</div>
+                    <div className="text-sm text-gray-400 leading-relaxed mt-2">{d.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What we do */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+                {t('about.whatWeDoTitle')}
+              </h2>
+              <p className="text-xl text-gray-400 leading-relaxed mb-6">
+                {t('about.whatWeDoSubtitle')}
+              </p>
+              <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-4">
+                {t('about.whatWeDoP1')}
+              </p>
+              <div className="space-y-3">
+                {whatWeDoPoints.map((k, idx) => (
+                  <div
+                    key={k}
+                    className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                      <span className="text-sm font-bold text-white/60">{idx + 1}</span>
+                    </div>
+                    <div className="text-gray-300 leading-relaxed">{t(k)}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-strong rounded-3xl p-8 border border-white/10">
+              <h3 className="text-xl font-bold text-white mb-4">
+                {isEn ? 'Where AI pays off fastest' : 'Де AI дає найбільший ефект'}
+              </h3>
+              <p className="text-gray-400 mb-6">
+                {isEn
+                  ? 'A simple mapping from business goals to systems and outcomes.'
+                  : 'Просте зіставлення бізнес-цілей із системами та результатами.'}
+              </p>
+              <div className="overflow-x-auto rounded-2xl border border-white/10">
+                <table className="min-w-full text-sm">
+                  <thead className="bg-white/[0.03]">
+                    <tr className="text-left text-white/70">
+                      <th className="px-5 py-4 font-semibold">{isEn ? 'Business goal' : 'Ціль бізнесу'}</th>
+                      <th className="px-5 py-4 font-semibold">{isEn ? 'What we build' : 'Що ми будуємо'}</th>
+                      <th className="px-5 py-4 font-semibold">{isEn ? 'Typical outcome' : 'Типовий результат'}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {[
+                      {
+                        goal: isEn ? 'More qualified leads' : 'Більше кваліфікованих лідів',
+                        build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up автоматизація',
+                        outcome: isEn ? 'Faster response, higher conversion' : 'Швидша реакція, вища конверсія',
+                      },
+                      {
+                        goal: isEn ? '24/7 customer support' : 'Підтримка 24/7',
+                        build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція з helpdesk',
+                        outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільні відповіді',
+                      },
+                      {
+                        goal: isEn ? 'More booked meetings' : 'Більше зустрічей',
+                        build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання в календарі',
+                        outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Вища частка бронювань, менше no-shows',
+                      },
+                      {
+                        goal: isEn ? 'Clean ops and CRM' : 'Чиста операційка та CRM',
+                        build: isEn ? 'n8n workflows + validations + SLA alerts' : 'n8n воркфлоу + валідації + SLA алерти',
+                        outcome: isEn ? 'Fewer errors, reliable reporting' : 'Менше помилок, надійна звітність',
+                      },
+                    ].map((r, i) => (
+                      <tr key={i} className="bg-black/0">
+                        <td className="px-5 py-4 text-gray-300 align-top">{r.goal}</td>
+                        <td className="px-5 py-4 text-gray-300 align-top">{r.build}</td>
+                        <td className="px-5 py-4 text-gray-300 align-top">{r.outcome}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How we help businesses */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 neural-bg opacity-5" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.howWeHelpTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.howWeHelpSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {howWeHelpSteps.map((s, idx) => (
+              <div
+                key={s.titleKey}
+                className="glass-strong rounded-2xl p-6 border border-white/10 transition-all duration-300 hover:border-white/30 hover:-translate-y-1"
+              >
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                  <span className="text-sm font-bold text-white/60">{String(idx + 1).padStart(2, '0')}</span>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3">{t(s.titleKey)}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{t(s.descKey)}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <Link
+              href={`${basePath}/services`}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full 
+                font-bold text-lg transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)' }}
+            >
+              {isEn ? 'Explore services' : 'Переглянути послуги'}
+              <span className="text-black/60">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Industries we serve */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.industriesTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.industriesSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industriesPoints.map((k) => (
+              <div key={k} className="glass-strong rounded-2xl p-6 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <span className="text-white/30 mt-1">•</span>
+                  <p className="text-gray-300 leading-relaxed">{t(k)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technologies we use */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.technologiesTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.technologiesSubtitle')}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {technologyTags.map((tag) => (
+              <span
+                key={tag}
+                className="text-sm px-4 py-2 rounded-full bg-white/5 text-gray-300 border border-white/10
+                  hover:bg-white/10 hover:border-white/25 transition-colors"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why AI Insider is different */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.whyDifferentTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.whyDifferentSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {whyDifferentPoints.map((k) => (
+              <div key={k} className="glass-strong rounded-2xl p-6 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-[10px] font-bold text-white/60">✓</span>
+                  </span>
+                  <p className="text-gray-300 leading-relaxed">{t(k)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Q&A (GEO) */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+              {t('about.geoFaqTitle')}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {t('about.geoFaqSubtitle')}
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-3">
+            {geoFaq.map((qa, i) => (
+              <details key={qa.qKey} className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden transition-colors hover:border-white/15">
+                <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6">
+                  <span className="text-base font-bold text-white leading-snug">{t(qa.qKey)}</span>
+                  <span className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0
+                    group-open:rotate-45 transition-all duration-300 group-open:bg-white/10">
+                    <span className="text-sm text-gray-400">+</span>
+                  </span>
+                </summary>
+                <div className="px-6 pb-5 text-[15px] text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                  {t(qa.aKey)}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

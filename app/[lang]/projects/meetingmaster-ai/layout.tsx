@@ -12,26 +12,28 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/projects/meetingmaster-ai';
   const title = 'MeetingMaster AI';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'Meeting automation with summaries, action items, follow-ups and CRM sync.'
       : 'Автоматизація зустрічей: summary, action items, follow‑ups та синхронізація з CRM.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'article',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
-    twitter: { title: `${title} | AI Insider`, description },
+    twitter: { card: 'summary_large_image', title: titleWithBrand, description, images: ['/twitter-image'] },
   };
 }
 

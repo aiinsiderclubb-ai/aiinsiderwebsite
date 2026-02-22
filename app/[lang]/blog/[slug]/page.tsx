@@ -25,22 +25,29 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
 
   /* ── JSON-LD ── */
+  const founderId = `${siteUrl}#vladyslav-archer`;
+  const ogImage = new URL('/opengraph-image', siteUrl).toString();
+
   const articleJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
+    '@id': `${canonicalUrl}#blogposting`,
     headline: t(article.h1),
     description: t(article.metaDescription),
     url: canonicalUrl,
     datePublished: article.publishedAt,
-    author: { '@type': 'Organization', name: SITE_NAME, url: siteUrl.toString() },
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: siteUrl.toString() },
-    inLanguage: lang,
-    mainEntityOfPage: canonicalUrl,
+    dateModified: article.publishedAt,
+    author: { '@type': 'Person', '@id': founderId, name: 'Vladyslav Archer' },
+    publisher: { '@id': `${siteUrl}#organization` },
+    inLanguage: isEn ? 'en-US' : 'uk-UA',
+    image: ogImage,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
   };
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    inLanguage: isEn ? 'en-US' : 'uk-UA',
     mainEntity: article.faq.map((qa) => ({
       '@type': 'Question',
       name: t(qa.q),

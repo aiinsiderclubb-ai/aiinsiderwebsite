@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import { isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import {
   PROGRAMMATIC_PAGES,
@@ -17,31 +17,37 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { lang } = await params;
   if (!isSupportedLang(lang)) return {};
 
-  const siteUrl = getSiteUrl();
-  const canonicalUrl = new URL(withLang(lang, '/solutions'), siteUrl).toString();
   const isEn = lang === 'en';
+  const path = '/solutions';
+  const canonical = withLang(lang, path);
 
-  const title = isEn ? 'AI Solutions | AI Insider' : 'AI Рішення | AI Insider';
+  const title = isEn ? 'AI Solutions' : 'AI Рішення';
+  const titleWithBrand = `${title} | AI Insider`;
   const description = isEn
     ? 'Explore AI solutions by use case, industry, and business function. Find the right AI automation for your needs.'
     : 'Досліджуйте AI рішення за кейсами використання, індустріями та бізнес-функціями. Знайдіть правильну AI автоматизацію для ваших потреб.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        en: new URL(withLang('en', '/solutions'), siteUrl).toString(),
-        uk: new URL(withLang('uk', '/solutions'), siteUrl).toString(),
-      },
+      canonical,
+      languages: buildHreflang(path),
     },
     openGraph: {
-      title,
+      title: titleWithBrand,
       description,
-      url: canonicalUrl,
+      url: canonical,
       siteName: SITE_NAME,
       type: 'website',
+      locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: titleWithBrand,
+      description,
+      images: ['/twitter-image'],
     },
   };
 }

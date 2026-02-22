@@ -38,24 +38,28 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const title = getLocalizedText(caseData.title, lang);
   const description = getLocalizedText(caseData.shortDescription, lang);
+  const titleWithBrand = `${title} | AI Insider`;
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, `/cases/${caseData.slug}`),
       languages: buildHreflang(`/cases/${caseData.slug}`),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, `/cases/${caseData.slug}`),
       type: 'article',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

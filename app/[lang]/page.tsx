@@ -66,10 +66,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       url: withLang(lang, '/'),
       type: 'website',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
+      card: 'summary_large_image',
       title,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

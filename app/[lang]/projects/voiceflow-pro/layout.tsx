@@ -12,28 +12,32 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/projects/voiceflow-pro';
   const title = 'VoiceFlow Pro';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'AI voice agent for handling incoming calls with natural speech, CRM logging and analytics.'
       : 'AI голосовий агент для обробки вхідних дзвінків з природною мовою, логуванням у CRM та аналітикою.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'article',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
     twitter: {
-      title: `${title} | AI Insider`,
+      card: 'summary_large_image',
+      title: titleWithBrand,
       description,
+      images: ['/twitter-image'],
     },
   };
 }

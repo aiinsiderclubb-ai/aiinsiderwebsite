@@ -12,26 +12,28 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const path = '/projects/autoscale-crm';
   const title = 'AutoScale CRM';
+  const titleWithBrand = `${title} | AI Insider`;
   const description =
     lang === 'en'
       ? 'End-to-end sales automation pipeline with CRM integrations, lead qualification and workflow orchestration.'
       : 'End‑to‑end автоматизація продажів з CRM інтеграціями, кваліфікацією лідів та orchestration workflow.';
 
   return {
-    title,
+    title: titleWithBrand,
     description,
     alternates: {
       canonical: withLang(lang, path),
       languages: buildHreflang(path),
     },
     openGraph: {
-      title: `${title} | AI Insider`,
+      title: titleWithBrand,
       description,
       url: withLang(lang, path),
       type: 'article',
       locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
     },
-    twitter: { title: `${title} | AI Insider`, description },
+    twitter: { card: 'summary_large_image', title: titleWithBrand, description, images: ['/twitter-image'] },
   };
 }
 

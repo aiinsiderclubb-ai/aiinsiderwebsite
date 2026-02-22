@@ -4,14 +4,11 @@ import './globals.css';
 import ChatWidget from './components/ChatWidget';
 import { ChatProvider } from './context/ChatContext';
 import { LanguageProvider } from './context/LanguageContext';
-import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME, TITLE_TEMPLATE } from './lib/site';
+import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME } from './lib/site';
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
-  title: {
-    default: DEFAULT_TITLE,
-    template: TITLE_TEMPLATE,
-  },
+  title: DEFAULT_TITLE,
   description: DEFAULT_DESCRIPTION,
   keywords: DEFAULT_KEYWORDS,
   alternates: {
@@ -23,11 +20,20 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     url: '/',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: ['/twitter-image'],
   },
   robots: {
     index: true,
@@ -51,30 +57,60 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const siteUrl = getSiteUrl();
+  const siteOrigin = siteUrl.origin;
   const hdrs = await headers();
   const langHeader = hdrs.get('x-aiinsider-lang');
   const lang = langHeader === 'en' || langHeader === 'uk' ? langHeader : 'uk';
+
+  const localizedDescription =
+    lang === 'en'
+      ? DEFAULT_DESCRIPTION
+      : 'Ми створюємо AI системи, які думають, говорять і діють — чатботи, голосові агенти та автоматизації для бізнесу. Базуємось у Швейцарії, працюємо глобально.';
+
+  const knowsAbout =
+    lang === 'en'
+      ? [
+          'AI automation',
+          'AI agents',
+          'AI chatbots',
+          'AI voice agents',
+          'Business process automation',
+          'CRM automation',
+          'Lead generation automation',
+          'n8n automation',
+          'AI-driven marketing',
+        ]
+      : [
+          'AI автоматизація',
+          'AI агенти',
+          'AI чатботи',
+          'AI голосові агенти',
+          'автоматизація бізнес-процесів',
+          'автоматизація CRM',
+          'AI лідогенерація',
+          'n8n автоматизація',
+          'AI-маркетинг',
+        ];
+
+  const vladyslavPersonId = `${siteUrl}#vladyslav-archer`;
+  const vladyslavImage = new URL('/images/team/hf_20260220_083203_481eab3a-8c9b-4bcf-8416-dc13dd09d3d7.jpeg', siteUrl).toString();
 
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${siteUrl}#organization`,
     name: SITE_NAME,
-    url: siteUrl.toString(),
-    description: DEFAULT_DESCRIPTION,
+    url: siteOrigin,
+    description: localizedDescription,
+    logo: new URL('/icon.svg', siteUrl).toString(),
+    image: vladyslavImage,
     areaServed: [
       { '@type': 'Country', name: 'Switzerland' },
       { '@type': 'Continent', name: 'Europe' },
       { '@type': 'Country', name: 'United States' },
     ],
-    knowsAbout: [
-      'AI automation',
-      'AI chatbots',
-      'AI voice agents',
-      'Workflow automation',
-      'Lead generation automation',
-      'CRM automation',
-    ],
+    knowsAbout,
+    founder: { '@id': vladyslavPersonId },
     sameAs: [
       'https://t.me/aiinsider',
       'https://youtube.com/@aiinsider',
@@ -82,7 +118,7 @@ export default async function RootLayout({
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@aiinsider.com',
+      email: 'hello@aiinsider.it.com',
       contactType: 'sales',
       availableLanguage: ['English', 'Ukrainian'],
     },
@@ -93,21 +129,36 @@ export default async function RootLayout({
     '@type': 'WebSite',
     '@id': `${siteUrl}#website`,
     name: SITE_NAME,
-    url: siteUrl.toString(),
-    inLanguage: ['en', 'uk'],
+    url: siteOrigin,
+    inLanguage: ['en', 'en-US', 'uk', 'uk-UA'],
     publisher: { '@id': `${siteUrl}#organization` },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${siteUrl}${lang === 'en' ? '/en' : '/uk'}/cases?q={search_term_string}`,
+        urlTemplate: `${siteOrigin}${lang === 'en' ? '/en' : '/uk'}/cases?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
   };
 
+  const founderPersonJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': vladyslavPersonId,
+    name: 'Vladyslav Archer',
+    jobTitle: 'CEO',
+    image: vladyslavImage,
+    url: `${siteOrigin}${lang === 'en' ? '/en' : '/uk'}/about#vladyslav-archer`,
+    worksFor: { '@id': `${siteUrl}#organization` },
+    sameAs: [
+      'https://www.linkedin.com/in/vladyslav-katash/',
+      'https://www.instagram.com/vladyslav.archer?igsh=MXc1c3hkODU5dW9hMQ%3D%3D&utm_source=qr',
+    ],
+  };
+
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang === 'uk' ? 'uk-UA' : 'en'} suppressHydrationWarning>
       <head>
         {/* Preconnect to Google Fonts for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -118,6 +169,11 @@ export default async function RootLayout({
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonJsonLd) }}
         />
         <script
           type="application/ld+json"

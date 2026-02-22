@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
+import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getLocalizedText, servicesData } from '@/app/lib/servicesData';
 import { SEO_SERVICE_PAGES, getLocalizedSeo, type SeoServiceSlug } from '@/app/lib/seoServicePages';
 
@@ -18,6 +19,123 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
   const isEn = lang === 'en';
   const bookCallLabel = isEn ? 'Book a free consultation' : 'Замовити безкоштовну консультацію';
   const viewCasesLabel = isEn ? 'View case studies' : 'Подивитись кейси';
+
+  const siteUrl = getSiteUrl();
+  const canonicalUrl = new URL(withLang(lang, '/services'), siteUrl).toString();
+
+  const pageTitle = isEn ? 'Services' : 'Послуги';
+  const pageDescription = isEn
+    ? 'AI services that drive measurable results: chatbots, voice agents, AI agents, n8n automation, and AI-driven marketing systems.'
+    : 'AI‑послуги з вимірюваними результатами: чатботи, голосові агенти, AI агенти, n8n автоматизація та AI‑маркетинг системи.';
+
+  const faq = isEn
+    ? [
+        {
+          q: 'What AI services does AI Insider provide?',
+          a: 'We build AI automation for sales, support, and operations: chatbots, voice agents, AI agents that take actions in your tools, and workflow automation with integrations (including n8n).',
+        },
+        {
+          q: 'What is an AI voice agent?',
+          a: 'An AI voice agent is a phone agent that talks naturally, qualifies leads, books meetings, and logs outcomes to your CRM. In production, it includes scripts, topic boundaries, and safe handoff to a human.',
+        },
+        {
+          q: 'Can you integrate with our CRM and automate workflows with n8n?',
+          a: 'Yes. We connect your CRM, inbox, calendar, and helpdesk with webhooks and workflows. n8n is often used for routing, validations, retries, alerts, and keeping data consistent across tools.',
+        },
+        {
+          q: 'How long does implementation take?',
+          a: 'Most MVPs launch in 2–6 weeks depending on scope and integrations. We start with a clear workflow map and measurable KPIs, then ship, monitor, and iterate.',
+        },
+      ]
+    : [
+        {
+          q: 'Які AI послуги надає AI Insider?',
+          a: 'Ми будуємо AI‑автоматизацію для продажів, підтримки та операцій: чатботи, голосові агенти, AI агенти, що виконують дії в ваших інструментах, та workflow‑автоматизацію з інтеграціями (включно з n8n).',
+        },
+        {
+          q: 'Що таке AI voice agent?',
+          a: 'AI voice agent — це голосовий агент, який природно спілкується телефоном, кваліфікує ліди, бронює зустрічі та фіксує результат у CRM. У production він має сценарії, обмеження тем і безпечну передачу на людину.',
+        },
+        {
+          q: 'Чи можете ви інтегрувати CRM та автоматизувати процеси через n8n?',
+          a: 'Так. Ми підʼєднуємо CRM, пошту, календар і підтримку через webhooks та воркфлоу. n8n часто використовуємо для маршрутизації, валідацій, retries, алертів і підтримки консистентних даних між інструментами.',
+        },
+        {
+          q: 'Скільки триває впровадження?',
+          a: 'Більшість MVP запускаємо за 2–6 тижнів залежно від обсягу та інтеграцій. Починаємо з карти процесів і KPI, далі — запуск, моніторинг і ітерації.',
+        },
+      ];
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: pageTitle,
+        description: pageDescription,
+        inLanguage: isEn ? 'en-US' : 'uk-UA',
+        isPartOf: { '@id': `${siteUrl}#website` },
+        about: { '@id': `${siteUrl}#organization` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: isEn ? 'Home' : 'Головна',
+            item: new URL(withLang(lang, '/'), siteUrl).toString(),
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: pageTitle,
+            item: canonicalUrl,
+          },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${canonicalUrl}#services`,
+        name: isEn ? 'AI services' : 'AI‑послуги',
+        itemListElement: ([
+          'ai-automation-for-business',
+          'ai-chatbots-for-business',
+          'ai-voice-agents',
+          'custom-ai-agents',
+        ] as SeoServiceSlug[]).map((slug, idx) => {
+          const page = SEO_SERVICE_PAGES[slug];
+          const rawTitle = getLocalizedSeo(page.titleTag, lang);
+          const cleanTitle = rawTitle.replace(/\s*\|\s*AI Insider\s*$/i, '');
+          return {
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: cleanTitle,
+            item: new URL(withLang(lang, `/${slug}`), siteUrl).toString(),
+          };
+        }),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${canonicalUrl}#faq`,
+        inLanguage: isEn ? 'en-US' : 'uk-UA',
+        mainEntity: faq.map((qa) => ({
+          '@type': 'Question',
+          name: qa.q,
+          acceptedAnswer: { '@type': 'Answer', text: qa.a },
+        })),
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${siteUrl}#organization`,
+        name: SITE_NAME,
+        url: siteUrl.origin,
+      },
+    ],
+  };
 
   const coreSlugs: SeoServiceSlug[] = [
     'ai-automation-for-business',
@@ -37,6 +155,12 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
+
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
       {/* Hero Section - Premium Design */}
       <section className="relative pt-32 pb-24 px-6 overflow-hidden">
@@ -457,6 +581,65 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ (GEO) */}
+      <section className="py-20 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              {isEn ? 'FAQ' : 'Поширені питання'}
+            </h2>
+            <p className="text-gray-400 max-w-3xl mx-auto">
+              {isEn
+                ? 'Direct answers about AI automation, voice agents, and n8n integrations.'
+                : 'Прямі відповіді про AI‑автоматизацію, голосових агентів та n8n‑інтеграції.'}
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-3">
+            {faq.map((qa) => (
+              <details
+                key={qa.q}
+                className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden transition-colors hover:border-white/15"
+              >
+                <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6">
+                  <span className="text-base font-bold text-white leading-snug">{qa.q}</span>
+                  <span
+                    className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0
+                      group-open:rotate-45 transition-all duration-300 group-open:bg-white/10"
+                  >
+                    <span className="text-sm text-gray-400">+</span>
+                  </span>
+                </summary>
+                <div className="px-6 pb-5 text-[15px] text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                  {qa.a}
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={withLang(lang, '/cases')}
+              className="text-sm px-5 py-3 rounded-full bg-white/5 text-white border border-white/15 hover:bg-white/10 hover:border-white/25 transition-all"
+            >
+              {isEn ? 'See case studies' : 'Подивитись кейси'} →
+            </Link>
+            <Link
+              href={withLang(lang, '/blog')}
+              className="text-sm px-5 py-3 rounded-full bg-white/5 text-white border border-white/15 hover:bg-white/10 hover:border-white/25 transition-all"
+            >
+              {isEn ? 'Read the blog' : 'Читати блог'} →
+            </Link>
+            <Link
+              href={withLang(lang, '/about')}
+              className="text-sm px-5 py-3 rounded-full bg-white/5 text-white border border-white/15 hover:bg-white/10 hover:border-white/25 transition-all"
+            >
+              {isEn ? 'About AI Insider' : 'Про AI Insider'} →
+            </Link>
           </div>
         </div>
       </section>
