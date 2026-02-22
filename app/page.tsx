@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Solutions from './components/Solutions';
+import AIContentStudio from './components/AIContentStudio';
 import CaseStudies from './components/CaseStudies';
 import TechStack from './components/TechStack';
 import Testimonials from './components/Testimonials';
