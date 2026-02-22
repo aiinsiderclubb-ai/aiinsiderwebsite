@@ -459,156 +459,346 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* GEO / AI Search Clarity */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+      {/* GEO / AI Search Clarity — Premium Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-[800px] h-[800px] rounded-full opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 50%)',
+              filter: 'blur(100px)',
+            }}
+          />
+          <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 50%)',
+              filter: 'blur(80px)',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+        </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">AI SEO / GEO</span>
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header with animated badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/20 bg-white/5 backdrop-blur-xl">
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="text-sm font-semibold text-white tracking-wide">AI SEO / GEO</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
               {t('about.whoWeAreTitle')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.whoWeAreSubtitle')}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="glass-strong rounded-3xl p-8 border border-white/10">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60 mb-4">
-                {isEn ? 'In one sentence' : 'В одному реченні'}
-              </h3>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                {t('about.geoIntro')}
-              </p>
+          {/* Main content grid */}
+          <div className="grid lg:grid-cols-5 gap-8">
+            {/* Left panel — Summary (wider) */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-2 group"
+            >
+              <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 lg:p-10 overflow-hidden transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_60px_rgba(255,255,255,0.05)]">
+                {/* Decorative corner accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-30"
+                  style={{
+                    background: 'radial-gradient(circle at top right, rgba(255,255,255,0.15) 0%, transparent 70%)',
+                  }}
+                />
+                
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg">
+                      <Zap className="w-5 h-5 text-black" />
+                    </div>
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white/60">
+                      {isEn ? 'In one sentence' : 'В одному реченні'}
+                    </h3>
+                  </div>
 
-              <div className="mt-8">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">
-                  {isEn ? 'Explore' : 'Перейти'}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { href: `${basePath}/services`, label: isEn ? 'Services' : 'Послуги' },
-                    { href: `${basePath}/cases`, label: isEn ? 'Case studies' : 'Кейси' },
-                    { href: `${basePath}/blog`, label: isEn ? 'Blog' : 'Блог' },
-                    { href: `${basePath}/solutions`, label: isEn ? 'Solutions' : 'Рішення' },
-                    { href: `${basePath}/ai-automation-for-business`, label: isEn ? 'AI automation' : 'AI автоматизація' },
-                    { href: `${basePath}/ai-voice-agents`, label: isEn ? 'Voice agents' : 'Голосові агенти' },
-                    { href: `${basePath}/custom-ai-agents`, label: isEn ? 'AI agents' : 'AI агенти' },
-                  ].map((l) => (
-                    <Link
-                      key={l.href}
-                      href={l.href}
-                      className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300
-                        transition-all duration-200 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                  <p className="text-lg md:text-xl text-white/90 leading-relaxed font-light mb-10">
+                    {t('about.geoIntro')}
+                  </p>
+
+                  {/* Explore links — redesigned */}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white/40 mb-5">
+                      {isEn ? 'Quick links' : 'Швидкі посилання'}
+                    </h4>
+                    <div className="flex flex-wrap gap-2.5">
+                      {[
+                        { href: `${basePath}/services`, label: isEn ? 'Services' : 'Послуги', featured: true },
+                        { href: `${basePath}/cases`, label: isEn ? 'Cases' : 'Кейси' },
+                        { href: `${basePath}/blog`, label: isEn ? 'Blog' : 'Блог' },
+                        { href: `${basePath}/ai-automation-for-business`, label: isEn ? 'Automation' : 'Автоматизація' },
+                        { href: `${basePath}/ai-voice-agents`, label: isEn ? 'Voice AI' : 'Voice AI' },
+                        { href: `${basePath}/custom-ai-agents`, label: isEn ? 'AI Agents' : 'AI Агенти' },
+                      ].map((l) => (
+                        <Link
+                          key={l.href}
+                          href={l.href}
+                          className={`text-sm px-4 py-2 rounded-full transition-all duration-300 ${
+                            l.featured 
+                              ? 'bg-white text-black font-semibold hover:scale-105 hover:shadow-lg' 
+                              : 'border border-white/15 text-gray-300 hover:border-white/30 hover:bg-white/5 hover:text-white'
+                          }`}
+                        >
+                          {l.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right panel — Definitions (wider) */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="lg:col-span-3"
+            >
+              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-xl p-8 lg:p-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                    <Target className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white/60">
+                    {isEn ? 'Key definitions' : 'Ключові визначення'}
+                  </h3>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {definitions.map((d, idx) => (
+                    <motion.div
+                      key={d.term}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.1 }}
+                      className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
                     >
-                      {l.label}
-                    </Link>
+                      {/* Number badge */}
+                      <div className="absolute -top-3 -left-3 w-7 h-7 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-xs font-bold text-white/60">
+                        {String(idx + 1).padStart(2, '0')}
+                      </div>
+
+                      <div className="text-base font-bold text-white mb-3 pt-1">{d.term}</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">{d.desc}</div>
+                      
+                      {/* Hover arrow */}
+                      <div className="absolute bottom-5 right-5 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-white/60 text-sm">→</span>
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
-            </div>
-
-            <div className="glass-strong rounded-3xl p-8 border border-white/10">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60 mb-6">
-                {isEn ? 'Definitions' : 'Визначення'}
-              </h3>
-              <div className="space-y-3">
-                {definitions.map((d) => (
-                  <div key={d.term} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                    <div className="text-sm font-bold text-white">{d.term}</div>
-                    <div className="text-sm text-gray-400 leading-relaxed mt-2">{d.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* What we do */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="relative max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+      {/* What we do — Premium Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+        
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left column — What we build */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-5"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-white/15 bg-white/5">
+                <Rocket className="w-4 h-4 text-white/70" />
+                <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+                  {isEn ? 'What we build' : 'Що ми будуємо'}
+                </span>
+              </div>
+
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-8 text-white leading-[1.1]">
                 {t('about.whatWeDoTitle')}
               </h2>
-              <p className="text-xl text-gray-400 leading-relaxed mb-6">
+              <p className="text-xl text-gray-400 leading-relaxed mb-10 font-light">
                 {t('about.whatWeDoSubtitle')}
               </p>
-              <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-4">
+
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/50 mb-6">
                 {t('about.whatWeDoP1')}
               </p>
-              <div className="space-y-3">
+
+              <div className="space-y-4">
                 {whatWeDoPoints.map((k, idx) => (
-                  <div
+                  <motion.div
                     key={k}
-                    className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className="group flex items-start gap-5 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.04] to-transparent p-5 transition-all duration-300 hover:border-white/20 hover:from-white/[0.08]"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                      <span className="text-sm font-bold text-white/60">{idx + 1}</span>
+                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                      <span className="text-sm font-bold text-black">{String(idx + 1).padStart(2, '0')}</span>
                     </div>
-                    <div className="text-gray-300 leading-relaxed">{t(k)}</div>
-                  </div>
+                    <div className="text-gray-300 leading-relaxed pt-2.5">{t(k)}</div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-strong rounded-3xl p-8 border border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">
-                {isEn ? 'Where AI pays off fastest' : 'Де AI дає найбільший ефект'}
-              </h3>
-              <p className="text-gray-400 mb-6">
-                {isEn
-                  ? 'A simple mapping from business goals to systems and outcomes.'
-                  : 'Просте зіставлення бізнес-цілей із системами та результатами.'}
-              </p>
-              <div className="overflow-x-auto rounded-2xl border border-white/10">
-                <table className="min-w-full text-sm">
-                  <thead className="bg-white/[0.03]">
-                    <tr className="text-left text-white/70">
-                      <th className="px-5 py-4 font-semibold">{isEn ? 'Business goal' : 'Ціль бізнесу'}</th>
-                      <th className="px-5 py-4 font-semibold">{isEn ? 'What we build' : 'Що ми будуємо'}</th>
-                      <th className="px-5 py-4 font-semibold">{isEn ? 'Typical outcome' : 'Типовий результат'}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
+            {/* Right column — ROI Matrix */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="lg:col-span-7"
+            >
+              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl overflow-hidden">
+                {/* Header */}
+                <div className="px-8 py-6 border-b border-white/10 bg-white/[0.03]">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                        {isEn ? 'Where AI pays off fastest' : 'Де AI дає найбільший ефект'}
+                      </h3>
+                      <p className="text-sm text-gray-400">
+                        {isEn
+                          ? 'Business goals → solutions → measurable outcomes'
+                          : 'Бізнес-цілі → рішення → вимірювані результати'}
+                      </p>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 rounded-full bg-green-400" />
+                      <span className="text-xs text-gray-400">{isEn ? 'ROI Matrix' : 'Матриця ROI'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Table content — Card-based for mobile */}
+                <div className="p-6 md:p-8">
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="text-left">
+                          <th className="pb-4 pr-6 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'Business goal' : 'Ціль бізнесу'}</th>
+                          <th className="pb-4 pr-6 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'What we build' : 'Що ми будуємо'}</th>
+                          <th className="pb-4 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'Outcome' : 'Результат'}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          {
+                            goal: isEn ? 'More qualified leads' : 'Більше кваліфікованих лідів',
+                            build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up',
+                            outcome: isEn ? 'Faster response, higher conversion' : 'Швидша реакція, вища конверсія',
+                            icon: '📈',
+                          },
+                          {
+                            goal: isEn ? '24/7 customer support' : 'Підтримка 24/7',
+                            build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція helpdesk',
+                            outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільність',
+                            icon: '💬',
+                          },
+                          {
+                            goal: isEn ? 'More booked meetings' : 'Більше зустрічей',
+                            build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання',
+                            outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Більше бронювань, менше no-shows',
+                            icon: '📞',
+                          },
+                          {
+                            goal: isEn ? 'Clean ops and CRM' : 'Чиста операційка та CRM',
+                            build: isEn ? 'n8n workflows + SLA alerts' : 'n8n воркфлоу + SLA алерти',
+                            outcome: isEn ? 'Fewer errors, reliable reporting' : 'Менше помилок, надійна звітність',
+                            icon: '⚡',
+                          },
+                        ].map((r, i) => (
+                          <tr key={i} className="group border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                            <td className="py-5 pr-6">
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">{r.icon}</span>
+                                <span className="text-gray-200 font-medium">{r.goal}</span>
+                              </div>
+                            </td>
+                            <td className="py-5 pr-6 text-gray-400">{r.build}</td>
+                            <td className="py-5">
+                              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-sm text-gray-300">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                                {r.outcome}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile cards */}
+                  <div className="md:hidden space-y-4">
                     {[
                       {
                         goal: isEn ? 'More qualified leads' : 'Більше кваліфікованих лідів',
-                        build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up автоматизація',
+                        build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up',
                         outcome: isEn ? 'Faster response, higher conversion' : 'Швидша реакція, вища конверсія',
+                        icon: '📈',
                       },
                       {
                         goal: isEn ? '24/7 customer support' : 'Підтримка 24/7',
-                        build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція з helpdesk',
-                        outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільні відповіді',
+                        build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція helpdesk',
+                        outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільність',
+                        icon: '💬',
                       },
                       {
                         goal: isEn ? 'More booked meetings' : 'Більше зустрічей',
-                        build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання в календарі',
-                        outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Вища частка бронювань, менше no-shows',
+                        build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання',
+                        outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Більше бронювань, менше no-shows',
+                        icon: '📞',
                       },
                       {
                         goal: isEn ? 'Clean ops and CRM' : 'Чиста операційка та CRM',
-                        build: isEn ? 'n8n workflows + validations + SLA alerts' : 'n8n воркфлоу + валідації + SLA алерти',
+                        build: isEn ? 'n8n workflows + SLA alerts' : 'n8n воркфлоу + SLA алерти',
                         outcome: isEn ? 'Fewer errors, reliable reporting' : 'Менше помилок, надійна звітність',
+                        icon: '⚡',
                       },
                     ].map((r, i) => (
-                      <tr key={i} className="bg-black/0">
-                        <td className="px-5 py-4 text-gray-300 align-top">{r.goal}</td>
-                        <td className="px-5 py-4 text-gray-300 align-top">{r.build}</td>
-                        <td className="px-5 py-4 text-gray-300 align-top">{r.outcome}</td>
-                      </tr>
+                      <div key={i} className="rounded-xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{r.icon}</span>
+                          <span className="text-white font-semibold">{r.goal}</span>
+                        </div>
+                        <p className="text-sm text-gray-400">{r.build}</p>
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-sm text-gray-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                          {r.outcome}
+                        </span>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
