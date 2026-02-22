@@ -268,6 +268,22 @@ export const SERVICE_ANCHORS: Record<SeoServiceSlug, { en: string[]; uk: string[
       'агенти для процесів',
     ],
   },
+  'ai-content-creation': {
+    en: [
+      'AI content creation',
+      'AI influencers',
+      'AI video production',
+      'AI UGC for marketing',
+      'synthetic content studio',
+    ],
+    uk: [
+      'AI контент',
+      'AI-інфлюенсери',
+      'AI відеопродакшн',
+      'AI UGC для маркетингу',
+      'синтетичний контент',
+    ],
+  },
 };
 
 /**
