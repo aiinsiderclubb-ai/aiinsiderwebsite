@@ -133,61 +133,87 @@ export default function AboutPage() {
         .join('')
         .toUpperCase() || 'AI';
 
+    const gradients = [
+      'from-blue-500/20 via-purple-500/10 to-transparent',
+      'from-emerald-500/20 via-teal-500/10 to-transparent',
+      'from-orange-500/20 via-red-500/10 to-transparent',
+    ];
+
     return (
       <motion.div
         id={member.id}
-        initial={{ opacity: 0, y: 30 }}
-        animate={teamInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: index * 0.15 }}
+        initial={{ opacity: 0, y: 50, scale: 0.95 }}
+        animate={teamInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+        transition={{ duration: 0.7, delay: index * 0.2, ease: [0.25, 0.1, 0.25, 1] }}
         className="group relative"
       >
-        <div className="glass-strong rounded-3xl p-6 border border-white/10 
-          transition-all duration-300 hover:border-white/30 hover:-translate-y-2">
-          {/* Image */}
-          <div className="relative mb-6">
-            <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl 
-              transition-opacity duration-300 group-hover:opacity-10" />
-            <div className="relative w-full aspect-square rounded-2xl border border-white/10 overflow-hidden bg-white/[0.03]">
-              <div className="absolute inset-0"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 60%, transparent 100%)' }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl font-bold text-white/15 tracking-tight">{initials}</span>
+        {/* Outer glow on hover */}
+        <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+        
+        <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-white/25 hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(255,255,255,0.1)]">
+          {/* Top gradient accent */}
+          <div className={`absolute top-0 left-0 right-0 h-40 bg-gradient-to-b ${gradients[index % 3]} opacity-60`} />
+          
+          {/* Image container */}
+          <div className="relative pt-8 px-8">
+            <div className="relative mx-auto w-48 h-48 md:w-56 md:h-56">
+              {/* Animated ring */}
+              <div className="absolute inset-0 rounded-full border-2 border-white/20 group-hover:border-white/40 transition-colors duration-500" />
+              <div className="absolute -inset-2 rounded-full border border-dashed border-white/10 group-hover:border-white/20 transition-colors duration-500 group-hover:rotate-12" 
+                style={{ transition: 'all 0.7s ease' }} />
+              
+              {/* Inner image */}
+              <div className="absolute inset-2 rounded-full overflow-hidden bg-gradient-to-br from-white/10 to-white/5">
+                {/* Fallback initials */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl font-bold text-white/20 tracking-tight">{initials}</span>
+                </div>
+                
+                {/* Photo */}
+                <img
+                  src={imageSrc}
+                  alt={name}
+                  loading="lazy"
+                  decoding="async"
+                  onLoad={(e) => {
+                    e.currentTarget.dataset.loaded = 'true';
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out opacity-0 data-[loaded=true]:opacity-100"
+                />
+                
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <img
-                src={imageSrc}
-                alt={name}
-                loading="lazy"
-                decoding="async"
-                onLoad={(e) => {
-                  e.currentTarget.dataset.loaded = 'true';
-                }}
-                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500
-                  opacity-0 data-[loaded=true]:opacity-100"
-              />
+              
+              {/* Status indicator */}
+              <div className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-green-500 border-3 border-black shadow-lg shadow-green-500/50" />
             </div>
           </div>
 
-          {/* Info */}
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-1 text-white">{name}</h3>
-            <p className="text-white/70 font-semibold mb-4">
-              {t(member.roleKey)}
-            </p>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">{t(member.bioKey)}</p>
+          {/* Info section */}
+          <div className="relative px-8 pt-8 pb-10 text-center">
+            {/* Role badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+              <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+                {t(member.roleKey)}
+              </span>
+            </div>
+            
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">{name}</h3>
+            <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs mx-auto">{t(member.bioKey)}</p>
 
-            {/* Social Links */}
-            <div className="flex justify-center gap-4">
+            {/* Social Links — Premium style */}
+            <div className="flex justify-center gap-3">
               {member.social.linkedin && (
                 <a
                   href={member.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                  className="group/social relative w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white hover:border-white hover:scale-110 hover:shadow-lg hover:shadow-white/20"
                 >
-                  <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
+                  <Linkedin className="w-5 h-5 text-gray-400 group-hover/social:text-black transition-colors" />
                 </a>
               )}
 
@@ -197,10 +223,9 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                  className="group/social relative w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-500 hover:to-orange-500 hover:border-transparent hover:scale-110 hover:shadow-lg hover:shadow-pink-500/30"
                 >
-                  <Instagram className="w-5 h-5 text-gray-400 hover:text-white" />
+                  <Instagram className="w-5 h-5 text-gray-400 group-hover/social:text-white transition-colors" />
                 </a>
               ) : member.social.twitter ? (
                 <a
@@ -208,10 +233,9 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Twitter"
-                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                  className="group/social relative w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-blue-500 hover:border-blue-500 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30"
                 >
-                  <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
+                  <Twitter className="w-5 h-5 text-gray-400 group-hover/social:text-white transition-colors" />
                 </a>
               ) : null}
 
@@ -219,14 +243,17 @@ export default function AboutPage() {
                 <a
                   href={`mailto:${member.social.email}`}
                   aria-label="Email"
-                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                  className="group/social relative w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/10 hover:border-white/30 hover:scale-110"
                 >
-                  <Mail className="w-5 h-5 text-gray-400 hover:text-white" />
+                  <Mail className="w-5 h-5 text-gray-400 group-hover/social:text-white transition-colors" />
                 </a>
               )}
             </div>
           </div>
+          
+          {/* Corner decorations */}
+          <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-white/10 rounded-tr-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-white/10 rounded-bl-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
       </motion.div>
     );
@@ -1260,35 +1287,82 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Section - Monochrome */}
-      <section ref={teamRef} className="relative py-24 px-6 overflow-hidden">
-        <div className="relative max-w-6xl mx-auto">
+      {/* Team Section — Premium Design */}
+      <section ref={teamRef} className="relative py-32 px-6 overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0">
+          {/* Central glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%)',
+              filter: 'blur(100px)',
+            }}
+          />
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '80px 80px',
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={teamInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium text-white">{t('about.theTeam')}</span>
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <div className="flex -space-x-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-black" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 border-2 border-black" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-black" />
+              </div>
+              <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">{t('about.theTeam')}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              {t('about.meetThe')} <span style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>{t('about.minds')}</span> {t('about.behindAI')}
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
+              {t('about.meetThe')}{' '}
+              <span className="relative inline-block">
+                <span 
+                  style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                    backgroundSize: '200% 200%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    animation: 'shimmer 3s ease-in-out infinite',
+                  }}
+                >
+                  {t('about.minds')}
+                </span>
+                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              </span>
+              <br className="hidden md:block" />
+              {t('about.behindAI')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.teamSubtitle')}
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* Team Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             {teamMembers.map((member, index) => (
               <TeamMemberCard key={member.nameKey} member={member} index={index} />
             ))}
           </div>
+
+          {/* Bottom decoration */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={teamInView ? { opacity: 1, scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="mt-20 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          />
         </div>
       </section>
 
