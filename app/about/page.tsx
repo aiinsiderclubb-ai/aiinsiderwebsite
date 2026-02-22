@@ -428,57 +428,174 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Story Section - Monochrome */}
-      <section ref={storyRef} className="relative py-24 px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Our Story Section — Premium Design */}
+      <section ref={storyRef} className="relative py-32 px-6 overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0">
+          {/* Diagonal lines pattern */}
+          <div className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 40px,
+                rgba(255,255,255,0.1) 40px,
+                rgba(255,255,255,0.1) 41px
+              )`,
+            }}
+          />
+          {/* Gradient orb */}
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%)',
+              filter: 'blur(80px)',
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+            {/* Left column — Story text */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={storyInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8 }}
+              className="lg:col-span-6"
             >
-              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-                {t('about.ourStory')} <span style={{
-                  background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>{t('about.story')}</span>
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-10 border border-white/15 bg-white/5 backdrop-blur-xl">
+                <span className="text-lg">📖</span>
+                <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                  {isEn ? 'Our journey' : 'Наш шлях'}
+                </span>
+              </div>
+
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-10 text-white leading-[1.1]">
+                {t('about.ourStory')}{' '}
+                <span className="relative inline-block">
+                  <span 
+                    style={{
+                      background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                      backgroundSize: '200% 200%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}
+                  >
+                    {t('about.story')}
+                  </span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                </span>
               </h2>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
-                <p>{t('about.storyP1')}</p>
-                <p>{t('about.storyP2')}</p>
-                <p>{t('about.storyP3')}</p>
+
+              {/* Story paragraphs with visual hierarchy */}
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative pl-6 border-l-2 border-white/20"
+                >
+                  <div className="absolute left-0 top-0 w-3 h-3 -translate-x-[7px] rounded-full bg-white shadow-lg shadow-white/30" />
+                  <p className="text-lg text-gray-300 leading-relaxed">{t('about.storyP1')}</p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.35 }}
+                  className="relative pl-6 border-l-2 border-white/10"
+                >
+                  <div className="absolute left-0 top-0 w-2 h-2 -translate-x-[5px] rounded-full bg-white/50" />
+                  <p className="text-gray-400 leading-relaxed">{t('about.storyP2')}</p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="relative pl-6 border-l-2 border-white/10"
+                >
+                  <div className="absolute left-0 top-0 w-2 h-2 -translate-x-[5px] rounded-full bg-white/50" />
+                  <p className="text-gray-400 leading-relaxed">{t('about.storyP3')}</p>
+                </motion.div>
               </div>
             </motion.div>
 
+            {/* Right column — Stats grid */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={storyInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
+              className="lg:col-span-6"
             >
-              <div className="glass-strong rounded-3xl p-8 border border-white/10">
-                <div className="grid grid-cols-2 gap-6">
-                  {[
-                    { number: '50+', labelKey: 'about.stat1' },
-                    { number: '95%', labelKey: 'about.stat2' },
-                    { number: '24/7', labelKey: 'about.stat3' },
-                    { number: '3x', labelKey: 'about.stat4' },
-                  ].map((stat, index) => (
-                    <div key={index} className="text-center p-4">
-                      <div 
-                        className="text-4xl font-bold mb-2"
-                        style={{
-                          background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                        }}
-                      >
-                        {stat.number}
-                      </div>
-                      <div className="text-sm text-gray-400">{t(stat.labelKey)}</div>
+              <div className="relative">
+                {/* Outer glow */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-white/5 to-transparent rounded-[2.5rem] blur-2xl" />
+                
+                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 md:p-10 overflow-hidden">
+                  {/* Corner accents */}
+                  <div className="absolute top-4 left-4 w-10 h-10 border-t-2 border-l-2 border-white/20 rounded-tl-xl" />
+                  <div className="absolute top-4 right-4 w-10 h-10 border-t-2 border-r-2 border-white/20 rounded-tr-xl" />
+                  <div className="absolute bottom-4 left-4 w-10 h-10 border-b-2 border-l-2 border-white/20 rounded-bl-xl" />
+                  <div className="absolute bottom-4 right-4 w-10 h-10 border-b-2 border-r-2 border-white/20 rounded-br-xl" />
+
+                  {/* Header */}
+                  <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                      <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+                        {isEn ? 'Key metrics' : 'Ключові метрики'}
+                      </span>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-2 gap-6">
+                    {[
+                      { number: '50+', labelKey: 'about.stat1', icon: '🚀', color: 'from-blue-500/20 to-purple-500/20' },
+                      { number: '95%', labelKey: 'about.stat2', icon: '⭐', color: 'from-emerald-500/20 to-teal-500/20' },
+                      { number: '24/7', labelKey: 'about.stat3', icon: '⚡', color: 'from-orange-500/20 to-red-500/20' },
+                      { number: '3x', labelKey: 'about.stat4', icon: '📈', color: 'from-violet-500/20 to-indigo-500/20' },
+                    ].map((stat, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={storyInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                        className="group relative"
+                      >
+                        <div className={`relative rounded-2xl border border-white/10 bg-gradient-to-br ${stat.color} p-6 text-center transition-all duration-500 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(255,255,255,0.05)]`}>
+                          {/* Icon */}
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                            <div className="w-8 h-8 rounded-lg bg-black border border-white/20 flex items-center justify-center text-sm shadow-lg">
+                              {stat.icon}
+                            </div>
+                          </div>
+
+                          <div className="pt-4">
+                            <div 
+                              className="text-4xl md:text-5xl font-bold mb-2"
+                              style={{
+                                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                              }}
+                            >
+                              {stat.number}
+                            </div>
+                            <div className="text-sm text-gray-400">{t(stat.labelKey)}</div>
+                          </div>
+
+                          {/* Hover glow */}
+                          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{
+                              background: 'radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%)',
+                            }}
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
