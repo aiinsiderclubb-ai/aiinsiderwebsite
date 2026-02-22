@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Linkedin, Twitter, Mail, Zap, Target, Rocket, Users } from 'lucide-react';
+import { Instagram, Linkedin, Mail, Twitter, Zap, Target, Rocket, Users } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
@@ -13,7 +13,7 @@ type TeamMember = {
   roleKey: string;
   imageCandidates: string[];
   bioKey: string;
-  social: { linkedin: string; twitter: string; email: string };
+  social: { linkedin?: string; twitter?: string; instagram?: string; email?: string };
 };
 
 function canLoadImage(src: string): Promise<boolean> {
@@ -83,8 +83,9 @@ export default function AboutPage() {
       ],
       bioKey: 'about.member1Bio',
       social: {
-        linkedin: 'https://linkedin.com',
-        twitter: 'https://twitter.com',
+        linkedin: 'https://www.linkedin.com/in/vladyslav-katash/',
+        instagram:
+          'https://www.instagram.com/vladyslav.archer?igsh=MXc1c3hkODU5dW9hMQ%3D%3D&utm_source=qr',
         email: 'hello@aiinsider.it.com',
       },
     },
@@ -168,31 +169,53 @@ export default function AboutPage() {
 
             {/* Social Links */}
             <div className="flex justify-center gap-4">
-              <a
-                href={member.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                  transition-all duration-200 hover:bg-white/10 hover:scale-110"
-              >
-                <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
-              </a>
-              <a
-                href={member.social.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                  transition-all duration-200 hover:bg-white/10 hover:scale-110"
-              >
-                <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
-              </a>
-              <a
-                href={`mailto:${member.social.email}`}
-                className="w-10 h-10 rounded-full glass flex items-center justify-center 
-                  transition-all duration-200 hover:bg-white/10 hover:scale-110"
-              >
-                <Mail className="w-5 h-5 text-gray-400 hover:text-white" />
-              </a>
+              {member.social.linkedin && (
+                <a
+                  href={member.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
+                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                >
+                  <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
+                </a>
+              )}
+
+              {member.social.instagram ? (
+                <a
+                  href={member.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
+                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                >
+                  <Instagram className="w-5 h-5 text-gray-400 hover:text-white" />
+                </a>
+              ) : member.social.twitter ? (
+                <a
+                  href={member.social.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
+                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                >
+                  <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
+                </a>
+              ) : null}
+
+              {member.social.email && (
+                <a
+                  href={`mailto:${member.social.email}`}
+                  aria-label="Email"
+                  className="w-10 h-10 rounded-full glass flex items-center justify-center 
+                    transition-all duration-200 hover:bg-white/10 hover:scale-110"
+                >
+                  <Mail className="w-5 h-5 text-gray-400 hover:text-white" />
+                </a>
+              )}
             </div>
           </div>
         </div>
