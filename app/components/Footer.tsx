@@ -23,10 +23,11 @@ export default function Footer() {
   ];
 
   const serviceLinks = [
-    { label: t('footer.linkChatbots'), href: `${basePath}/ai-chatbots-for-business` },
-    { label: t('footer.linkVoiceAgents'), href: `${basePath}/ai-voice-agents` },
-    { label: t('footer.linkAutomation'), href: `${basePath}/ai-automation-for-business` },
-    { label: t('footer.linkCustomAgents'), href: `${basePath}/custom-ai-agents` },
+    // Link to offer pages (not SEO landing "article" pages)
+    { label: t('footer.linkChatbots'), href: `${basePath}/services/ai-chatbot-for-business` },
+    { label: t('footer.linkVoiceAgents'), href: `${basePath}/services/ai-voice-agent` },
+    { label: t('footer.linkAutomation'), href: `${basePath}/services/workflow-automation` },
+    { label: t('footer.linkCustomAgents'), href: `${basePath}/services/custom-ai-models` },
   ];
 
   const resourceLinks = [
@@ -150,11 +151,11 @@ export default function Footer() {
             </h3>
             <div className="space-y-2.5">
               <a
-                href="mailto:hello@aiinsider.com"
+                href="mailto:hello@aiinsider.it.com"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4 shrink-0" />
-                hello@aiinsider.com
+                hello@aiinsider.it.com
               </a>
               <a
                 href="https://t.me/aiinsider"
