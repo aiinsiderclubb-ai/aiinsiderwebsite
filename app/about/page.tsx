@@ -106,17 +106,15 @@ function useResolvedImage(candidates: string[]): string {
 
 export default function AboutPage() {
   const heroRef = useRef(null);
-  const teamRef = useRef(null);
-  const valuesRef = useRef(null);
   const storyRef = useRef(null);
+  const teamRef = useRef(null);
   const { t, lang } = useLanguage();
   const basePath = `/${lang}`;
   const isEn = lang === 'en';
   
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
-  const valuesInView = useInView(valuesRef, { once: true, margin: '-100px' });
   const storyInView = useInView(storyRef, { once: true, margin: '-100px' });
+  const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
 
   const teamMembers = TEAM_MEMBERS;
 
@@ -259,38 +257,6 @@ export default function AboutPage() {
     );
   };
 
-  const values = [
-    {
-      icon: Zap,
-      titleKey: 'about.value1Title',
-      descKey: 'about.value1Desc',
-    },
-    {
-      icon: Target,
-      titleKey: 'about.value2Title',
-      descKey: 'about.value2Desc',
-    },
-    {
-      icon: Rocket,
-      titleKey: 'about.value3Title',
-      descKey: 'about.value3Desc',
-    },
-    {
-      icon: Users,
-      titleKey: 'about.value4Title',
-      descKey: 'about.value4Desc',
-    },
-  ];
-
-  const whatWeDoPoints = [
-    'about.whatWeDoPoint1',
-    'about.whatWeDoPoint2',
-    'about.whatWeDoPoint3',
-    'about.whatWeDoPoint4',
-    'about.whatWeDoPoint5',
-    'about.whatWeDoPoint6',
-  ];
-
   const industriesPoints = [
     'about.industriesPoint1',
     'about.industriesPoint2',
@@ -357,25 +323,6 @@ export default function AboutPage() {
           desc: 'Побудова воркфлоу з тригерів, webhooks та інтеграцій для звʼязку інструментів, маршрутизації лідів і SLA‑контролю.',
         },
       ];
-
-  const technologyTags = [
-    'n8n',
-    'RAG',
-    'Tool-use agents',
-    'OpenAI / GPT',
-    'Whisper / STT',
-    'TTS',
-    'Webhooks',
-    'CRM',
-    'HubSpot',
-    'Salesforce',
-    'Pipedrive',
-    'Twilio',
-    'WhatsApp Business API',
-    'Next.js',
-    'TypeScript',
-    'PostgreSQL',
-  ];
 
   return (
     <main className="min-h-screen">
@@ -603,6 +550,87 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Team Section — Premium Design */}
+      <section ref={teamRef} className="relative py-32 px-6 overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0">
+          {/* Central glow */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%)',
+              filter: 'blur(100px)',
+            }}
+          />
+          {/* Grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '80px 80px',
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={teamInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <div className="flex -space-x-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-black" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 border-2 border-black" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-black" />
+              </div>
+              <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">{t('about.theTeam')}</span>
+            </div>
+
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
+              {t('about.meetThe')}{' '}
+              <span className="relative inline-block">
+                <span
+                  style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
+                    backgroundSize: '200% 200%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    animation: 'shimmer 3s ease-in-out infinite',
+                  }}
+                >
+                  {t('about.minds')}
+                </span>
+                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              </span>
+              <br className="hidden md:block" />
+              {t('about.behindAI')}
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
+              {t('about.teamSubtitle')}
+            </p>
+          </motion.div>
+
+          {/* Team Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {teamMembers.map((member, index) => (
+              <TeamMemberCard key={member.nameKey} member={member} index={index} />
+            ))}
+          </div>
+
+          {/* Bottom decoration */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={teamInView ? { opacity: 1, scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="mt-20 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          />
+        </div>
+      </section>
+
       {/* GEO / AI Search Clarity — Premium Design */}
       <section className="relative py-32 px-6 overflow-hidden">
         {/* Animated background elements */}
@@ -749,197 +777,6 @@ export default function AboutPage() {
                       </div>
                     </motion.div>
                   ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* What we do — Premium Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-        
-        <div className="relative max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left column — What we build */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="lg:col-span-5"
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-white/15 bg-white/5">
-                <Rocket className="w-4 h-4 text-white/70" />
-                <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
-                  {isEn ? 'What we build' : 'Що ми будуємо'}
-                </span>
-              </div>
-
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-8 text-white leading-[1.1]">
-                {t('about.whatWeDoTitle')}
-              </h2>
-              <p className="text-xl text-gray-400 leading-relaxed mb-10 font-light">
-                {t('about.whatWeDoSubtitle')}
-              </p>
-
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/50 mb-6">
-                {t('about.whatWeDoP1')}
-              </p>
-
-              <div className="space-y-4">
-                {whatWeDoPoints.map((k, idx) => (
-                  <motion.div
-                    key={k}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
-                    className="group flex items-start gap-5 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.04] to-transparent p-5 transition-all duration-300 hover:border-white/20 hover:from-white/[0.08]"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-lg transition-transform duration-300 group-hover:scale-110">
-                      <span className="text-sm font-bold text-black">{String(idx + 1).padStart(2, '0')}</span>
-                    </div>
-                    <div className="text-gray-300 leading-relaxed pt-2.5">{t(k)}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right column — ROI Matrix */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="lg:col-span-7"
-            >
-              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl overflow-hidden">
-                {/* Header */}
-                <div className="px-8 py-6 border-b border-white/10 bg-white/[0.03]">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
-                        {isEn ? 'Where AI pays off fastest' : 'Де AI дає найбільший ефект'}
-                      </h3>
-                      <p className="text-sm text-gray-400">
-                        {isEn
-                          ? 'Business goals → solutions → measurable outcomes'
-                          : 'Бізнес-цілі → рішення → вимірювані результати'}
-                      </p>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                      <div className="w-2 h-2 rounded-full bg-green-400" />
-                      <span className="text-xs text-gray-400">{isEn ? 'ROI Matrix' : 'Матриця ROI'}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Table content — Card-based for mobile */}
-                <div className="p-6 md:p-8">
-                  <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="text-left">
-                          <th className="pb-4 pr-6 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'Business goal' : 'Ціль бізнесу'}</th>
-                          <th className="pb-4 pr-6 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'What we build' : 'Що ми будуємо'}</th>
-                          <th className="pb-4 text-xs font-bold uppercase tracking-[0.15em] text-white/50">{isEn ? 'Outcome' : 'Результат'}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[
-                          {
-                            goal: isEn ? 'More qualified leads' : 'Більше кваліфікованих лідів',
-                            build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up',
-                            outcome: isEn ? 'Faster response, higher conversion' : 'Швидша реакція, вища конверсія',
-                            icon: '📈',
-                          },
-                          {
-                            goal: isEn ? '24/7 customer support' : 'Підтримка 24/7',
-                            build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція helpdesk',
-                            outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільність',
-                            icon: '💬',
-                          },
-                          {
-                            goal: isEn ? 'More booked meetings' : 'Більше зустрічей',
-                            build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання',
-                            outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Більше бронювань, менше no-shows',
-                            icon: '📞',
-                          },
-                          {
-                            goal: isEn ? 'Clean ops and CRM' : 'Чиста операційка та CRM',
-                            build: isEn ? 'n8n workflows + SLA alerts' : 'n8n воркфлоу + SLA алерти',
-                            outcome: isEn ? 'Fewer errors, reliable reporting' : 'Менше помилок, надійна звітність',
-                            icon: '⚡',
-                          },
-                        ].map((r, i) => (
-                          <tr key={i} className="group border-t border-white/5 hover:bg-white/[0.02] transition-colors">
-                            <td className="py-5 pr-6">
-                              <div className="flex items-center gap-3">
-                                <span className="text-xl">{r.icon}</span>
-                                <span className="text-gray-200 font-medium">{r.goal}</span>
-                              </div>
-                            </td>
-                            <td className="py-5 pr-6 text-gray-400">{r.build}</td>
-                            <td className="py-5">
-                              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-sm text-gray-300">
-                                <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                                {r.outcome}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Mobile cards */}
-                  <div className="md:hidden space-y-4">
-                    {[
-                      {
-                        goal: isEn ? 'More qualified leads' : 'Більше кваліфікованих лідів',
-                        build: isEn ? 'Lead routing + scoring + follow-up automation' : 'Маршрутизація + скоринг + follow-up',
-                        outcome: isEn ? 'Faster response, higher conversion' : 'Швидша реакція, вища конверсія',
-                        icon: '📈',
-                      },
-                      {
-                        goal: isEn ? '24/7 customer support' : 'Підтримка 24/7',
-                        build: isEn ? 'RAG chatbot + helpdesk integration' : 'RAG чатбот + інтеграція helpdesk',
-                        outcome: isEn ? 'Lower load, consistent answers' : 'Менше навантаження, стабільність',
-                        icon: '💬',
-                      },
-                      {
-                        goal: isEn ? 'More booked meetings' : 'Більше зустрічей',
-                        build: isEn ? 'AI voice agent + calendar booking' : 'AI voice agent + бронювання',
-                        outcome: isEn ? 'Higher booking rate, fewer no-shows' : 'Більше бронювань, менше no-shows',
-                        icon: '📞',
-                      },
-                      {
-                        goal: isEn ? 'Clean ops and CRM' : 'Чиста операційка та CRM',
-                        build: isEn ? 'n8n workflows + SLA alerts' : 'n8n воркфлоу + SLA алерти',
-                        outcome: isEn ? 'Fewer errors, reliable reporting' : 'Менше помилок, надійна звітність',
-                        icon: '⚡',
-                      },
-                    ].map((r, i) => (
-                      <div key={i} className="rounded-xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xl">{r.icon}</span>
-                          <span className="text-white font-semibold">{r.goal}</span>
-                        </div>
-                        <p className="text-sm text-gray-400">{r.build}</p>
-                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-sm text-gray-300">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                          {r.outcome}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1149,87 +986,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Technologies we use — Floating Tags Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
-        {/* Radial gradient background */}
-        <div className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 60%)',
-          }}
-        />
-
-        <div className="relative max-w-7xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
-              <span className="text-lg">⚡</span>
-              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
-                {isEn ? 'Tech stack' : 'Технології'}
-              </span>
-            </div>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
-              {t('about.technologiesTitle')}
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
-              {t('about.technologiesSubtitle')}
-            </p>
-          </motion.div>
-
-          {/* Technology Cloud */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10 md:p-14"
-          >
-            {/* Decorative corner accents */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 rounded-tl-lg" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/20 rounded-tr-lg" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-lg" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-lg" />
-
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              {technologyTags.map((tag, idx) => {
-                const sizes = ['text-sm', 'text-base', 'text-lg'];
-                const sizeClass = sizes[idx % 3];
-                const isHighlighted = ['n8n', 'RAG', 'OpenAI / GPT', 'Tool-use agents'].includes(tag);
-
-                return (
-                  <motion.span
-                    key={tag}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: idx * 0.03 }}
-                    className={`${sizeClass} px-5 py-2.5 rounded-full transition-all duration-300 cursor-default ${
-                      isHighlighted
-                        ? 'bg-white text-black font-semibold shadow-lg shadow-white/20 hover:scale-110'
-                        : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10 hover:border-white/25 hover:text-white hover:scale-105'
-                    }`}
-                  >
-                    {tag}
-                  </motion.span>
-                );
-              })}
-            </div>
-
-            {/* Center glow */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 50%)',
-              }}
-            />
-          </motion.div>
-        </div>
-      </section>
-
       {/* Why AI Insider is different — Premium Card Design */}
       <section className="relative py-32 px-6 overflow-hidden">
         {/* Gradient orbs */}
@@ -1351,135 +1107,6 @@ export default function AboutPage() {
               </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Values Section - Monochrome */}
-      <section ref={valuesRef} className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 neural-bg opacity-5" />
-        
-        <div className="relative max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              {t('about.ourValues')} <span style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>{t('about.values')}</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              {t('about.valuesSubtitle')}
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group glass-strong rounded-2xl p-6 border border-white/10 
-                    transition-all duration-300 hover:border-white/30 hover:-translate-y-2"
-                >
-                  <div className="w-14 h-14 rounded-xl bg-white
-                    flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
-                    style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.15)' }}
-                  >
-                    <Icon className="w-7 h-7 text-black" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">{t(value.titleKey)}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{t(value.descKey)}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section — Premium Design */}
-      <section ref={teamRef} className="relative py-32 px-6 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0">
-          {/* Central glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-20"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%)',
-              filter: 'blur(100px)',
-            }}
-          />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: '80px 80px',
-            }}
-          />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={teamInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
-              <div className="flex -space-x-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-black" />
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 border-2 border-black" />
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-black" />
-              </div>
-              <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">{t('about.theTeam')}</span>
-            </div>
-            
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
-              {t('about.meetThe')}{' '}
-              <span className="relative inline-block">
-                <span 
-                  style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
-                    backgroundSize: '200% 200%',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    animation: 'shimmer 3s ease-in-out infinite',
-                  }}
-                >
-                  {t('about.minds')}
-                </span>
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-              </span>
-              <br className="hidden md:block" />
-              {t('about.behindAI')}
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
-              {t('about.teamSubtitle')}
-            </p>
-          </motion.div>
-
-          {/* Team Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {teamMembers.map((member, index) => (
-              <TeamMemberCard key={member.nameKey} member={member} index={index} />
-            ))}
-          </div>
-
-          {/* Bottom decoration */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={teamInView ? { opacity: 1, scaleX: 1 } : {}}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="mt-20 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          />
         </div>
       </section>
 
