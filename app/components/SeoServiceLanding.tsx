@@ -144,6 +144,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
     'ai-chatbots-for-business': ['ai-chatbot-for-business', 'custom-ai-models'],
     'ai-voice-agents': ['ai-voice-agent', 'ai-automation-for-real-estate'],
     'custom-ai-agents': ['custom-ai-models', 'workflow-automation'],
+    'ai-content-creation': ['ai-influencers', 'ai-video-production', 'ai-ugc-content'],
   };
   const relatedServiceDetails = (SERVICE_DETAIL_MAP[slug] || [])
     .map((s) => servicesData.find((svc) => svc.slug === s))

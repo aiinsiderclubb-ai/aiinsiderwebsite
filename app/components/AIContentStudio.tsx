@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Users, Video, Sparkles, Play, CheckCircle } from 'lucide-react';
-import { useLanguage } from '@/app/lib/LanguageContext';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 const services = [
   {

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import { useLanguage } from '@/app/lib/LanguageContext';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 const services = [
   {

@@ -2897,7 +2897,7 @@ export const blogArticles: BlogArticle[] = [
         body: [
           {
             en: 'An AI influencer is a computer-generated character that operates like a real influencer on social media. They have a defined personality, visual style, voice, and backstory. They post content, respond to comments, collaborate with brands, and build audiences — all powered by AI.',
-            uk: 'AI-інфлюенсер — це згенерований комп'ютером персонаж, який працює як справжній інфлюенсер у соцмережах. Він має визначену особистість, візуальний стиль, голос та історію. Він публікує контент, відповідає на коментарі, співпрацює з брендами та будує аудиторію — все завдяки AI.',
+            uk: 'AI-інфлюенсер — це згенерований комп\'ютером персонаж, який працює як справжній інфлюенсер у соцмережах. Він має визначену особистість, візуальний стиль, голос та історію. Він публікує контент, відповідає на коментарі, співпрацює з брендами та будує аудиторію — все завдяки AI.',
           },
         ],
         bullets: [
