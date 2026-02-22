@@ -6,7 +6,7 @@ export const getLocalizedText = (text: LocalizedText, lang: Language): string =>
   return text[lang] || text.en;
 };
 
-export type ServiceCategory = 'agents' | 'automation' | 'analytics' | 'models' | 'leadgen' | 'realestate';
+export type ServiceCategory = 'agents' | 'automation' | 'analytics' | 'models' | 'leadgen' | 'realestate' | 'content';
 
 export type ServiceFeature = {
   icon: string;
@@ -912,6 +912,458 @@ export const servicesData: ServicePage[] = [
       { question: { uk: 'Чим RAG відрізняється від “просто GPT”?', en: 'How is RAG different from “just GPT”?' }, answer: { uk: 'RAG підтягує релевантні джерела з вашої бази знань для кожної відповіді, тому контент більш точний і контрольований.', en: 'RAG retrieves relevant sources from your knowledge base per answer, making outputs more grounded and controllable.' } },
       { question: { uk: 'Чи можна обмежити доступ до даних?', en: 'Can you restrict data access?' }, answer: { uk: 'Так. Робимо ролі, правила доступу та логування запитів.', en: 'Yes. We add roles, access rules, and request logging.' } },
     ],
+  },
+  {
+    slug: 'ai-influencers',
+    category: 'content',
+    title: { uk: 'AI-інфлюенсери', en: 'AI Influencers' },
+    subtitle: {
+      uk: 'Віртуальні персонажі для вашого бренду: ведуть соцмережі, створюють контент, спілкуються з аудиторією — без реальних людей.',
+      en: 'Virtual personas for your brand: run social media, create content, engage audiences — no real people needed.',
+    },
+    seoTitle: {
+      uk: 'AI-інфлюенсери для бізнесу | Віртуальні аватари | AI Insider',
+      en: 'AI Influencers for Business | Virtual Avatars | AI Insider',
+    },
+    seoDescription: {
+      uk: 'Створюємо AI-інфлюенсерів та віртуальних аватарів для брендів: контент 24/7, унікальний персонаж, масштабування без обмежень. Швейцарія (CH), Європа, США.',
+      en: 'We create AI influencers and virtual avatars for brands: 24/7 content, unique persona, unlimited scalability. Switzerland (CH), Europe, US.',
+    },
+    keywords: {
+      en: [
+        'AI influencer',
+        'virtual influencer',
+        'AI avatar',
+        'digital influencer',
+        'synthetic influencer',
+        'AI content creator',
+        'virtual brand ambassador',
+      ],
+      uk: [
+        'AI інфлюенсер',
+        'віртуальний інфлюенсер',
+        'AI аватар',
+        'цифровий інфлюенсер',
+        'синтетичний інфлюенсер',
+        'AI контент-креатор',
+        'віртуальний амбасадор бренду',
+      ],
+    },
+    timeline: { uk: '3–6 тижнів до запуску', en: '3–6 weeks to launch' },
+    outcomes: [
+      { uk: 'Контент 24/7 без залежності від реальних людей', en: 'Content 24/7 without relying on real people' },
+      { uk: 'Повний контроль над персонажем та меседжами', en: 'Full control over persona and messaging' },
+      { uk: 'Масштабування на нові ринки та мови без додаткових витрат', en: 'Scale to new markets and languages without extra costs' },
+    ],
+    features: [
+      {
+        icon: '🎭',
+        title: { uk: 'Унікальний персонаж', en: 'Unique Persona' },
+        description: {
+          uk: 'Створюємо віртуального персонажа з власним стилем, голосом та характером під ваш бренд.',
+          en: 'Create a virtual character with unique style, voice, and personality tailored to your brand.',
+        },
+      },
+      {
+        icon: '📱',
+        title: { uk: 'Контент для соцмереж', en: 'Social Media Content' },
+        description: {
+          uk: 'Генеруємо пости, stories, reels, відео — у форматах Instagram, TikTok, YouTube Shorts.',
+          en: 'Generate posts, stories, reels, videos — for Instagram, TikTok, YouTube Shorts.',
+        },
+      },
+      {
+        icon: '💬',
+        title: { uk: 'Взаємодія з аудиторією', en: 'Audience Engagement' },
+        description: {
+          uk: 'AI відповідає на коментарі та DM, підтримує комʼюніті та збирає фідбек.',
+          en: 'AI responds to comments and DMs, nurtures community, and collects feedback.',
+        },
+      },
+      {
+        icon: '🌍',
+        title: { uk: 'Мультимовність', en: 'Multilingual' },
+        description: {
+          uk: 'Один персонаж — багато мов. Легко адаптуємо під різні ринки.',
+          en: 'One persona — many languages. Easy adaptation for different markets.',
+        },
+      },
+    ],
+    useCases: [
+      {
+        title: { uk: 'Бренд-амбасадор', en: 'Brand Ambassador' },
+        description: {
+          uk: 'Віртуальне "обличчя" бренду для соцмереж, івентів та рекламних кампаній.',
+          en: 'Virtual brand face for social media, events, and ad campaigns.',
+        },
+      },
+      {
+        title: { uk: 'Продуктовий контент', en: 'Product Content' },
+        description: {
+          uk: 'Огляди, розпаковки, tutorials з AI-персонажем замість реальних інфлюенсерів.',
+          en: 'Reviews, unboxings, tutorials featuring AI persona instead of real influencers.',
+        },
+      },
+      {
+        title: { uk: 'Локалізація', en: 'Localization' },
+        description: {
+          uk: 'Один AI-інфлюенсер для різних країн та мов без додаткових контрактів.',
+          en: 'One AI influencer for multiple countries and languages without extra contracts.',
+        },
+      },
+    ],
+    implementation: [
+      {
+        title: { uk: 'Концепт персонажа', en: 'Persona Concept' },
+        description: {
+          uk: 'Визначаємо зовнішність, характер, tone of voice, платформи та цільову аудиторію.',
+          en: 'Define appearance, personality, tone of voice, platforms, and target audience.',
+        },
+        duration: { uk: '1–2 тижні', en: '1–2 weeks' },
+      },
+      {
+        title: { uk: 'Створення аватара', en: 'Avatar Creation' },
+        description: {
+          uk: 'Генеруємо візуал, голос, базові анімації та контент-шаблони.',
+          en: 'Generate visuals, voice, base animations, and content templates.',
+        },
+        duration: { uk: '1–2 тижні', en: '1–2 weeks' },
+      },
+      {
+        title: { uk: 'Контент-пайплайн', en: 'Content Pipeline' },
+        description: {
+          uk: 'Налаштовуємо процес генерації та публікації контенту з контролем якості.',
+          en: 'Set up content generation and publishing workflow with quality control.',
+        },
+        duration: { uk: '1–2 тижні', en: '1–2 weeks' },
+      },
+    ],
+    faq: [
+      {
+        question: { uk: 'Чи буде персонаж унікальним?', en: 'Will the persona be unique?' },
+        answer: {
+          uk: 'Так. Ми створюємо кастомного персонажа спеціально для вашого бренду — зовнішність, голос, стиль.',
+          en: 'Yes. We create a custom character specifically for your brand — appearance, voice, style.',
+        },
+      },
+      {
+        question: { uk: 'Чи можна використовувати на різних платформах?', en: 'Can it be used across platforms?' },
+        answer: {
+          uk: 'Так — Instagram, TikTok, YouTube, LinkedIn, Twitter та інші.',
+          en: 'Yes — Instagram, TikTok, YouTube, LinkedIn, Twitter, and more.',
+        },
+      },
+      {
+        question: { uk: 'Як щодо авторських прав?', en: 'What about rights?' },
+        answer: {
+          uk: 'Ви отримуєте повні права на персонажа та весь згенерований контент.',
+          en: 'You get full rights to the persona and all generated content.',
+        },
+      },
+    ],
+    relatedCaseSlugs: [],
+  },
+  {
+    slug: 'ai-video-production',
+    category: 'content',
+    title: { uk: 'AI-відеопродакшн', en: 'AI Video Production' },
+    subtitle: {
+      uk: 'Створення відео з AI-аватарами, автоматичний repurposing, дубляж на інші мови — без камер і знімальних команд.',
+      en: 'Create videos with AI avatars, auto-repurpose content, dub to other languages — no cameras or crews needed.',
+    },
+    seoTitle: {
+      uk: 'AI-відеопродакшн | Відео з AI-аватарами | AI Insider',
+      en: 'AI Video Production | Videos with AI Avatars | AI Insider',
+    },
+    seoDescription: {
+      uk: 'Генеруємо маркетингові відео з AI-аватарами: скрипт → готове відео за години. Дубляж, repurposing, UGC-стиль. Швейцарія (CH), Європа, США.',
+      en: 'Generate marketing videos with AI avatars: script → video in hours. Dubbing, repurposing, UGC-style. Switzerland (CH), Europe, US.',
+    },
+    keywords: {
+      en: [
+        'AI video production',
+        'AI video generator',
+        'AI avatar video',
+        'synthetic video',
+        'AI video marketing',
+        'HeyGen',
+        'Synthesia alternative',
+        'AI dubbing',
+      ],
+      uk: [
+        'AI відеопродакшн',
+        'AI генератор відео',
+        'відео з AI-аватаром',
+        'синтетичне відео',
+        'AI відеомаркетинг',
+        'HeyGen',
+        'Synthesia альтернатива',
+        'AI дубляж',
+      ],
+    },
+    timeline: { uk: '1–3 тижні до перших відео', en: '1–3 weeks to first videos' },
+    outcomes: [
+      { uk: 'Відео за години замість тижнів зйомок', en: 'Videos in hours instead of weeks of shooting' },
+      { uk: 'Масштабування контенту: 10+ відео на тиждень без додаткових витрат', en: 'Scale content: 10+ videos per week without extra costs' },
+      { uk: 'Мультимовний контент з одного скрипта', en: 'Multilingual content from a single script' },
+    ],
+    features: [
+      {
+        icon: '🎬',
+        title: { uk: 'AI-аватари', en: 'AI Avatars' },
+        description: {
+          uk: 'Кастомні або готові аватари, які "говорять" ваш текст з реалістичною мімікою.',
+          en: 'Custom or stock avatars that "speak" your text with realistic lip-sync.',
+        },
+      },
+      {
+        icon: '🔄',
+        title: { uk: 'Repurposing', en: 'Repurposing' },
+        description: {
+          uk: 'Перетворюємо блоги, подкасти, вебінари у короткі відео для соцмереж.',
+          en: 'Turn blogs, podcasts, webinars into short-form social videos.',
+        },
+      },
+      {
+        icon: '🌐',
+        title: { uk: 'Мультимовний дубляж', en: 'Multilingual Dubbing' },
+        description: {
+          uk: 'Один відеоролик — 10+ мов. AI-дубляж з синхронізацією губ.',
+          en: 'One video — 10+ languages. AI dubbing with lip-sync.',
+        },
+      },
+      {
+        icon: '📊',
+        title: { uk: 'A/B тестування', en: 'A/B Testing' },
+        description: {
+          uk: 'Швидко генеруємо варіації для тестування hooks, CTA, візуалів.',
+          en: 'Quickly generate variations to test hooks, CTAs, and visuals.',
+        },
+      },
+    ],
+    useCases: [
+      {
+        title: { uk: 'Рекламні відео', en: 'Ad Creatives' },
+        description: {
+          uk: 'UGC-style реклама, VSL, product demos — без зйомок та акторів.',
+          en: 'UGC-style ads, VSLs, product demos — no shoots or actors.',
+        },
+      },
+      {
+        title: { uk: 'Навчальний контент', en: 'Educational Content' },
+        description: {
+          uk: 'Онбординг, tutorials, курси — швидко та масштабовано.',
+          en: 'Onboarding, tutorials, courses — fast and scalable.',
+        },
+      },
+      {
+        title: { uk: 'Соцмережі', en: 'Social Media' },
+        description: {
+          uk: 'TikTok, Reels, Shorts — регулярний відеоконтент без команди.',
+          en: 'TikTok, Reels, Shorts — regular video content without a team.',
+        },
+      },
+    ],
+    implementation: [
+      {
+        title: { uk: 'Формат і стиль', en: 'Format & Style' },
+        description: {
+          uk: 'Визначаємо формати, тривалість, тон, аватари та платформи.',
+          en: 'Define formats, length, tone, avatars, and platforms.',
+        },
+        duration: { uk: '3–5 днів', en: '3–5 days' },
+      },
+      {
+        title: { uk: 'Пайплайн генерації', en: 'Generation Pipeline' },
+        description: {
+          uk: 'Налаштовуємо процес: скрипт → генерація → ревью → публікація.',
+          en: 'Set up workflow: script → generation → review → publish.',
+        },
+        duration: { uk: '1–2 тижні', en: '1–2 weeks' },
+      },
+      {
+        title: { uk: 'Масштабування', en: 'Scaling' },
+        description: {
+          uk: 'Шаблони, автоматизація, A/B тести, аналітика ефективності.',
+          en: 'Templates, automation, A/B tests, and performance analytics.',
+        },
+        duration: { uk: 'постійно', en: 'ongoing' },
+      },
+    ],
+    faq: [
+      {
+        question: { uk: 'Чи виглядає це "штучно"?', en: 'Does it look "artificial"?' },
+        answer: {
+          uk: 'Сучасні AI-аватари дуже реалістичні. Ми підбираємо стиль під вашу аудиторію і тестуємо до запуску.',
+          en: 'Modern AI avatars are very realistic. We match the style to your audience and test before launch.',
+        },
+      },
+      {
+        question: { uk: 'Які технології використовуєте?', en: 'What tech do you use?' },
+        answer: {
+          uk: 'HeyGen, Synthesia, D-ID, Runway, ElevenLabs та інші — підбираємо під задачу.',
+          en: 'HeyGen, Synthesia, D-ID, Runway, ElevenLabs, and more — we pick based on your needs.',
+        },
+      },
+      {
+        question: { uk: 'Чи можна використовувати свій голос?', en: 'Can I use my own voice?' },
+        answer: {
+          uk: 'Так — клонуємо ваш голос для AI-аватара або створюємо унікальний синтетичний голос.',
+          en: 'Yes — we can clone your voice for the AI avatar or create a unique synthetic voice.',
+        },
+      },
+    ],
+    relatedCaseSlugs: [],
+  },
+  {
+    slug: 'ai-ugc-content',
+    category: 'content',
+    title: { uk: 'AI UGC-контент', en: 'AI UGC Content' },
+    subtitle: {
+      uk: 'Масова генерація UGC-відео з AI-аватарами для реклами — без інфлюенсерів, зйомок та контрактів.',
+      en: 'Mass-generate UGC videos with AI avatars for ads — no influencers, shoots, or contracts.',
+    },
+    seoTitle: {
+      uk: 'AI UGC-контент для реклами | AI Insider',
+      en: 'AI UGC Content for Advertising | AI Insider',
+    },
+    seoDescription: {
+      uk: 'Генеруємо UGC-відео з AI-аватарами для Meta, TikTok, YouTube Ads. Швидко, дешево, масштабовано. Швейцарія (CH), Європа, США.',
+      en: 'Generate UGC videos with AI avatars for Meta, TikTok, YouTube Ads. Fast, affordable, scalable. Switzerland (CH), Europe, US.',
+    },
+    keywords: {
+      en: [
+        'AI UGC',
+        'AI user generated content',
+        'UGC ads AI',
+        'synthetic UGC',
+        'AI ad creatives',
+        'UGC video generator',
+        'AI testimonial videos',
+      ],
+      uk: [
+        'AI UGC',
+        'AI користувацький контент',
+        'UGC реклама AI',
+        'синтетичний UGC',
+        'AI рекламні креативи',
+        'генератор UGC відео',
+        'AI відгуки відео',
+      ],
+    },
+    timeline: { uk: '1–2 тижні до перших креативів', en: '1–2 weeks to first creatives' },
+    outcomes: [
+      { uk: '10–50 унікальних креативів на тиждень', en: '10–50 unique creatives per week' },
+      { uk: 'Вартість у 5–10 разів нижча за традиційний UGC', en: 'Cost 5–10x lower than traditional UGC' },
+      { uk: 'Повний контроль над меседжами та швидкі ітерації', en: 'Full control over messaging and fast iterations' },
+    ],
+    features: [
+      {
+        icon: '👥',
+        title: { uk: 'Різноманітність аватарів', en: 'Avatar Diversity' },
+        description: {
+          uk: 'Сотні різних "людей" — вік, стать, етнічність, стиль — під вашу аудиторію.',
+          en: 'Hundreds of different "people" — age, gender, ethnicity, style — tailored to your audience.',
+        },
+      },
+      {
+        icon: '📝',
+        title: { uk: 'Скрипти під конверсії', en: 'Conversion Scripts' },
+        description: {
+          uk: 'Пишемо UGC-скрипти з hooks, pain points, testimonials та CTA.',
+          en: 'Write UGC scripts with hooks, pain points, testimonials, and CTAs.',
+        },
+      },
+      {
+        icon: '⚡',
+        title: { uk: 'Швидка генерація', en: 'Fast Generation' },
+        description: {
+          uk: 'Від скрипта до готового відео — години замість тижнів.',
+          en: 'From script to finished video — hours instead of weeks.',
+        },
+      },
+      {
+        icon: '🧪',
+        title: { uk: 'A/B тестування', en: 'A/B Testing' },
+        description: {
+          uk: 'Генеруємо 10+ варіацій для швидкого тестування в рекламних кабінетах.',
+          en: 'Generate 10+ variations for rapid testing in ad managers.',
+        },
+      },
+    ],
+    useCases: [
+      {
+        title: { uk: 'Meta/TikTok Ads', en: 'Meta/TikTok Ads' },
+        description: {
+          uk: 'UGC-креативи для performance-кампаній з A/B тестуванням hooks і CTA.',
+          en: 'UGC creatives for performance campaigns with A/B testing of hooks and CTAs.',
+        },
+      },
+      {
+        title: { uk: 'Testimonials', en: 'Testimonials' },
+        description: {
+          uk: 'Відео-відгуки з AI-аватарами — швидко та без координації з клієнтами.',
+          en: 'Video testimonials with AI avatars — fast and no client coordination.',
+        },
+      },
+      {
+        title: { uk: 'Локалізація', en: 'Localization' },
+        description: {
+          uk: 'Один скрипт — креативи для різних ринків і мов.',
+          en: 'One script — creatives for different markets and languages.',
+        },
+      },
+    ],
+    implementation: [
+      {
+        title: { uk: 'Стратегія креативів', en: 'Creative Strategy' },
+        description: {
+          uk: 'Аналізуємо аудиторію, конкурентів, формати — готуємо план тестування.',
+          en: 'Analyze audience, competitors, formats — prepare testing plan.',
+        },
+        duration: { uk: '3–5 днів', en: '3–5 days' },
+      },
+      {
+        title: { uk: 'Генерація креативів', en: 'Creative Generation' },
+        description: {
+          uk: 'Скрипти → аватари → відео → ревью → експорт для рекламних платформ.',
+          en: 'Scripts → avatars → videos → review → export for ad platforms.',
+        },
+        duration: { uk: '1 тиждень', en: '1 week' },
+      },
+      {
+        title: { uk: 'Оптимізація', en: 'Optimization' },
+        description: {
+          uk: 'Аналіз результатів, нові варіації, масштабування виграшних креативів.',
+          en: 'Analyze results, new variations, scale winning creatives.',
+        },
+        duration: { uk: 'постійно', en: 'ongoing' },
+      },
+    ],
+    faq: [
+      {
+        question: { uk: 'Чи це легально?', en: 'Is this legal?' },
+        answer: {
+          uk: 'Так. AI UGC — це маркетинговий контент, а не підробка реальних людей. Ми дотримуємось рекламних політик платформ.',
+          en: 'Yes. AI UGC is marketing content, not deepfakes of real people. We comply with platform ad policies.',
+        },
+      },
+      {
+        question: { uk: 'Чи працює це на Meta/TikTok?', en: 'Does it work on Meta/TikTok?' },
+        answer: {
+          uk: 'Так — AI UGC успішно використовується для performance-реклами на всіх основних платформах.',
+          en: 'Yes — AI UGC is successfully used for performance ads on all major platforms.',
+        },
+      },
+      {
+        question: { uk: 'Як швидко можна отримати перші креативи?', en: 'How fast can I get first creatives?' },
+        answer: {
+          uk: 'Перші креативи — за 5–7 днів після старту проєкту.',
+          en: 'First creatives — within 5–7 days after project start.',
+        },
+      },
+    ],
+    relatedCaseSlugs: [],
   },
 ];
 

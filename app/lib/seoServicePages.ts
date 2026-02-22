@@ -6,7 +6,8 @@ export type SeoServiceSlug =
   | 'ai-automation-for-business'
   | 'ai-chatbots-for-business'
   | 'ai-voice-agents'
-  | 'custom-ai-agents';
+  | 'custom-ai-agents'
+  | 'ai-content-creation';
 
 export type SeoFaq = { q: string; a: string };
 
@@ -711,6 +712,166 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
     metaKeywords: {
       en: ['Custom AI agents', 'agentic AI', 'AI workflow agents', 'CRM automation agent', 'AI operations automation'],
       uk: ['Custom AI agents', 'агентні AI системи', 'AI агенти для процесів', 'агент для CRM', 'автоматизація операцій'],
+    },
+  },
+  'ai-content-creation': {
+    slug: 'ai-content-creation',
+    keyword: 'AI content creation',
+    titleTag: {
+      en: 'AI Content Creation | AI Influencers, Video & UGC | AI Insider',
+      uk: 'AI контент-продакшн | AI-інфлюенсери, відео та UGC | AI Insider',
+    },
+    metaDescription: {
+      en: 'AI content creation studio: AI influencers, AI video production, and AI UGC for marketing. Scale your content without shoots or influencers.',
+      uk: 'AI контент-студія: AI-інфлюенсери, AI-відеопродакшн та AI UGC для маркетингу. Масштабуйте контент без зйомок та інфлюенсерів.',
+    },
+    intro: {
+      en: [
+        'AI content creation is transforming how brands produce marketing materials — from virtual influencers to UGC-style ads.',
+        'No more expensive shoots, unreliable creators, or content bottlenecks. AI generates video, avatars, and social content at scale.',
+        'This is for brands that want to 10x their content output while cutting costs and maintaining full creative control.',
+      ],
+      uk: [
+        'AI content creation трансформує спосіб створення маркетингових матеріалів — від віртуальних інфлюенсерів до UGC-реклами.',
+        'Більше ніяких дорогих зйомок, ненадійних креаторів чи контентних "затичок". AI генерує відео, аватари та соцмережний контент у масштабі.',
+        'Це для брендів, які хочуть збільшити контент у 10 разів, знизити витрати і зберегти повний контроль над креативом.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI content creation includes three main directions:'],
+        bullets: [
+          'AI Influencers — virtual personas that run your social media, engage audiences, and never ask for a day off',
+          'AI Video Production — generate videos with AI avatars, repurpose content, and dub to multiple languages',
+          'AI UGC — mass-produce UGC-style ads for Meta, TikTok, and YouTube without hiring creators',
+        ],
+        outro: 'Together, they form a complete AI content studio for modern marketing teams.',
+      },
+      uk: {
+        paragraphs: ['AI content creation включає три основні напрямки:'],
+        bullets: [
+          'AI-інфлюенсери — віртуальні персонажі, які ведуть ваші соцмережі, залучають аудиторію і ніколи не просять вихідний',
+          'AI-відеопродакшн — генеруйте відео з AI-аватарами, перепрофілюйте контент і дублюйте на різні мови',
+          'AI UGC — масово створюйте UGC-рекламу для Meta, TikTok та YouTube без найму креаторів',
+        ],
+        outro: 'Разом вони формують повноцінну AI контент-студію для сучасних маркетингових команд.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Define your content strategy and target platforms (TikTok, Instagram, YouTube, etc.)',
+        'Choose your approach: AI influencer persona, AI video templates, or UGC creative factory',
+        'Set up generation pipelines: scripts → AI avatars → video → review → publish',
+        'Scale with A/B testing, multilingual versions, and continuous optimization',
+        'Measure performance and iterate based on engagement and conversion data',
+      ],
+      uk: [
+        'Визначте контент-стратегію та цільові платформи (TikTok, Instagram, YouTube тощо)',
+        'Оберіть підхід: AI-інфлюенсер, AI-відео шаблони або UGC-креативна фабрика',
+        'Налаштуйте пайплайн генерації: скрипти → AI-аватари → відео → ревью → публікація',
+        'Масштабуйте через A/B тестування, мультимовні версії та постійну оптимізацію',
+        'Вимірюйте результати та ітеруйте на основі даних про залученість та конверсії',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: '10x content output without growing your team',
+        costReduction: '5-10x cheaper than traditional video production and UGC',
+        automation: 'from script to published video in hours, not weeks',
+        scalability: 'unlimited variations, languages, and A/B tests',
+      },
+      uk: {
+        efficiency: 'у 10 разів більше контенту без розширення команди',
+        costReduction: 'у 5-10 разів дешевше за традиційне відеовиробництво та UGC',
+        automation: 'від скрипта до готового відео за години, а не тижні',
+        scalability: 'необмежені варіації, мови та A/B тести',
+      },
+    },
+    useCases: {
+      en: {
+        sales: [
+          'AI influencer showcasing products and driving engagement',
+          'video sales letters (VSL) generated in hours',
+          'personalized video outreach at scale',
+        ],
+        customerSupport: [
+          'onboarding videos with AI avatars',
+          'tutorial and how-to content without filming',
+          'FAQ videos automatically generated from docs',
+        ],
+        crm: [
+          'personalized video messages for key accounts',
+          'automated video follow-ups in sales sequences',
+          'localized content for different market segments',
+        ],
+        operations: [
+          'internal training videos with AI instructors',
+          'process documentation in video format',
+          'multi-language content without translation agencies',
+        ],
+      },
+      uk: {
+        sales: [
+          'AI-інфлюенсер демонструє продукти та залучає аудиторію',
+          'відео-листи продажів (VSL) за лічені години',
+          'персоналізований відео-аутріч у масштабі',
+        ],
+        customerSupport: [
+          'онбординг-відео з AI-аватарами',
+          'tutorials та how-to контент без зйомок',
+          'FAQ-відео автоматично згенеровані з документації',
+        ],
+        crm: [
+          'персоналізовані відео-повідомлення для ключових клієнтів',
+          'автоматичні відео-фоловапи в sales-послідовностях',
+          'локалізований контент для різних сегментів ринку',
+        ],
+        operations: [
+          'внутрішні навчальні відео з AI-інструкторами',
+          'документація процесів у відео-форматі',
+          'мультимовний контент без перекладацьких агенцій',
+        ],
+      },
+    },
+    whyAiInsider: {
+      en: [
+        'Full-stack AI content capabilities: influencers + video + UGC under one roof',
+        'Production-ready quality with brand consistency and guardrails',
+        'Fast iteration: from concept to live content in days, not months',
+        'Measurable ROI: we track engagement, conversions, and cost-per-content',
+        'Swiss precision and reliability, serving clients across EU and US',
+      ],
+      uk: [
+        'Повний стек AI-контенту: інфлюенсери + відео + UGC під одним дахом',
+        'Production-ready якість з консистентністю бренду та гардрейлами',
+        'Швидкі ітерації: від концепту до live-контенту за дні, а не місяці',
+        'Вимірюваний ROI: відстежуємо engagement, конверсії та вартість контенту',
+        'Швейцарська точність і надійність, працюємо з клієнтами по ЄС та США',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Does AI content look fake?', a: 'Modern AI avatars are highly realistic. We match the style to your brand and audience, and test before launch.' },
+        { q: 'Can I use my own voice or likeness?', a: 'Yes — we can clone your voice or create a unique synthetic persona. You retain full rights.' },
+        { q: 'Is AI UGC allowed on Meta and TikTok?', a: 'Yes — AI-generated content is used successfully for performance ads. We comply with platform policies.' },
+        { q: 'How fast can I get first videos?', a: 'First AI videos are typically ready within 5-10 days of project start.' },
+        { q: 'What about multilingual content?', a: 'One script can be rendered in 10+ languages with lip-sync. Perfect for global campaigns.' },
+      ],
+      uk: [
+        { q: 'Чи виглядає AI-контент штучно?', a: 'Сучасні AI-аватари дуже реалістичні. Ми підбираємо стиль під ваш бренд і тестуємо до запуску.' },
+        { q: 'Чи можна використати власний голос?', a: 'Так — можемо клонувати ваш голос або створити унікальний синтетичний персонаж. Права залишаються у вас.' },
+        { q: 'Чи дозволено AI UGC на Meta і TikTok?', a: 'Так — AI-контент успішно використовується для performance-реклами. Ми дотримуємось політик платформ.' },
+        { q: 'Як швидко можна отримати перші відео?', a: 'Перші AI-відео зазвичай готові за 5-10 днів від старту проєкту.' },
+        { q: 'А що щодо мультимовного контенту?', a: 'Один скрипт можна рендерити у 10+ мовах з lip-sync. Ідеально для глобальних кампаній.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book a free AI content consultation', getAudit: 'Get AI content audit' },
+      uk: { bookConsultation: 'Замовити безкоштовну AI-консультацію', getAudit: 'Отримати аудит AI-контенту' },
+    },
+    metaKeywords: {
+      en: ['AI content creation', 'AI influencer', 'AI video production', 'AI UGC', 'virtual influencer', 'AI avatar', 'synthetic media'],
+      uk: ['AI контент', 'AI інфлюенсер', 'AI відеопродакшн', 'AI UGC', 'віртуальний інфлюенсер', 'AI аватар', 'синтетичні медіа'],
     },
   },
 };
