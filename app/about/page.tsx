@@ -803,123 +803,378 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* How we help businesses */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 neural-bg opacity-5" />
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+      {/* How we help businesses — Premium Timeline Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Animated gradient orbs */}
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] -translate-y-1/2 -translate-x-1/2 opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        <div className="absolute top-1/2 right-0 w-[500px] h-[500px] -translate-y-1/2 translate-x-1/2 opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%)',
+            filter: 'blur(80px)',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Our process' : 'Наш процес'}
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
               {t('about.howWeHelpTitle')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.howWeHelpSubtitle')}
             </p>
+          </motion.div>
+
+          {/* Timeline Steps */}
+          <div className="relative">
+            {/* Connecting line for desktop */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-y-1/2" />
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {howWeHelpSteps.map((s, idx) => (
+                <motion.div
+                  key={s.titleKey}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.15 }}
+                  className="group relative"
+                >
+                  <div className="relative rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 transition-all duration-500 hover:border-white/25 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(255,255,255,0.05)]">
+                    {/* Step number badge */}
+                    <div className="absolute -top-5 left-8">
+                      <div className="relative">
+                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-white/20">
+                          <span className="text-sm font-bold text-black">{String(idx + 1).padStart(2, '0')}</span>
+                        </div>
+                        {/* Pulse effect */}
+                        <div className="absolute inset-0 w-10 h-10 rounded-xl bg-white opacity-0 group-hover:opacity-30 animate-ping" />
+                      </div>
+                    </div>
+                    
+                    {/* Icon area with gradient */}
+                    <div className="mt-4 mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center">
+                        {idx === 0 && <Target className="w-6 h-6 text-white/70" />}
+                        {idx === 1 && <Zap className="w-6 h-6 text-white/70" />}
+                        {idx === 2 && <Rocket className="w-6 h-6 text-white/70" />}
+                        {idx === 3 && <Users className="w-6 h-6 text-white/70" />}
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-white mb-4">{t(s.titleKey)}</h3>
+                    <p className="text-gray-400 leading-relaxed">{t(s.descKey)}</p>
+
+                    {/* Decorative corner gradient */}
+                    <div className="absolute bottom-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: 'radial-gradient(circle at bottom right, rgba(255,255,255,0.08) 0%, transparent 70%)',
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {howWeHelpSteps.map((s, idx) => (
-              <div
-                key={s.titleKey}
-                className="glass-strong rounded-2xl p-6 border border-white/10 transition-all duration-300 hover:border-white/30 hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                  <span className="text-sm font-bold text-white/60">{String(idx + 1).padStart(2, '0')}</span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3">{t(s.titleKey)}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{t(s.descKey)}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 flex justify-center">
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-16 flex justify-center"
+          >
             <Link
               href={`${basePath}/services`}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full 
-                font-bold text-lg transition-all duration-300 hover:scale-105"
-              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)' }}
+              className="group relative inline-flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)' }}
             >
-              {isEn ? 'Explore services' : 'Переглянути послуги'}
-              <span className="text-black/60">→</span>
+              <span className="relative z-10">{isEn ? 'Explore services' : 'Переглянути послуги'}</span>
+              <span className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">
+                <span className="text-black">→</span>
+              </span>
+              {/* Shine effect */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Industries we serve */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+      {/* Industries we serve — Bento Grid Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <span className="text-lg">🎯</span>
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Industries' : 'Індустрії'}
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
               {t('about.industriesTitle')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.industriesSubtitle')}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industriesPoints.map((k) => (
-              <div key={k} className="glass-strong rounded-2xl p-6 border border-white/10">
-                <div className="flex items-start gap-3">
-                  <span className="text-white/30 mt-1">•</span>
-                  <p className="text-gray-300 leading-relaxed">{t(k)}</p>
-                </div>
-              </div>
-            ))}
+          {/* Bento Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {industriesPoints.map((k, idx) => {
+              const icons = ['🛒', '🏠', '💼', '🖥️', '📢'];
+              const colors = [
+                'from-blue-500/10 to-purple-500/10',
+                'from-emerald-500/10 to-teal-500/10',
+                'from-orange-500/10 to-red-500/10',
+                'from-violet-500/10 to-indigo-500/10',
+                'from-pink-500/10 to-rose-500/10',
+              ];
+              const isLarge = idx === 0 || idx === 3;
+
+              return (
+                <motion.div
+                  key={k}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.1 }}
+                  className={`group relative ${isLarge ? 'lg:col-span-2' : ''}`}
+                >
+                  <div className={`relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br ${colors[idx]} backdrop-blur-xl p-8 overflow-hidden transition-all duration-500 hover:border-white/25 hover:shadow-[0_20px_60px_rgba(255,255,255,0.05)]`}>
+                    {/* Large emoji background */}
+                    <div className="absolute -top-4 -right-4 text-[120px] opacity-[0.06] select-none transition-transform duration-500 group-hover:scale-110 group-hover:opacity-[0.1]">
+                      {icons[idx]}
+                    </div>
+
+                    <div className="relative">
+                      {/* Icon badge */}
+                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 border border-white/10 mb-6 text-2xl">
+                        {icons[idx]}
+                      </div>
+
+                      <p className="text-lg md:text-xl text-white/90 leading-relaxed font-medium">
+                        {t(k)}
+                      </p>
+                    </div>
+
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%)',
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Technologies we use */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+      {/* Technologies we use — Floating Tags Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Radial gradient background */}
+        <div className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 60%)',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <span className="text-lg">⚡</span>
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Tech stack' : 'Технології'}
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
               {t('about.technologiesTitle')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.technologiesSubtitle')}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-2.5">
-            {technologyTags.map((tag) => (
-              <span
-                key={tag}
-                className="text-sm px-4 py-2 rounded-full bg-white/5 text-gray-300 border border-white/10
-                  hover:bg-white/10 hover:border-white/25 transition-colors"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          {/* Technology Cloud */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-xl p-10 md:p-14"
+          >
+            {/* Decorative corner accents */}
+            <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 rounded-tl-lg" />
+            <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/20 rounded-tr-lg" />
+            <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-lg" />
+            <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-lg" />
+
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+              {technologyTags.map((tag, idx) => {
+                const sizes = ['text-sm', 'text-base', 'text-lg'];
+                const sizeClass = sizes[idx % 3];
+                const isHighlighted = ['n8n', 'RAG', 'OpenAI / GPT', 'Tool-use agents'].includes(tag);
+
+                return (
+                  <motion.span
+                    key={tag}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.03 }}
+                    className={`${sizeClass} px-5 py-2.5 rounded-full transition-all duration-300 cursor-default ${
+                      isHighlighted
+                        ? 'bg-white text-black font-semibold shadow-lg shadow-white/20 hover:scale-110'
+                        : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10 hover:border-white/25 hover:text-white hover:scale-105'
+                    }`}
+                  >
+                    {tag}
+                  </motion.span>
+                );
+              })}
+            </div>
+
+            {/* Center glow */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 50%)',
+              }}
+            />
+          </motion.div>
         </div>
       </section>
 
-      {/* Why AI Insider is different */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
+      {/* Why AI Insider is different — Premium Card Design */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        {/* Gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 50%)',
+            filter: 'blur(100px)',
+          }}
+        />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 50%)',
+            filter: 'blur(100px)',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
+              <span className="text-lg">✨</span>
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Our edge' : 'Наші переваги'}
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
               {t('about.whyDifferentTitle')}
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
               {t('about.whyDifferentSubtitle')}
             </p>
-          </div>
+          </motion.div>
 
+          {/* Advantage Cards */}
           <div className="grid md:grid-cols-2 gap-6">
-            {whyDifferentPoints.map((k) => (
-              <div key={k} className="glass-strong rounded-2xl p-6 border border-white/10">
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-[10px] font-bold text-white/60">✓</span>
-                  </span>
-                  <p className="text-gray-300 leading-relaxed">{t(k)}</p>
-                </div>
-              </div>
-            ))}
+            {whyDifferentPoints.map((k, idx) => {
+              const icons = ['🔒', '🛡️', '📊', '🌍'];
+              const accents = [
+                'group-hover:shadow-blue-500/10',
+                'group-hover:shadow-emerald-500/10',
+                'group-hover:shadow-orange-500/10',
+                'group-hover:shadow-violet-500/10',
+              ];
+
+              return (
+                <motion.div
+                  key={k}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group"
+                >
+                  <div className={`relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl p-8 overflow-hidden transition-all duration-500 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_30px_60px_-15px] ${accents[idx]}`}>
+                    {/* Checkmark badge */}
+                    <div className="flex items-start gap-5">
+                      <div className="relative shrink-0">
+                        <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-white/20">
+                          <span className="text-2xl">{icons[idx]}</span>
+                        </div>
+                        {/* Success indicator */}
+                        <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-500 border-2 border-black flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">✓</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2">
+                        <p className="text-lg md:text-xl text-white/90 leading-relaxed font-medium">
+                          {t(k)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Corner decoration */}
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)',
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
