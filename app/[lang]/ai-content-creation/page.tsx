@@ -107,7 +107,7 @@ const videoShowcase = [
     titleUk: 'Приклад AI UGC',
     descEn: 'UGC-style creatives at scale for performance marketing',
     descUk: 'UGC-креативи у масштабі для performance-маркетингу',
-    category: 'influencer',
+    category: 'ugc',
     gradient: 'from-orange-600 to-red-600',
     glowColor: 'rgba(249, 115, 22, 0.4)',
     src: '/videos/ai-ugc.mp4',
@@ -124,25 +124,75 @@ export default function AIContentCreationHub() {
   
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
+  const [isPausedByUser, setIsPausedByUser] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const showcaseVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const carouselRef = useRef(null);
   const carouselInView = useInView(carouselRef, { once: true, margin: '-100px' });
 
   useEffect(() => {
-    if (!isAutoplay) return;
+    if (!isAutoplay || isPausedByUser) return;
     const interval = setInterval(() => {
       setCurrentVideo((prev) => (prev + 1) % videoShowcase.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [isAutoplay]);
+  }, [isAutoplay, isPausedByUser]);
+
+  useEffect(() => {
+    showcaseVideoRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      if (idx === currentVideo) return;
+      el.pause();
+    });
+
+    const active = showcaseVideoRefs.current[currentVideo];
+    if (!active) return;
+
+    if (isPausedByUser) {
+      active.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    active
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch(() => {
+        // If play is blocked for any reason, keep UI consistent.
+        setIsPlaying(!active.paused);
+      });
+  }, [currentVideo, isPausedByUser]);
 
   const nextVideo = () => {
     setCurrentVideo((prev) => (prev + 1) % videoShowcase.length);
     setIsAutoplay(false);
+    setIsPausedByUser(false);
   };
 
   const prevVideo = () => {
     setCurrentVideo((prev) => (prev - 1 + videoShowcase.length) % videoShowcase.length);
     setIsAutoplay(false);
+    setIsPausedByUser(false);
+  };
+
+  const toggleCurrentVideoPlayback = () => {
+    const active = showcaseVideoRefs.current[currentVideo];
+    if (!active) return;
+
+    setIsAutoplay(false);
+
+    if (active.paused) {
+      setIsPausedByUser(false);
+      active
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(!active.paused));
+      return;
+    }
+
+    active.pause();
+    setIsPausedByUser(true);
+    setIsPlaying(false);
   };
 
   return (
@@ -452,88 +502,101 @@ export default function AIContentCreationHub() {
           <div className="relative">
             {/* Main video display */}
             <div className="relative max-w-4xl mx-auto">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentVideo}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative"
-                >
-                  {(() => {
-                    const video = videoShowcase[currentVideo];
-                    return (
-                      <>
-                        {/* Glow */}
-                        <div
-                          className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
-                          style={{
-                            background: `radial-gradient(circle at 30% 30%, ${video.glowColor} 0%, transparent 60%)`,
-                          }}
-                        />
-                  
-                        {/* Video Card */}
-                        <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
-                          <div className={`aspect-video bg-gradient-to-br ${video.gradient} relative overflow-hidden`}>
-                            {/* Real video (from /public/videos) */}
-                            <video
-                              className="absolute inset-0 w-full h-full object-cover"
-                              src={video.src}
-                              poster={video.poster}
-                              muted
-                              playsInline
-                              loop
-                              autoPlay
-                              preload="metadata"
-                            />
-                            {/* Dark overlay for readable text */}
-                            <div className="absolute inset-0 bg-black/25" />
-                      
-                            {/* Play button (visual) */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="relative group">
-                                <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
-                                <div className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                                  <Play className="w-10 h-10 text-white fill-white ml-1" />
-                                </div>
-                              </div>
-                            </div>
-                      
-                            {/* Video info overlay */}
-                            <div className="absolute top-4 left-4 flex items-center gap-2">
-                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm">
-                                {video.category === 'influencer' && '🎭 AI Influencer'}
-                                {video.category === 'ugc' && '⚡ UGC'}
-                                {video.category === 'video' && '🎬 AI Video'}
-                              </span>
-                            </div>
-                      
-                            <div className="absolute top-4 right-4 flex items-center gap-2">
-                              <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
-                                <Play className="w-3 h-3" /> {video.duration}
-                              </span>
-                            </div>
-                      
-                            {/* Bottom info */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                              <h3 className="text-2xl font-bold mb-2">
-                                {isEn ? video.titleEn : video.titleUk}
-                              </h3>
-                              <p className="text-gray-300">
-                                {isEn ? video.descEn : video.descUk}
-                              </p>
-                              <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-                                <span>{video.views} views</span>
-                              </div>
-                            </div>
+              {(() => {
+                const video = videoShowcase[currentVideo];
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="relative"
+                  >
+                    {/* Glow */}
+                    <div
+                      className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
+                      style={{
+                        background: `radial-gradient(circle at 30% 30%, ${video.glowColor} 0%, transparent 60%)`,
+                      }}
+                    />
+
+                    {/* Video Card */}
+                    <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
+                      <div className={`aspect-video bg-black relative overflow-hidden`}>
+                        {/* Keep all videos mounted to avoid flashes */}
+                        {videoShowcase.map((v, idx) => (
+                          <video
+                            key={v.id}
+                            ref={(el) => {
+                              showcaseVideoRefs.current[idx] = el;
+                            }}
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                              idx === currentVideo ? 'opacity-100' : 'opacity-0'
+                            }`}
+                            src={v.src}
+                            poster={v.poster}
+                            muted
+                            playsInline
+                            loop
+                            autoPlay={!isPausedByUser && idx === currentVideo}
+                            preload="auto"
+                          />
+                        ))}
+
+                        {/* Dark overlay for readable text */}
+                        <div className="absolute inset-0 bg-black/25" />
+
+                        {/* Play/Pause button */}
+                        <button
+                          type="button"
+                          aria-label={isPlaying ? (isEn ? 'Pause video' : 'Пауза') : (isEn ? 'Play video' : 'Відтворити')}
+                          onClick={toggleCurrentVideoPlayback}
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <span className="relative group">
+                            <span className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
+                            <span className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                              {isPlaying ? (
+                                <Pause className="w-10 h-10 text-white" />
+                              ) : (
+                                <Play className="w-10 h-10 text-white fill-white ml-1" />
+                              )}
+                            </span>
+                          </span>
+                        </button>
+
+                        {/* Video info overlay */}
+                        <div className="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
+                          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm">
+                            {video.category === 'influencer' && '🎭 AI Influencer'}
+                            {video.category === 'ugc' && '⚡ UGC'}
+                            {video.category === 'video' && '🎬 AI Video'}
+                          </span>
+                        </div>
+
+                        <div className="absolute top-4 right-4 flex items-center gap-2 pointer-events-none">
+                          <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
+                            <Play className="w-3 h-3" /> {video.duration}
+                          </span>
+                        </div>
+
+                        {/* Bottom info */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
+                          <h3 className="text-2xl font-bold mb-2">
+                            {isEn ? video.titleEn : video.titleUk}
+                          </h3>
+                          <p className="text-gray-300">
+                            {isEn ? video.descEn : video.descUk}
+                          </p>
+                          <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+                            <span>{video.views} views</span>
                           </div>
                         </div>
-                      </>
-                    );
-                  })()}
-                </motion.div>
-              </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })()}
 
               {/* Navigation buttons */}
               <button
@@ -558,6 +621,7 @@ export default function AIContentCreationHub() {
                   onClick={() => {
                     setCurrentVideo(index);
                     setIsAutoplay(false);
+                    setIsPausedByUser(false);
                   }}
                   className={`relative w-20 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                     index === currentVideo
@@ -576,7 +640,11 @@ export default function AIContentCreationHub() {
             {/* Autoplay control */}
             <div className="mt-6 flex items-center justify-center">
               <button
-                onClick={() => setIsAutoplay(!isAutoplay)}
+                onClick={() => {
+                  const next = !isAutoplay;
+                  setIsAutoplay(next);
+                  if (next) setIsPausedByUser(false);
+                }}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors"
               >
                 {isAutoplay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}

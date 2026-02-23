@@ -2,8 +2,8 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Users, Video, Sparkles, Play, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Users, Video, Sparkles, Play, Pause, CheckCircle } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
 
 const services = [
@@ -86,13 +86,57 @@ export default function AIContentStudio() {
   const basePath = `/${lang}`;
   
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [isPausedByUser, setIsPausedByUser] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const phoneVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   
   useEffect(() => {
+    if (isPausedByUser) return;
     const interval = setInterval(() => {
       setCurrentVideo((prev) => (prev + 1) % videoExamples.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPausedByUser]);
+
+  useEffect(() => {
+    phoneVideoRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      if (idx === currentVideo) return;
+      el.pause();
+    });
+
+    const active = phoneVideoRefs.current[currentVideo];
+    if (!active) return;
+
+    if (isPausedByUser) {
+      active.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    active
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(!active.paused));
+  }, [currentVideo, isPausedByUser]);
+
+  const togglePhonePlayback = () => {
+    const active = phoneVideoRefs.current[currentVideo];
+    if (!active) return;
+
+    if (active.paused) {
+      setIsPausedByUser(false);
+      active
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(!active.paused));
+      return;
+    }
+
+    active.pause();
+    setIsPausedByUser(true);
+    setIsPlaying(false);
+  };
 
   return (
     <section ref={sectionRef} className="relative py-28 px-6 overflow-hidden">
@@ -272,59 +316,68 @@ export default function AIContentStudio() {
                   
                   {/* Video content */}
                   <div className="aspect-[9/19] relative overflow-hidden">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={currentVideo}
-                        initial={{ opacity: 0, scale: 1.1 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.5 }}
-                        className={`absolute inset-0 bg-gradient-to-br ${videoExamples[currentVideo].gradient}`}
-                      >
-                        {/* Real video (from /public/videos) */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${videoExamples[currentVideo].gradient}`}>
+                      {/* Keep all videos mounted to avoid flashes */}
+                      {videoExamples.map((v, idx) => (
                         <video
-                          className="absolute inset-0 w-full h-full object-cover"
-                          src={videoExamples[currentVideo].src}
-                          poster={videoExamples[currentVideo].poster}
+                          key={v.id}
+                          ref={(el) => {
+                            phoneVideoRefs.current[idx] = el;
+                          }}
+                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                            idx === currentVideo ? 'opacity-100' : 'opacity-0'
+                          }`}
+                          src={v.src}
+                          poster={v.poster}
                           muted
                           playsInline
                           loop
-                          autoPlay
-                          preload="metadata"
+                          autoPlay={!isPausedByUser && idx === currentVideo}
+                          preload="auto"
                         />
-                        <div className="absolute inset-0 bg-black/25" />
+                      ))}
 
-                        {/* Play button */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="relative">
-                            <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
-                            <div className="relative w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30">
+                      <div className="absolute inset-0 bg-black/25" />
+
+                      {/* Play/Pause button */}
+                      <button
+                        type="button"
+                        aria-label={isPlaying ? (isEn ? 'Pause video' : 'Пауза') : (isEn ? 'Play video' : 'Відтворити')}
+                        onClick={togglePhonePlayback}
+                        className="absolute inset-0 flex items-center justify-center"
+                      >
+                        <span className="relative">
+                          <span className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
+                          <span className="relative w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30">
+                            {isPlaying ? (
+                              <Pause className="w-7 h-7 text-white" />
+                            ) : (
                               <Play className="w-7 h-7 text-white fill-white ml-0.5" />
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Top badges */}
-                        <div className="absolute top-8 left-4 flex items-center gap-2">
-                          <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
-                            {videoExamples[currentVideo].category}
+                            )}
                           </span>
-                        </div>
-                        
-                        {/* Bottom info */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 rounded-full bg-white/20" />
-                            <div>
-                              <div className="font-bold text-sm">
-                                {isEn ? videoExamples[currentVideo].titleEn : videoExamples[currentVideo].titleUk}
-                              </div>
-                              <div className="text-xs text-gray-400">AI Generated</div>
+                        </span>
+                      </button>
+                      
+                      {/* Top badges */}
+                      <div className="absolute top-8 left-4 flex items-center gap-2 pointer-events-none">
+                        <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
+                          {videoExamples[currentVideo].category}
+                        </span>
+                      </div>
+                      
+                      {/* Bottom info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 rounded-full bg-white/20" />
+                          <div>
+                            <div className="font-bold text-sm">
+                              {isEn ? videoExamples[currentVideo].titleEn : videoExamples[currentVideo].titleUk}
                             </div>
+                            <div className="text-xs text-gray-400">AI Generated</div>
                           </div>
                         </div>
-                      </motion.div>
-                    </AnimatePresence>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -333,7 +386,10 @@ export default function AIContentStudio() {
                   {videoExamples.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentVideo(index)}
+                      onClick={() => {
+                        setCurrentVideo(index);
+                        setIsPausedByUser(false);
+                      }}
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
                         index === currentVideo
                           ? 'bg-white w-6'
