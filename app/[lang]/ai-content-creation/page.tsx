@@ -389,7 +389,7 @@ export default function AIContentCreationHub() {
                     {/* Floating elements */}
                     <div className="absolute top-4 left-4 px-3 py-1.5 bg-red-500 rounded-full text-xs font-bold flex items-center gap-1">
                       <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      LIVE
+                      {isEn ? 'LIVE' : 'НАЖИВО'}
                     </div>
                     <div className="absolute top-4 right-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium">
                       @ai_influencer
@@ -400,21 +400,23 @@ export default function AIContentCreationHub() {
                       <div className="flex items-center gap-3 mb-2">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
                         <div>
-                          <div className="font-bold text-sm">AI Creator</div>
-                          <div className="text-xs text-gray-400">2.5M followers</div>
+                          <div className="font-bold text-sm">{isEn ? 'AI Creator' : 'AI-креатор'}</div>
+                          <div className="text-xs text-gray-400">{isEn ? '2.5M followers' : '2.5M підписників'}</div>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-300">Creating content 24/7 without breaks</p>
+                      <p className="text-sm text-gray-300">
+                        {isEn ? 'Creating content 24/7 without breaks' : 'Створює контент 24/7 без перерв'}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating badges */}
                 <div className="absolute -right-6 top-1/4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
-                  🎭 AI Influencer
+                  {isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер'}
                 </div>
                 <div className="absolute -left-6 bottom-1/4 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}>
-                  🎬 AI Video
+                  {isEn ? '🎬 AI Video' : '🎬 AI-відео'}
                 </div>
               </div>
             </motion.div>
@@ -568,9 +570,9 @@ export default function AIContentCreationHub() {
                         {/* Video info overlay */}
                         <div className="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
                           <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm">
-                            {video.category === 'influencer' && '🎭 AI Influencer'}
-                            {video.category === 'ugc' && '⚡ UGC'}
-                            {video.category === 'video' && '🎬 AI Video'}
+                            {video.category === 'influencer' && (isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер')}
+                            {video.category === 'ugc' && (isEn ? '⚡ UGC' : '⚡ UGC')}
+                            {video.category === 'video' && (isEn ? '🎬 AI Video' : '🎬 AI-відео')}
                           </span>
                         </div>
 
@@ -589,7 +591,9 @@ export default function AIContentCreationHub() {
                             {isEn ? video.descEn : video.descUk}
                           </p>
                           <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-                            <span>{video.views} views</span>
+                            <span>
+                              {video.views} {isEn ? 'views' : 'переглядів'}
+                            </span>
                           </div>
                         </div>
                       </div>

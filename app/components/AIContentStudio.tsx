@@ -373,7 +373,7 @@ export default function AIContentStudio() {
                             <div className="font-bold text-sm">
                               {isEn ? videoExamples[currentVideo].titleEn : videoExamples[currentVideo].titleUk}
                             </div>
-                            <div className="text-xs text-gray-400">AI Generated</div>
+                            <div className="text-xs text-gray-400">{isEn ? 'AI Generated' : 'Згенеровано AI'}</div>
                           </div>
                         </div>
                       </div>
@@ -401,10 +401,10 @@ export default function AIContentStudio() {
 
                 {/* Floating badges */}
                 <div className="absolute -right-8 top-1/4 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-xs font-bold shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
-                  🎭 AI Persona
+                  {isEn ? '🎭 AI Persona' : '🎭 AI-персона'}
                 </div>
                 <div className="absolute -left-8 bottom-1/3 px-3 py-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-xs font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>
-                  🎬 Video AI
+                  {isEn ? '🎬 Video AI' : '🎬 AI-відео'}
                 </div>
               </div>
             </div>
