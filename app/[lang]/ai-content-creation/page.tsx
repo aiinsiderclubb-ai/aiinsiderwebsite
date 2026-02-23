@@ -1,9 +1,9 @@
 'use client';
 
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp, ChevronLeft, ChevronRight, Volume2, VolumeX, Pause } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
@@ -13,7 +13,7 @@ const services = [
     slug: 'ai-influencers',
     icon: Users,
     gradient: 'from-purple-500 to-pink-500',
-    shadowColor: 'shadow-purple-500/20',
+    glowColor: 'rgba(168, 85, 247, 0.4)',
     emoji: '🎭',
     titleEn: 'AI Influencers',
     titleUk: 'AI-інфлюенсери',
@@ -21,12 +21,14 @@ const services = [
     subtitleUk: 'Віртуальні персонажі для вашого бренду',
     featuresEn: ['24/7 content creation', 'Full brand control', 'Multilingual support', 'No contracts or fees'],
     featuresUk: ['Контент 24/7', 'Повний контроль бренду', 'Мультимовність', 'Без контрактів та гонорарів'],
+    statValue: '3M+',
+    statLabel: { en: 'followers generated', uk: 'згенерованих підписників' },
   },
   {
     slug: 'ai-video-production',
     icon: Video,
     gradient: 'from-blue-500 to-cyan-500',
-    shadowColor: 'shadow-blue-500/20',
+    glowColor: 'rgba(59, 130, 246, 0.4)',
     emoji: '🎬',
     titleEn: 'AI Video Production',
     titleUk: 'AI-відеопродакшн',
@@ -34,12 +36,14 @@ const services = [
     subtitleUk: 'Відео без камер і команд',
     featuresEn: ['AI avatars with lip-sync', 'Content repurposing', '10+ languages dubbing', 'A/B test variations'],
     featuresUk: ['AI-аватари з lip-sync', 'Repurposing контенту', 'Дубляж 10+ мов', 'A/B тест варіації'],
+    statValue: '500+',
+    statLabel: { en: 'videos/month', uk: 'відео/місяць' },
   },
   {
     slug: 'ai-ugc-content',
     icon: Sparkles,
     gradient: 'from-orange-500 to-red-500',
-    shadowColor: 'shadow-orange-500/20',
+    glowColor: 'rgba(249, 115, 22, 0.4)',
     emoji: '⚡',
     titleEn: 'AI UGC Content',
     titleUk: 'AI UGC-контент',
@@ -47,162 +51,367 @@ const services = [
     subtitleUk: 'UGC-реклама у масштабі',
     featuresEn: ['100+ avatar diversity', 'Conversion-focused scripts', 'Platform-optimized', '5-10x cost reduction'],
     featuresUk: ['100+ різних аватарів', 'Скрипти під конверсії', 'Оптимізовано під платформи', 'Вартість у 5-10 разів нижча'],
+    statValue: '80%',
+    statLabel: { en: 'cost reduction', uk: 'економія витрат' },
   },
 ];
 
 const stats = [
-  { valueEn: '10x', valueUk: '10x', labelEn: 'Content output', labelUk: 'Обсяг контенту' },
-  { valueEn: '5-10x', valueUk: '5-10x', labelEn: 'Cost savings', labelUk: 'Економія коштів' },
-  { valueEn: '24/7', valueUk: '24/7', labelEn: 'Content creation', labelUk: 'Створення контенту' },
-  { valueEn: '10+', valueUk: '10+', labelEn: 'Languages', labelUk: 'Мов' },
+  { valueEn: '10x', valueUk: '10x', labelEn: 'Content output', labelUk: 'Обсяг контенту', icon: '📈' },
+  { valueEn: '5-10x', valueUk: '5-10x', labelEn: 'Cost savings', labelUk: 'Економія коштів', icon: '💰' },
+  { valueEn: '24/7', valueUk: '24/7', labelEn: 'Content creation', labelUk: 'Створення контенту', icon: '⚡' },
+  { valueEn: '10+', valueUk: '10+', labelEn: 'Languages', labelUk: 'Мов', icon: '🌍' },
 ];
 
 const useCases = [
-  { iconEmoji: '📱', titleEn: 'Social Media', titleUk: 'Соцмережі', descEn: 'TikTok, Reels, Shorts — daily content without a team', descUk: 'TikTok, Reels, Shorts — щоденний контент без команди' },
-  { iconEmoji: '📢', titleEn: 'Paid Ads', titleUk: 'Платна реклама', descEn: 'UGC-style creatives for Meta, TikTok, YouTube', descUk: 'UGC-креативи для Meta, TikTok, YouTube' },
-  { iconEmoji: '🎓', titleEn: 'Education', titleUk: 'Навчання', descEn: 'Onboarding, tutorials, courses with AI instructors', descUk: 'Онбординг, tutorials, курси з AI-інструкторами' },
-  { iconEmoji: '🌍', titleEn: 'Localization', titleUk: 'Локалізація', descEn: 'One script → 10+ languages with lip-sync', descUk: 'Один скрипт → 10+ мов з lip-sync' },
-  { iconEmoji: '🛍️', titleEn: 'E-commerce', titleUk: 'E-commerce', descEn: 'Product demos, reviews, unboxings at scale', descUk: 'Демо продуктів, огляди, розпаковки у масштабі' },
-  { iconEmoji: '💼', titleEn: 'B2B', titleUk: 'B2B', descEn: 'Video outreach, VSLs, case study videos', descUk: 'Відео-аутріч, VSL, відео-кейси' },
+  { iconEmoji: '📱', titleEn: 'Social Media', titleUk: 'Соцмережі', descEn: 'TikTok, Reels, Shorts — daily content without a team', descUk: 'TikTok, Reels, Shorts — щоденний контент без команди', color: 'from-pink-500 to-rose-500' },
+  { iconEmoji: '📢', titleEn: 'Paid Ads', titleUk: 'Платна реклама', descEn: 'UGC-style creatives for Meta, TikTok, YouTube', descUk: 'UGC-креативи для Meta, TikTok, YouTube', color: 'from-blue-500 to-indigo-500' },
+  { iconEmoji: '🎓', titleEn: 'Education', titleUk: 'Навчання', descEn: 'Onboarding, tutorials, courses with AI instructors', descUk: 'Онбординг, tutorials, курси з AI-інструкторами', color: 'from-green-500 to-emerald-500' },
+  { iconEmoji: '🌍', titleEn: 'Localization', titleUk: 'Локалізація', descEn: 'One script → 10+ languages with lip-sync', descUk: 'Один скрипт → 10+ мов з lip-sync', color: 'from-purple-500 to-violet-500' },
+  { iconEmoji: '🛍️', titleEn: 'E-commerce', titleUk: 'E-commerce', descEn: 'Product demos, reviews, unboxings at scale', descUk: 'Демо продуктів, огляди, розпаковки у масштабі', color: 'from-orange-500 to-amber-500' },
+  { iconEmoji: '💼', titleEn: 'B2B', titleUk: 'B2B', descEn: 'Video outreach, VSLs, case study videos', descUk: 'Відео-аутріч, VSL, відео-кейси', color: 'from-cyan-500 to-teal-500' },
+];
+
+const videoShowcase = [
+  {
+    id: 1,
+    titleEn: 'AI Influencer Demo',
+    titleUk: 'Демо AI-інфлюенсера',
+    descEn: 'Virtual persona creating content for fashion brand',
+    descUk: 'Віртуальний персонаж створює контент для fashion бренду',
+    category: 'influencer',
+    gradient: 'from-purple-600 to-pink-600',
+    glowColor: 'rgba(168, 85, 247, 0.4)',
+    duration: '0:45',
+    views: '12.5K',
+  },
+  {
+    id: 2,
+    titleEn: 'UGC Ad Creative',
+    titleUk: 'UGC рекламний креатив',
+    descEn: 'AI-generated testimonial for e-commerce',
+    descUk: 'AI-згенерований відгук для e-commerce',
+    category: 'ugc',
+    gradient: 'from-orange-600 to-red-600',
+    glowColor: 'rgba(249, 115, 22, 0.4)',
+    duration: '0:30',
+    views: '8.2K',
+  },
+  {
+    id: 3,
+    titleEn: 'Multilingual Video',
+    titleUk: 'Мультимовне відео',
+    descEn: 'Same video in 5 languages with lip-sync',
+    descUk: 'Те саме відео 5 мовами з lip-sync',
+    category: 'video',
+    gradient: 'from-blue-600 to-cyan-600',
+    glowColor: 'rgba(59, 130, 246, 0.4)',
+    duration: '1:15',
+    views: '15.8K',
+  },
+  {
+    id: 4,
+    titleEn: 'Product Demo',
+    titleUk: 'Демо продукту',
+    descEn: 'AI avatar presenting SaaS product',
+    descUk: 'AI-аватар презентує SaaS продукт',
+    category: 'video',
+    gradient: 'from-emerald-600 to-teal-600',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
+    duration: '2:00',
+    views: '6.3K',
+  },
+  {
+    id: 5,
+    titleEn: 'Social Story',
+    titleUk: 'Соціальна історія',
+    descEn: 'Instagram story with AI character',
+    descUk: 'Instagram story з AI-персонажем',
+    category: 'influencer',
+    gradient: 'from-rose-600 to-pink-600',
+    glowColor: 'rgba(244, 63, 94, 0.4)',
+    duration: '0:15',
+    views: '22.1K',
+  },
 ];
 
 export default function AIContentCreationHub() {
-  const { t, lang } = useLanguage();
+  const { lang } = useLanguage();
   const isEn = lang === 'en';
   const basePath = `/${lang}`;
+  
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const [isAutoplay, setIsAutoplay] = useState(true);
+  const carouselRef = useRef(null);
+  const carouselInView = useInView(carouselRef, { once: true, margin: '-100px' });
+
+  useEffect(() => {
+    if (!isAutoplay) return;
+    const interval = setInterval(() => {
+      setCurrentVideo((prev) => (prev + 1) % videoShowcase.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoplay]);
+
+  const nextVideo = () => {
+    setCurrentVideo((prev) => (prev + 1) % videoShowcase.length);
+    setIsAutoplay(false);
+  };
+
+  const prevVideo = () => {
+    setCurrentVideo((prev) => (prev - 1 + videoShowcase.length) % videoShowcase.length);
+    setIsAutoplay(false);
+  };
 
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
-        {/* Animated background */}
+      {/* Hero Section - Enhanced */}
+      <section className="relative pt-32 pb-32 px-6 overflow-hidden">
+        {/* Animated mesh gradient background */}
         <div className="absolute inset-0">
           <div
-            className="absolute top-20 left-1/4 w-[600px] h-[600px] rounded-full opacity-20"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              background: 'radial-gradient(circle, rgba(168,85,247,0.4) 0%, transparent 60%)',
-              filter: 'blur(80px)',
-              animation: 'pulse 8s ease-in-out infinite',
+              background: `
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)
+              `,
             }}
           />
           <div
-            className="absolute bottom-20 right-1/4 w-[500px] h-[500px] rounded-full opacity-20"
+            className="absolute top-20 left-1/4 w-[800px] h-[800px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 60%)',
-              filter: 'blur(80px)',
-              animation: 'pulse 8s ease-in-out infinite 2s',
+              background: 'radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 50%)',
+              filter: 'blur(120px)',
+              animation: 'float 20s ease-in-out infinite',
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-10"
+            className="absolute bottom-20 right-1/4 w-[600px] h-[600px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(236,72,153,0.3) 0%, transparent 60%)',
+              background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 50%)',
               filter: 'blur(100px)',
+              animation: 'float 15s ease-in-out infinite reverse',
             }}
           />
+          {/* Animated particles */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(20)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white/20 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl"
-          >
-            <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
-              <span className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Content */}
+            <div>
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-8 border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
+              >
+                <div className="relative flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                  <span className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
+                  <div className="absolute inset-0 blur-sm bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 opacity-50" />
+                </div>
+                <span className="text-sm font-semibold text-purple-300 uppercase tracking-wider">
+                  {isEn ? 'AI Content Studio' : 'AI Контент-Студія'}
+                </span>
+              </motion.div>
+
+              {/* Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 leading-[1.05]"
+              >
+                {isEn ? 'Create ' : 'Створюйте '}
+                <span className="relative inline-block">
+                  <span
+                    style={{
+                      background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 40%, #ec4899 80%, #a855f7 100%)',
+                      backgroundSize: '200% 200%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      animation: 'gradient-shift 4s ease infinite',
+                    }}
+                  >
+                    {isEn ? 'Stunning' : 'вражаючий'}
+                  </span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full opacity-60" />
+                </span>
+                <br />
+                {isEn ? 'AI Content' : 'AI-контент'}
+              </motion.h1>
+
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed"
+              >
+                {isEn
+                  ? 'AI influencers, video production, and UGC ads — without shoots, creators, or content bottlenecks.'
+                  : 'AI-інфлюенсери, відеопродакшн та UGC-реклама — без зйомок, креаторів та контентних "затичок".'}
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="flex flex-col sm:flex-row items-start gap-4"
+              >
+                <Link
+                  href={`${basePath}/contact`}
+                  className="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all duration-500 hover:scale-105"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isEn ? 'Book a Demo' : 'Замовити демо'}
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-bold">
+                    {isEn ? 'Book a Demo' : 'Замовити демо'}
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                </Link>
+                <Link
+                  href="#showcase"
+                  className="group px-8 py-4 border border-white/20 text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/40 flex items-center gap-2"
+                >
+                  <Play className="w-5 h-5 fill-white/50" />
+                  {isEn ? 'Watch Examples' : 'Дивитись приклади'}
+                </Link>
+              </motion.div>
+
+              {/* Mini stats */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+                className="mt-12 flex items-center gap-8"
+              >
+                {[
+                  { value: '10x', label: isEn ? 'faster' : 'швидше' },
+                  { value: '80%', label: isEn ? 'cost cut' : 'економія' },
+                  { value: '24/7', label: isEn ? 'creation' : 'генерація' },
+                ].map((stat, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-2xl font-bold text-white">{stat.value}</span>
+                    <span className="text-sm text-gray-500">{stat.label}</span>
+                  </div>
+                ))}
+              </motion.div>
             </div>
-            <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">
-              {isEn ? 'AI Content Studio' : 'AI Контент-Студія'}
-            </span>
-          </motion.div>
 
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 leading-[1.1]"
-          >
-            {isEn ? 'AI-Powered' : 'AI-Контент'}{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #ec4899 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
+            {/* Right: Video Preview Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative hidden lg:block"
             >
-              {isEn ? 'Content Creation' : 'для Маркетингу'}
-            </span>
-          </motion.h1>
+              <div className="relative">
+                {/* Glow effect */}
+                <div
+                  className="absolute -inset-4 rounded-[2.5rem] opacity-50 blur-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(168,85,247,0.4) 0%, rgba(59,130,246,0.4) 50%, rgba(236,72,153,0.4) 100%)',
+                  }}
+                />
+                
+                {/* Main card */}
+                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
+                  {/* Video placeholder */}
+                  <div className="aspect-[9/16] max-h-[500px] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
+                    {/* Animated play button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
+                        <div className="relative w-20 h-20 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 cursor-pointer hover:scale-110 transition-transform">
+                          <Play className="w-8 h-8 text-white fill-white ml-1" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Floating elements */}
+                    <div className="absolute top-4 left-4 px-3 py-1.5 bg-red-500 rounded-full text-xs font-bold flex items-center gap-1">
+                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                      LIVE
+                    </div>
+                    <div className="absolute top-4 right-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium">
+                      @ai_influencer
+                    </div>
+                    
+                    {/* Bottom info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+                        <div>
+                          <div className="font-bold text-sm">AI Creator</div>
+                          <div className="text-xs text-gray-400">2.5M followers</div>
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-300">Creating content 24/7 without breaks</p>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
-          >
-            {isEn
-              ? 'AI influencers, video production, and UGC ads — without shoots, creators, or content bottlenecks.'
-              : 'AI-інфлюенсери, відеопродакшн та UGC-реклама — без зйомок, креаторів та контентних "затичок".'}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link
-              href={`${basePath}/contact`}
-              className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                {isEn ? 'Book a Demo' : 'Замовити демо'}
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {isEn ? 'Book a Demo' : 'Замовити демо'}
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </Link>
-            <Link
-              href="#services"
-              className="group px-8 py-4 border border-white/20 text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/40 flex items-center gap-2"
-            >
-              <Play className="w-5 h-5" />
-              {isEn ? 'Explore Services' : 'Дізнатись більше'}
-            </Link>
-          </motion.div>
+                {/* Floating badges */}
+                <div className="absolute -right-6 top-1/4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
+                  🎭 AI Influencer
+                </div>
+                <div className="absolute -left-6 bottom-1/4 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}>
+                  🎬 AI Video
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="relative py-16 px-6">
+      {/* Stats Section - Enhanced */}
+      <section className="relative py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm"
+                className="group relative"
               >
-                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                  {isEn ? stat.valueEn : stat.valueUk}
-                </div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">
-                  {isEn ? stat.labelEn : stat.labelUk}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative text-center p-6 md:p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-white/20 transition-all duration-300">
+                  <div className="text-3xl mb-3">{stat.icon}</div>
+                  <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                    {isEn ? stat.valueEn : stat.valueUk}
+                  </div>
+                  <div className="text-sm text-gray-400 uppercase tracking-wider">
+                    {isEn ? stat.labelEn : stat.labelUk}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -210,7 +419,173 @@ export default function AIContentCreationHub() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Video Showcase Carousel */}
+      <section id="showcase" ref={carouselRef} className="relative py-24 px-6 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[800px] opacity-20"
+            style={{
+              background: `radial-gradient(ellipse, ${videoShowcase[currentVideo]?.glowColor || 'rgba(168,85,247,0.3)'} 0%, transparent 60%)`,
+              filter: 'blur(100px)',
+              transition: 'background 0.5s ease',
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={carouselInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+              <Video className="w-4 h-4 text-blue-400" />
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Video Examples' : 'Приклади відео'}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
+              {isEn ? 'See AI Content in ' : 'Дивіться AI-контент '}
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                {isEn ? 'Action' : 'в дії'}
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              {isEn
+                ? 'Real examples of AI-generated content for brands'
+                : 'Реальні приклади AI-контенту для брендів'}
+            </p>
+          </motion.div>
+
+          {/* Carousel */}
+          <div className="relative">
+            {/* Main video display */}
+            <div className="relative max-w-4xl mx-auto">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentVideo}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                  className="relative"
+                >
+                  {/* Glow */}
+                  <div
+                    className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
+                    style={{
+                      background: `linear-gradient(135deg, ${videoShowcase[currentVideo].gradient.replace('from-', '').replace('to-', ', ').replace('-600', '')})`,
+                    }}
+                  />
+                  
+                  {/* Video Card */}
+                  <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
+                    {/* Video placeholder - aspect ratio 16:9 */}
+                    <div className={`aspect-video bg-gradient-to-br ${videoShowcase[currentVideo].gradient} relative`}>
+                      {/* Play button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative cursor-pointer group">
+                          <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
+                          <div className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                            <Play className="w-10 h-10 text-white fill-white ml-1" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Video info overlay */}
+                      <div className="absolute top-4 left-4 flex items-center gap-2">
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm`}>
+                          {videoShowcase[currentVideo].category === 'influencer' && '🎭 AI Influencer'}
+                          {videoShowcase[currentVideo].category === 'ugc' && '⚡ UGC'}
+                          {videoShowcase[currentVideo].category === 'video' && '🎬 AI Video'}
+                        </span>
+                      </div>
+                      
+                      <div className="absolute top-4 right-4 flex items-center gap-2">
+                        <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
+                          <Play className="w-3 h-3" /> {videoShowcase[currentVideo].duration}
+                        </span>
+                      </div>
+                      
+                      {/* Bottom info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                        <h3 className="text-2xl font-bold mb-2">
+                          {isEn ? videoShowcase[currentVideo].titleEn : videoShowcase[currentVideo].titleUk}
+                        </h3>
+                        <p className="text-gray-300">
+                          {isEn ? videoShowcase[currentVideo].descEn : videoShowcase[currentVideo].descUk}
+                        </p>
+                        <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+                          <span>{videoShowcase[currentVideo].views} views</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Navigation buttons */}
+              <button
+                onClick={prevVideo}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-10"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextVideo}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-10"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Thumbnails */}
+            <div className="mt-8 flex items-center justify-center gap-3">
+              {videoShowcase.map((video, index) => (
+                <button
+                  key={video.id}
+                  onClick={() => {
+                    setCurrentVideo(index);
+                    setIsAutoplay(false);
+                  }}
+                  className={`relative w-20 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    index === currentVideo
+                      ? 'border-white scale-110'
+                      : 'border-white/20 opacity-50 hover:opacity-80'
+                  }`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${video.gradient}`} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Play className="w-4 h-4 text-white/80" />
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Autoplay control */}
+            <div className="mt-6 flex items-center justify-center">
+              <button
+                onClick={() => setIsAutoplay(!isAutoplay)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+              >
+                {isAutoplay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                {isAutoplay ? (isEn ? 'Pause' : 'Пауза') : (isEn ? 'Autoplay' : 'Автопрогравання')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section - Enhanced */}
       <section id="services" className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02]"
           style={{
@@ -247,45 +622,54 @@ export default function AIContentCreationHub() {
                 {isEn ? 'Content Solution' : 'контент-рішення'}
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              {isEn
-                ? 'Three powerful AI content services to transform your marketing'
-                : 'Три потужні AI контент-сервіси для трансформації вашого маркетингу'}
-            </p>
           </motion.div>
 
-          {/* Service Cards */}
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* Service Cards - Premium Bento Style */}
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
                 <motion.div
                   key={service.slug}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.15 }}
                   className="group relative"
                 >
+                  {/* Glow effect on hover */}
+                  <div
+                    className="absolute -inset-1 rounded-[2rem] opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+                    style={{ background: `linear-gradient(135deg, ${service.glowColor}, transparent)` }}
+                  />
+                  
                   <Link href={`${basePath}/services/${service.slug}`}>
-                    <div className={`relative h-full rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-white/25 hover:${service.shadowColor} hover:shadow-2xl`}>
+                    <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-white/25">
                       {/* Gradient top strip */}
                       <div className={`h-1.5 bg-gradient-to-r ${service.gradient}`} />
 
                       {/* Content */}
                       <div className="p-8">
-                        {/* Icon */}
-                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                          <Icon className="w-8 h-8 text-white" />
+                        {/* Header with icon and stat */}
+                        <div className="flex items-start justify-between mb-6">
+                          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg`}
+                            style={{ boxShadow: `0 10px 40px ${service.glowColor}` }}
+                          >
+                            <Icon className="w-8 h-8 text-white" />
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-white">{service.statValue}</div>
+                            <div className="text-xs text-gray-500">{isEn ? service.statLabel.en : service.statLabel.uk}</div>
+                          </div>
                         </div>
 
-                        {/* Emoji */}
-                        <div className="absolute top-6 right-6 text-4xl opacity-20 group-hover:opacity-40 transition-opacity">
+                        {/* Emoji background */}
+                        <div className="absolute top-8 right-8 text-6xl opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
                           {service.emoji}
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-white/90 transition-colors">
+                        <h3 className="text-2xl font-bold mb-3 text-white">
                           {isEn ? service.titleEn : service.titleUk}
                         </h3>
 
@@ -298,16 +682,18 @@ export default function AIContentCreationHub() {
                         <ul className="space-y-3 mb-8">
                           {(isEn ? service.featuresEn : service.featuresUk).map((feature, fIndex) => (
                             <li key={fIndex} className="flex items-center gap-3 text-sm text-gray-300">
-                              <CheckCircle className="w-4 h-4 text-green-400 shrink-0" />
+                              <div className={`w-5 h-5 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center`}>
+                                <CheckCircle className="w-3 h-3 text-white" />
+                              </div>
                               {feature}
                             </li>
                           ))}
                         </ul>
 
                         {/* CTA */}
-                        <div className="flex items-center gap-2 text-white font-semibold group-hover:gap-3 transition-all">
+                        <div className={`flex items-center gap-2 font-semibold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent group-hover:gap-3 transition-all`}>
                           {isEn ? 'Learn more' : 'Дізнатись більше'}
-                          <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                          <ArrowRight className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" />
                         </div>
                       </div>
                     </div>
@@ -319,11 +705,11 @@ export default function AIContentCreationHub() {
         </div>
       </section>
 
-      {/* Use Cases Section */}
+      {/* Use Cases Section - Enhanced */}
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.05) 0%, transparent 50%)',
+            background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.08) 0%, transparent 50%)',
           }}
         />
 
@@ -356,24 +742,29 @@ export default function AIContentCreationHub() {
             </h2>
           </motion.div>
 
-          {/* Use Cases Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Use Cases Grid - Bento Style */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {useCases.map((useCase, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="group relative"
               >
-                <div className="text-4xl mb-4">{useCase.iconEmoji}</div>
-                <h3 className="text-xl font-bold mb-2 text-white">
-                  {isEn ? useCase.titleEn : useCase.titleUk}
-                </h3>
-                <p className="text-gray-400 text-sm">
-                  {isEn ? useCase.descEn : useCase.descUk}
-                </p>
+                <div className={`absolute inset-0 bg-gradient-to-br ${useCase.color} rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
+                <div className="relative p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 h-full">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${useCase.color} flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110`}>
+                    <span className="text-2xl">{useCase.iconEmoji}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-white">
+                    {isEn ? useCase.titleEn : useCase.titleUk}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    {isEn ? useCase.descEn : useCase.descUk}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -384,10 +775,10 @@ export default function AIContentCreationHub() {
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0">
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] opacity-30"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] opacity-30"
             style={{
-              background: 'radial-gradient(ellipse, rgba(168,85,247,0.3) 0%, transparent 70%)',
-              filter: 'blur(60px)',
+              background: 'radial-gradient(ellipse, rgba(168,85,247,0.4) 0%, transparent 60%)',
+              filter: 'blur(80px)',
             }}
           />
         </div>
@@ -398,55 +789,77 @@ export default function AIContentCreationHub() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center p-12 md:p-16 rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl"
+            className="relative"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-purple-500/30 bg-purple-500/10">
-              <Star className="w-4 h-4 text-purple-400" />
-              <span className="text-sm font-semibold text-purple-300">
-                {isEn ? 'Ready to transform your content?' : 'Готові трансформувати ваш контент?'}
-              </span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-              {isEn ? 'Start Creating with AI' : 'Почніть створювати з AI'}
-            </h2>
-
-            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-              {isEn
-                ? 'Book a free consultation to see how AI content can scale your marketing'
-                : 'Замовте безкоштовну консультацію, щоб побачити, як AI-контент може масштабувати ваш маркетинг'}
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href={`${basePath}/contact`}
-                className="group relative px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)]"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  {isEn ? 'Book Free Consultation' : 'Замовити безкоштовну консультацію'}
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            {/* Outer glow */}
+            <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 rounded-[3rem] blur-xl" />
+            
+            <div className="relative text-center p-12 md:p-16 rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-white/[0.1] to-white/[0.02] backdrop-blur-xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-purple-500/30 bg-purple-500/10">
+                <Star className="w-4 h-4 text-purple-400" />
+                <span className="text-sm font-semibold text-purple-300">
+                  {isEn ? 'Ready to transform your content?' : 'Готові трансформувати ваш контент?'}
                 </span>
-              </Link>
-            </div>
+              </div>
 
-            {/* Trust indicators */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                {isEn ? 'Switzerland • EU • US' : 'Швейцарія • ЄС • США'}
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+                {isEn ? 'Start Creating with AI' : 'Почніть створювати з AI'}
+              </h2>
+
+              <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                {isEn
+                  ? 'Book a free consultation to see how AI content can scale your marketing'
+                  : 'Замовте безкоштовну консультацію, щоб побачити, як AI-контент може масштабувати ваш маркетинг'}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href={`${basePath}/contact`}
+                  className="group relative px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_60px_rgba(168,85,247,0.5)]"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isEn ? 'Book Free Consultation' : 'Замовити безкоштовну консультацію'}
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
               </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                {isEn ? 'Fast delivery' : 'Швидка доставка'}
-              </div>
-              <div className="flex items-center gap-2">
-                <Palette className="w-4 h-4" />
-                {isEn ? 'Custom solutions' : 'Кастомні рішення'}
+
+              {/* Trust indicators */}
+              <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4" />
+                  {isEn ? 'Switzerland • EU • US' : 'Швейцарія • ЄС • США'}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4" />
+                  {isEn ? 'Fast delivery' : 'Швидка доставка'}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Palette className="w-4 h-4" />
+                  {isEn ? 'Custom solutions' : 'Кастомні рішення'}
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* CSS Animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.5); }
+        }
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
 
       <Footer />
     </main>
