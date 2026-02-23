@@ -55,6 +55,8 @@ const videoExamples = [
     titleUk: 'AI-інфлюенсер',
     gradient: 'from-purple-600 to-pink-600',
     category: '🎭',
+    src: '/videos/ai-influencer.mp4',
+    poster: '/posters/ai-influencer.jpg',
   },
   {
     id: 2,
@@ -62,6 +64,8 @@ const videoExamples = [
     titleUk: 'UGC реклама',
     gradient: 'from-orange-600 to-red-600',
     category: '⚡',
+    src: '/videos/ai-ugc.mp4',
+    poster: '/posters/ai-ugc.jpg',
   },
   {
     id: 3,
@@ -69,6 +73,8 @@ const videoExamples = [
     titleUk: 'Демо продукту',
     gradient: 'from-blue-600 to-cyan-600',
     category: '🎬',
+    src: '/videos/ai-video.mp4',
+    poster: '/posters/ai-video.jpg',
   },
 ];
 
@@ -275,6 +281,19 @@ export default function AIContentStudio() {
                         transition={{ duration: 0.5 }}
                         className={`absolute inset-0 bg-gradient-to-br ${videoExamples[currentVideo].gradient}`}
                       >
+                        {/* Real video (from /public/videos) */}
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover"
+                          src={videoExamples[currentVideo].src}
+                          poster={videoExamples[currentVideo].poster}
+                          muted
+                          playsInline
+                          loop
+                          autoPlay
+                          preload="metadata"
+                        />
+                        <div className="absolute inset-0 bg-black/25" />
+
                         {/* Play button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="relative">

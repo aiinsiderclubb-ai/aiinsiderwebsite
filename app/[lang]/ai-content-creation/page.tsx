@@ -75,63 +75,45 @@ const useCases = [
 const videoShowcase = [
   {
     id: 1,
-    titleEn: 'AI Influencer Demo',
-    titleUk: 'Демо AI-інфлюенсера',
-    descEn: 'Virtual persona creating content for fashion brand',
-    descUk: 'Віртуальний персонаж створює контент для fashion бренду',
+    titleEn: 'AI Influencer Example',
+    titleUk: 'Приклад AI-інфлюенсера',
+    descEn: 'Virtual persona creating content for your brand',
+    descUk: 'Віртуальний персонаж створює контент для вашого бренду',
     category: 'influencer',
     gradient: 'from-purple-600 to-pink-600',
     glowColor: 'rgba(168, 85, 247, 0.4)',
-    duration: '0:45',
-    views: '12.5K',
+    src: '/videos/ai-influencer.mp4',
+    poster: '/posters/ai-influencer.jpg',
+    duration: '0:30',
+    views: '—',
   },
   {
     id: 2,
-    titleEn: 'UGC Ad Creative',
-    titleUk: 'UGC рекламний креатив',
-    descEn: 'AI-generated testimonial for e-commerce',
-    descUk: 'AI-згенерований відгук для e-commerce',
-    category: 'ugc',
-    gradient: 'from-orange-600 to-red-600',
-    glowColor: 'rgba(249, 115, 22, 0.4)',
-    duration: '0:30',
-    views: '8.2K',
-  },
-  {
-    id: 3,
-    titleEn: 'Multilingual Video',
-    titleUk: 'Мультимовне відео',
-    descEn: 'Same video in 5 languages with lip-sync',
-    descUk: 'Те саме відео 5 мовами з lip-sync',
+    titleEn: 'AI Video Example',
+    titleUk: 'Приклад AI-відео',
+    descEn: 'AI video production for ads, social, and product demos',
+    descUk: 'AI-відеопродакшн для реклами, соцмереж і демо продуктів',
     category: 'video',
     gradient: 'from-blue-600 to-cyan-600',
     glowColor: 'rgba(59, 130, 246, 0.4)',
-    duration: '1:15',
-    views: '15.8K',
+    src: '/videos/ai-video.mp4',
+    poster: '/posters/ai-video.jpg',
+    duration: '0:30',
+    views: '—',
   },
   {
-    id: 4,
-    titleEn: 'Product Demo',
-    titleUk: 'Демо продукту',
-    descEn: 'AI avatar presenting SaaS product',
-    descUk: 'AI-аватар презентує SaaS продукт',
-    category: 'video',
-    gradient: 'from-emerald-600 to-teal-600',
-    glowColor: 'rgba(16, 185, 129, 0.4)',
-    duration: '2:00',
-    views: '6.3K',
-  },
-  {
-    id: 5,
-    titleEn: 'Social Story',
-    titleUk: 'Соціальна історія',
-    descEn: 'Instagram story with AI character',
-    descUk: 'Instagram story з AI-персонажем',
+    id: 3,
+    titleEn: 'AI UGC Example',
+    titleUk: 'Приклад AI UGC',
+    descEn: 'UGC-style creatives at scale for performance marketing',
+    descUk: 'UGC-креативи у масштабі для performance-маркетингу',
     category: 'influencer',
-    gradient: 'from-rose-600 to-pink-600',
-    glowColor: 'rgba(244, 63, 94, 0.4)',
-    duration: '0:15',
-    views: '22.1K',
+    gradient: 'from-orange-600 to-red-600',
+    glowColor: 'rgba(249, 115, 22, 0.4)',
+    src: '/videos/ai-ugc.mp4',
+    poster: '/posters/ai-ugc.jpg',
+    duration: '0:30',
+    views: '—',
   },
 ];
 
@@ -479,57 +461,77 @@ export default function AIContentCreationHub() {
                   transition={{ duration: 0.4 }}
                   className="relative"
                 >
-                  {/* Glow */}
-                  <div
-                    className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
-                    style={{
-                      background: `linear-gradient(135deg, ${videoShowcase[currentVideo].gradient.replace('from-', '').replace('to-', ', ').replace('-600', '')})`,
-                    }}
-                  />
+                  {(() => {
+                    const video = videoShowcase[currentVideo];
+                    return (
+                      <>
+                        {/* Glow */}
+                        <div
+                          className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
+                          style={{
+                            background: `radial-gradient(circle at 30% 30%, ${video.glowColor} 0%, transparent 60%)`,
+                          }}
+                        />
                   
-                  {/* Video Card */}
-                  <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
-                    {/* Video placeholder - aspect ratio 16:9 */}
-                    <div className={`aspect-video bg-gradient-to-br ${videoShowcase[currentVideo].gradient} relative`}>
-                      {/* Play button */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative cursor-pointer group">
-                          <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
-                          <div className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                            <Play className="w-10 h-10 text-white fill-white ml-1" />
+                        {/* Video Card */}
+                        <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
+                          <div className={`aspect-video bg-gradient-to-br ${video.gradient} relative overflow-hidden`}>
+                            {/* Real video (from /public/videos) */}
+                            <video
+                              className="absolute inset-0 w-full h-full object-cover"
+                              src={video.src}
+                              poster={video.poster}
+                              muted
+                              playsInline
+                              loop
+                              autoPlay
+                              preload="metadata"
+                            />
+                            {/* Dark overlay for readable text */}
+                            <div className="absolute inset-0 bg-black/25" />
+                      
+                            {/* Play button (visual) */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="relative group">
+                                <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
+                                <div className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                                  <Play className="w-10 h-10 text-white fill-white ml-1" />
+                                </div>
+                              </div>
+                            </div>
+                      
+                            {/* Video info overlay */}
+                            <div className="absolute top-4 left-4 flex items-center gap-2">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm">
+                                {video.category === 'influencer' && '🎭 AI Influencer'}
+                                {video.category === 'ugc' && '⚡ UGC'}
+                                {video.category === 'video' && '🎬 AI Video'}
+                              </span>
+                            </div>
+                      
+                            <div className="absolute top-4 right-4 flex items-center gap-2">
+                              <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
+                                <Play className="w-3 h-3" /> {video.duration}
+                              </span>
+                            </div>
+                      
+                            {/* Bottom info */}
+                            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                              <h3 className="text-2xl font-bold mb-2">
+                                {isEn ? video.titleEn : video.titleUk}
+                              </h3>
+                              <p className="text-gray-300">
+                                {isEn ? video.descEn : video.descUk}
+                              </p>
+                              <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+                                <span>{video.views} views</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      
-                      {/* Video info overlay */}
-                      <div className="absolute top-4 left-4 flex items-center gap-2">
-                        <span className={`px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm`}>
-                          {videoShowcase[currentVideo].category === 'influencer' && '🎭 AI Influencer'}
-                          {videoShowcase[currentVideo].category === 'ugc' && '⚡ UGC'}
-                          {videoShowcase[currentVideo].category === 'video' && '🎬 AI Video'}
-                        </span>
-                      </div>
-                      
-                      <div className="absolute top-4 right-4 flex items-center gap-2">
-                        <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
-                          <Play className="w-3 h-3" /> {videoShowcase[currentVideo].duration}
-                        </span>
-                      </div>
-                      
-                      {/* Bottom info */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                        <h3 className="text-2xl font-bold mb-2">
-                          {isEn ? videoShowcase[currentVideo].titleEn : videoShowcase[currentVideo].titleUk}
-                        </h3>
-                        <p className="text-gray-300">
-                          {isEn ? videoShowcase[currentVideo].descEn : videoShowcase[currentVideo].descUk}
-                        </p>
-                        <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-                          <span>{videoShowcase[currentVideo].views} views</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      </>
+                    );
+                  })()}
                 </motion.div>
               </AnimatePresence>
 
