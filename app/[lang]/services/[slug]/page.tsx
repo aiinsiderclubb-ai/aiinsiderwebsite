@@ -1,432 +1,596 @@
+'use client';
+
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { ArrowRight, Play, CheckCircle, Sparkles, Clock, ChevronDown, Users, Video, Zap, Globe, Star, Target, Layers, MessageCircle } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import { getCaseBySlug, getLocalizedText as getCaseText, type CaseStudy } from '@/app/lib/casesData';
-import { isSupportedLang, withLang } from '@/app/lib/i18n';
-import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
-import { getLocalizedText, getServiceBySlug } from '@/app/lib/servicesData';
-import { getBlogArticlesForServiceDetail, getSeoServicesForServiceDetail, getSemanticAnchor } from '@/app/lib/internalLinks';
-import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
-import { getBlogText } from '@/app/lib/blogData';
+import { useLanguage } from '@/app/context/LanguageContext';
+import { getLocalizedText, getServiceBySlug, servicesData } from '@/app/lib/servicesData';
 
-type Params = { lang: string; slug: string };
+const iconMap: Record<string, React.ReactNode> = {
+  '🎭': <Users className="w-6 h-6" />,
+  '📱': <Layers className="w-6 h-6" />,
+  '💬': <MessageCircle className="w-6 h-6" />,
+  '🌍': <Globe className="w-6 h-6" />,
+  '🎬': <Video className="w-6 h-6" />,
+  '🎯': <Target className="w-6 h-6" />,
+  '⚡': <Zap className="w-6 h-6" />,
+  '✨': <Sparkles className="w-6 h-6" />,
+  '🧪': <Sparkles className="w-6 h-6" />,
+  '🔊': <Video className="w-6 h-6" />,
+  '📊': <Target className="w-6 h-6" />,
+  '🤖': <Users className="w-6 h-6" />,
+  '📈': <Target className="w-6 h-6" />,
+  '🛠️': <Layers className="w-6 h-6" />,
+  '💡': <Sparkles className="w-6 h-6" />,
+};
 
-export default async function ServiceDetailPage({ params }: { params: Promise<Params> }) {
-  const { lang, slug } = await params;
+const serviceGradients: Record<string, { gradient: string; glowColor: string }> = {
+  'ai-influencers': { gradient: 'from-purple-500 to-pink-500', glowColor: 'rgba(168, 85, 247, 0.4)' },
+  'ai-video-production': { gradient: 'from-blue-500 to-cyan-500', glowColor: 'rgba(59, 130, 246, 0.4)' },
+  'ai-ugc-content': { gradient: 'from-orange-500 to-red-500', glowColor: 'rgba(249, 115, 22, 0.4)' },
+};
 
-  if (!isSupportedLang(lang)) {
-    notFound();
-  }
+const defaultGradient = { gradient: 'from-white/20 to-white/10', glowColor: 'rgba(255, 255, 255, 0.2)' };
+
+export default function ServiceDetailPage() {
+  const params = useParams();
+  const slug = params?.slug as string;
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
+  const basePath = `/${lang}`;
 
   const service = getServiceBySlug(slug);
+  
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   if (!service) {
-    notFound();
+    return (
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
+        <Navbar />
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">{isEn ? 'Service not found' : 'Послугу не знайдено'}</h1>
+          <Link href={`${basePath}/services`} className="text-purple-400 hover:underline">
+            {isEn ? 'Back to services' : 'Назад до послуг'}
+          </Link>
+        </div>
+        <Footer />
+      </main>
+    );
   }
 
-  const siteUrl = getSiteUrl();
-  const canonicalPath = withLang(lang, `/services/${service.slug}`);
-  const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+  const { gradient, glowColor } = serviceGradients[slug] || defaultGradient;
 
   const pageTitle = getLocalizedText(service.title, lang);
   const pageSubtitle = getLocalizedText(service.subtitle, lang);
 
-  const servicesLabel = lang === 'en' ? 'Services' : 'Послуги';
-  const homeLabel = lang === 'en' ? 'Home' : 'Головна';
-  const outcomesLabel = lang === 'en' ? 'Outcomes' : 'Результати';
-  const featuresLabel = lang === 'en' ? 'What you get' : 'Що входить';
-  const useCasesLabel = lang === 'en' ? 'Best for' : 'Кому підходить';
-  const implementationLabel = lang === 'en' ? 'Implementation timeline' : 'Таймлайн впровадження';
-  const faqLabel = lang === 'en' ? 'FAQ' : 'Поширені питання';
-
-  const bookCallLabel = lang === 'en' ? 'Book an intro call' : 'Замовити дзвінок';
-  const viewCasesLabel = lang === 'en' ? 'View case studies' : 'Подивитись кейси';
-
-  const relatedCases: CaseStudy[] = (service.relatedCaseSlugs || [])
-    .map((s) => getCaseBySlug(s))
-    .filter((c): c is CaseStudy => Boolean(c));
-
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: pageTitle,
-    description: getLocalizedText(service.seoDescription, lang),
-    url: canonicalUrl,
-    provider: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      url: siteUrl.toString(),
-    },
-    areaServed: ['Switzerland', 'Europe', 'United States'],
-    serviceType: pageTitle,
-  };
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: homeLabel,
-        item: new URL(withLang(lang, '/'), siteUrl).toString(),
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: servicesLabel,
-        item: new URL(withLang(lang, '/services'), siteUrl).toString(),
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: pageTitle,
-        item: canonicalUrl,
-      },
-    ],
-  };
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: service.faq.map((qa) => ({
-      '@type': 'Question',
-      name: getLocalizedText(qa.question, lang),
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: getLocalizedText(qa.answer, lang),
-      },
-    })),
-  };
+  const servicesLabel = isEn ? 'Services' : 'Послуги';
+  const homeLabel = isEn ? 'Home' : 'Головна';
+  const outcomesLabel = isEn ? 'Outcomes' : 'Результати';
+  const featuresLabel = isEn ? 'What you get' : 'Що входить';
+  const useCasesLabel = isEn ? 'Best for' : 'Кому підходить';
+  const implementationLabel = isEn ? 'Implementation timeline' : 'Таймлайн впровадження';
+  const faqLabel = isEn ? 'FAQ' : 'Поширені питання';
+  const bookCallLabel = isEn ? 'Book an intro call' : 'Замовити дзвінок';
+  const viewCasesLabel = isEn ? 'View case studies' : 'Подивитись кейси';
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="min-h-screen bg-black text-white overflow-x-hidden">
       <Navbar />
 
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
-      {/* Hero */}
-      <section className="relative pt-32 pb-10 px-6 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0">
           <div
-            className="absolute top-0 left-1/4 w-[700px] h-[700px] rounded-full"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%)',
-              filter: 'blur(90px)',
+              background: `
+                radial-gradient(ellipse 80% 50% at 20% 40%, ${glowColor} 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%)
+              `,
             }}
           />
           <div
-            className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full"
+            className="absolute top-20 left-1/4 w-[800px] h-[800px] rounded-full opacity-30"
             style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.035) 0%, transparent 60%)',
+              background: `radial-gradient(circle, ${glowColor} 0%, transparent 50%)`,
+              filter: 'blur(120px)',
+              animation: 'float 20s ease-in-out infinite',
+            }}
+          />
+          {/* Particles */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white/20 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="relative max-w-6xl mx-auto">
+          {/* Breadcrumbs */}
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm text-gray-500 mb-8"
+          >
+            <Link href={`${basePath}`} className="hover:text-white transition-colors">
+              {homeLabel}
+            </Link>
+            <span className="mx-2">/</span>
+            <Link href={`${basePath}/services`} className="hover:text-white transition-colors">
+              {servicesLabel}
+            </Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-300">{pageTitle}</span>
+          </motion.nav>
+
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className={`inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-8 border border-white/20 bg-gradient-to-r ${gradient} bg-opacity-10`}
+            style={{ background: `linear-gradient(135deg, ${glowColor}, transparent)` }}
+          >
+            <Sparkles className="w-4 h-4 text-white" />
+            <span className="text-sm font-semibold text-white uppercase tracking-wider">
+              {servicesLabel}
+            </span>
+            <span className="px-2 py-0.5 bg-white/20 rounded-full text-xs font-medium">
+              {getLocalizedText(service.timeline, lang)}
+            </span>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6 leading-[1.05]"
+          >
+            <span
+              style={{
+                background: `linear-gradient(135deg, #fff 0%, ${glowColor.replace('0.4', '1')} 100%)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              {pageTitle}
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-xl md:text-2xl text-gray-400 max-w-4xl mb-10 leading-relaxed"
+          >
+            {pageSubtitle}
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 mb-12"
+          >
+            <Link
+              href={`${basePath}/contact`}
+              className={`group relative px-8 py-4 bg-gradient-to-r ${gradient} text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg`}
+              style={{ boxShadow: `0 10px 40px ${glowColor}` }}
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                {bookCallLabel}
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+            <Link
+              href={`${basePath}/cases`}
+              className="group px-8 py-4 border border-white/20 text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/40 flex items-center gap-2"
+            >
+              <Play className="w-5 h-5" />
+              {viewCasesLabel}
+            </Link>
+          </motion.div>
+
+          {/* Outcomes */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="grid md:grid-cols-3 gap-4"
+          >
+            {service.outcomes.map((o, idx) => (
+              <div
+                key={idx}
+                className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 hover:border-white/20 hover:bg-white/[0.06] transition-all duration-300"
+              >
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `radial-gradient(circle at 50% 0%, ${glowColor} 0%, transparent 60%)`,
+                    filter: 'blur(40px)',
+                  }}
+                />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${gradient} flex items-center justify-center`}>
+                      <CheckCircle className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-xs uppercase tracking-wider text-gray-500 font-semibold">
+                      {outcomesLabel} {idx + 1}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-300 leading-relaxed">{getLocalizedText(o, lang)}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <div className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-gradient-to-r ${gradient} bg-opacity-10`}>
+              <Sparkles className="w-4 h-4 text-white" />
+              <span className="text-sm font-semibold text-white/90 uppercase tracking-wider">
+                {featuresLabel}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading">
+              {isEn ? 'Everything ' : 'Все, '}
+              <span
+                style={{
+                  background: `linear-gradient(135deg, ${glowColor.replace('0.4', '1')} 0%, #fff 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                {isEn ? 'Included' : 'що входить'}
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {service.features.map((f, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="group relative"
+              >
+                <div
+                  className="absolute -inset-1 rounded-[2rem] opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+                  style={{ background: `linear-gradient(135deg, ${glowColor}, transparent)` }}
+                />
+                <div className="relative h-full rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 hover:border-white/25 transition-all duration-300">
+                  <div
+                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
+                    style={{ boxShadow: `0 10px 30px ${glowColor}` }}
+                  >
+                    {iconMap[f.icon] || <span className="text-2xl">{f.icon}</span>}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">{getLocalizedText(f.title, lang)}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(f.description, lang)}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases & Timeline */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            background: `radial-gradient(ellipse at center, ${glowColor} 0%, transparent 50%)`,
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-16">
+          {/* Use Cases */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-10"
+            >
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+                <Target className="w-4 h-4 text-white/70" />
+                <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                  {useCasesLabel}
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">
+                {isEn ? 'Perfect for' : 'Ідеально для'}
+              </h2>
+            </motion.div>
+
+            <div className="space-y-4">
+              {service.useCases.map((u, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shrink-0`}>
+                      <Star className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-white mb-1">{getLocalizedText(u.title, lang)}</h3>
+                      <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(u.description, lang)}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-10"
+            >
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+                <Clock className="w-4 h-4 text-white/70" />
+                <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                  {implementationLabel}
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">
+                {isEn ? 'How we do it' : 'Як ми це робимо'}
+              </h2>
+            </motion.div>
+
+            <div className="relative">
+              {/* Timeline line */}
+              <div className={`absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b ${gradient} opacity-30`} />
+
+              <div className="space-y-6">
+                {service.implementation.map((step, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.15 }}
+                    className="relative pl-14"
+                  >
+                    {/* Step number */}
+                    <div
+                      className={`absolute left-0 w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold z-10`}
+                      style={{ boxShadow: `0 5px 20px ${glowColor}` }}
+                    >
+                      {idx + 1}
+                    </div>
+
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-bold text-white">{getLocalizedText(step.title, lang)}</h3>
+                        <span className="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-400 border border-white/10">
+                          {getLocalizedText(step.duration, lang)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(step.description, lang)}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="relative max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+              <MessageCircle className="w-4 h-4 text-white/70" />
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {faqLabel}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading">
+              {isEn ? 'Common ' : 'Поширені '}
+              <span
+                style={{
+                  background: `linear-gradient(135deg, ${glowColor.replace('0.4', '1')} 0%, #fff 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                {isEn ? 'Questions' : 'питання'}
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="space-y-4">
+            {service.faq.map((qa, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="group"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className={`w-full rounded-2xl border ${openFaq === idx ? 'border-white/25 bg-white/[0.06]' : 'border-white/10 bg-white/[0.03]'} p-6 text-left transition-all duration-300 hover:border-white/20`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-lg font-bold text-white">{getLocalizedText(qa.question, lang)}</span>
+                    <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shrink-0 transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`}>
+                      <ChevronDown className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <AnimatePresence>
+                    {openFaq === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="mt-4 text-gray-400 leading-relaxed">
+                          {getLocalizedText(qa.answer, lang)}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0">
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] opacity-30"
+            style={{
+              background: `radial-gradient(ellipse, ${glowColor} 0%, transparent 60%)`,
               filter: 'blur(80px)',
             }}
           />
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Breadcrumbs */}
-          <nav className="text-sm text-gray-500 mb-8">
-            <Link href={withLang(lang, '/')} className="hover:text-white transition-colors">
-              {homeLabel}
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href={withLang(lang, '/services')} className="hover:text-white transition-colors">
-              {servicesLabel}
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-300">{pageTitle}</span>
-          </nav>
+        <div className="relative max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative"
+          >
+            <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 rounded-[3rem] blur-xl" />
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-7">
-            <span className="text-sm text-gray-300">{servicesLabel}</span>
-            <span className="text-xs px-2 py-1 bg-white/10 text-white rounded-full border border-white/20">
-              {getLocalizedText(service.timeline, lang)}
-            </span>
-          </div>
-
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading leading-tight mb-5">
-            {pageTitle}
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mb-10">{pageSubtitle}</p>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href={`${withLang(lang, '/')}#bookcall`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
-            >
-              {bookCallLabel}
-            </Link>
-            <Link
-              href={withLang(lang, '/cases')}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
-            >
-              {viewCasesLabel}
-            </Link>
-          </div>
-
-          {/* SEO-friendly summary */}
-          <div className="mt-10 grid md:grid-cols-3 gap-4">
-            {service.outcomes.map((o, idx) => (
-              <div key={idx} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
-                  {outcomesLabel} {idx + 1}
-                </div>
-                <p className="text-sm text-gray-300 leading-relaxed">{getLocalizedText(o, lang)}</p>
+            <div className="relative text-center p-12 md:p-16 rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-white/[0.1] to-white/[0.02] backdrop-blur-xl">
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-white/20 bg-gradient-to-r ${gradient} bg-opacity-20`}>
+                <Star className="w-4 h-4 text-white" />
+                <span className="text-sm font-semibold text-white">
+                  {isEn ? 'Ready to start?' : 'Готові розпочати?'}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Features */}
-      <section className="py-14 px-6 border-y border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">{featuresLabel}</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {service.features.map((f, idx) => (
-              <div
-                key={idx}
-                className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))' }}
-              >
-                <div
-                  className="w-12 h-12 rounded-2xl bg-white text-black flex items-center justify-center text-2xl mb-4"
-                  style={{ boxShadow: '0 0 25px rgba(255, 255, 255, 0.16)' }}
-                >
-                  {f.icon}
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">{getLocalizedText(f.title, lang)}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(f.description, lang)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases + Timeline */}
-      <section className="py-14 px-6">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">{useCasesLabel}</h2>
-            <div className="space-y-4">
-              {service.useCases.map((u, idx) => (
-                <div key={idx} className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
-                  <h3 className="text-lg font-bold text-white mb-2">{getLocalizedText(u.title, lang)}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(u.description, lang)}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">{implementationLabel}</h2>
-            <ol className="space-y-4">
-              {service.implementation.map((step, idx) => (
-                <li key={idx} className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
-                  <div className="flex items-center justify-between gap-4 mb-2">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white text-black font-bold"
-                        style={{ boxShadow: '0 0 20px rgba(255,255,255,0.18)' }}
-                      >
-                        {idx + 1}
-                      </span>
-                      <h3 className="text-lg font-bold text-white">{getLocalizedText(step.title, lang)}</h3>
-                    </div>
-                    <span className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-gray-300 border border-white/10">
-                      {getLocalizedText(step.duration, lang)}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-400 leading-relaxed">{getLocalizedText(step.description, lang)}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-14 px-6 border-y border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">{faqLabel}</h2>
-          <div className="space-y-4">
-            {service.faq.map((qa, idx) => (
-              <details key={idx} className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6">
-                <summary className="cursor-pointer list-none flex items-start justify-between gap-6">
-                  <span className="text-lg font-bold text-white">{getLocalizedText(qa.question, lang)}</span>
-                  <span className="text-gray-400 group-open:rotate-45 transition-transform duration-200">+</span>
-                </summary>
-                <div className="mt-3 text-sm text-gray-400 leading-relaxed">
-                  {getLocalizedText(qa.answer, lang)}
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Related cases */}
-      {relatedCases.length > 0 && (
-        <section className="py-14 px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
-              {lang === 'en' ? 'Related case studies' : 'Пов’язані кейси'}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-5">
-              {relatedCases.map((c) => {
-                const caseTitle = getCaseText(c.title, lang);
-                const caseDesc = getCaseText(c.shortDescription, lang);
-                const href = c.slug === 'sweezy' ? '/cases/sweezy' : `/cases/${c.slug}`;
-                return (
-                  <Link
-                    key={c.slug}
-                    href={withLang(lang, href)}
-                    className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6
-                      transition-all duration-300 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_0_60px_rgba(255,255,255,0.06)]"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))' }}
-                  >
-                    <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">{caseTitle}</div>
-                    <p className="text-sm text-gray-400 leading-relaxed">{caseDesc}</p>
-                    <div className="mt-5 text-sm font-semibold text-white">
-                      {lang === 'en' ? 'Read case →' : 'Читати кейс →'}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="mt-8">
-              <Link
-                href={withLang(lang, '/cases')}
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-white/5 text-white rounded-full font-bold
-                  border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
-              >
-                {viewCasesLabel}
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Related blog articles */}
-      {(() => {
-        const relatedBlog = getBlogArticlesForServiceDetail(service.slug, 3);
-        if (relatedBlog.length === 0) return null;
-        return (
-          <section className="py-14 px-6 border-t border-white/5">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                {lang === 'en' ? 'From the blog' : 'З блогу'}
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+                {isEn ? "Let's build this together" : 'Давайте створимо це разом'}
               </h2>
-              <div className="grid md:grid-cols-3 gap-5">
-                {relatedBlog.map((a) => (
-                  <Link
-                    key={a.slug}
-                    href={withLang(lang, `/blog/${a.slug}`)}
-                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-lg">{a.icon}</span>
-                      <span className="text-xs font-semibold uppercase tracking-wider text-white/50">
-                        {getBlogText(a.category, lang)}
-                      </span>
-                      <span className="text-xs text-gray-500 ml-auto">{a.readTime} {lang === 'en' ? 'min' : 'хв'}</span>
-                    </div>
-                    <h3 className="text-sm font-bold text-white leading-snug group-hover:text-white/80 transition-colors mb-2">
-                      {getBlogText(a.h1, lang)}
-                    </h3>
-                    <p className="text-xs text-gray-500 line-clamp-2">{getBlogText(a.metaDescription, lang)}</p>
-                  </Link>
-                ))}
+
+              <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                {isEn
+                  ? 'Book a free consultation to discuss your project and see how we can help'
+                  : 'Замовте безкоштовну консультацію, щоб обговорити ваш проект'}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href={`${basePath}/contact`}
+                  className={`group relative px-10 py-5 bg-gradient-to-r ${gradient} text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105`}
+                  style={{ boxShadow: `0 15px 50px ${glowColor}` }}
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    {bookCallLabel}
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+                <Link
+                  href={`${basePath}/services`}
+                  className="px-8 py-4 text-white/70 hover:text-white font-semibold transition-colors"
+                >
+                  {servicesLabel} →
+                </Link>
+              </div>
+
+              {/* Trust indicators */}
+              <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4" />
+                  {isEn ? 'Switzerland • EU • US' : 'Швейцарія • ЄС • США'}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4" />
+                  {isEn ? 'Fast delivery' : 'Швидка доставка'}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  {isEn ? 'Custom solutions' : 'Кастомні рішення'}
+                </div>
               </div>
             </div>
-          </section>
-        );
-      })()}
-
-      {/* Related SEO service pages */}
-      {(() => {
-        const seoSlugs = getSeoServicesForServiceDetail(service.slug);
-        if (seoSlugs.length === 0) return null;
-        return (
-          <section className="py-10 px-6">
-            <div className="max-w-6xl mx-auto">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">
-                {lang === 'en' ? 'Related solutions' : 'Повʼязані рішення'}
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {seoSlugs.map((seoSlug, idx) => {
-                  const page = SEO_SERVICE_PAGES[seoSlug];
-                  if (!page) return null;
-                  return (
-                    <Link
-                      key={seoSlug}
-                      href={withLang(lang, `/${seoSlug}`)}
-                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
-                        transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]"
-                    >
-                      <span>{getSemanticAnchor(seoSlug, lang, idx)}</span>
-                      <span className="text-white/30 group-hover:text-white/60 transition-colors">→</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* Final CTA */}
-      <section className="py-14 px-6">
-        <div className="max-w-6xl mx-auto rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            {lang === 'en'
-              ? 'Want to rank for a narrower keyword than this?'
-              : 'Хочеш ранжуватись по ще більш “вузькому” ключу?'}
-          </h2>
-          <p className="text-gray-400 max-w-3xl mb-6">
-            {lang === 'en'
-              ? 'We can spin up a dedicated landing page (with FAQ schema + internal linking) for your exact intent query and location focus (CH/EU/US).'
-              : 'Ми можемо зробити окрему посадкову сторінку (з FAQ schema + перелінковкою) під ваш точний запит і гео‑фокус (CH/ЄС/США).'}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href={`${withLang(lang, '/')}#bookcall`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25"
-            >
-              {bookCallLabel}
-            </Link>
-            <Link
-              href={withLang(lang, '/services')}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
-            >
-              {servicesLabel}
-            </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      {/* CSS Animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.5); }
+        }
+      `}</style>
 
       <Footer />
     </main>
   );
 }
-
