@@ -17,6 +17,8 @@ const journeySteps = [
       companyKey: 'testimonials.company1',
     },
     resultKey: 'testimonials.result1',
+    gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
+    accentColor: 'rgba(59, 130, 246, 0.4)',
   },
   {
     step: 2,
@@ -29,6 +31,8 @@ const journeySteps = [
       companyKey: 'testimonials.company2',
     },
     resultKey: 'testimonials.result2',
+    gradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
+    accentColor: 'rgba(168, 85, 247, 0.4)',
   },
   {
     step: 3,
@@ -41,6 +45,8 @@ const journeySteps = [
       companyKey: 'testimonials.company3',
     },
     resultKey: 'testimonials.result3',
+    gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+    accentColor: 'rgba(16, 185, 129, 0.4)',
   },
   {
     step: 4,
@@ -53,6 +59,8 @@ const journeySteps = [
       companyKey: 'testimonials.company4',
     },
     resultKey: 'testimonials.result4',
+    gradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
+    accentColor: 'rgba(245, 158, 11, 0.4)',
   },
 ];
 
@@ -65,14 +73,14 @@ export default function Testimonials() {
     <section className="relative py-24 px-6 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
-        <div 
+        <div
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
-        <div 
+        <div
           className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 60%)',
@@ -81,13 +89,13 @@ export default function Testimonials() {
         />
       </div>
 
-      <div ref={ref} className="relative max-w-6xl mx-auto">
+      <div ref={ref} className="relative max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-strong rounded-full mb-6 border border-white/20">
             <Sparkles className="w-4 h-4 text-white" />
@@ -96,7 +104,7 @@ export default function Testimonials() {
 
           <h2 className="text-4xl md:text-6xl font-bold font-heading mb-5 text-white">
             {t('testimonials.title1')}
-            <span 
+            <span
               className="block mt-2"
               style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
@@ -108,192 +116,111 @@ export default function Testimonials() {
             </span>
           </h2>
 
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
             {t('testimonials.subtitle')}
           </p>
         </motion.div>
 
-        {/* Roadmap Timeline */}
-        <div className="relative">
-          {/* Central Timeline Line - Desktop */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2">
-            <motion.div
-              initial={{ height: 0 }}
-              animate={isInView ? { height: '100%' } : {}}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-              className="w-full bg-gradient-to-b from-white/30 via-white/20 to-white/10"
-            />
-          </div>
-
-          {/* Mobile Timeline Line */}
-          <div className="lg:hidden absolute left-8 top-0 bottom-0 w-px">
-            <motion.div
-              initial={{ height: 0 }}
-              animate={isInView ? { height: '100%' } : {}}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-              className="w-full bg-gradient-to-b from-white/30 via-white/20 to-white/10"
-            />
-          </div>
-
-          {/* Journey Steps */}
-          <div className="space-y-16 lg:space-y-24">
-            {journeySteps.map((item, index) => {
-              const Icon = item.icon;
-              const isEven = index % 2 === 0;
-
-              return (
-                <motion.div
-                  key={item.step}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className={`relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
-                    isEven ? '' : 'lg:direction-rtl'
-                  }`}
-                >
-                  {/* Timeline Node - Desktop */}
-                  <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 z-10">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={isInView ? { scale: 1 } : {}}
-                      transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
-                      className="relative"
-                    >
-                      {/* Outer glow ring */}
-                      <div 
-                        className="absolute inset-0 w-16 h-16 rounded-full animate-pulse"
-                        style={{
-                          background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)',
-                        }}
-                      />
-                      {/* Main node */}
-                      <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                        <span className="text-black font-bold text-xl">{item.step}</span>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Timeline Node - Mobile */}
-                  <div className="lg:hidden absolute left-8 -translate-x-1/2 z-10">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={isInView ? { scale: 1 } : {}}
-                      transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
-                      className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                    >
-                      <span className="text-black font-bold text-lg">{item.step}</span>
-                    </motion.div>
-                  </div>
-
-                  {/* Content Card - Left or Right based on index */}
-                  <div className={`lg:pl-0 pl-20 ${isEven ? 'lg:pr-12 lg:text-right' : 'lg:pl-12 lg:col-start-2 lg:text-left'}`}>
-                    {/* Phase Label */}
-                    <motion.div
-                      initial={{ opacity: 0, x: isEven ? -20 : 20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }}
-                      className={`flex items-center gap-3 mb-4 ${isEven ? 'lg:justify-end' : 'lg:justify-start'}`}
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
-                        {t(item.phaseKey)}
-                      </span>
-                    </motion.div>
-
-                    {/* Testimonial Card */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
-                      className="relative group"
-                    >
-                      <div 
-                        className="relative p-6 lg:p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-sm
-                          transition-all duration-500 hover:bg-white/[0.05] hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.05)]"
-                      >
-                        {/* Quote Icon */}
-                        <Quote className="w-8 h-8 mb-4 text-white/30" />
-
-                        {/* Quote Text */}
-                        <p className={`text-xl lg:text-2xl font-medium text-white leading-relaxed mb-6 ${isEven ? 'lg:text-right' : 'lg:text-left'}`}>
-                          "{t(item.testimonial.quoteKey)}"
-                        </p>
-
-                        {/* Author */}
-                        <div className={`flex items-center gap-4 ${isEven ? 'lg:justify-end lg:flex-row-reverse' : ''}`}>
-                          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-black font-bold text-lg">
-                            {item.testimonial.author.charAt(0)}
-                          </div>
-                          <div className={isEven ? 'lg:text-right' : ''}>
-                            <p className="font-semibold text-white">{item.testimonial.author}</p>
-                            <p className="text-sm text-gray-400">{item.testimonial.role}, {t(item.testimonial.companyKey)}</p>
-                          </div>
-                        </div>
-
-                        {/* Result Badge */}
-                        <div className={`mt-6 pt-6 border-t border-white/10 flex items-center gap-2 ${isEven ? 'lg:justify-end' : ''}`}>
-                          <CheckCircle2 className="w-5 h-5 text-green-400" />
-                          <span className="text-sm text-green-400 font-medium">{t(item.resultKey)}</span>
-                        </div>
-
-                        {/* Decorative corner gradient */}
-                        <div 
-                          className={`absolute top-0 ${isEven ? 'right-0 rounded-tr-3xl' : 'left-0 rounded-tl-3xl'} w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                          style={{
-                            background: `radial-gradient(circle at ${isEven ? 'top right' : 'top left'}, rgba(255,255,255,0.05) 0%, transparent 70%)`,
-                          }}
-                        />
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Empty space for alternating layout - Desktop only */}
-                  <div className={`hidden lg:block ${isEven ? 'lg:col-start-2' : 'lg:col-start-1 lg:row-start-1'}`} />
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Final CTA Node */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="relative mt-20 pt-12"
-          >
-            {/* Connection line to CTA */}
-            <div className="hidden lg:block absolute left-1/2 -top-4 w-px h-16 -translate-x-1/2 bg-gradient-to-b from-white/20 to-transparent" />
-            
-            <div className="text-center">
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {journeySteps.map((item, index) => {
+            const Icon = item.icon;
+            return (
               <motion.div
-                initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 1.2 }}
-                className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white mb-8 shadow-[0_0_40px_rgba(255,255,255,0.4)]"
+                key={item.step}
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.7, delay: index * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+                className="relative group"
               >
-                <Sparkles className="w-10 h-10 text-black" />
-              </motion.div>
+                {/* Outer glow on hover */}
+                <div className={`absolute -inset-1 rounded-[2rem] bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500`} />
 
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                {t('testimonials.ctaTitle')}
-              </h3>
-              <p className="text-gray-400 mb-8 max-w-md mx-auto">
-                {t('testimonials.ctaSubtitle')}
-              </p>
-              
-              <a
-                href="#bookcall"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                  transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-              >
-                {t('testimonials.ctaButton')}
-                <ArrowRight className="w-5 h-5" />
-              </a>
-            </div>
-          </motion.div>
+                {/* Card */}
+                <div className="relative h-full rounded-[2rem] overflow-hidden border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl transition-all duration-500 hover:border-white/25 hover:-translate-y-2 hover:shadow-[0_20px_50px_-15px_rgba(255,255,255,0.1)]">
+                  {/* Top accent line */}
+                  <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${item.gradient}`} />
+
+                  {/* Decorative corner */}
+                  <div
+                    className="absolute top-0 right-0 w-32 h-32 opacity-30"
+                    style={{
+                      background: `radial-gradient(circle at top right, ${item.accentColor} 0%, transparent 70%)`,
+                    }}
+                  />
+
+                  <div className="relative z-10 p-6 lg:p-7 flex flex-col h-full">
+                    {/* Header: Phase + Step */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
+                          {t(item.phaseKey)}
+                        </span>
+                      </div>
+                      <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-black font-bold text-sm shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        {item.step}
+                      </div>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="flex-1">
+                      <Quote className="w-6 h-6 mb-3 text-white/20" />
+                      <p className="text-lg font-medium text-white leading-relaxed mb-5">
+                        &ldquo;{t(item.testimonial.quoteKey)}&rdquo;
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mb-4" />
+
+                    {/* Author + Result */}
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black font-bold text-sm">
+                          {item.testimonial.author.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white text-sm">{item.testimonial.author}</p>
+                          <p className="text-xs text-gray-500">{item.testimonial.role}, {t(item.testimonial.companyKey)}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                        <span className="text-xs text-green-400 font-medium whitespace-nowrap">{t(item.resultKey)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom corner decoration */}
+                  <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-white/10 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-14 text-center"
+        >
+          <a
+            href="#bookcall"
+            className="group inline-flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 relative"
+            style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)' }}
+          >
+            <span className="relative z-10">{t('testimonials.ctaButton')}</span>
+            <span className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">
+              <ArrowRight className="w-4 h-4 text-black" />
+            </span>
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );
