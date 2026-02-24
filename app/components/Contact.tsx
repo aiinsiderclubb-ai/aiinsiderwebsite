@@ -22,7 +22,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-32 px-6 overflow-hidden">
+    <section id="contact" className="relative py-24 px-6 overflow-hidden">
       {/* Background - Monochrome */}
       <div
         className="absolute inset-0 gpu-accelerated"
@@ -43,7 +43,7 @@ export default function Contact() {
             <span className="text-sm font-medium text-white">{t('contact.badge')}</span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl font-bold font-heading mb-6 text-white">
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-5 text-white">
             {t('contact.title1')}
             <span 
               className="block mt-2"

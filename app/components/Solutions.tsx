@@ -48,7 +48,7 @@ export default function Solutions() {
   ];
 
   return (
-    <section id="solutions" className="relative py-32 px-6 overflow-hidden">
+    <section id="solutions" className="relative py-24 px-6 overflow-hidden">
       {/* Static Background Orbs - Monochrome */}
       <div
         className="absolute top-1/2 left-1/4 w-[600px] h-[600px] rounded-full gpu-accelerated"
@@ -72,17 +72,17 @@ export default function Solutions() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 glass-strong rounded-full mb-8 border border-white/20">
             <Sparkles className="w-5 h-5 text-white" />
             <span className="text-sm font-medium text-white">{t('solutions.badge')}</span>
           </div>
 
-          <h2 className="text-5xl md:text-7xl font-bold font-heading mb-8 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-bold font-heading mb-6 leading-tight">
             <span className="block text-white">{t('solutions.title1')}</span>
             <span 
-              className="block text-6xl md:text-8xl mt-2"
+              className="block text-5xl md:text-7xl mt-2"
               style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
                 WebkitBackgroundClip: 'text',

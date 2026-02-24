@@ -163,7 +163,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
       />
 
       {/* Hero Section - Premium Design */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-28 pb-20 px-6 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div
@@ -213,7 +213,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
 
           {/* Main heading */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-heading mb-8 leading-[0.95]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading mb-6 leading-[0.95]">
               <span className="block text-white">
                 {isEn ? 'AI Services That' : 'AI-послуги, які'}
               </span>
@@ -277,7 +277,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
       </section>
 
       {/* Core SEO Service Pages - Premium Cards */}
-      <section className="py-20 px-6 relative">
+      <section className="py-16 px-6 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
         
         <div className="relative max-w-7xl mx-auto">
@@ -334,7 +334,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
                     }}
                   />
 
-                  <div className="relative p-8 md:p-10">
+                  <div className="relative p-6 md:p-8">
                     {/* Top row */}
                     <div className="flex items-start justify-between mb-6">
                       <div
@@ -386,7 +386,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
       </section>
 
       {/* Services Grid - Bento Style */}
-      <section className="py-20 px-6">
+      <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16">
@@ -493,7 +493,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
       </section>
 
       {/* CTA Section - Premium */}
-      <section className="py-20 px-6">
+      <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div
             className="relative rounded-[2.5rem] overflow-hidden"
@@ -513,7 +513,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
             </div>
             <div className="absolute inset-0 border border-white/10 rounded-[2.5rem]" />
 
-            <div className="relative p-10 md:p-16 lg:p-20">
+            <div className="relative p-8 md:p-12 lg:p-16">
               <div className="max-w-3xl mx-auto text-center">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-8">
@@ -586,7 +586,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
       </section>
 
       {/* FAQ (GEO) */}
-      <section className="py-20 px-6 border-t border-white/5">
+      <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

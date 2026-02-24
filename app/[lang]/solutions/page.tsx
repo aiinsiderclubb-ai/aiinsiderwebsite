@@ -170,7 +170,7 @@ export default async function SolutionsIndexPage({ params }: { params: Promise<P
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div
-            className="rounded-3xl border border-white/10 p-8 md:p-12 relative overflow-hidden"
+            className="rounded-3xl border border-white/10 p-6 md:p-10 relative overflow-hidden"
             style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}
           >
             <div className="relative text-center max-w-3xl mx-auto">

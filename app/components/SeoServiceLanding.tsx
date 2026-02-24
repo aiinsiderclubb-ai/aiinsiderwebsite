@@ -411,7 +411,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* CTA */}
           <div className="max-w-6xl">
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-10">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{headings.ctaTitle}</h2>
               <p className="text-gray-400 mb-6 max-w-3xl">{headings.ctaSubtitle}</p>
               <div className="flex flex-col sm:flex-row gap-4">

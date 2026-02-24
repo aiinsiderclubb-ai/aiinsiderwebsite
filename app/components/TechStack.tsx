@@ -74,7 +74,7 @@ export default function TechStack() {
   const [isPaused, setIsPaused] = useState(false);
 
   return (
-    <section className="relative py-32 overflow-hidden">
+    <section className="relative py-24 overflow-hidden">
       {/* Background - Monochrome */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent"
@@ -87,7 +87,7 @@ export default function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20 px-6"
+          className="text-center mb-16 px-6"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -99,11 +99,11 @@ export default function TechStack() {
             <span className="text-sm font-medium text-white">Technology Stack</span>
           </motion.div>
 
-          <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6 text-white">
+          <h2 className="text-4xl md:text-6xl font-bold font-heading mb-5 text-white">
             Powered by
           </h2>
           <h2 
-            className="text-6xl md:text-8xl font-bold font-heading mb-8"
+            className="text-5xl md:text-7xl font-bold font-heading mb-6"
             style={{
               background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
               WebkitBackgroundClip: 'text',

@@ -42,7 +42,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative py-32 px-6 overflow-hidden">
+    <section id="about" className="relative py-24 px-6 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div
@@ -95,7 +95,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-5xl md:text-6xl font-bold font-heading mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-bold font-heading mb-5 leading-tight"
             >
               {isEn ? 'Creative AI Studio' : 'Креативна AI-студія'}
               <span

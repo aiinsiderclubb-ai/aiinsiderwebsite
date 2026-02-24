@@ -72,7 +72,7 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-28 pb-16 px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 left-1/3 w-[800px] h-[800px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%)', filter: 'blur(100px)' }} />
           <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 55%)', filter: 'blur(80px)' }} />
@@ -87,7 +87,7 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
             <span className="text-sm font-medium text-gray-300">{isEn ? 'Knowledge hub' : '\u0425\u0430\u0431 \u0437\u043d\u0430\u043d\u044c'}</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-6 leading-[0.95]">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading mb-5 leading-[0.95]">
             <span className="text-white">{title}</span>
             <br />
             <span className="inline-block mt-2" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
@@ -108,7 +108,7 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
       </section>
 
       {/* Articles Grid */}
-      <section className="py-16 px-6">
+      <section className="py-14 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Articles count badge */}
           <div className="flex items-center justify-between mb-8">
@@ -246,7 +246,7 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6">
+      <section className="py-14 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="rounded-3xl border border-white/10 p-8 md:p-12 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%)', filter: 'blur(60px)' }} />

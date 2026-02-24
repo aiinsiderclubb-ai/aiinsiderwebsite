@@ -90,7 +90,7 @@ export default function CasesPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-28 pb-16 px-6 overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
           <div 
@@ -126,7 +126,7 @@ export default function CasesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-5"
           >
             {t('cases.title1')}
             <br />

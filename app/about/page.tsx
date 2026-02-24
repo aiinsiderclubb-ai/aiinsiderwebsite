@@ -376,7 +376,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story Section — Premium Design */}
-      <section ref={storyRef} className="relative py-32 px-6 overflow-hidden">
+      <section ref={storyRef} className="relative py-24 px-6 overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0">
           {/* Diagonal lines pattern */}
@@ -479,7 +479,7 @@ export default function AboutPage() {
                 {/* Outer glow */}
                 <div className="absolute -inset-4 bg-gradient-to-br from-white/5 to-transparent rounded-[2.5rem] blur-2xl" />
                 
-                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 md:p-10 overflow-hidden">
+                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-6 md:p-8 overflow-hidden">
                   {/* Corner accents */}
                   <div className="absolute top-4 left-4 w-10 h-10 border-t-2 border-l-2 border-white/20 rounded-tl-xl" />
                   <div className="absolute top-4 right-4 w-10 h-10 border-t-2 border-r-2 border-white/20 rounded-tr-xl" />
@@ -551,7 +551,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section — Premium Design */}
-      <section ref={teamRef} className="relative py-32 px-6 overflow-hidden">
+      <section ref={teamRef} className="relative py-24 px-6 overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0">
           {/* Central glow */}
@@ -579,7 +579,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={teamInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
               <div className="flex -space-x-2">
@@ -632,7 +632,7 @@ export default function AboutPage() {
       </section>
 
       {/* GEO / AI Search Clarity — Premium Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
+      <section className="relative py-24 px-6 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-[800px] h-[800px] rounded-full opacity-30"
@@ -657,7 +657,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/20 bg-white/5 backdrop-blur-xl">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -785,7 +785,7 @@ export default function AboutPage() {
       </section>
 
       {/* How we help businesses — Premium Timeline Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
+      <section className="relative py-24 px-6 overflow-hidden">
         {/* Animated gradient orbs */}
         <div className="absolute top-1/2 left-0 w-[500px] h-[500px] -translate-y-1/2 -translate-x-1/2 opacity-20"
           style={{
@@ -807,7 +807,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -900,7 +900,7 @@ export default function AboutPage() {
       </section>
 
       {/* Industries we serve — Bento Grid Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
+      <section className="relative py-24 px-6 overflow-hidden">
         {/* Subtle grid background */}
         <div className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -917,7 +917,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
               <span className="text-lg">🎯</span>
@@ -987,7 +987,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why AI Insider is different — Premium Card Design */}
-      <section className="relative py-32 px-6 overflow-hidden">
+      <section className="relative py-24 px-6 overflow-hidden">
         {/* Gradient orbs */}
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] opacity-20"
           style={{
@@ -1009,7 +1009,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
               <span className="text-lg">✨</span>

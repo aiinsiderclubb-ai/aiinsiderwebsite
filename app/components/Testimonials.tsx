@@ -62,7 +62,7 @@ export default function Testimonials() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section className="relative py-24 px-6 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div 
@@ -87,14 +87,14 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-strong rounded-full mb-6 border border-white/20">
             <Sparkles className="w-4 h-4 text-white" />
             <span className="text-sm font-medium text-white">{t('testimonials.badge')}</span>
           </div>
 
-          <h2 className="text-5xl md:text-7xl font-bold font-heading mb-6 text-white">
+          <h2 className="text-4xl md:text-6xl font-bold font-heading mb-5 text-white">
             {t('testimonials.title1')}
             <span 
               className="block mt-2"

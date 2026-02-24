@@ -139,7 +139,7 @@ export default function AIContentStudio() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-28 px-6 overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 px-6 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         {/* Main gradient orbs */}
@@ -192,7 +192,7 @@ export default function AIContentStudio() {
               </div>
 
               {/* Title */}
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-[1.1]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-5 leading-[1.1]">
                 {isEn ? 'AI-Powered ' : 'AI-контент '}
                 <span
                   style={{

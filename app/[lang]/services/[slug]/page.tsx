@@ -82,7 +82,7 @@ export default function ServiceDetailPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-28 pb-20 px-6 overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0">
           <div
@@ -161,7 +161,7 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6 leading-[1.05]"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-5 leading-[1.05]"
           >
             <span
               style={{
@@ -247,7 +247,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Features Section */}
-      <section className="relative py-24 px-6 overflow-hidden">
+      <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -315,7 +315,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Use Cases & Timeline */}
-      <section className="relative py-24 px-6 overflow-hidden">
+      <section className="relative py-20 px-6 overflow-hidden">
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -428,7 +428,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="relative py-24 px-6 overflow-hidden">
+      <section className="relative py-20 px-6 overflow-hidden">
         <div className="relative max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -500,7 +500,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-24 px-6 overflow-hidden">
+      <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0">
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] opacity-30"
@@ -521,7 +521,7 @@ export default function ServiceDetailPage() {
           >
             <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 rounded-[3rem] blur-xl" />
 
-            <div className="relative text-center p-12 md:p-16 rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-white/[0.1] to-white/[0.02] backdrop-blur-xl">
+            <div className="relative text-center p-10 md:p-12 rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-white/[0.1] to-white/[0.02] backdrop-blur-xl">
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-white/20 bg-gradient-to-r ${gradient} bg-opacity-20`}>
                 <Star className="w-4 h-4 text-white" />
                 <span className="text-sm font-semibold text-white">

@@ -214,7 +214,7 @@ export default function Hero() {
         {/* Main Heading */}
         <motion.h1
           variants={itemVariants}
-          className="text-6xl md:text-8xl lg:text-[10rem] font-bold font-heading mb-8 leading-[0.9]"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-6 leading-[0.9]"
         >
           <span 
             className="block text-white"
@@ -223,7 +223,7 @@ export default function Hero() {
             {t('hero.title1')}
           </span>
           <span 
-            className="block text-7xl md:text-9xl lg:text-[12rem]"
+            className="block text-6xl md:text-8xl lg:text-9xl"
             style={{
               background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
               WebkitBackgroundClip: 'text',
@@ -238,7 +238,7 @@ export default function Hero() {
         {/* Subtitle with Elegant Tags */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-wrap items-center justify-center gap-4 text-xl md:text-3xl text-gray-400 mb-12 max-w-4xl mx-auto"
+          className="flex flex-wrap items-center justify-center gap-3 text-lg md:text-2xl text-gray-400 mb-10 max-w-4xl mx-auto"
         >
           <span>{t('hero.subtitle')}</span>
           <span className="px-4 py-2 rounded-xl bg-white/5 text-white border border-white/20 font-semibold">
@@ -255,7 +255,7 @@ export default function Hero() {
         {/* Stats Bar */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-wrap items-center justify-center gap-8 mb-12"
+          className="flex flex-wrap items-center justify-center gap-6 mb-10"
         >
           {[
             { value: '70%', labelKey: 'hero.stat1Label' },

@@ -48,7 +48,7 @@ export default function CaseStudies() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="cases" className="relative py-32 px-6 overflow-hidden">
+    <section id="cases" className="relative py-24 px-6 overflow-hidden">
       {/* Premium Background */}
       <div className="absolute inset-0">
         {/* Gradient orbs */}
@@ -80,7 +80,7 @@ export default function CaseStudies() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           {/* Animated badge */}
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-10 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -92,7 +92,7 @@ export default function CaseStudies() {
             <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">Case Studies</span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 text-white leading-[1.1]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 text-white leading-[1.1]">
             Real Results,
             <span className="relative inline-block ml-4">
               <span 

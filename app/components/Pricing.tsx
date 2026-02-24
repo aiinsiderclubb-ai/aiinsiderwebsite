@@ -78,7 +78,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="relative py-32 px-6 overflow-hidden">
+    <section id="pricing" className="relative py-24 px-6 overflow-hidden">
       {/* Premium Background */}
       <div className="absolute inset-0">
         {/* Large gradient orbs */}
@@ -113,7 +113,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           {/* Animated badge */}
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-10 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -125,7 +125,7 @@ export default function Pricing() {
             <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">{t('pricing.badge')}</span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-8 leading-[1.1]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-[1.1]">
             <span className="block text-white">{t('pricing.title1')}</span>
             <span
               className="block mt-2"
@@ -198,7 +198,7 @@ export default function Pricing() {
                   />
 
                   {/* Content */}
-                  <div className="relative z-10 p-8 lg:p-10">
+                  <div className="relative z-10 p-6 lg:p-8">
                     {/* Top row: Icon + Badge */}
                     <div className="flex items-start justify-between mb-8">
                       <div

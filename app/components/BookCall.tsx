@@ -201,7 +201,7 @@ export default function BookCall() {
   };
 
   return (
-    <section id="bookcall" className="relative py-32 px-6 overflow-hidden">
+    <section id="bookcall" className="relative py-24 px-6 overflow-hidden">
       {/* Static Background - no animation */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full gpu-accelerated"
@@ -223,7 +223,7 @@ export default function BookCall() {
               {t('bookCall.question')}
             </p>
 
-            <h2 className="text-6xl md:text-7xl font-bold font-heading mb-6 leading-tight">
+            <h2 className="text-5xl md:text-6xl font-bold font-heading mb-5 leading-tight">
               {t('bookCall.title1')}<br />
               <span className="gradient-text">{t('bookCall.title2')}</span>
             </h2>
@@ -255,7 +255,7 @@ export default function BookCall() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="glass-strong rounded-3xl p-8 border border-white/10"
+            className="glass-strong rounded-3xl p-6 border border-white/10"
           >
             <h3 className="text-2xl font-bold mb-6 text-center">{t('bookCall.selectDay')}</h3>
 
