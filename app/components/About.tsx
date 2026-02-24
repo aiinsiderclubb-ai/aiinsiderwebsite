@@ -174,14 +174,24 @@ export default function About() {
           >
             {(() => {
               const nodeCount = capabilities.length;
-              const nodePositions = capabilities.map((_, i) => {
-                const angle = (i * 360) / nodeCount - 90;
-                const r = 38;
-                return {
-                  x: 50 + r * Math.cos((angle * Math.PI) / 180),
-                  y: 50 + r * Math.sin((angle * Math.PI) / 180),
-                };
-              });
+              const nodePositions =
+                nodeCount === 6
+                  ? ([
+                      { x: 50, y: 12 },
+                      { x: 83, y: 31 },
+                      { x: 83, y: 69 },
+                      { x: 50, y: 88 },
+                      { x: 17, y: 69 },
+                      { x: 17, y: 31 },
+                    ] satisfies Array<{ x: number; y: number }>)
+                  : capabilities.map((_, i) => {
+                      const angle = (i * 360) / nodeCount - 90;
+                      const r = 38;
+                      return {
+                        x: 50 + r * Math.cos((angle * Math.PI) / 180),
+                        y: 50 + r * Math.sin((angle * Math.PI) / 180),
+                      };
+                    });
 
               const neuralConnections: Array<[number, number]> = [];
               for (let i = 0; i < nodeCount; i++) {
@@ -363,8 +373,8 @@ export default function About() {
                         transition={{ duration: 0.5, delay: 0.5 + i * 0.12, type: 'spring', stiffness: 200 }}
                       >
                         <motion.div
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                          animate={{ scale: [1, 1.04, 1] }}
+                          transition={{ duration: 3.2 + i * 0.2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.35 }}
                           className="relative group"
                         >
                           {/* Node glow */}
