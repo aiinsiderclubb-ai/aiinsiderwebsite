@@ -165,132 +165,252 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* Right: AI Visualization */}
+          {/* Right: Neural Network Visualization */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.83, 0, 0.17, 1], delay: 0.3 }}
             className="relative hidden lg:block"
           >
-            <div className="relative w-full aspect-square max-w-[500px] mx-auto">
-              {/* Outer glow ring */}
-              <div
-                className="absolute inset-8 rounded-full"
-                style={{
-                  background: 'conic-gradient(from 0deg, rgba(168,85,247,0.3), rgba(59,130,246,0.3), rgba(236,72,153,0.3), rgba(168,85,247,0.3))',
-                  filter: 'blur(40px)',
-                  animation: 'spin 12s linear infinite',
-                }}
-              />
+            {(() => {
+              const nodeCount = capabilities.length;
+              const nodePositions = capabilities.map((_, i) => {
+                const angle = (i * 360) / nodeCount - 90;
+                const r = 38;
+                return {
+                  x: 50 + r * Math.cos((angle * Math.PI) / 180),
+                  y: 50 + r * Math.sin((angle * Math.PI) / 180),
+                };
+              });
 
-              {/* Main circle */}
-              <div className="absolute inset-12 rounded-full border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl">
-                {/* Inner gradient ring */}
-                <div
-                  className="absolute inset-4 rounded-full border border-white/5"
-                  style={{
-                    background: 'radial-gradient(circle at 30% 30%, rgba(168,85,247,0.1) 0%, transparent 60%)',
-                  }}
-                />
+              const neuralConnections: Array<[number, number]> = [];
+              for (let i = 0; i < nodeCount; i++) {
+                for (let j = i + 1; j < nodeCount; j++) {
+                  neuralConnections.push([i, j]);
+                }
+              }
 
-                {/* Center content */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
+              return (
+                <div className="relative w-full aspect-square max-w-[520px] mx-auto">
+                  {/* Ambient glow behind entire network */}
+                  <div
+                    className="absolute inset-0 rounded-full opacity-30"
+                    style={{
+                      background: 'radial-gradient(circle at 50% 50%, rgba(168,85,247,0.3) 0%, transparent 60%)',
+                      filter: 'blur(60px)',
+                    }}
+                  />
+
+                  {/* SVG Neural Connections */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 520 520" fill="none">
+                    <defs>
+                      <linearGradient id="neural-grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(168,85,247,0.6)" />
+                        <stop offset="100%" stopColor="rgba(236,72,153,0.6)" />
+                      </linearGradient>
+                      <linearGradient id="neural-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(59,130,246,0.6)" />
+                        <stop offset="100%" stopColor="rgba(6,182,212,0.6)" />
+                      </linearGradient>
+                      <linearGradient id="neural-grad-mixed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(168,85,247,0.4)" />
+                        <stop offset="50%" stopColor="rgba(59,130,246,0.4)" />
+                        <stop offset="100%" stopColor="rgba(236,72,153,0.4)" />
+                      </linearGradient>
+                      <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Node-to-node connections */}
+                    {neuralConnections.map(([a, b], idx) => {
+                      const x1 = (nodePositions[a].x / 100) * 520;
+                      const y1 = (nodePositions[a].y / 100) * 520;
+                      const x2 = (nodePositions[b].x / 100) * 520;
+                      const y2 = (nodePositions[b].y / 100) * 520;
+                      const gradId = idx % 3 === 0 ? 'neural-grad-purple' : idx % 3 === 1 ? 'neural-grad-blue' : 'neural-grad-mixed';
+                      return (
+                        <motion.line
+                          key={`conn-${a}-${b}`}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={`url(#${gradId})`}
+                          strokeWidth="1.5"
+                          initial={{ pathLength: 0, opacity: 0 }}
+                          animate={isInView ? { pathLength: 1, opacity: 0.35 } : {}}
+                          transition={{ duration: 1.2, delay: 0.4 + idx * 0.06, ease: 'easeOut' }}
+                        />
+                      );
+                    })}
+
+                    {/* Center connections — from center to each node */}
+                    {nodePositions.map((pos, i) => {
+                      const x2 = (pos.x / 100) * 520;
+                      const y2 = (pos.y / 100) * 520;
+                      return (
+                        <motion.line
+                          key={`center-${i}`}
+                          x1={260} y1={260} x2={x2} y2={y2}
+                          stroke="url(#neural-grad-mixed)"
+                          strokeWidth="2"
+                          filter="url(#glow)"
+                          initial={{ pathLength: 0, opacity: 0 }}
+                          animate={isInView ? { pathLength: 1, opacity: 0.5 } : {}}
+                          transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
+                        />
+                      );
+                    })}
+
+                    {/* Animated signal pulses traveling along connections */}
+                    {nodePositions.map((pos, i) => {
+                      const x2 = (pos.x / 100) * 520;
+                      const y2 = (pos.y / 100) * 520;
+                      return (
+                        <motion.circle
+                          key={`pulse-${i}`}
+                          r="3"
+                          fill="white"
+                          filter="url(#glow)"
+                          initial={{ cx: 260, cy: 260, opacity: 0 }}
+                          animate={isInView ? {
+                            cx: [260, x2, 260],
+                            cy: [260, y2, 260],
+                            opacity: [0, 0.8, 0],
+                          } : {}}
+                          transition={{
+                            duration: 3,
+                            delay: 1.5 + i * 0.5,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                      );
+                    })}
+
+                    {/* Synaptic dots at each connection midpoint */}
+                    {neuralConnections.map(([a, b], idx) => {
+                      const mx = ((nodePositions[a].x + nodePositions[b].x) / 2 / 100) * 520;
+                      const my = ((nodePositions[a].y + nodePositions[b].y) / 2 / 100) * 520;
+                      return (
+                        <motion.circle
+                          key={`synapse-${idx}`}
+                          cx={mx} cy={my} r="2"
+                          fill="rgba(168,85,247,0.6)"
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={isInView ? {
+                            opacity: [0.3, 0.8, 0.3],
+                            r: [1.5, 3, 1.5],
+                          } : {}}
+                          transition={{
+                            duration: 2 + (idx % 3) * 0.5,
+                            delay: 1 + idx * 0.08,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                      );
+                    })}
+
+                    {/* Center glow */}
+                    <motion.circle
+                      cx={260} cy={260} r="40"
+                      fill="rgba(168,85,247,0.15)"
+                      filter="url(#glow)"
+                      animate={{ r: [35, 45, 35], opacity: [0.15, 0.25, 0.15] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                  </svg>
+
+                  {/* Center node */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 3, repeat: Infinity }}
-                      className="relative"
                     >
                       <div
-                        className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 flex items-center justify-center mb-4"
-                        style={{ boxShadow: '0 15px 50px rgba(168,85,247,0.4)' }}
+                        className="w-[90px] h-[90px] rounded-3xl bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 flex items-center justify-center"
+                        style={{ boxShadow: '0 0 60px rgba(168,85,247,0.5), 0 0 120px rgba(59,130,246,0.3)' }}
                       >
-                        <Brain className="w-12 h-12 text-white" />
+                        <Brain className="w-11 h-11 text-white" />
                       </div>
                     </motion.div>
-                    <div className="text-xl font-bold text-white">AI Insider</div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {isEn ? 'Intelligence at scale' : 'Інтелект у масштабі'}
+                    <div className="text-center mt-3">
+                      <div className="text-lg font-bold text-white">AI Insider</div>
+                      <div className="text-[11px] text-gray-500">
+                        {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Orbiting capability icons */}
-              {capabilities.map((cap, i) => {
-                const angle = (i * 360) / capabilities.length;
-                const radius = 42;
-                const Icon = cap.icon;
-                return (
-                  <motion.div
-                    key={i}
-                    className="absolute"
-                    style={{
-                      top: `${50 + radius * Math.sin((angle * Math.PI) / 180)}%`,
-                      left: `${50 + radius * Math.cos((angle * Math.PI) / 180)}%`,
-                      transform: 'translate(-50%, -50%)',
-                    }}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                  >
+                  {/* Capability nodes */}
+                  {capabilities.map((cap, i) => {
+                    const Icon = cap.icon;
+                    const pos = nodePositions[i];
+                    return (
+                      <motion.div
+                        key={i}
+                        className="absolute z-10"
+                        style={{
+                          top: `${pos.y}%`,
+                          left: `${pos.x}%`,
+                          transform: 'translate(-50%, -50%)',
+                        }}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ duration: 0.5, delay: 0.5 + i * 0.12, type: 'spring', stiffness: 200 }}
+                      >
+                        <motion.div
+                          animate={{ y: [0, -5, 0] }}
+                          transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                          className="relative group"
+                        >
+                          {/* Node glow */}
+                          <div
+                            className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            style={{
+                              background: `radial-gradient(circle, ${cap.gradient.includes('purple') ? 'rgba(168,85,247,0.4)' : cap.gradient.includes('blue') ? 'rgba(59,130,246,0.4)' : cap.gradient.includes('orange') ? 'rgba(249,115,22,0.4)' : cap.gradient.includes('emerald') ? 'rgba(16,185,129,0.4)' : cap.gradient.includes('violet') ? 'rgba(139,92,246,0.4)' : 'rgba(244,63,94,0.4)'} 0%, transparent 70%)`,
+                              filter: 'blur(10px)',
+                            }}
+                          />
+                          <div
+                            className={`relative w-[56px] h-[56px] rounded-2xl bg-gradient-to-br ${cap.gradient} flex items-center justify-center border border-white/25 transition-transform duration-300 group-hover:scale-110`}
+                            style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.4)' }}
+                          >
+                            <Icon className="w-6 h-6 text-white" />
+                          </div>
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
+
+                  {/* Extra ambient particles scattered around */}
+                  {[...Array(12)].map((_, i) => (
                     <motion.div
-                      animate={{ y: [0, -6, 0] }}
-                      transition={{ duration: 2 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: cap.delay }}
-                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cap.gradient} flex items-center justify-center border border-white/20 shadow-lg`}
-                      style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}
-                    >
-                      <Icon className="w-6 h-6 text-white" />
-                    </motion.div>
-                  </motion.div>
-                );
-              })}
-
-              {/* Decorative connecting lines */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 500">
-                {capabilities.map((_, i) => {
-                  const angle = (i * 360) / capabilities.length;
-                  const radius = 210;
-                  const x2 = 250 + radius * Math.cos((angle * Math.PI) / 180);
-                  const y2 = 250 + radius * Math.sin((angle * Math.PI) / 180);
-                  return (
-                    <motion.line
-                      key={i}
-                      x1="250"
-                      y1="250"
-                      x2={x2}
-                      y2={y2}
-                      stroke="url(#line-gradient)"
-                      strokeWidth="1"
-                      strokeDasharray="4 4"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 0.2 } : {}}
-                      transition={{ duration: 1, delay: 0.6 + i * 0.1 }}
+                      key={`particle-${i}`}
+                      className="absolute w-1 h-1 rounded-full"
+                      style={{
+                        left: `${15 + Math.random() * 70}%`,
+                        top: `${15 + Math.random() * 70}%`,
+                        background: i % 3 === 0 ? 'rgba(168,85,247,0.6)' : i % 3 === 1 ? 'rgba(59,130,246,0.6)' : 'rgba(236,72,153,0.6)',
+                      }}
+                      animate={{
+                        opacity: [0.2, 0.8, 0.2],
+                        scale: [1, 1.8, 1],
+                      }}
+                      transition={{
+                        duration: 2 + Math.random() * 2,
+                        delay: Math.random() * 3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }}
                     />
-                  );
-                })}
-                <defs>
-                  <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="rgba(168,85,247,0.5)" />
-                    <stop offset="100%" stopColor="rgba(59,130,246,0.5)" />
-                  </linearGradient>
-                </defs>
-              </svg>
-
-              {/* Ambient particles */}
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-1 h-1 bg-white/30 rounded-full"
-                  style={{
-                    left: `${20 + Math.random() * 60}%`,
-                    top: `${20 + Math.random() * 60}%`,
-                    animation: `twinkle ${2 + Math.random() * 2}s ease-in-out infinite`,
-                    animationDelay: `${Math.random() * 3}s`,
-                  }}
-                />
-              ))}
-            </div>
+                  ))}
+                </div>
+              );
+            })()}
           </motion.div>
         </div>
       </div>
