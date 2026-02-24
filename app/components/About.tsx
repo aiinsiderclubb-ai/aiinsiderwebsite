@@ -176,7 +176,7 @@ export default function About() {
               const nodeCount = capabilities.length;
               const nodePositions = capabilities.map((_, i) => {
                 const angle = (i * 360) / nodeCount - 90;
-                const r = 38;
+                const r = 41;
                 return {
                   x: 50 + r * Math.cos((angle * Math.PI) / 180),
                   y: 50 + r * Math.sin((angle * Math.PI) / 180),
@@ -324,7 +324,7 @@ export default function About() {
                     />
                   </svg>
 
-                  {/* Center node */}
+                  {/* Center node (tile perfectly centered) */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
@@ -337,11 +337,13 @@ export default function About() {
                         <Brain className="w-11 h-11 text-white" />
                       </div>
                     </motion.div>
-                    <div className="text-center mt-3">
-                      <div className="text-lg font-bold text-white">AI Insider</div>
-                      <div className="text-[11px] text-gray-500">
-                        {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
-                      </div>
+                  </div>
+
+                  {/* Center label (positioned under the tile) */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[78px] z-10 text-center pointer-events-none">
+                    <div className="text-lg font-bold text-white">AI Insider</div>
+                    <div className="text-[11px] text-gray-500">
+                      {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
                     </div>
                   </div>
 
@@ -363,8 +365,8 @@ export default function About() {
                         transition={{ duration: 0.5, delay: 0.5 + i * 0.12, type: 'spring', stiffness: 200 }}
                       >
                         <motion.div
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                          animate={{ scale: [1, 1.06, 1] }}
+                          transition={{ duration: 2.8 + i * 0.2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.25 }}
                           className="relative group"
                         >
                           {/* Node glow */}
