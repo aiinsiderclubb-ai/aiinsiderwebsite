@@ -174,24 +174,15 @@ export default function About() {
           >
             {(() => {
               const nodeCount = capabilities.length;
-              const nodePositions =
-                nodeCount === 6
-                  ? ([
-                      { x: 50, y: 12 },
-                      { x: 83, y: 31 },
-                      { x: 83, y: 69 },
-                      { x: 50, y: 88 },
-                      { x: 17, y: 69 },
-                      { x: 17, y: 31 },
-                    ] satisfies Array<{ x: number; y: number }>)
-                  : capabilities.map((_, i) => {
-                      const angle = (i * 360) / nodeCount - 90;
-                      const r = 38;
-                      return {
-                        x: 50 + r * Math.cos((angle * Math.PI) / 180),
-                        y: 50 + r * Math.sin((angle * Math.PI) / 180),
-                      };
-                    });
+              const nodePositions = capabilities.map((_, i) => {
+                const angle = (i * 360) / nodeCount - 90;
+                // Push nodes closer to the outer intersections (without clipping)
+                const r = 42;
+                return {
+                  x: 50 + r * Math.cos((angle * Math.PI) / 180),
+                  y: 50 + r * Math.sin((angle * Math.PI) / 180),
+                };
+              });
 
               const neuralConnections: Array<[number, number]> = [];
               for (let i = 0; i < nodeCount; i++) {
@@ -335,7 +326,7 @@ export default function About() {
                   </svg>
 
                   {/* Center node */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  <div className="absolute inset-0 flex items-center justify-center z-10">
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 3, repeat: Infinity }}
@@ -347,11 +338,13 @@ export default function About() {
                         <Brain className="w-11 h-11 text-white" />
                       </div>
                     </motion.div>
-                    <div className="text-center mt-3">
-                      <div className="text-lg font-bold text-white">AI Insider</div>
-                      <div className="text-[11px] text-gray-500">
-                        {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
-                      </div>
+                  </div>
+
+                  {/* Center label (separate so the tile stays perfectly centered) */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[74px] z-10 text-center">
+                    <div className="text-lg font-bold text-white">AI Insider</div>
+                    <div className="text-[11px] text-gray-500">
+                      {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
                     </div>
                   </div>
 
@@ -373,8 +366,8 @@ export default function About() {
                         transition={{ duration: 0.5, delay: 0.5 + i * 0.12, type: 'spring', stiffness: 200 }}
                       >
                         <motion.div
-                          animate={{ scale: [1, 1.04, 1] }}
-                          transition={{ duration: 3.2 + i * 0.2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.35 }}
+                          animate={{ y: [0, -5, 0] }}
+                          transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
                           className="relative group"
                         >
                           {/* Node glow */}
