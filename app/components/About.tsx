@@ -176,8 +176,7 @@ export default function About() {
               const nodeCount = capabilities.length;
               const nodePositions = capabilities.map((_, i) => {
                 const angle = (i * 360) / nodeCount - 90;
-                // Push nodes closer to the outer intersections (without clipping)
-                const r = 42;
+                const r = 38;
                 return {
                   x: 50 + r * Math.cos((angle * Math.PI) / 180),
                   y: 50 + r * Math.sin((angle * Math.PI) / 180),
@@ -326,7 +325,7 @@ export default function About() {
                   </svg>
 
                   {/* Center node */}
-                  <div className="absolute inset-0 flex items-center justify-center z-10">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 3, repeat: Infinity }}
@@ -338,13 +337,11 @@ export default function About() {
                         <Brain className="w-11 h-11 text-white" />
                       </div>
                     </motion.div>
-                  </div>
-
-                  {/* Center label (separate so the tile stays perfectly centered) */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[74px] z-10 text-center">
-                    <div className="text-lg font-bold text-white">AI Insider</div>
-                    <div className="text-[11px] text-gray-500">
-                      {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
+                    <div className="text-center mt-3">
+                      <div className="text-lg font-bold text-white">AI Insider</div>
+                      <div className="text-[11px] text-gray-500">
+                        {isEn ? 'Neural Intelligence' : 'Нейронний інтелект'}
+                      </div>
                     </div>
                   </div>
 
