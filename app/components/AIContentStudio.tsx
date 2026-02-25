@@ -289,27 +289,28 @@ export default function AIContentStudio() {
             </motion.div>
           </div>
 
-          {/* Right: Phone mockup — 2 cols, visible from md */}
+          {/* Right: Phone mockup with info panel — 2 cols, visible from md */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="md:col-span-2 hidden md:flex justify-center"
+            className="md:col-span-2 hidden md:flex items-center justify-center gap-4"
           >
-            <div className="relative">
+            {/* Phone mockup */}
+            <div className="relative shrink-0">
               {/* Glow */}
               <div
-                className="absolute -inset-4 rounded-[2.5rem] opacity-30 blur-2xl transition-all duration-500"
+                className="absolute -inset-4 rounded-[2.5rem] opacity-40 blur-2xl transition-all duration-500"
                 style={{
                   background: `linear-gradient(135deg, ${services[currentVideo % 3].glowColor} 0%, transparent 100%)`,
                 }}
               />
 
               {/* Phone frame */}
-              <div className="relative mx-auto w-[220px]">
-                <div className="relative rounded-[2.2rem] border-[3px] border-white/10 bg-black overflow-hidden shadow-2xl">
+              <div className="relative w-[180px] lg:w-[200px]">
+                <div className="relative rounded-[2rem] border-[3px] border-white/15 bg-black overflow-hidden shadow-2xl shadow-purple-500/20">
                   {/* Notch */}
-                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-black rounded-full z-20" />
+                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-14 h-4 bg-black rounded-full z-20" />
 
                   {/* Video content */}
                   <div className="aspect-[9/19] relative overflow-hidden">
@@ -344,36 +345,54 @@ export default function AIContentStudio() {
                       >
                         <span className="relative">
                           <span className="absolute inset-0 bg-white/20 rounded-full blur-lg animate-pulse" />
-                          <span className="relative w-12 h-12 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30">
+                          <span className="relative w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30">
                             {isPlaying ? (
-                              <Pause className="w-5 h-5 text-white" />
+                              <Pause className="w-4 h-4 text-white" />
                             ) : (
-                              <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                              <Play className="w-4 h-4 text-white fill-white ml-0.5" />
                             )}
                           </span>
                         </span>
                       </button>
 
-                      {/* Top badge */}
-                      <div className="absolute top-7 left-3 pointer-events-none">
-                        <span className="px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded-full text-[10px] font-bold">
-                          {videoExamples[currentVideo].category}
+                      {/* Live badge */}
+                      <div className="absolute top-7 left-3 flex items-center gap-1.5 pointer-events-none">
+                        <span className="flex items-center gap-1 px-2 py-0.5 bg-red-500/90 backdrop-blur-sm rounded-full text-[9px] font-bold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                          {isEn ? 'LIVE' : 'НАЖИВО'}
+                        </span>
+                      </div>
+                      
+                      {/* Username badge */}
+                      <div className="absolute top-7 right-3 pointer-events-none">
+                        <span className="px-2 py-0.5 bg-black/50 backdrop-blur-sm rounded-full text-[9px] font-medium text-white/80">
+                          @ai_influencer
                         </span>
                       </div>
 
                       {/* Bottom info */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                        <div className="font-bold text-xs">
-                          {isEn ? videoExamples[currentVideo].titleEn : videoExamples[currentVideo].titleUk}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+                          <div>
+                            <div className="font-bold text-[10px]">
+                              {isEn ? 'AI Creator' : 'AI-креатор'}
+                            </div>
+                            <div className="text-[8px] text-gray-400">
+                              2.5M {isEn ? 'followers' : 'підписників'}
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-[10px] text-gray-400">{isEn ? 'AI Generated' : 'Згенеровано AI'}</div>
+                        <div className="text-[9px] text-white/70 line-clamp-2">
+                          {isEn ? 'Creating content 24/7 without breaks' : 'Створює контент 24/7 без перерв'}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Navigation dots */}
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
                   {videoExamples.map((_, index) => (
                     <button
                       key={index}
@@ -383,20 +402,79 @@ export default function AIContentStudio() {
                       }}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         index === currentVideo
-                          ? 'bg-white w-5'
+                          ? 'bg-white w-4'
                           : 'bg-white/30 w-1.5 hover:bg-white/50'
                       }`}
                     />
                   ))}
                 </div>
 
-                {/* Floating badges */}
-                <div className="absolute -right-6 top-1/4 px-2.5 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-[10px] font-bold shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
-                  {isEn ? '🎭 AI Persona' : '🎭 AI-персона'}
+                {/* Floating badge left */}
+                <div className="absolute -left-4 bottom-1/3 px-2 py-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-[9px] font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
+                  {isEn ? '🎬 AI-video' : '🎬 AI-відео'}
                 </div>
-                <div className="absolute -left-6 bottom-1/3 px-2.5 py-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-[10px] font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>
-                  {isEn ? '🎬 Video AI' : '🎬 AI-відео'}
+              </div>
+            </div>
+
+            {/* Info Panel */}
+            <div className="relative flex flex-col gap-3 max-w-[160px]">
+              {/* Panel glow */}
+              <div className="absolute -inset-2 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl blur-xl" />
+              
+              {/* Floating influencer badge */}
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative px-3 py-2 rounded-xl border border-pink-500/30 bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-xl"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🎭</span>
+                  <span className="text-[11px] font-bold text-pink-300">
+                    {isEn ? 'AI-influencer' : 'AI-інфлюенсер'}
+                  </span>
                 </div>
+              </motion.div>
+
+              {/* Stats card */}
+              <div className="relative px-3 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-xl">
+                <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">
+                  {isEn ? 'Performance' : 'Показники'}
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-gray-400">{isEn ? 'Engagement' : 'Залучення'}</span>
+                    <span className="text-[11px] font-bold text-green-400">+340%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-gray-400">{isEn ? 'Content/mo' : 'Контент/міс'}</span>
+                    <span className="text-[11px] font-bold text-white">500+</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-gray-400">{isEn ? 'Cost saved' : 'Економія'}</span>
+                    <span className="text-[11px] font-bold text-purple-400">80%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Category tags */}
+              <div className="relative flex flex-wrap gap-1.5">
+                {services.map((s, i) => (
+                  <motion.span
+                    key={s.slug}
+                    animate={{ scale: currentVideo === i ? 1.05 : 1 }}
+                    className={`px-2 py-1 rounded-full text-[9px] font-medium border transition-all duration-300 cursor-pointer ${
+                      currentVideo === i
+                        ? `bg-gradient-to-r ${s.gradient} border-transparent text-white shadow-lg`
+                        : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
+                    }`}
+                    onClick={() => {
+                      setCurrentVideo(i);
+                      setIsPausedByUser(false);
+                    }}
+                  >
+                    {isEn ? s.titleEn : s.titleUk}
+                  </motion.span>
+                ))}
               </div>
             </div>
           </motion.div>
