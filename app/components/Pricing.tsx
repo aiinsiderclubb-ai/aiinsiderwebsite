@@ -116,7 +116,7 @@ export default function Pricing() {
           className="text-center mb-16"
         >
           {/* Animated badge */}
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-10 border border-white/15 bg-white/5 backdrop-blur-xl">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5 backdrop-blur-xl">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
@@ -140,13 +140,13 @@ export default function Pricing() {
             </span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
             {t('pricing.subtitle')}
           </p>
         </motion.div>
 
         {/* Pricing Cards — Premium Bento Design */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
             return (
@@ -155,7 +155,7 @@ export default function Pricing() {
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                 transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                className={`relative group ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
+                className={`relative group ${plan.popular ? 'md:-mt-3 md:mb-3' : ''}`}
               >
                 {/* Popular Badge — Floating */}
                 {plan.popular && (
@@ -185,7 +185,7 @@ export default function Pricing() {
                       ? 'border-white/30 bg-gradient-to-br from-white/[0.12] to-white/[0.04]'
                       : 'border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02]'
                     }
-                    hover:border-white/40 hover:-translate-y-3 hover:shadow-[0_40px_80px_-20px_rgba(255,255,255,0.15)]`}
+                    hover:border-white/40 hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(255,255,255,0.12)]`}
                 >
                   {/* Top gradient accent */}
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${plan.gradient.replace('to-transparent', 'to-transparent')}`} />
@@ -200,13 +200,13 @@ export default function Pricing() {
                   {/* Content */}
                   <div className="relative z-10 p-6 lg:p-8">
                     {/* Top row: Icon + Badge */}
-                    <div className="flex items-start justify-between mb-8">
+                    <div className="flex items-start justify-between mb-5">
                       <div
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3
                           ${plan.popular ? 'bg-white' : 'bg-white/10 border border-white/20'}`}
-                        style={plan.popular ? { boxShadow: '0 0 40px rgba(255, 255, 255, 0.3)' } : {}}
+                        style={plan.popular ? { boxShadow: '0 0 30px rgba(255, 255, 255, 0.3)' } : {}}
                       >
-                        <Icon className={`w-8 h-8 ${plan.popular ? 'text-black' : 'text-white'}`} />
+                        <Icon className={`w-6 h-6 ${plan.popular ? 'text-black' : 'text-white'}`} />
                       </div>
                       <span className="text-xs font-bold uppercase tracking-wider text-white/40 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
                         {plan.badge}
@@ -214,18 +214,18 @@ export default function Pricing() {
                     </div>
 
                     {/* Plan Name */}
-                    <h3 className="text-3xl md:text-4xl font-bold font-heading mb-3 text-white">
+                    <h3 className="text-2xl md:text-3xl font-bold font-heading mb-2 text-white">
                       {plan.name}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-400 mb-8 leading-relaxed">{t(plan.descKey)}</p>
+                    <p className="text-gray-400 mb-5 leading-relaxed text-sm">{t(plan.descKey)}</p>
 
                     {/* Price */}
-                    <div className="mb-10">
+                    <div className="mb-6">
                       <div className="flex items-baseline gap-1">
                         <span
-                          className="text-4xl md:text-5xl font-bold"
+                          className="text-3xl md:text-4xl font-bold"
                           style={{
                             background: plan.popular
                               ? 'linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #ffffff 100%)'
@@ -248,24 +248,24 @@ export default function Pricing() {
                     </div>
 
                     {/* Divider */}
-                    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8" />
+                    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-5" />
 
                     {/* Features */}
-                    <ul className="space-y-4 mb-10">
+                    <ul className="space-y-3 mb-6">
                       {plan.featureKeys.map((featureKey, idx) => (
                         <motion.li
                           key={idx}
                           initial={{ opacity: 0, x: -10 }}
                           animate={isInView ? { opacity: 1, x: 0 } : {}}
                           transition={{ duration: 0.4, delay: 0.3 + idx * 0.05 }}
-                          className="flex items-start gap-4"
+                          className="flex items-start gap-3"
                         >
-                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5
+                          <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5
                             ${plan.popular ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-white/10 border border-white/20'}`}
                           >
-                            <Check className={`w-3.5 h-3.5 ${plan.popular ? 'text-purple-300' : 'text-white'}`} />
+                            <Check className={`w-3 h-3 ${plan.popular ? 'text-purple-300' : 'text-white'}`} />
                           </div>
-                          <span className="text-gray-300 leading-relaxed">{t(featureKey)}</span>
+                          <span className="text-gray-300 leading-relaxed text-sm">{t(featureKey)}</span>
                         </motion.li>
                       ))}
                     </ul>
@@ -275,7 +275,7 @@ export default function Pricing() {
                       href={SCHEDULING_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`group/btn relative flex items-center justify-center gap-3 w-full py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]
+                      className={`group/btn relative flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-base overflow-hidden transition-all duration-300 hover:scale-[1.02]
                         ${plan.popular
                           ? 'bg-white text-black'
                           : 'bg-white/5 text-white border border-white/20 hover:bg-white/10 hover:border-white/30'
@@ -304,11 +304,11 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-20"
+          className="mt-14"
         >
           {/* Custom solution note */}
-          <div className="text-center mb-10">
-            <p className="text-gray-400 text-lg">
+          <div className="text-center mb-6">
+            <p className="text-gray-400 text-base">
               {t('pricing.needCustom')}{' '}
               <a href="#contact" className="text-white font-semibold hover:underline underline-offset-4 transition-all">
                 {t('pricing.letsTalk')} →
