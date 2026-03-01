@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, ArrowLeft, TrendingUp, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, TrendingUp, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
 import { CaseStudy, getLocalizedText } from '@/app/lib/casesData';
 import { useLanguage } from '@/app/context/LanguageContext';
 
@@ -24,59 +24,61 @@ const categoryColors: Record<string, { gradient: string; glow: string; accent: s
 export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps) {
   const { lang, t } = useLanguage();
   const basePath = `/${lang}`;
-  const isEn = lang === 'en';
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const cardWidth = 420;
-  const gap = 24;
-
-  const checkScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    
-    const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-    setActiveIndex(Math.min(newIndex, cases.length - 1));
-  };
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    container.addEventListener('scroll', checkScroll);
-    checkScroll();
-    return () => container.removeEventListener('scroll', checkScroll);
+  const navigate = useCallback((direction: 'left' | 'right') => {
+    setActiveIndex((prev) => {
+      if (direction === 'right') return Math.min(prev + 1, cases.length - 1);
+      return Math.max(prev - 1, 0);
+    });
   }, [cases.length]);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (!containerRef.current) return;
-    const scrollAmount = cardWidth + gap;
-    containerRef.current.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    });
+  const visibleCount = 5;
+  const getCardStyle = (index: number) => {
+    const offset = index - activeIndex;
+
+    if (offset < -1 || offset > visibleCount - 2) {
+      return { opacity: 0, scale: 0.8, x: offset < 0 ? -600 : 600, zIndex: 0, rotateY: 0 };
+    }
+
+    if (offset === 0) {
+      return { opacity: 1, scale: 1, x: 0, zIndex: 30, rotateY: 0 };
+    }
+
+    if (offset === -1) {
+      return { opacity: 0.5, scale: 0.88, x: -320, zIndex: 20, rotateY: 8 };
+    }
+
+    if (offset === 1) {
+      return { opacity: 0.7, scale: 0.92, x: 340, zIndex: 25, rotateY: -5 };
+    }
+
+    if (offset === 2) {
+      return { opacity: 0.4, scale: 0.84, x: 580, zIndex: 15, rotateY: -8 };
+    }
+
+    if (offset === 3) {
+      return { opacity: 0.2, scale: 0.78, x: 740, zIndex: 10, rotateY: -10 };
+    }
+
+    return { opacity: 0, scale: 0.75, x: offset > 0 ? 800 : -500, zIndex: 0, rotateY: 0 };
   };
 
-  const scrollToIndex = (index: number) => {
-    if (!containerRef.current) return;
-    containerRef.current.scrollTo({
-      left: index * (cardWidth + gap),
-      behavior: 'smooth',
-    });
-  };
+  const activeCase = cases[activeIndex];
+  const activeColors = categoryColors[activeCase?.category] || categoryColors.automation;
 
   return (
     <div className="relative">
-      {/* Navigation buttons */}
+      {/* Navigation */}
       <div className="absolute -top-16 right-0 flex items-center gap-3 z-10">
+        <span className="text-sm text-gray-500 mr-2">
+          {activeIndex + 1} / {cases.length}
+        </span>
         <button
-          onClick={() => scroll('left')}
-          disabled={!canScrollLeft}
-          className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-            canScrollLeft
+          onClick={() => navigate('left')}
+          disabled={activeIndex === 0}
+          className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 ${
+            activeIndex > 0
               ? 'border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 text-white'
               : 'border-white/10 bg-white/[0.02] text-white/30 cursor-not-allowed'
           }`}
@@ -84,10 +86,10 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
-          onClick={() => scroll('right')}
-          disabled={!canScrollRight}
-          className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-            canScrollRight
+          onClick={() => navigate('right')}
+          disabled={activeIndex === cases.length - 1}
+          className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 ${
+            activeIndex < cases.length - 1
               ? 'border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 text-white'
               : 'border-white/10 bg-white/[0.02] text-white/30 cursor-not-allowed'
           }`}
@@ -96,51 +98,52 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
         </button>
       </div>
 
-      {/* Carousel container */}
-      <div
-        ref={containerRef}
-        className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch',
-        }}
-      >
+      {/* Card stack area */}
+      <div className="relative h-[520px] flex items-center justify-center" style={{ perspective: 1200 }}>
+        {/* Background glow that follows active card */}
+        <div
+          className="absolute inset-0 transition-all duration-700 pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse at center, ${activeColors.glow.replace('0.4', '0.15')} 0%, transparent 60%)`,
+          }}
+        />
+
         {cases.map((caseData, index) => {
           const colors = categoryColors[caseData.category] || categoryColors.automation;
           const isSweezy = caseData.id === 'case-sweezy';
           const isActive = index === activeIndex;
+          const style = getCardStyle(index);
           const topResults = caseData.results.slice(0, 2);
 
           return (
             <motion.div
               key={caseData.id}
-              className="flex-shrink-0 snap-center"
-              style={{ width: cardWidth }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ 
-                opacity: 1, 
-                scale: isActive ? 1 : 0.95,
-                filter: isActive ? 'brightness(1)' : 'brightness(0.7)',
+              className="absolute w-[380px] md:w-[420px] cursor-pointer"
+              animate={{
+                opacity: style.opacity,
+                scale: style.scale,
+                x: style.x,
+                rotateY: style.rotateY,
+                zIndex: style.zIndex,
               }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              onClick={() => {
+                if (!isActive) setActiveIndex(index);
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              <Link href={`${basePath}/cases/${caseData.slug}`} className="block h-full group">
-                {/* Spotlight glow for active card */}
-                <div
-                  className={`absolute -inset-4 rounded-[2rem] blur-2xl transition-opacity duration-500 ${
-                    isActive ? 'opacity-60' : 'opacity-0'
-                  }`}
-                  style={{ background: `radial-gradient(circle, ${colors.glow} 0%, transparent 70%)` }}
-                />
-
+              <Link
+                href={`${basePath}/cases/${caseData.slug}`}
+                className={`block h-full group ${!isActive ? 'pointer-events-none' : ''}`}
+                tabIndex={isActive ? 0 : -1}
+              >
                 {/* Card */}
                 <div
                   className={`relative h-full rounded-[1.5rem] border overflow-hidden transition-all duration-500 ${
                     isSweezy
-                      ? 'bg-gradient-to-br from-blue-950/70 to-yellow-950/50 border-blue-500/40'
+                      ? 'bg-gradient-to-br from-blue-950/80 to-yellow-950/60 border-blue-500/40'
                       : 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border-white/15'
-                  } ${isActive ? 'shadow-2xl' : ''}`}
+                  } ${isActive ? 'shadow-2xl shadow-black/50' : 'shadow-xl shadow-black/30'}`}
                 >
                   {/* Top gradient line */}
                   <div className={`h-1 bg-gradient-to-r ${isSweezy ? 'from-blue-500 to-yellow-500' : colors.gradient}`} />
@@ -148,15 +151,15 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
                   {/* Content */}
                   <div className="p-6">
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-5">
+                    <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div
-                          className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl ${
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${
                             isSweezy
                               ? 'bg-gradient-to-br from-blue-500/30 to-yellow-500/30 border border-blue-400/40'
                               : `bg-gradient-to-br ${colors.gradient}`
                           }`}
-                          style={!isSweezy ? { boxShadow: `0 8px 24px ${colors.glow}` } : {}}
+                          style={!isSweezy ? { boxShadow: `0 6px 20px ${colors.glow}` } : {}}
                         >
                           {caseData.icon}
                         </div>
@@ -168,7 +171,7 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
                             {getLocalizedText(caseData.industryName, lang)}
                           </span>
                           {caseData.featured && (
-                            <div className="flex items-center gap-1 mt-1">
+                            <div className="flex items-center gap-1 mt-0.5">
                               <Zap className="w-3 h-3 text-yellow-500" />
                               <span className="text-[9px] font-bold text-yellow-400 uppercase">
                                 {t('cases.featured')}
@@ -180,44 +183,44 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white mb-3 leading-tight line-clamp-2">
+                    <h3 className="text-lg font-bold text-white mb-2 leading-tight line-clamp-2">
                       {getLocalizedText(caseData.title, lang)}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm text-gray-400 mb-5 line-clamp-3 leading-relaxed">
+                    <p className="text-sm text-gray-400 mb-4 line-clamp-2 leading-relaxed">
                       {getLocalizedText(caseData.shortDescription, lang)}
                     </p>
 
                     {/* Results */}
-                    <div className="flex flex-wrap gap-2 mb-5">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {topResults.map((result, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10"
                         >
-                          <TrendingUp className="w-4 h-4" style={{ color: isSweezy ? '#60a5fa' : colors.accent }} />
-                          <span className="text-base font-bold text-white">
+                          <TrendingUp className="w-3.5 h-3.5" style={{ color: isSweezy ? '#60a5fa' : colors.accent }} />
+                          <span className="text-sm font-bold text-white">
                             {result.prefix}{result.value}{result.suffix}
                           </span>
-                          <span className="text-xs text-gray-500">{getLocalizedText(result.label, lang)}</span>
+                          <span className="text-[10px] text-gray-500">{getLocalizedText(result.label, lang)}</span>
                         </div>
                       ))}
                     </div>
 
                     {/* Tech tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-5">
-                      {caseData.technologies.slice(0, 4).map((tech, i) => (
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {caseData.technologies.slice(0, 3).map((tech, i) => (
                         <span
                           key={i}
-                          className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-gray-500 border border-white/10"
+                          className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-gray-500 border border-white/8"
                         >
                           {tech}
                         </span>
                       ))}
-                      {caseData.technologies.length > 4 && (
-                        <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-gray-500 border border-white/10">
-                          +{caseData.technologies.length - 4}
+                      {caseData.technologies.length > 3 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-gray-500 border border-white/8">
+                          +{caseData.technologies.length - 3}
                         </span>
                       )}
                     </div>
@@ -228,12 +231,12 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
                         e.preventDefault();
                         onDemoClick(caseData);
                       }}
-                      className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 group-hover:scale-[1.02] ${
+                      className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
                         isSweezy
                           ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
                           : `bg-gradient-to-r ${colors.gradient} text-white`
                       }`}
-                      style={!isSweezy ? { boxShadow: `0 4px 20px ${colors.glow}` } : {}}
+                      style={!isSweezy ? { boxShadow: `0 4px 16px ${colors.glow}` } : {}}
                     >
                       {caseData.ctas[0]?.icon}
                       <span>{getLocalizedText(caseData.ctas[0]?.label, lang)}</span>
@@ -247,26 +250,22 @@ export default function CasesCarousel({ cases, onDemoClick }: CasesCarouselProps
         })}
       </div>
 
-      {/* Progress dots */}
-      <div className="flex items-center justify-center gap-2 mt-6">
+      {/* Progress bar */}
+      <div className="flex items-center justify-center gap-1.5 mt-4">
         {cases.map((_, index) => (
           <button
             key={index}
-            onClick={() => scrollToIndex(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
+            onClick={() => setActiveIndex(index)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
               index === activeIndex
                 ? 'bg-white w-8'
-                : 'bg-white/20 w-2 hover:bg-white/40'
+                : index > activeIndex - 3 && index < activeIndex + 3
+                  ? 'bg-white/30 w-1.5 hover:bg-white/50'
+                  : 'bg-white/15 w-1 hover:bg-white/30'
             }`}
           />
         ))}
       </div>
-
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }
