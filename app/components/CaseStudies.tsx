@@ -51,7 +51,7 @@ export default function CaseStudies() {
   const isEn = lang === 'en';
 
   return (
-    <section id="cases" className="relative py-24 px-6 overflow-hidden">
+    <section id="cases" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[700px] h-[700px] opacity-20"

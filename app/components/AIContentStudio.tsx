@@ -136,7 +136,7 @@ export default function AIContentStudio() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-20 px-6 overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 px-6 overflow-hidden content-visibility-auto">
       {/* Background */}
       <div className="absolute inset-0">
         <div

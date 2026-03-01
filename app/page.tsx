@@ -1,17 +1,19 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Solutions from './components/Solutions';
-import AIContentStudio from './components/AIContentStudio';
-import CaseStudies from './components/CaseStudies';
-import TechStack from './components/TechStack';
-import Testimonials from './components/Testimonials';
-import Pricing from './components/Pricing';
-import BookCall from './components/BookCall';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+
+const About = dynamic(() => import('./components/About'), { ssr: true });
+const Solutions = dynamic(() => import('./components/Solutions'), { ssr: true });
+const AIContentStudio = dynamic(() => import('./components/AIContentStudio'), { ssr: true });
+const CaseStudies = dynamic(() => import('./components/CaseStudies'), { ssr: true });
+const TechStack = dynamic(() => import('./components/TechStack'), { ssr: true });
+const Testimonials = dynamic(() => import('./components/Testimonials'), { ssr: true });
+const Pricing = dynamic(() => import('./components/Pricing'), { ssr: true });
+const BookCall = dynamic(() => import('./components/BookCall'), { ssr: true });
+const Contact = dynamic(() => import('./components/Contact'), { ssr: true });
 
 export default function Home() {
   return (

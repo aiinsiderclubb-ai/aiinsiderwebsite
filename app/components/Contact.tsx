@@ -22,7 +22,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 px-6 overflow-hidden">
+    <section id="contact" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Background - Monochrome */}
       <div
         className="absolute inset-0 gpu-accelerated"

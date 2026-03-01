@@ -36,6 +36,11 @@ const serviceGradients: Record<string, { gradient: string; glowColor: string }> 
 
 const defaultGradient = { gradient: 'from-white/20 to-white/10', glowColor: 'rgba(255, 255, 255, 0.2)' };
 
+const PARTICLE_POSITIONS = [
+  [12, 18], [78, 32], [45, 72], [28, 45], [62, 58], [18, 65], [72, 22], [35, 38],
+  [55, 82], [88, 48], [22, 28], [68, 72], [42, 15], [58, 45], [15, 55],
+];
+
 export default function ServiceDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
@@ -103,17 +108,17 @@ export default function ServiceDetailPage() {
               animation: 'float 20s ease-in-out infinite',
             }}
           />
-          {/* Particles */}
+          {/* Particles - fixed positions for performance */}
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(15)].map((_, i) => (
+            {PARTICLE_POSITIONS.map(([left, top], i) => (
               <div
                 key={i}
                 className="absolute w-1 h-1 bg-white/20 rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 2}s`,
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  animation: `twinkle ${2.5 + (i % 3)}s ease-in-out infinite`,
+                  animationDelay: `${(i % 5) * 0.4}s`,
                 }}
               />
             ))}

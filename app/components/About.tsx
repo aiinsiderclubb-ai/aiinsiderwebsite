@@ -5,6 +5,12 @@ import { useRef } from 'react';
 import { Zap, Globe, Shield, Brain, Cpu, Workflow, Sparkles, Bot, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
 
+const AMBIENT_PARTICLES = [
+  { left: 18, top: 22 }, { left: 72, top: 35 }, { left: 45, top: 68 }, { left: 28, top: 55 },
+  { left: 65, top: 18 }, { left: 52, top: 42 }, { left: 38, top: 78 }, { left: 78, top: 62 },
+  { left: 22, top: 45 }, { left: 58, top: 28 }, { left: 35, top: 65 }, { left: 68, top: 52 },
+];
+
 const capabilities = [
   { icon: Bot, gradient: 'from-purple-500 to-pink-500', delay: 0 },
   { icon: MessageCircle, gradient: 'from-blue-500 to-cyan-500', delay: 0.8 },
@@ -42,7 +48,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative py-24 px-6 overflow-hidden">
+    <section id="about" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Background */}
       <div className="absolute inset-0">
         <div
@@ -264,8 +270,9 @@ export default function About() {
                       );
                     })}
 
-                    {/* Animated signal pulses traveling along connections */}
-                    {nodePositions.map((pos, i) => {
+                    {/* Animated signal pulses (reduced to 3 for performance) */}
+                    {[0, 2, 4].map((i) => {
+                      const pos = nodePositions[i];
                       const x2 = (pos.x / 100) * 520;
                       const y2 = (pos.y / 100) * 520;
                       return (
@@ -281,8 +288,8 @@ export default function About() {
                             opacity: [0, 0.8, 0],
                           } : {}}
                           transition={{
-                            duration: 3,
-                            delay: 1.5 + i * 0.5,
+                            duration: 4,
+                            delay: 2 + i * 0.8,
                             repeat: Infinity,
                             ease: 'easeInOut',
                           }}
@@ -290,7 +297,7 @@ export default function About() {
                       );
                     })}
 
-                    {/* Synaptic dots at each connection midpoint */}
+                    {/* Synaptic dots - static opacity, no infinite animation */}
                     {neuralConnections.map(([a, b], idx) => {
                       const mx = ((nodePositions[a].x + nodePositions[b].x) / 2 / 100) * 520;
                       const my = ((nodePositions[a].y + nodePositions[b].y) / 2 / 100) * 520;
@@ -298,45 +305,32 @@ export default function About() {
                         <motion.circle
                           key={`synapse-${idx}`}
                           cx={mx} cy={my} r="2"
-                          fill="rgba(168,85,247,0.6)"
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={isInView ? {
-                            opacity: [0.3, 0.8, 0.3],
-                            r: [1.5, 3, 1.5],
-                          } : {}}
-                          transition={{
-                            duration: 2 + (idx % 3) * 0.5,
-                            delay: 1 + idx * 0.08,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                          }}
+                          fill="rgba(168,85,247,0.5)"
+                          initial={{ opacity: 0 }}
+                          animate={isInView ? { opacity: 0.6 } : {}}
+                          transition={{ duration: 0.8, delay: 1.2 + idx * 0.05 }}
                         />
                       );
                     })}
 
-                    {/* Center glow */}
-                    <motion.circle
+                    {/* Center glow - static for performance */}
+                    <circle
                       cx={260} cy={260} r="40"
-                      fill="rgba(168,85,247,0.15)"
+                      fill="rgba(168,85,247,0.2)"
                       filter="url(#glow)"
-                      animate={{ r: [35, 45, 35], opacity: [0.15, 0.25, 0.15] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                     />
                   </svg>
 
                   {/* Center node (tile perfectly centered) */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
+                    <div>
                       <div
                         className="w-[90px] h-[90px] rounded-3xl bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 flex items-center justify-center"
                         style={{ boxShadow: '0 0 60px rgba(168,85,247,0.5), 0 0 120px rgba(59,130,246,0.3)' }}
                       >
                         <Brain className="w-11 h-11 text-white" />
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Center label (positioned under the tile) */}
@@ -364,11 +358,7 @@ export default function About() {
                         animate={isInView ? { opacity: 1, scale: 1 } : {}}
                         transition={{ duration: 0.5, delay: 0.5 + i * 0.12, type: 'spring', stiffness: 200 }}
                       >
-                        <motion.div
-                          animate={{ scale: [1, 1.06, 1] }}
-                          transition={{ duration: 2.8 + i * 0.2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.25 }}
-                          className="relative group"
-                        >
+                        <div className="relative group">
                           {/* Node glow */}
                           <div
                             className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -383,30 +373,20 @@ export default function About() {
                           >
                             <Icon className="w-6 h-6 text-white" />
                           </div>
-                        </motion.div>
+                        </div>
                       </motion.div>
                     );
                   })}
 
-                  {/* Extra ambient particles scattered around */}
-                  {[...Array(12)].map((_, i) => (
-                    <motion.div
+                  {/* Ambient particles (fixed positions - no Math.random in render) */}
+                  {AMBIENT_PARTICLES.map((p, i) => (
+                    <div
                       key={`particle-${i}`}
-                      className="absolute w-1 h-1 rounded-full"
+                      className="absolute w-1 h-1 rounded-full opacity-50"
                       style={{
-                        left: `${15 + Math.random() * 70}%`,
-                        top: `${15 + Math.random() * 70}%`,
+                        left: `${p.left}%`,
+                        top: `${p.top}%`,
                         background: i % 3 === 0 ? 'rgba(168,85,247,0.6)' : i % 3 === 1 ? 'rgba(59,130,246,0.6)' : 'rgba(236,72,153,0.6)',
-                      }}
-                      animate={{
-                        opacity: [0.2, 0.8, 0.2],
-                        scale: [1, 1.8, 1],
-                      }}
-                      transition={{
-                        duration: 2 + Math.random() * 2,
-                        delay: Math.random() * 3,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
                       }}
                     />
                   ))}

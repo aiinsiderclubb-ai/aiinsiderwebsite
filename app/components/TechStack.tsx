@@ -74,7 +74,7 @@ export default function TechStack() {
   const [isPaused, setIsPaused] = useState(false);
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-24 overflow-hidden content-visibility-auto">
       {/* Background - Monochrome */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent"

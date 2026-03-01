@@ -201,7 +201,7 @@ export default function BookCall() {
   };
 
   return (
-    <section id="bookcall" className="relative py-24 px-6 overflow-hidden">
+    <section id="bookcall" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Static Background - no animation */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full gpu-accelerated"

@@ -70,7 +70,7 @@ export default function Testimonials() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden">
+    <section className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div

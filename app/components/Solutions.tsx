@@ -81,7 +81,7 @@ export default function Solutions() {
   ];
 
   return (
-    <section id="solutions" className="relative py-24 px-6 overflow-hidden">
+    <section id="solutions" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
         <div

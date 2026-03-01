@@ -1,20 +1,22 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 
+const SCROLL_THROTTLE_MS = 80;
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 100], [0, 1]);
-  const blur = useTransform(scrollY, [0, 100], [0, 20]);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const lastScrollUpdate = useRef(0);
+  const rafId = useRef<number | null>(null);
   const pathname = usePathname();
   const { t, lang } = useLanguage();
   const basePath = `/${lang}`;
@@ -22,10 +24,22 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const now = Date.now();
+      if (now - lastScrollUpdate.current < SCROLL_THROTTLE_MS) return;
+      if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
+      rafId.current = window.requestAnimationFrame(() => {
+        lastScrollUpdate.current = now;
+        const y = window.scrollY;
+        setIsScrolled(y > 50);
+        setScrollProgress(Math.min(y / 100, 1));
+      });
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const navLinks = [
@@ -37,14 +51,17 @@ export default function Navbar() {
     { name: t('nav.contact'), href: isHomePage ? '#bookcall' : `${basePath}#bookcall` },
   ];
 
+  const navOpacity = isHomePage ? scrollProgress : 1;
+  const navBlur = isHomePage ? scrollProgress * 20 : 20;
+
   return (
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         isScrolled || !isHomePage ? 'py-4' : 'py-6'
       }`}
       style={{ 
-        opacity: isHomePage ? opacity : 1,
-        backdropFilter: (isScrolled || !isHomePage) ? `blur(${isHomePage ? blur : 20}px)` : 'none',
+        opacity: isHomePage ? navOpacity : 1,
+        backdropFilter: (isScrolled || !isHomePage) ? `blur(${navBlur}px)` : 'none',
       }}
     >
       {/* Background with border */}

@@ -78,7 +78,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="relative py-24 px-6 overflow-hidden">
+    <section id="pricing" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
       {/* Premium Background */}
       <div className="absolute inset-0">
         {/* Large gradient orbs */}

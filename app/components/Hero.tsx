@@ -3,36 +3,40 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+
+const MOUSE_THROTTLE_MS = 120;
+const PARTICLES_COUNT = 4;
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const lastUpdate = useRef(0);
+  const rafId = useRef<number | null>(null);
   const { t } = useLanguage();
 
   useEffect(() => {
     if (typeof window === 'undefined' || shouldReduceMotion) return;
 
-    let frame: number | null = null;
-
     const handleMouseMove = (e: MouseEvent) => {
-      if (frame !== null) return;
+      const now = Date.now();
+      if (now - lastUpdate.current < MOUSE_THROTTLE_MS) return;
 
-      frame = window.requestAnimationFrame(() => {
+      if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
+      rafId.current = window.requestAnimationFrame(() => {
+        lastUpdate.current = now;
         setMousePosition({
           x: (e.clientX / window.innerWidth) * 100,
           y: (e.clientY / window.innerHeight) * 100,
         });
-        frame = null;
+        rafId.current = null;
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => {
-      if (frame !== null) {
-        window.cancelAnimationFrame(frame);
-      }
+      if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [shouldReduceMotion]);
@@ -65,7 +69,7 @@ export default function Hero() {
       {/* Background */}
       <div className="absolute inset-0 bg-black" />
       
-      {/* Animated Orbs - Monochrome */}
+      {/* Animated Orbs - Monochrome (will-change for GPU layer) */}
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full gpu-accelerated"
         style={{
@@ -73,17 +77,11 @@ export default function Hero() {
           filter: 'blur(60px)',
           left: '20%',
           top: '20%',
+          willChange: 'transform',
         }}
-        animate={{
-          scale: [1, 1.15, 1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
-      
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full gpu-accelerated"
         style={{
@@ -91,17 +89,11 @@ export default function Hero() {
           filter: 'blur(50px)',
           right: '10%',
           top: '40%',
+          willChange: 'transform',
         }}
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
       />
-
       <motion.div
         className="absolute w-[400px] h-[400px] rounded-full gpu-accelerated"
         style={{
@@ -109,39 +101,25 @@ export default function Hero() {
           filter: 'blur(40px)',
           left: '50%',
           bottom: '10%',
+          willChange: 'transform',
         }}
-        animate={{
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
       
-      {/* Cursor Follow Glow - Monochrome */}
+      {/* Cursor Follow Glow - Monochrome (throttled updates) */}
       {!shouldReduceMotion && (
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-30"
           style={{
-            background: `radial-gradient(circle, 
-            rgba(255, 255, 255, 0.15) 0%, 
-            rgba(255, 255, 255, 0.08) 30%,
-            rgba(255, 255, 255, 0.03) 60%,
-            transparent 70%)`,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.03) 60%, transparent 70%)',
             left: `${mousePosition.x}%`,
             top: `${mousePosition.y}%`,
             transform: 'translate(-50%, -50%)',
+            willChange: 'transform, left, top',
           }}
-          animate={{
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          animate={{ scale: [1, 1.12, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         />
       )}
 
@@ -158,26 +136,26 @@ export default function Hero() {
         />
       </div>
 
-      {/* Floating Particles - White */}
+      {/* Floating Particles - White (reduced for performance) */}
       {!shouldReduceMotion &&
-        [...Array(8)].map((_, i) => {
-          const xPos = (i * 12.5) + 5;
-          const yPos = 50 + (i % 3) * 20;
+        [...Array(PARTICLES_COUNT)].map((_, i) => {
+          const xPos = (i * 25) + 10;
+          const yPos = 45 + (i % 2) * 30;
 
           return (
             <motion.div
               key={i}
               className="absolute w-2 h-2 bg-white rounded-full gpu-accelerated"
-              style={{ left: `${xPos}%`, top: `${yPos}%` }}
+              style={{ left: `${xPos}%`, top: `${yPos}%`, willChange: 'transform, opacity' }}
               initial={{ opacity: 0 }}
               animate={{
-                y: [0, -200],
+                y: [0, -180],
                 opacity: [0, 0.6, 0],
               }}
               transition={{
-                duration: 5 + i * 0.5,
+                duration: 6 + i * 0.5,
                 repeat: Infinity,
-                delay: i * 0.8,
+                delay: i * 1.2,
                 ease: 'easeOut',
               }}
             />
