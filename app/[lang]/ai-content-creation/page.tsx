@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp, ChevronLeft, ChevronRight, Volume2, VolumeX, Pause } from 'lucide-react';
@@ -129,6 +129,16 @@ export default function AIContentCreationHub() {
   const showcaseVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const carouselRef = useRef(null);
   const carouselInView = useInView(carouselRef, { once: true, margin: '-100px' });
+  const heroParticles = useMemo(
+    () =>
+      Array.from({ length: 14 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        duration: `${2 + Math.random() * 3}s`,
+        delay: `${Math.random() * 2}s`,
+      })),
+    []
+  );
 
   useEffect(() => {
     if (!isAutoplay || isPausedByUser) return;
@@ -231,15 +241,15 @@ export default function AIContentCreationHub() {
           />
           {/* Animated particles */}
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(20)].map((_, i) => (
+            {heroParticles.map((particle, i) => (
               <div
                 key={i}
                 className="absolute w-1 h-1 bg-white/20 rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 2}s`,
+                  left: particle.left,
+                  top: particle.top,
+                  animation: `twinkle ${particle.duration} ease-in-out infinite`,
+                  animationDelay: particle.delay,
                 }}
               />
             ))}
@@ -541,7 +551,7 @@ export default function AIContentCreationHub() {
                             playsInline
                             loop
                             autoPlay={!isPausedByUser && idx === currentVideo}
-                            preload="auto"
+                            preload="metadata"
                           />
                         ))}
 

@@ -330,7 +330,7 @@ export default function AIContentStudio() {
                           playsInline
                           loop
                           autoPlay={!isPausedByUser && idx === currentVideo}
-                          preload="auto"
+                          preload="metadata"
                         />
                       ))}
 

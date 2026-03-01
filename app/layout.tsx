@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import './globals.css';
-import ChatWidget from './components/ChatWidget';
+import LazyChatWidget from './components/LazyChatWidget';
 import { ChatProvider } from './context/ChatContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME } from './lib/site';
@@ -183,7 +183,7 @@ export default async function RootLayout({
         <LanguageProvider initialLang={lang}>
           <ChatProvider>
             {children}
-            <ChatWidget />
+            <LazyChatWidget />
           </ChatProvider>
         </LanguageProvider>
       </body>
