@@ -1,8 +1,8 @@
 interface LeadMagnetSectionProps {
-  isSubmitted?: boolean;
+  status?: 'success' | 'error';
 }
 
-export default function LeadMagnetSection({ isSubmitted = false }: LeadMagnetSectionProps) {
+export default function LeadMagnetSection({ status }: LeadMagnetSectionProps) {
   return (
     <section id="lead-magnet" className="py-12 px-6 content-visibility-auto">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
@@ -22,9 +22,13 @@ export default function LeadMagnetSection({ isSubmitted = false }: LeadMagnetSec
           <h3 className="text-xl font-bold text-white">Завантажити чек-лист</h3>
           <p className="mt-2 text-sm text-gray-400">Отримаєте PDF на email + шаблон для розрахунку втрат.</p>
 
-          {isSubmitted ? (
+          {status === 'success' ? (
             <p className="mt-4 rounded-lg border border-emerald-400/30 bg-emerald-500/15 p-3 text-sm text-emerald-100">
               Дякуємо! Заявка прийнята. Ми надішлемо чек-лист на вашу пошту.
+            </p>
+          ) : status === 'error' ? (
+            <p className="mt-4 rounded-lg border border-rose-400/30 bg-rose-500/10 p-3 text-sm text-rose-100">
+              Не вдалося надіслати форму. Перевірте поля та спробуйте ще раз.
             </p>
           ) : null}
 
@@ -35,11 +39,14 @@ export default function LeadMagnetSection({ isSubmitted = false }: LeadMagnetSec
             data-cta="lead-magnet-form"
           >
             <input type="hidden" name="source" value="beauty-pillar" />
+            <input type="hidden" name="formType" value="lead-magnet" />
+            <input type="hidden" name="locale" value="uk" />
             <label className="block">
               <span className="text-sm text-gray-300">Ім'я</span>
               <input
                 name="name"
                 required
+                minLength={2}
                 className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
               />
             </label>

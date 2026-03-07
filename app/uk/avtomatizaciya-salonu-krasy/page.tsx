@@ -5,6 +5,7 @@ import Link from 'next/link';
 import HeroSection from '@/app/components/beauty-salon/HeroSection';
 import ProblemSection from '@/app/components/beauty-salon/ProblemSection';
 import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
+import BeautyClusterSection from '@/app/components/beauty-salon/BeautyClusterSection';
 import ROISection from '@/app/components/beauty-salon/ROISection';
 import LeadMagnetSection from '@/app/components/beauty-salon/LeadMagnetSection';
 import type { FaqEntry } from '@/app/lib/schema/faqSchema';
@@ -128,6 +129,9 @@ export default async function BeautySalonAutomationPage({
   ]);
   const serviceSchema = buildBeautyServiceSchema({ url: pageUrl });
 
+  const leadMagnetStatus = params.leadMagnet === 'success' ? 'success' : params.leadMagnet === 'error' ? 'error' : undefined;
+  const auditStatus = params.audit === 'success' ? 'success' : params.audit === 'error' ? 'error' : undefined;
+
   return (
     <main className="min-h-screen bg-black text-white">
       <Script id="beauty-faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -140,6 +144,40 @@ export default async function BeautySalonAutomationPage({
         id="beauty-service-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <Script
+        id="beauty-form-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function () {
+              try {
+                var params = new URLSearchParams(window.location.search);
+                var source = 'beauty-pillar';
+                var locale = 'uk';
+                var fired = false;
+                function fire(formType) {
+                  var payload = { event: 'aiinsider_form_submit_success', source: source, formType: formType, locale: locale };
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push(payload);
+                  if (typeof window.gtag === 'function') {
+                    window.gtag('event', payload.event, payload);
+                  }
+                  window.dispatchEvent(new CustomEvent('aiinsider:lead', { detail: payload }));
+                  fired = true;
+                }
+                if (params.get('leadMagnet') === 'success') fire('lead-magnet');
+                if (params.get('audit') === 'success') fire('audit-request');
+                if (fired) {
+                  params.delete('leadMagnet');
+                  params.delete('audit');
+                  var next = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+                  window.history.replaceState({}, '', next);
+                }
+              } catch (e) {}
+            })();
+          `,
+        }}
       />
 
       <article>
@@ -175,13 +213,14 @@ export default async function BeautySalonAutomationPage({
 
         <ProblemSection />
         <AutomationSection />
+        <BeautyClusterSection />
         <ROISection />
         <CaseSection />
         <ImplementationSection />
         <ObjectionSection />
         <FAQSection faqs={FAQS} />
-        <LeadMagnetSection isSubmitted={params.leadMagnet === 'success'} />
-        <FinalCTA isSubmitted={params.audit === 'success'} />
+        <LeadMagnetSection status={leadMagnetStatus} />
+        <FinalCTA status={auditStatus} />
       </article>
     </main>
   );

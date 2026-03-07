@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
 interface FinalCTAProps {
-  isSubmitted?: boolean;
+  status?: 'success' | 'error';
 }
 
-export default function FinalCTA({ isSubmitted = false }: FinalCTAProps) {
+export default function FinalCTA({ status }: FinalCTAProps) {
   return (
     <section className="py-12 pb-20 px-6 content-visibility-auto">
       <div className="max-w-6xl mx-auto rounded-3xl border border-white/15 bg-gradient-to-br from-white/10 to-white/[0.02] p-6 md:p-8">
@@ -33,18 +33,25 @@ export default function FinalCTA({ isSubmitted = false }: FinalCTAProps) {
 
           <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
             <h3 className="text-xl font-semibold text-white">Запит на аудит</h3>
-            {isSubmitted ? (
+            {status === 'success' ? (
               <p className="mt-4 rounded-lg border border-emerald-400/30 bg-emerald-500/15 p-3 text-sm text-emerald-100">
                 Дякуємо! Ваш запит на аудит отримано. Ми зв’яжемося з вами найближчим часом.
+              </p>
+            ) : status === 'error' ? (
+              <p className="mt-4 rounded-lg border border-rose-400/30 bg-rose-500/10 p-3 text-sm text-rose-100">
+                Не вдалося надіслати запит. Перевірте поля та спробуйте ще раз.
               </p>
             ) : null}
             <form id="audit-form" action="/api/audit-request" method="post" className="mt-4 space-y-3" data-cta="audit-form">
               <input type="hidden" name="source" value="beauty-pillar" />
+              <input type="hidden" name="formType" value="audit-request" />
+              <input type="hidden" name="locale" value="uk" />
               <label className="block">
                 <span className="text-sm text-gray-300">Ім'я</span>
                 <input
                   name="name"
                   required
+                  minLength={2}
                   className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
                 />
               </label>
@@ -53,6 +60,7 @@ export default function FinalCTA({ isSubmitted = false }: FinalCTAProps) {
                 <input
                   name="phone"
                   required
+                  inputMode="tel"
                   className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
                 />
               </label>
@@ -76,7 +84,7 @@ export default function FinalCTA({ isSubmitted = false }: FinalCTAProps) {
                   type="number"
                   name="monthlyBookings"
                   required
-                  min={0}
+                  min={1}
                   className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
                 />
               </label>
