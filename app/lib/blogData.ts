@@ -35,6 +35,8 @@ export interface BlogArticle {
   faq: BlogFaq[];
   /** CTA labels */
   cta: { bookConsultation: L; getAudit: L };
+  /** Optional CTA target path (without language prefix), ex: /avtomatizaciya-salonu-krasy#roi-calculator */
+  ctaHref?: string;
   /** Internal links to service/case pages. */
   relatedLinks: { href: string; label: L }[];
 }
@@ -3295,6 +3297,849 @@ export const blogArticles: BlogArticle[] = [
       { href: '/ai-content-creation', label: { en: 'AI Content Studio', uk: 'AI Контент-Студія' } },
       { href: '/services/ai-influencers', label: { en: 'AI Influencer Service', uk: 'Послуга AI-інфлюенсерів' } },
       { href: '/blog/ai-influencers-for-brands-complete-guide', label: { en: 'AI Influencers Guide', uk: 'Гайд з AI-інфлюенсерів' } },
+    ],
+  },
+  /* ─── Article 35 ─── */
+  {
+    slug: 'instagram-direct-leads-beauty-salon',
+    keyword: { en: 'instagram direct leads for beauty salon', uk: 'ліди з Instagram Direct для салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '💅',
+    readTime: 11,
+    publishedAt: '2026-03-02',
+    titleTag: {
+      en: 'Instagram Direct Leads for Beauty Salons: Conversion Playbook | AI Insider',
+      uk: 'Ліди з Instagram Direct для салону краси: playbook конверсії | AI Insider',
+    },
+    metaDescription: {
+      en: 'How beauty salons convert Instagram Direct inquiries into booked appointments with scripts, routing logic, and automation.',
+      uk: 'Як салону краси перетворювати звернення з Instagram Direct у записи: скрипти, логіка маршрутизації та автоматизація.',
+    },
+    metaKeywords: {
+      en: ['instagram leads beauty salon', 'direct message conversion', 'beauty salon automation', 'instagram booking bot'],
+      uk: ['ліди instagram салон краси', 'конверсія direct у запис', 'автоматизація салону краси', 'бот запису instagram'],
+    },
+    h1: {
+      en: 'Instagram Direct leads for beauty salons: how to stop losing hot inquiries',
+      uk: 'Ліди з Instagram Direct для салону краси: як перестати втрачати гарячі звернення',
+    },
+    intro: [
+      {
+        en: 'Most beauty salons do not have a lead problem. They have a response-time problem. The inquiry arrives in Direct, someone replies after 20 minutes, and the client books elsewhere.',
+        uk: 'У більшості салонів краси проблема не в кількості лідів, а в швидкості реакції. Запит приходить у Direct, відповідь летить через 20 хвилин, і клієнт уже записався до конкурента.',
+      },
+      {
+        en: 'This guide shows the exact workflow to convert Instagram messages into booked appointments: first-response SLA, qualification script, CRM handoff, and follow-up automation.',
+        uk: 'У цьому гайді — конкретний workflow, як конвертувати повідомлення в Instagram у запис: SLA першої відповіді, скрипт кваліфікації, передача в CRM і follow-up автоматизація.',
+      },
+    ],
+    sections: [
+      {
+        heading: { en: 'Why salons lose Direct leads', uk: 'Чому салони втрачають ліди з Direct' },
+        body: [
+          {
+            en: 'The leak usually happens in the first 10 minutes. If the client asks price, nearest slot, or procedure prep and does not get a clear answer quickly, intent drops fast.',
+            uk: 'Витік відбувається в перші 10 хвилин. Якщо клієнт питає ціну, найближчий слот або підготовку до процедури і не отримує чіткої відповіді швидко, намір різко падає.',
+          },
+          {
+            en: 'Another issue is fragmented communication: one admin replies in one style, another in a different style. There is no consistent script, no status tracking, and no conversion discipline.',
+            uk: 'Друга проблема — фрагментована комунікація: один адміністратор відповідає одним стилем, інший — іншим. Немає єдиного скрипта, статусів і дисципліни конверсії.',
+          },
+        ],
+        bullets: [
+          { en: 'No first-response SLA in minutes', uk: 'Немає SLA першої відповіді в хвилинах' },
+          { en: 'No qualification fields before booking', uk: 'Немає кваліфікаційних полів перед записом' },
+          { en: 'No CRM logging for Direct conversations', uk: 'Немає логування Direct-діалогів у CRM' },
+          { en: 'No follow-up for silent prospects', uk: 'Немає follow-up для “тихих” проспектів' },
+        ],
+      },
+      {
+        heading: { en: 'High-conversion Direct script', uk: 'Скрипт Direct з високою конверсією' },
+        body: [
+          {
+            en: 'A conversion script should not be long. It should answer intent quickly and move the user to a scheduling step. Ask only what you need to place the booking correctly.',
+            uk: 'Конверсійний скрипт не має бути довгим. Він має швидко закрити намір і перевести людину на крок бронювання. Запитуйте лише те, що потрібно для правильного запису.',
+          },
+          {
+            en: 'Use short response blocks and pre-built reply templates with variables: service, duration, price range, available slots, and prep rules.',
+            uk: 'Використовуйте короткі блоки відповіді та шаблони з змінними: послуга, тривалість, діапазон ціни, доступні слоти і правила підготовки.',
+          },
+        ],
+        bullets: [
+          { en: 'Step 1: acknowledge request and show availability window', uk: 'Крок 1: підтвердити запит і показати вікно доступності' },
+          { en: 'Step 2: clarify service type and preferred time', uk: 'Крок 2: уточнити тип послуги та бажаний час' },
+          { en: 'Step 3: offer 2-3 slots only (decision simplification)', uk: 'Крок 3: дати 2-3 слоти (спрощення вибору)' },
+          { en: 'Step 4: lock booking and send prep instructions', uk: 'Крок 4: зафіксувати запис і надіслати підготовку' },
+        ],
+      },
+      {
+        heading: { en: 'Automation stack for Direct', uk: 'Automation stack для Direct' },
+        body: [
+          {
+            en: 'The stack should include message intake, intent tagging, CRM sync, and reminder engine. Keep it simple: one source of truth for booking status.',
+            uk: 'Стек має включати прийом повідомлень, тегування наміру, синхронізацію з CRM і движок нагадувань. Головне — одне джерело правди для статусу запису.',
+          },
+          {
+            en: 'Without CRM sync, your team can answer fast but still lose operational control. Every Direct dialog must become a trackable lead event.',
+            uk: 'Без синхронізації з CRM команда може відповідати швидко, але втрачати контроль операційки. Кожен Direct-діалог має ставати трекованою подією ліда.',
+          },
+        ],
+        bullets: [
+          { en: 'Instagram entry point', uk: 'Точка входу Instagram' },
+          { en: 'Tagging by intent and urgency', uk: 'Тегування за наміром і терміновістю' },
+          { en: 'CRM lead creation with owner assignment', uk: 'Створення ліда в CRM з призначенням відповідального' },
+          { en: 'Reminder and reactivation trigger', uk: 'Тригер нагадування і реактивації' },
+        ],
+      },
+      {
+        heading: { en: 'KPIs to monitor weekly', uk: 'KPI, які треба моніторити щотижня' },
+        body: [
+          {
+            en: 'Do not track vanity metrics only. Likes and reach do not pay rent. Track conversion metrics from inquiry to attended appointment.',
+            uk: 'Не відстежуйте лише vanity-метрики. Лайки і охоплення не платять оренду. Відстежуйте конверсійні метрики від звернення до фактичного візиту.',
+          },
+          {
+            en: 'Weekly review should include response time distribution, booking conversion by source, no-show by channel, and repeat booking share.',
+            uk: 'Щотижневий огляд має включати розподіл часу відповіді, конверсію в запис за джерелом, no-show за каналом і частку повторних бронювань.',
+          },
+        ],
+        bullets: [
+          { en: 'Median first response time', uk: 'Медіанний час першої відповіді' },
+          { en: 'Direct inquiry to booking conversion', uk: 'Конверсія Direct-запит → запис' },
+          { en: 'Booking to attendance rate', uk: 'Конверсія запис → візит' },
+          { en: 'Revenue per Direct lead', uk: 'Виручка на один Direct-лід' },
+        ],
+      },
+      {
+        heading: { en: 'What to implement first', uk: 'Що впровадити в першу чергу' },
+        body: [
+          {
+            en: 'Start with SLA, script templates, and CRM statuses. This gives the fastest conversion lift. Then add bot-assisted qualification and reminders.',
+            uk: 'Починайте зі SLA, шаблонів скрипта і статусів у CRM. Це дає найшвидший ріст конверсії. Далі додавайте bot-assisted кваліфікацію і нагадування.',
+          },
+          {
+            en: 'If you try to build a perfect system from day one, rollout slows down. Prioritize speed-to-value and iterate each week.',
+            uk: 'Якщо намагаєтесь зібрати “ідеальну” систему з першого дня, запуск гальмує. Пріоритезуйте швидкість до цінності і ітеруйте щотижня.',
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { en: 'How fast should we respond in Direct?', uk: 'Як швидко треба відповідати в Direct?' },
+        a: { en: 'Target under 3 minutes during business hours. If that is not possible manually, use automation for first response and qualification.', uk: 'Ціль — до 3 хвилин у робочий час. Якщо вручну це неможливо, використовуйте автоматизацію для першої відповіді та кваліфікації.' },
+      },
+      {
+        q: { en: 'Should we use a bot for all messages?', uk: 'Чи варто ставити бота на всі повідомлення?' },
+        a: { en: 'Use bot for repetitive intents and routing. Escalate complex or emotional cases to a human quickly.', uk: 'Використовуйте бота для повторюваних намірів і маршрутизації. Складні або емоційні кейси швидко передавайте людині.' },
+      },
+      {
+        q: { en: 'How do we reduce no-shows from Direct?', uk: 'Як знизити no-show з Direct?' },
+        a: { en: 'Enable confirmation flow and reminder sequence 24h/2h before appointment with one-click reschedule option.', uk: 'Увімкніть потік підтвердження і нагадування 24h/2h до візиту з опцією перенесення в один клік.' },
+      },
+    ],
+    cta: {
+      bookConsultation: { en: 'Calculate salon ROI now', uk: 'Порахувати ROI салону зараз' },
+      getAudit: { en: 'Get automation audit', uk: 'Отримати аудит автоматизації' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction system', uk: 'Система зниження no-show' } },
+      { href: '/blog/online-booking-automation-for-beauty-salon', label: { en: 'Online booking automation', uk: 'Автоматизація онлайн-запису' } },
+    ],
+  },
+  /* ─── Article 36 ─── */
+  {
+    slug: 'beauty-salon-no-show-reduction-system',
+    keyword: { en: 'beauty salon no show reduction system', uk: 'система зниження no-show в салоні краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '📉',
+    readTime: 10,
+    publishedAt: '2026-03-03',
+    titleTag: {
+      en: 'Beauty Salon No-Show Reduction System: Practical Setup | AI Insider',
+      uk: 'Система зниження no-show в салоні краси: практичне налаштування | AI Insider',
+    },
+    metaDescription: {
+      en: 'Practical framework to reduce no-shows in beauty salons using confirmations, reminders, and reschedule logic.',
+      uk: 'Практична система зниження no-show у салоні краси через підтвердження, нагадування та логіку перенесення.',
+    },
+    metaKeywords: {
+      en: ['reduce no-show beauty salon', 'appointment reminders salon', 'beauty booking confirmation'],
+      uk: ['зменшити no-show салон краси', 'нагадування про запис салон', 'підтвердження запису салон'],
+    },
+    h1: {
+      en: 'Beauty salon no-show reduction system: from lost slots to predictable schedule',
+      uk: 'Система зниження no-show в салоні краси: від втрачених слотів до прогнозованого графіка',
+    },
+    intro: [
+      {
+        en: 'No-show is one of the most expensive hidden problems in beauty operations. A single missed appointment creates a direct revenue gap and a downstream schedule disruption.',
+        uk: 'No-show — одна з найдорожчих прихованих проблем beauty-операційки. Один пропущений візит створює прямий провал у виручці і тягне за собою злам графіка.',
+      },
+      {
+        en: 'This article explains a no-show reduction system that can be launched in weeks: confirmation architecture, reminder cadence, fallback calls, and waitlist logic.',
+        uk: 'У цій статті — система зниження no-show, яку можна запустити за кілька тижнів: архітектура підтвердження, ритм нагадувань, fallback-дзвінки і логіка waitlist.',
+      },
+    ],
+    sections: [
+      {
+        heading: { en: 'Quantify your no-show loss first', uk: 'Спочатку порахуйте втрати від no-show' },
+        body: [
+          {
+            en: 'Many teams try to fix no-show without baseline numbers. Start with monthly booking count, average check, and no-show share by channel.',
+            uk: 'Багато команд намагаються “лікувати” no-show без базових цифр. Почніть з кількості записів на місяць, середнього чека і частки no-show по каналах.',
+          },
+          {
+            en: 'If no-show is uneven by source (e.g., Instagram vs phone), your workflow should be channel-specific. One generic reminder flow is often suboptimal.',
+            uk: 'Якщо no-show нерівномірний за джерелами (наприклад, Instagram vs телефон), workflow має бути channel-specific. Один загальний сценарій часто неефективний.',
+          },
+        ],
+        bullets: [
+          { en: 'Track no-show by source and service type', uk: 'Відстежуйте no-show за джерелом і типом послуги' },
+          { en: 'Track no-show by time slot (morning/evening)', uk: 'Відстежуйте no-show за часовим слотом (ранок/вечір)' },
+          { en: 'Track no-show by first-time vs returning client', uk: 'Відстежуйте no-show для нових і повторних клієнтів' },
+        ],
+      },
+      {
+        heading: { en: 'Build a 3-layer confirmation flow', uk: 'Побудуйте 3-рівневий потік підтвердження' },
+        body: [
+          {
+            en: 'Layer 1: booking confirmation immediately after scheduling. Layer 2: reminder at 24h. Layer 3: reminder at 2h with one-tap confirm/reschedule.',
+            uk: 'Рівень 1: підтвердження одразу після запису. Рівень 2: нагадування за 24h. Рівень 3: нагадування за 2h з підтвердженням/переносом в один тап.',
+          },
+          {
+            en: 'The key is frictionless action. If a client cannot quickly confirm or move the slot, they are more likely to no-show silently.',
+            uk: 'Ключ — frictionless дія. Якщо клієнт не може швидко підтвердити або перенести слот, імовірність “тихого” no-show зростає.',
+          },
+        ],
+        bullets: [
+          { en: 'Use short message templates', uk: 'Використовуйте короткі шаблони повідомлень' },
+          { en: 'Include clear date/time in local format', uk: 'Додавайте чітку дату/час у локальному форматі' },
+          { en: 'Offer direct reschedule action', uk: 'Давайте пряму дію на перенесення' },
+        ],
+      },
+      {
+        heading: { en: 'Use waitlist to recover canceled slots', uk: 'Використовуйте waitlist для повернення скасованих слотів' },
+        body: [
+          {
+            en: 'Canceled slots should not stay empty. A waitlist engine can push open slots to pre-qualified clients who previously requested a close date.',
+            uk: 'Скасовані слоти не мають залишатися порожніми. Waitlist-механіка може пропонувати відкриті вікна попередньо кваліфікованим клієнтам.',
+          },
+          {
+            en: 'This is one of the fastest levers to recover revenue without spending on additional ads.',
+            uk: 'Це один з найшвидших важелів повернення виручки без додаткових витрат на рекламу.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'No-show risk scoring', uk: 'Скоринг ризику no-show' },
+        body: [
+          {
+            en: 'Not all bookings have equal risk. You can score each booking using behavior signals: response speed, first-time status, cancellation history, channel quality.',
+            uk: 'Не всі записи мають однаковий ризик. Можна скорувати кожен запис за поведінковими сигналами: швидкість відповіді, статус нового клієнта, історія скасувань, якість каналу.',
+          },
+          {
+            en: 'High-risk bookings should receive stronger confirmation logic and, if necessary, manual outreach.',
+            uk: 'Записи з високим ризиком мають отримувати посилений сценарій підтвердження і, за потреби, ручний контакт.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Weekly optimization cycle', uk: 'Щотижневий цикл оптимізації' },
+        body: [
+          {
+            en: 'No-show reduction is not a one-time setup. Review template performance, channel-level no-show, and reschedule completion every week.',
+            uk: 'Зниження no-show — не одноразове налаштування. Щотижня переглядайте ефективність шаблонів, no-show по каналах і completion перенесень.',
+          },
+          {
+            en: 'Small improvements in reminders can create meaningful monthly impact in occupied slots.',
+            uk: 'Навіть невеликі покращення в нагадуваннях дають відчутний щомісячний ефект у зайнятості слотів.',
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { en: 'What no-show rate is considered healthy?', uk: 'Який рівень no-show вважається здоровим?' },
+        a: { en: 'For many salons, 4-7% is a realistic target with proper reminder and reschedule flow.', uk: 'Для багатьох салонів реалістична ціль — 4-7% при правильному сценарії нагадувань і перенесення.' },
+      },
+      {
+        q: { en: 'Should we use deposits for all bookings?', uk: 'Чи потрібна передоплата для всіх записів?' },
+        a: { en: 'Not always. Start with high-risk services or first-time clients and test conversion impact.', uk: 'Не завжди. Почніть з high-risk послуг або нових клієнтів і протестуйте вплив на конверсію.' },
+      },
+      {
+        q: { en: 'How quickly can we see improvement?', uk: 'Як швидко видно покращення?' },
+        a: { en: 'You can usually detect trend changes within 2-4 weeks after launch.', uk: 'Тренд зазвичай видно вже через 2-4 тижні після запуску.' },
+      },
+    ],
+    cta: {
+      bookConsultation: { en: 'Open ROI calculator', uk: 'Відкрити ROI-калькулятор' },
+      getAudit: { en: 'Request no-show audit', uk: 'Запросити аудит no-show' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/beauty-salon-reminders-sms-dm-workflows', label: { en: 'SMS/DM reminder workflows', uk: 'SMS/DM сценарії нагадувань' } },
+      { href: '/blog/beauty-salon-repeat-sales-automation', label: { en: 'Repeat sales automation', uk: 'Автоматизація повторних продажів' } },
+    ],
+  },
+  /* ─── Article 37 ─── */
+  {
+    slug: 'online-booking-automation-for-beauty-salon',
+    keyword: { en: 'online booking automation for beauty salon', uk: 'автоматизація онлайн-запису для салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '📅',
+    readTime: 10,
+    publishedAt: '2026-03-04',
+    titleTag: {
+      en: 'Online Booking Automation for Beauty Salons: Setup Guide | AI Insider',
+      uk: 'Автоматизація онлайн-запису для салону краси: гайд по впровадженню | AI Insider',
+    },
+    metaDescription: {
+      en: 'Step-by-step setup of online booking automation for beauty salons: slot logic, calendar sync, and conversion flow.',
+      uk: 'Покрокове впровадження автоматизації онлайн-запису в салоні краси: логіка слотів, синхронізація календаря і конверсія.',
+    },
+    metaKeywords: {
+      en: ['online booking beauty salon', 'beauty appointment automation', 'salon booking system'],
+      uk: ['онлайн запис салон краси', 'автоматизація запису салон', 'система бронювання салону'],
+    },
+    h1: { en: 'Online booking automation for beauty salons: practical rollout', uk: 'Автоматизація онлайн-запису для салону краси: практичний rollout' },
+    intro: [
+      {
+        en: 'Online booking should reduce admin workload and increase filled slots. In many salons, it does the opposite because the setup is too generic.',
+        uk: 'Онлайн-запис має зменшувати навантаження на адміністратора і збільшувати заповненість слотів. У багатьох салонах виходить навпаки, бо налаштування занадто загальне.',
+      },
+      {
+        en: 'This guide focuses on operational details that drive conversion: slot architecture, service duration rules, prep constraints, and fallback scenarios.',
+        uk: 'Цей гайд фокусується на операційних деталях, що впливають на конверсію: архітектура слотів, правила тривалості послуг, підготовка і fallback-сценарії.',
+      },
+    ],
+    sections: [
+      {
+        heading: { en: 'Design slot architecture first', uk: 'Спочатку спроєктуйте архітектуру слотів' },
+        body: [
+          {
+            en: 'The booking calendar should reflect real business constraints. If not, clients book impossible combinations and admins spend time fixing conflicts.',
+            uk: 'Календар запису має відображати реальні бізнес-обмеження. Інакше клієнти бронюють неможливі комбінації, а адміністратори витрачають час на виправлення конфліктів.',
+          },
+          {
+            en: 'Define service duration, cleanup buffer, parallel capacity, and blocked windows per specialist.',
+            uk: 'Визначте тривалість послуг, буфер на підготовку, паралельну місткість і заблоковані вікна для кожного спеціаліста.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Build conversion-oriented booking flow', uk: 'Побудуйте конверсійний booking flow' },
+        body: [
+          {
+            en: 'The form should ask only booking-critical fields. Every extra question increases drop-off before confirmation.',
+            uk: 'Форма має запитувати лише критичні для запису поля. Кожне зайве питання збільшує drop-off до підтвердження.',
+          },
+          {
+            en: 'Offer limited slot options to simplify choice and reduce indecision.',
+            uk: 'Показуйте обмежений набір слотів, щоб спростити вибір і зменшити нерішучість.',
+          },
+        ],
+        bullets: [
+          { en: 'Service', uk: 'Послуга' },
+          { en: 'Preferred date/time', uk: 'Бажана дата/час' },
+          { en: 'Contact and confirmation channel', uk: 'Контакт і канал підтвердження' },
+        ],
+      },
+      {
+        heading: { en: 'Sync booking with CRM and reminders', uk: 'Синхронізуйте запис з CRM і нагадуваннями' },
+        body: [
+          {
+            en: 'A booking event must create/update CRM contact and trigger reminder sequence automatically.',
+            uk: 'Подія запису має автоматично створювати/оновлювати контакт у CRM і запускати ланцюг нагадувань.',
+          },
+          {
+            en: 'This prevents the common gap where booking exists in one tool but communication history is missing in another.',
+            uk: 'Це закриває типову дірку, коли запис є в одному інструменті, а історії комунікації немає в іншому.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Protect high-value slots', uk: 'Захистіть високовартісні слоти' },
+        body: [
+          {
+            en: 'Prime-time and high-check services deserve stricter confirmation logic and backup waitlist flow.',
+            uk: 'Прайм-тайм і високочекові послуги потребують жорсткішої логіки підтвердження і резервної waitlist-механіки.',
+          },
+          {
+            en: 'Use risk-based logic instead of one-size-fits-all flow.',
+            uk: 'Використовуйте risk-based логіку замість однакового сценарію для всіх.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Measure quality, not just booking volume', uk: 'Міряйте якість, а не лише обсяг записів' },
+        body: [
+          {
+            en: 'High booking count is meaningless if attendance is low. Track attended bookings and revenue per occupied slot.',
+            uk: 'Високий обсяг записів нічого не вартий, якщо низька дохідність по фактичних візитах. Трекуйте attended bookings і виручку на зайнятий слот.',
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { en: 'Can online booking fully replace an admin?', uk: 'Чи може онлайн-запис повністю замінити адміністратора?' },
+        a: { en: 'No. It removes repetitive load, but complex cases and premium service communication still need humans.', uk: 'Ні. Він знімає рутину, але складні кейси та premium-комунікація все ще потребують людини.' },
+      },
+      {
+        q: { en: 'How many slots should we display?', uk: 'Скільки слотів показувати клієнту?' },
+        a: { en: 'Usually 2-5 options per request is enough to maximize decision speed.', uk: 'Зазвичай 2-5 варіантів достатньо, щоб прискорити прийняття рішення.' },
+      },
+      {
+        q: { en: 'What is the biggest implementation risk?', uk: 'Який найбільший ризик у впровадженні?' },
+        a: { en: 'Misconfigured slot rules that create booking conflicts. Validate with real schedule simulations before go-live.', uk: 'Неправильно налаштовані правила слотів, що створюють конфлікти. Перевіряйте на симуляціях реального графіка до запуску.' },
+      },
+    ],
+    cta: {
+      bookConsultation: { en: 'Check your booking ROI', uk: 'Перевірити ROI запису' },
+      getAudit: { en: 'Get booking flow audit', uk: 'Отримати аудит booking flow' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/instagram-direct-leads-beauty-salon', label: { en: 'Instagram Direct conversion', uk: 'Конверсія Instagram Direct' } },
+      { href: '/blog/beauty-salon-reminders-sms-dm-workflows', label: { en: 'Reminder workflows', uk: 'Сценарії нагадувань' } },
+    ],
+  },
+  /* ─── Article 38 ─── */
+  {
+    slug: 'beauty-salon-reminders-sms-dm-workflows',
+    keyword: { en: 'sms dm reminders for beauty salon', uk: 'SMS і DM нагадування для салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '📲',
+    readTime: 9,
+    publishedAt: '2026-03-05',
+    titleTag: {
+      en: 'SMS/DM Reminder Workflows for Beauty Salons | AI Insider',
+      uk: 'SMS/DM сценарії нагадувань для салону краси | AI Insider',
+    },
+    metaDescription: {
+      en: 'Build reminder workflows for beauty salons: timing, message templates, confirmation logic, and no-show impact.',
+      uk: 'Побудуйте сценарії SMS/DM нагадувань для салону: таймінг, шаблони, логіка підтвердження і вплив на no-show.',
+    },
+    metaKeywords: {
+      en: ['beauty salon reminders', 'sms reminders salon', 'dm reminders booking'],
+      uk: ['нагадування салон краси', 'sms нагадування запис', 'dm нагадування візит'],
+    },
+    h1: { en: 'SMS and DM reminders for beauty salons: workflow that actually reduces no-show', uk: 'SMS і DM нагадування для салону краси: workflow, який реально знижує no-show' },
+    intro: [
+      {
+        en: 'Reminder automation is often implemented as one generic message. That is why results are weak. Effective workflows depend on timing, channel, and client type.',
+        uk: 'Автоматизацію нагадувань часто зводять до одного шаблону. Тому результати слабкі. Ефективний workflow залежить від таймінгу, каналу і типу клієнта.',
+      },
+      {
+        en: 'In this playbook, you get a practical reminder architecture for beauty operations with confirmation and reschedule logic.',
+        uk: 'У цьому playbook — практична архітектура нагадувань для beauty-операційки з логікою підтвердження та перенесення.',
+      },
+    ],
+    sections: [
+      {
+        heading: { en: 'Channel strategy: SMS vs DM', uk: 'Канальна стратегія: SMS vs DM' },
+        body: [
+          {
+            en: 'Use DM when Instagram is your primary acquisition channel and engagement is high. Use SMS when delivery reliability is priority.',
+            uk: 'Використовуйте DM, якщо Instagram — ключовий канал залучення і там високий engagement. Використовуйте SMS, коли критична гарантована доставка.',
+          },
+          {
+            en: 'Many salons run hybrid: DM for soft reminder and SMS for final confirmation.',
+            uk: 'Багато салонів використовують гібрид: DM для мʼякого нагадування і SMS для фінального підтвердження.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Reminder timing matrix', uk: 'Матриця таймінгу нагадувань' },
+        body: [
+          {
+            en: 'Timing should reflect appointment lead time and service value. One schedule does not fit every procedure.',
+            uk: 'Таймінг має враховувати горизонт запису і вартість послуги. Один графік не підходить для всіх процедур.',
+          },
+        ],
+        bullets: [
+          { en: '24h reminder with clear appointment details', uk: 'Нагадування за 24h з чіткими деталями візиту' },
+          { en: '2h reminder with confirm/reschedule action', uk: 'Нагадування за 2h з дією підтвердження/перенесення' },
+          { en: 'Optional 48h reminder for high-check services', uk: 'Опційно нагадування за 48h для високочекових послуг' },
+        ],
+      },
+      {
+        heading: { en: 'Message template framework', uk: 'Фреймворк шаблонів повідомлень' },
+        body: [
+          {
+            en: 'Keep copy concise and actionable. Include date, time, specialist, and one-click action.',
+            uk: 'Текст має бути коротким і дієвим. Додавайте дату, час, спеціаліста і дію в один клік.',
+          },
+          {
+            en: 'Avoid overloaded copy. Extra details can be linked to prep page or sent after confirmation.',
+            uk: 'Уникайте перевантаження повідомлень. Додаткові деталі краще віддати посиланням або відправити після підтвердження.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Escalation and fallback logic', uk: 'Логіка ескалації і fallback' },
+        body: [
+          {
+            en: 'If no response after second reminder, trigger fallback call task for admin. High-value slots should never be left unconfirmed.',
+            uk: 'Якщо після другого нагадування немає реакції, запускайте fallback-задачу на дзвінок адміністратору. Високовартісні слоти не мають лишатися непідтвердженими.',
+          },
+        ],
+      },
+      {
+        heading: { en: 'Measuring reminder ROI', uk: 'Як міряти ROI нагадувань' },
+        body: [
+          {
+            en: 'Track attendance lift and recovered slots. Compare cohorts with and without reminder workflow.',
+            uk: 'Відстежуйте ріст attendance і кількість врятованих слотів. Порівнюйте когорти зі сценарієм нагадувань і без нього.',
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { en: 'How many reminders are too many?', uk: 'Скільки нагадувань — це вже забагато?' },
+        a: { en: 'For most salons, 2 core reminders are enough. Add a third only for high-ticket or high-risk bookings.', uk: 'Для більшості салонів достатньо 2 базових нагадувань. Третє додавайте лише для high-ticket або high-risk записів.' },
+      },
+      {
+        q: { en: 'What if clients ignore reminders?', uk: 'Що робити, якщо клієнти ігнорують нагадування?' },
+        a: { en: 'Use fallback logic: alternate channel and manual outreach task for admin.', uk: 'Використовуйте fallback-логіку: альтернативний канал і ручну задачу для адміністратора.' },
+      },
+      {
+        q: { en: 'Can reminders feel spammy?', uk: 'Чи не виглядатимуть нагадування як спам?' },
+        a: { en: 'Not if you keep copy short, relevant, and tied to concrete appointment actions.', uk: 'Ні, якщо текст короткий, релевантний і привʼязаний до конкретної дії по запису.' },
+      },
+    ],
+    cta: {
+      bookConsultation: { en: 'Calculate reminder impact', uk: 'Порахувати ефект нагадувань' },
+      getAudit: { en: 'Audit my reminder flow', uk: 'Аудит сценарію нагадувань' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction system', uk: 'Система зниження no-show' } },
+      { href: '/blog/online-booking-automation-for-beauty-salon', label: { en: 'Online booking automation', uk: 'Автоматизація онлайн-запису' } },
+    ],
+  },
+  /* ─── Article 39 ─── */
+  {
+    slug: 'salon-crm-segmentation-playbook',
+    keyword: { en: 'crm segmentation for beauty salon', uk: 'CRM сегментація клієнтів салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '🗂️',
+    readTime: 10,
+    publishedAt: '2026-03-06',
+    titleTag: {
+      en: 'CRM Segmentation Playbook for Beauty Salons | AI Insider',
+      uk: 'CRM сегментація клієнтів салону краси: playbook | AI Insider',
+    },
+    metaDescription: {
+      en: 'How to segment beauty salon clients in CRM to improve retention, repeat bookings, and campaign ROI.',
+      uk: 'Як сегментувати клієнтів салону краси в CRM для росту retention, повторних записів і ROI кампаній.',
+    },
+    metaKeywords: {
+      en: ['beauty salon CRM segmentation', 'salon retention CRM', 'beauty customer segments'],
+      uk: ['CRM сегментація салон краси', 'утримання клієнтів салон', 'сегменти клієнтів beauty'],
+    },
+    h1: { en: 'CRM segmentation for beauty salons: from mass messaging to profitable retention', uk: 'CRM сегментація для салону краси: від масових розсилок до прибуткового retention' },
+    intro: [
+      { en: 'Most salon CRM databases are large but under-monetized. Contacts exist, but communication is generic and conversion weak.', uk: 'Більшість CRM-баз салонів великі, але недомонетизовані. Контакти є, а комунікація загальна і конверсія слабка.' },
+      { en: 'Segmentation fixes this by sending the right offer to the right client at the right time.', uk: 'Сегментація виправляє це: правильний офер потрібному клієнту в правильний момент.' },
+    ],
+    sections: [
+      {
+        heading: { en: 'Core segments every salon needs', uk: 'Базові сегменти, які потрібні кожному салону' },
+        body: [
+          { en: 'Start with behavior-first segments. Demographics alone rarely predict booking action.', uk: 'Починайте з поведінкових сегментів. Демографія сама по собі рідко прогнозує дію бронювання.' },
+        ],
+        bullets: [
+          { en: 'New client (first visit)', uk: 'Новий клієнт (перший візит)' },
+          { en: 'Active repeat client', uk: 'Активний повторний клієнт' },
+          { en: 'At-risk (no visit beyond expected cycle)', uk: 'At-risk (немає візиту довше очікуваного циклу)' },
+          { en: 'VIP high-check frequent client', uk: 'VIP з високим чеком і частотою' },
+        ],
+      },
+      {
+        heading: { en: 'Data model for segmentation', uk: 'Яка дата-модель потрібна для сегментації' },
+        body: [
+          { en: 'Define mandatory CRM fields for all booking events. Without clean data, segmentation quality collapses quickly.', uk: 'Визначте обовʼязкові поля CRM для кожної події запису. Без чистих даних якість сегментації швидко падає.' },
+        ],
+        bullets: [
+          { en: 'Last visit date', uk: 'Дата останнього візиту' },
+          { en: 'Service type and average check', uk: 'Тип послуги і середній чек' },
+          { en: 'Acquisition channel', uk: 'Канал залучення' },
+          { en: 'No-show / cancellation history', uk: 'Історія no-show / скасувань' },
+        ],
+      },
+      {
+        heading: { en: 'Campaign logic per segment', uk: 'Логіка кампаній по сегментах' },
+        body: [
+          { en: 'Segment-specific campaigns outperform broad promotions because offer relevance is higher and timing is better.', uk: 'Кампанії по сегментах працюють краще за широкі акції, бо релевантність оферу вища, а таймінг точніший.' },
+          { en: 'For at-risk clients, use urgency + convenience. For VIP, use premium value and priority slots.', uk: 'Для at-risk клієнтів використовуйте терміновість + зручність. Для VIP — premium-цінність і пріоритетні слоти.' },
+        ],
+      },
+      {
+        heading: { en: 'Avoid common CRM segmentation mistakes', uk: 'Типові помилки сегментації, яких варто уникати' },
+        body: [
+          { en: 'The biggest mistake is static segments that never refresh. Segments must update automatically based on latest behavior.', uk: 'Найбільша помилка — статичні сегменти, які не оновлюються. Сегменти мають оновлюватися автоматично за останньою поведінкою.' },
+        ],
+      },
+      {
+        heading: { en: 'Retention KPI dashboard', uk: 'Retention KPI dashboard' },
+        body: [
+          { en: 'Track repeat booking rate, days between visits, reactivation conversion, and revenue by segment each week.', uk: 'Щотижня трекуйте repeat booking rate, інтервал між візитами, реактиваційну конверсію і виручку по сегментах.' },
+        ],
+      },
+    ],
+    faq: [
+      { q: { en: 'How many segments should we start with?', uk: 'Зі скількох сегментів починати?' }, a: { en: 'Start with 4 core segments and only expand when campaign execution is stable.', uk: 'Починайте з 4 базових сегментів і розширюйтеся лише після стабільного виконання кампаній.' } },
+      { q: { en: 'Can we segment without a complex CRM?', uk: 'Чи можна сегментувати без складної CRM?' }, a: { en: 'Yes, if your key fields are consistent and automation rules are configured correctly.', uk: 'Так, якщо ключові поля ведуться стабільно і правильно налаштовані правила автоматизації.' } },
+      { q: { en: 'How fast does retention improve?', uk: 'Як швидко росте retention?' }, a: { en: 'Initial uplift can appear in 3-6 weeks after segment-triggered campaigns go live.', uk: 'Перший приріст зазвичай видно через 3-6 тижнів після запуску сегментних кампаній.' } },
+    ],
+    cta: {
+      bookConsultation: { en: 'Estimate retention ROI', uk: 'Оцінити ROI retention' },
+      getAudit: { en: 'Get CRM segmentation audit', uk: 'Отримати аудит CRM-сегментації' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/beauty-salon-repeat-sales-automation', label: { en: 'Repeat sales automation', uk: 'Автоматизація повторних продажів' } },
+      { href: '/blog/beauty-salon-kpi-dashboard-automation', label: { en: 'KPI dashboard automation', uk: 'Автоматизація KPI-дашборду' } },
+    ],
+  },
+  /* ─── Article 40 ─── */
+  {
+    slug: 'beauty-salon-repeat-sales-automation',
+    keyword: { en: 'repeat sales automation beauty salon', uk: 'автоматизація повторних продажів салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '🔁',
+    readTime: 10,
+    publishedAt: '2026-03-07',
+    titleTag: {
+      en: 'Repeat Sales Automation for Beauty Salons | AI Insider',
+      uk: 'Автоматизація повторних продажів у салоні краси | AI Insider',
+    },
+    metaDescription: {
+      en: 'Build repeat sales workflows for beauty salons: cycle-based triggers, reactivation campaigns, and LTV growth strategy.',
+      uk: 'Побудуйте автоматизацію повторних продажів у салоні: тригери за циклом послуг, реактивація і стратегія росту LTV.',
+    },
+    metaKeywords: {
+      en: ['repeat booking salon', 'beauty salon retention automation', 'reactivation workflow salon'],
+      uk: ['повторні записи салон', 'автоматизація retention салон', 'реактивація клієнтів салон'],
+    },
+    h1: { en: 'Repeat sales automation for beauty salons: predictable revenue model', uk: 'Автоматизація повторних продажів у салоні краси: модель прогнозованої виручки' },
+    intro: [
+      { en: 'Acquiring new clients is expensive. Retaining and reactivating existing clients is usually your highest-margin growth lever.', uk: 'Залучення нових клієнтів дороге. Утримання і реактивація поточних клієнтів зазвичай наймаржинальніший важіль росту.' },
+      { en: 'This guide explains how to convert your CRM base into recurring revenue with cycle-aware automation.', uk: 'Цей гайд пояснює, як перетворити вашу CRM-базу на повторну виручку через automation, привʼязану до циклу послуг.' },
+    ],
+    sections: [
+      {
+        heading: { en: 'Map service repeat cycles', uk: 'Змоделюйте цикли повторних візитів' },
+        body: [
+          { en: 'Each procedure has a natural repeat interval. Your automation must follow service cadence, not calendar guesswork.', uk: 'Кожна процедура має природний інтервал повтору. Автоматизація має опиратися на цикл послуги, а не випадковий календар.' },
+        ],
+      },
+      {
+        heading: { en: 'Build trigger ladders', uk: 'Побудуйте драбину тригерів' },
+        body: [
+          { en: 'Use a staged sequence: soft reminder, offer reminder, urgency reminder. Keep each step purposeful.', uk: 'Використовуйте послідовність: мʼяке нагадування, оферне нагадування, термінове нагадування. Кожен крок має бути цільовим.' },
+        ],
+        bullets: [
+          { en: 'Day N: cycle reminder', uk: 'День N: нагадування по циклу' },
+          { en: 'Day N+3: social proof + slot prompt', uk: 'День N+3: соціальний доказ + пропозиція слота' },
+          { en: 'Day N+7: urgency with limited window', uk: 'День N+7: терміновість з обмеженим вікном' },
+        ],
+      },
+      {
+        heading: { en: 'Reactivation campaigns for dormant clients', uk: 'Реактивація “сплячих” клієнтів' },
+        body: [
+          { en: 'Dormant clients require different messaging. Lead with convenience and value, not generic discounts.', uk: 'Для “сплячих” клієнтів потрібна інша комунікація. Починайте зі зручності і цінності, а не з безликих знижок.' },
+        ],
+      },
+      {
+        heading: { en: 'Offer design and margin control', uk: 'Дизайн офера і контроль маржі' },
+        body: [
+          { en: 'A retention offer should protect margin. Bundle value and priority access instead of broad discounting.', uk: 'Retention-офер має захищати маржу. Працюйте через value-бандли і пріоритетний доступ, а не широкі знижки.' },
+        ],
+      },
+      {
+        heading: { en: 'LTV metrics and optimization', uk: 'LTV-метрики і оптимізація' },
+        body: [
+          { en: 'Measure repeat booking interval, repeat conversion, and revenue per retained client cohort.', uk: 'Міряйте інтервал повторного бронювання, repeat-конверсію і виручку на когорту утриманих клієнтів.' },
+        ],
+      },
+    ],
+    faq: [
+      { q: { en: 'Should we send discounts to all inactive clients?', uk: 'Чи треба давати знижку всім неактивним клієнтам?' }, a: { en: 'No. Segment first and test value-first offers before discounting.', uk: 'Ні. Спочатку сегментація і тести value-first оферів, потім знижки за потреби.' } },
+      { q: { en: 'What is a good repeat rate target?', uk: 'Яка цільова repeat rate?' }, a: { en: 'Depends on service mix, but trend growth and stable cycle adherence matter more than one static benchmark.', uk: 'Залежить від міксу послуг, але важливіший тренд росту і стабільність циклу, ніж одна статична цифра.' } },
+      { q: { en: 'How often should we run reactivation?', uk: 'Як часто запускати реактивацію?' }, a: { en: 'Run as an always-on automated program with weekly QA and monthly offer refresh.', uk: 'Запускайте як always-on автоматичну програму зі щотижневим QA і щомісячним оновленням оферів.' } },
+    ],
+    cta: {
+      bookConsultation: { en: 'Open ROI calculator', uk: 'Відкрити ROI-калькулятор' },
+      getAudit: { en: 'Audit repeat sales funnel', uk: 'Аудит воронки повторних продажів' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation playbook', uk: 'Playbook CRM-сегментації' } },
+      { href: '/blog/beauty-salon-review-automation-system', label: { en: 'Review automation system', uk: 'Система автоматизації відгуків' } },
+    ],
+  },
+  /* ─── Article 41 ─── */
+  {
+    slug: 'beauty-salon-review-automation-system',
+    keyword: { en: 'review automation for beauty salon', uk: 'автоматизація відгуків для салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '⭐',
+    readTime: 9,
+    publishedAt: '2026-03-08',
+    titleTag: {
+      en: 'Review Automation System for Beauty Salons | AI Insider',
+      uk: 'Система автоматизації відгуків для салону краси | AI Insider',
+    },
+    metaDescription: {
+      en: 'Automate review collection for beauty salons with post-visit triggers, routing logic, and reputation protection flow.',
+      uk: 'Автоматизуйте збір відгуків у салоні краси через post-visit тригери, маршрутизацію і сценарій захисту репутації.',
+    },
+    metaKeywords: {
+      en: ['beauty salon review automation', 'google reviews salon', 'reputation management beauty'],
+      uk: ['автоматизація відгуків салон', 'google відгуки салон', 'репутаційний менеджмент beauty'],
+    },
+    h1: { en: 'Review automation for beauty salons: grow reputation without manual chasing', uk: 'Автоматизація відгуків для салону краси: ріст репутації без ручного “догону”' },
+    intro: [
+      { en: 'Most salons ask for reviews inconsistently, which creates unstable social proof and weak local conversion.', uk: 'Більшість салонів просить відгуки нерівномірно, через що соціальний доказ нестабільний, а локальна конверсія слабка.' },
+      { en: 'A review automation system standardizes timing and quality routing after each visit.', uk: 'Система автоматизації відгуків стандартизує таймінг і маршрутизацію якості після кожного візиту.' },
+    ],
+    sections: [
+      {
+        heading: { en: 'Post-visit trigger design', uk: 'Дизайн post-visit тригерів' },
+        body: [
+          { en: 'Send a review request while the experience is still fresh. Timing usually matters more than wording.', uk: 'Надсилайте запит на відгук, поки досвід клієнта ще “свіжий”. Таймінг зазвичай важливіший за формулювання.' },
+        ],
+      },
+      {
+        heading: { en: 'Quality routing logic', uk: 'Логіка маршрутизації якості' },
+        body: [
+          { en: 'Positive sentiment should be routed to public review channels. Negative sentiment should trigger internal recovery workflow first.', uk: 'Позитивний фідбек має маршрутизуватись у публічні канали відгуків. Негативний — спочатку в внутрішній recovery workflow.' },
+        ],
+      },
+      {
+        heading: { en: 'Template and channel strategy', uk: 'Шаблони та канальна стратегія' },
+        body: [
+          { en: 'Use concise prompts and one clear action. Avoid long messages that dilute response intent.', uk: 'Використовуйте стислий запит і одну чітку дію. Уникайте довгих повідомлень, які розмивають намір.' },
+        ],
+      },
+      {
+        heading: { en: 'Reputation protection workflow', uk: 'Сценарій захисту репутації' },
+        body: [
+          { en: 'If feedback indicates dissatisfaction, assign internal callback task and resolve before requesting public review.', uk: 'Якщо фідбек вказує на незадоволення, призначайте внутрішній callback і закривайте проблему до публічного запиту відгуку.' },
+        ],
+      },
+      {
+        heading: { en: 'Metrics that matter', uk: 'Метрики, які мають значення' },
+        body: [
+          { en: 'Track request-to-review conversion, positive review share, and recovery close rate.', uk: 'Трекуйте конверсію запит→відгук, частку позитивних відгуків і відсоток закритих recovery-кейсів.' },
+        ],
+      },
+    ],
+    faq: [
+      { q: { en: 'How soon after visit should we ask for review?', uk: 'Коли просити відгук після візиту?' }, a: { en: 'Usually within 2-24 hours, depending on service type and client profile.', uk: 'Зазвичай у межах 2-24 годин, залежно від типу послуги та профілю клієнта.' } },
+      { q: { en: 'Should every client get a public review link?', uk: 'Чи всім клієнтам давати публічне посилання на відгук?' }, a: { en: 'Better to route by sentiment signal to protect brand reputation.', uk: 'Краще маршрутизувати за сигналом задоволеності, щоб захистити репутацію бренду.' } },
+      { q: { en: 'Can review automation increase local SEO?', uk: 'Чи допомагає автоматизація відгуків local SEO?' }, a: { en: 'Yes. Consistent review velocity and quality can improve trust and local visibility.', uk: 'Так. Стабільна динаміка і якість відгуків підвищує довіру і локальну видимість.' } },
+    ],
+    cta: {
+      bookConsultation: { en: 'Calculate ROI impact', uk: 'Порахувати ROI-вплив' },
+      getAudit: { en: 'Get reputation workflow audit', uk: 'Аудит репутаційного workflow' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/beauty-salon-repeat-sales-automation', label: { en: 'Repeat sales automation', uk: 'Автоматизація повторних продажів' } },
+      { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation', uk: 'CRM-сегментація' } },
+    ],
+  },
+  /* ─── Article 42 ─── */
+  {
+    slug: 'beauty-salon-kpi-dashboard-automation',
+    keyword: { en: 'beauty salon KPI dashboard automation', uk: 'автоматизація KPI-дашборду салону краси' },
+    category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
+    icon: '📊',
+    readTime: 9,
+    publishedAt: '2026-03-09',
+    titleTag: {
+      en: 'Beauty Salon KPI Dashboard Automation: What to Track Weekly | AI Insider',
+      uk: 'Автоматизація KPI-дашборду салону краси: що трекати щотижня | AI Insider',
+    },
+    metaDescription: {
+      en: 'How to automate KPI dashboards for beauty salons: no-show, conversion, retention, and revenue metrics in one operational view.',
+      uk: 'Як автоматизувати KPI-дашборд салону краси: no-show, конверсія, retention і виручка в одному операційному view.',
+    },
+    metaKeywords: {
+      en: ['beauty salon KPI dashboard', 'salon analytics automation', 'beauty metrics tracking'],
+      uk: ['KPI дашборд салон краси', 'автоматизація аналітики салон', 'метрики салону краси'],
+    },
+    h1: { en: 'Beauty salon KPI dashboard automation: metrics that drive revenue decisions', uk: 'Автоматизація KPI-дашборду салону краси: метрики для рішень по виручці' },
+    intro: [
+      { en: 'If your team tracks metrics in scattered spreadsheets, decision speed drops and hidden losses grow.', uk: 'Якщо команда веде метрики в розрізнених таблицях, швидкість рішень падає, а приховані втрати ростуть.' },
+      { en: 'A KPI dashboard automation layer gives one operational view for bookings, attendance, retention, and revenue efficiency.', uk: 'Автоматизований KPI-дашборд дає єдине операційне view для записів, attendance, retention і ефективності виручки.' },
+    ],
+    sections: [
+      {
+        heading: { en: 'Minimum KPI stack for salon operations', uk: 'Мінімальний KPI-стек для операційки салону' },
+        body: [
+          { en: 'Avoid metric overload. Start with the KPIs that map directly to money and schedule quality.', uk: 'Уникайте перевантаження метриками. Починайте з KPI, які прямо привʼязані до грошей і якості графіка.' },
+        ],
+        bullets: [
+          { en: 'Inquiry to booking conversion', uk: 'Конверсія звернення → запис' },
+          { en: 'Booking to attendance conversion', uk: 'Конверсія запис → візит' },
+          { en: 'No-show rate by source', uk: 'No-show rate по джерелах' },
+          { en: 'Repeat booking rate', uk: 'Repeat booking rate' },
+          { en: 'Revenue per occupied slot', uk: 'Виручка на зайнятий слот' },
+        ],
+      },
+      {
+        heading: { en: 'Data pipeline and ownership', uk: 'Дата-пайплайн і ownership' },
+        body: [
+          { en: 'Define exactly where each KPI comes from and who owns its quality. Automated dashboards fail when source data ownership is unclear.', uk: 'Чітко визначте, звідки береться кожен KPI і хто відповідає за якість даних. Дашборди “падають”, коли ownership джерел нечіткий.' },
+        ],
+      },
+      {
+        heading: { en: 'Operational dashboard layout', uk: 'Структура операційного дашборду' },
+        body: [
+          { en: 'Separate dashboard layers: executive summary, channel diagnostics, specialist performance, and retention trends.', uk: 'Розділяйте шари дашборду: executive summary, канал-діагностика, performance спеціалістів, retention-тренди.' },
+        ],
+      },
+      {
+        heading: { en: 'Weekly review ritual', uk: 'Щотижневий ритуал перегляду' },
+        body: [
+          { en: 'Dashboard without review cadence becomes decoration. Schedule weekly 30-minute KPI review with decision log.', uk: 'Дашборд без ритуалу перегляду стає декором. Поставте щотижневий 30-хвилинний KPI-огляд з decision log.' },
+        ],
+      },
+      {
+        heading: { en: 'From insight to action', uk: 'Від інсайту до дії' },
+        body: [
+          { en: 'Each KPI movement should trigger a predefined action: script update, reminder change, staffing adjustment, or offer test.', uk: 'Кожен рух KPI має запускати predefined дію: оновлення скрипта, зміна нагадувань, корекція графіка або тест офера.' },
+        ],
+      },
+    ],
+    faq: [
+      { q: { en: 'How often should we refresh dashboard data?', uk: 'Як часто оновлювати дані в дашборді?' }, a: { en: 'For salon operations, daily refresh is usually enough, with weekly strategic review.', uk: 'Для салонної операційки зазвичай достатньо щоденного оновлення і щотижневого стратегічного огляду.' } },
+      { q: { en: 'Do we need complex BI tools from day one?', uk: 'Чи потрібні складні BI-інструменти з першого дня?' }, a: { en: 'No. Start with a clean KPI model and reliable data sync, then scale tooling as complexity grows.', uk: 'Ні. Почніть з чистої KPI-моделі та надійної синхронізації даних, а інструментарій масштабуйте пізніше.' } },
+      { q: { en: 'What KPI predicts revenue best?', uk: 'Який KPI найкраще прогнозує виручку?' }, a: { en: 'Typically booking-to-attendance conversion combined with repeat booking rate gives strongest signal.', uk: 'Зазвичай найсильніший сигнал дає комбінація конверсії запис→візит і repeat booking rate.' } },
+    ],
+    cta: {
+      bookConsultation: { en: 'Run ROI calculator', uk: 'Запустити ROI-калькулятор' },
+      getAudit: { en: 'Get KPI system audit', uk: 'Отримати аудит KPI-системи' },
+    },
+    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    relatedLinks: [
+      { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
+      { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation playbook', uk: 'Playbook CRM-сегментації' } },
+      { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction', uk: 'Зниження no-show' } },
     ],
   },
 ];

@@ -23,6 +23,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   const isEn = lang === 'en';
 
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
+  const primaryCtaHref = article.ctaHref ? withLang(lang, article.ctaHref) : `${withLang(lang, '/')}#bookcall`;
 
   /* ── JSON-LD ── */
   const founderId = `${siteUrl}#vladyslav-archer`;
@@ -368,7 +369,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link href={`${withLang(lang, '/')}#bookcall`}
+                  <Link href={primaryCtaHref}
                     className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
                       transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)] overflow-hidden">
                     {/* Shine effect */}
@@ -379,7 +380,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                     <span>{t(article.cta.bookConsultation)}</span>
                   </Link>
                   
-                  <Link href={`${withLang(lang, '/')}#bookcall`}
+                  <Link href={primaryCtaHref}
                     className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg
                       bg-white/10 backdrop-blur-sm text-white border border-white/20
                       transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-[1.02]">
