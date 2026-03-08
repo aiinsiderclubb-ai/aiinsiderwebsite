@@ -16,7 +16,7 @@ export default function Pricing() {
     {
       name: 'Starter',
       price: '€399',
-      priceNote: t('pricing.perMonth'),
+      priceNote: '',
       descKey: 'pricing.starterDesc',
       icon: Zap,
       gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
@@ -33,7 +33,7 @@ export default function Pricing() {
     {
       name: 'Pro',
       price: '€899',
-      priceNote: t('pricing.perMonth'),
+      priceNote: '',
       descKey: 'pricing.proDesc',
       icon: Rocket,
       gradient: 'from-purple-500/30 via-pink-500/20 to-transparent',
@@ -225,14 +225,11 @@ export default function Pricing() {
                     <div className="mb-6">
                       <div className="flex items-baseline gap-1">
                         <span
-                          className="text-3xl md:text-4xl font-bold"
-                          style={{
-                            background: plan.popular
-                              ? 'linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #ffffff 100%)'
-                              : 'linear-gradient(135deg, #ffffff 0%, #888888 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                          }}
+                          className={`text-3xl md:text-4xl font-bold text-white ${
+                            plan.popular
+                              ? 'drop-shadow-[0_0_28px_rgba(192,132,252,0.22)]'
+                              : 'drop-shadow-[0_0_20px_rgba(255,255,255,0.12)]'
+                          }`}
                         >
                           {plan.price}
                         </span>

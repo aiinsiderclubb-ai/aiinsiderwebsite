@@ -15,10 +15,10 @@ export default function Solutions() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const seoPages = [
-    { href: `${basePath}/ai-automation-for-business`, label: 'AI automation for business' },
-    { href: `${basePath}/ai-chatbots-for-business`, label: 'AI chatbots for business' },
-    { href: `${basePath}/ai-voice-agents`, label: 'AI voice agents' },
-    { href: `${basePath}/custom-ai-agents`, label: 'Custom AI agents' },
+    { href: `${basePath}/ai-automation-for-business`, label: isEn ? 'AI automation' : 'AI автоматизація' },
+    { href: `${basePath}/ai-chatbots-for-business`, label: isEn ? 'AI chatbots' : 'AI чатботи' },
+    { href: `${basePath}/ai-voice-agents`, label: isEn ? 'AI voice agents' : 'Голосові агенти' },
+    { href: `${basePath}/custom-ai-agents`, label: isEn ? 'Custom AI agents' : 'Кастомні агенти' },
   ];
 
   const solutions = [
@@ -33,8 +33,8 @@ export default function Solutions() {
       timeframe: isEn ? '2-4 weeks' : '2-4 тижні',
       clients: '+50',
       tags: isEn 
-        ? ['AI voice agent', 'Voice assistant'] 
-        : ['AI голосовий агент', 'Голосовий асистент'],
+        ? ['24/7 calls & chat', 'Meeting booking', 'CRM handoff']
+        : ['24/7 дзвінки та чат', 'Бронювання зустрічей', 'Передача в CRM'],
     },
     {
       titleKey: 'solutions.solution2Title',
@@ -47,8 +47,8 @@ export default function Solutions() {
       timeframe: isEn ? '2-5 weeks' : '2-5 тижнів',
       clients: '+50',
       tags: isEn 
-        ? ['AI lead generation', 'Lead gen automation'] 
-        : ['AI лідогенерація', 'Ш‎І генерація лідів'],
+        ? ['Lead routing', 'CRM sync', 'No manual ops']
+        : ['Маршрутизація лідів', 'Синхронізація з CRM', 'Без ручної рутини'],
     },
     {
       titleKey: 'solutions.solution3Title',
@@ -61,8 +61,8 @@ export default function Solutions() {
       timeframe: isEn ? '3-6 weeks' : '3-6 тижнів',
       clients: '+50',
       tags: isEn 
-        ? ['AI chatbot for business', 'Chatbot for website', 'RAG chatbot'] 
-        : ['AI чатбот для бізнесу', 'ШІ чатбот для бізнесу', 'чатбот для сайту'],
+        ? ['Weekly reports', 'Alerts', 'Actionable insights']
+        : ['Щотижневі звіти', 'Алерти', 'Інсайти для дій'],
     },
     {
       titleKey: 'solutions.solution4Title',
@@ -75,8 +75,8 @@ export default function Solutions() {
       timeframe: isEn ? '3-8 weeks' : '3-8 тижнів',
       clients: '+50',
       tags: isEn 
-        ? ['AI automation for real estate', 'Chatbot for real estate', 'Voice agent for real estate', 'Automated lead qualification'] 
-        : ['AI автоматизація для нерухомості', 'чатбот для нерухомості', 'голосовий агент для нерухомості', 'автоматизація заявок по об\'єктах'],
+        ? ['RAG knowledge base', 'Custom GPT', 'Stack integration']
+        : ['RAG база знань', 'Кастомний GPT', 'Інтеграція в стек'],
     },
   ];
 

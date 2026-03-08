@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { buildConversionPayload, extractUtmFromUrl, getRequestContext, safeString } from '@/app/lib/forms/payload';
+import type { ConversionLocale, ConversionPageType, ConversionVertical } from '@/app/lib/forms/types';
+import { submitLeadToOps } from '@/app/lib/leads/submit';
 
 // Initialize Resend only when API key is available
 const getResendClient = () => {
@@ -22,7 +25,25 @@ export interface BookingData {
   time: string;
   timezone: string;
   message?: string;
+  // attribution (optional)
+  locale?: ConversionLocale;
+  vertical?: ConversionVertical;
+  pageType?: ConversionPageType;
+  slug?: string;
+  sourceSection?: string;
+  ctaType?: string;
+  ctaVariant?: string;
 }
+
+function asEnum<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
+  if (typeof value !== 'string') return fallback;
+  const v = value.trim() as T;
+  return (allowed as readonly string[]).includes(v) ? v : fallback;
+}
+
+const LOCALES = ['uk', 'en'] as const satisfies readonly ConversionLocale[];
+const VERTICALS = ['beauty', 'flowers', 'general', 'real_estate', 'ecommerce'] as const satisfies readonly ConversionVertical[];
+const PAGE_TYPES = ['pillar', 'blog_article', 'blog_list', 'service', 'home', 'other'] as const satisfies readonly ConversionPageType[];
 
 // Beautiful HTML email template for the client
 function getClientEmailHTML(booking: BookingData): string {
@@ -278,7 +299,22 @@ function getAdminEmailHTML(booking: BookingData): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, company, date, time, timezone, message } = body as BookingData;
+    const {
+      name,
+      email,
+      company,
+      date,
+      time,
+      timezone,
+      message,
+      locale: localeRaw,
+      vertical: verticalRaw,
+      pageType: pageTypeRaw,
+      slug: slugRaw,
+      sourceSection: sourceSectionRaw,
+      ctaType: ctaTypeRaw,
+      ctaVariant: ctaVariantRaw,
+    } = body as BookingData;
 
     // Validate required fields
     if (!name || !email || !date || !time) {
@@ -307,28 +343,76 @@ export async function POST(request: NextRequest) {
       message,
     };
 
-    // Send confirmation email to client
-    const resend = getResendClient();
-    const clientEmailResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject: `✨ Booking Confirmed - ${date} at ${time}`,
-      html: getClientEmailHTML(bookingData),
+    const locale = asEnum(localeRaw, LOCALES, 'uk');
+    const vertical = asEnum(verticalRaw, VERTICALS, 'general');
+    const pageType = asEnum(pageTypeRaw, PAGE_TYPES, 'other');
+
+    const referer = request.headers.get('referer') || undefined;
+    const pageUrl = referer ? (() => { try { return new URL(referer); } catch { return null; } })() : null;
+    const utm = pageUrl ? extractUtmFromUrl(pageUrl) : undefined;
+
+    const payload = buildConversionPayload({
+      formType: 'booking',
+      attribution: {
+        locale,
+        vertical,
+        pageType,
+        slug: safeString(slugRaw, 180) || pageUrl?.pathname,
+        sourceSection: safeString(sourceSectionRaw, 64) || 'bookcall',
+        ctaType: safeString(ctaTypeRaw, 32) as any,
+        ctaVariant: safeString(ctaVariantRaw, 32) as any,
+      },
+      lead: {
+        name: bookingData.name,
+        email: bookingData.email,
+        company: bookingData.company,
+        date: bookingData.date,
+        time: bookingData.time,
+        timezone: bookingData.timezone,
+        message: bookingData.message,
+      },
+      page: {
+        path: pageUrl?.pathname,
+        url: pageUrl?.toString(),
+        referer,
+      },
+      utm,
+      context: getRequestContext(request),
     });
 
-    // Send notification email to admin
-    const adminEmailResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `🎯 New Booking: ${name} - ${date} at ${time}`,
-      html: getAdminEmailHTML(bookingData),
-    });
+    const result = await submitLeadToOps(payload);
+    if (!result.ok) {
+      return NextResponse.json(
+        { error: result.error === 'config_error' ? 'Webhook URL is not configured' : 'Failed to submit booking. Please try again.' },
+        { status: result.error === 'config_error' ? 500 : 502 }
+      );
+    }
 
-    console.log('📧 Emails sent:', { client: clientEmailResult, admin: adminEmailResult });
+    // Send emails (best-effort). Webhook is the source of truth.
+    try {
+      const resend = getResendClient();
+      const clientEmailResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: email,
+        subject: `✨ Booking Confirmed - ${date} at ${time}`,
+        html: getClientEmailHTML(bookingData),
+      });
+
+      const adminEmailResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: ADMIN_EMAIL,
+        subject: `🎯 New Booking: ${name} - ${date} at ${time}`,
+        html: getAdminEmailHTML(bookingData),
+      });
+
+      console.log('📧 Emails sent:', { client: clientEmailResult, admin: adminEmailResult });
+    } catch (e) {
+      console.warn('Booking email sending skipped/failed:', e);
+    }
 
     return NextResponse.json({
       success: true,
-      message: 'Booking confirmed! Check your email for confirmation.',
+      message: 'Booking confirmed! You will receive an email confirmation shortly.',
       bookingId: Date.now().toString(),
     });
   } catch (error) {

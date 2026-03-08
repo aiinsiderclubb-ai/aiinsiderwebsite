@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const SALON_SIZES = new Set(['1-2', '3-7', '8-15', '15+']);
+import { buildConversionPayload, extractUtmFromUrl, getRequestContext, safeString } from '@/app/lib/forms/payload';
+import { validateForm } from '@/app/lib/forms/validation';
+import { submitLeadToOps } from '@/app/lib/leads/submit';
 
 function safeReturnUrl(request: NextRequest) {
   const origin = request.nextUrl.origin;
@@ -27,86 +27,41 @@ export async function POST(request: NextRequest) {
 
   const redirectUrl = safeReturnUrl(request);
 
-  // Server-side attribution (do not trust client hidden fields)
-  const source = 'beauty-pillar';
-  const formType = 'lead-magnet';
-  const locale = 'uk';
-
-  const errors: string[] = [];
-  if (!name || name.length < 2) errors.push('name');
-  if (!EMAIL_RE.test(email)) errors.push('email');
-  if (!SALON_SIZES.has(salonSize)) errors.push('salonSize');
-
-  if (errors.length > 0) {
+  const lead = { name, email, salonSize };
+  const validation = validateForm('lead-magnet', lead);
+  if (!validation.ok) {
     redirectUrl.searchParams.set('leadMagnet', 'error');
     return NextResponse.redirect(redirectUrl, 303);
   }
 
-  const webhookUrl = process.env.N8N_LEAD_MAGNET_WEBHOOK_URL?.trim();
-  if (!webhookUrl) {
-    redirectUrl.searchParams.set('leadMagnet', 'error');
-    return NextResponse.redirect(redirectUrl, 303);
-  }
+  const ctaType = safeString(formData.get('ctaType'), 32) as any;
+  const ctaVariant = safeString(formData.get('ctaVariant'), 32) as any;
+  const sourceSection = 'lead-magnet';
 
-  // Extract UTM params from the return URL (if present)
-  const utm: Record<string, string> = {};
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
-    const v = redirectUrl.searchParams.get(k);
-    if (v) utm[k] = v;
-  });
-
-  const userAgent = request.headers.get('user-agent') || '';
-  const forwardedFor = request.headers.get('x-forwarded-for') || '';
-  const ip = forwardedFor.split(',')[0]?.trim();
-
-  const telegramMessage = [
-    'New lead magnet request (Beauty pillar)',
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Salon size: ${salonSize}`,
-    `Page: ${redirectUrl.pathname}`,
-    Object.keys(utm).length ? `UTM: ${JSON.stringify(utm)}` : null,
-  ]
-    .filter(Boolean)
-    .join('\n');
-
-  const payload = {
-    source,
-    formType,
-    locale,
-    submittedAt: new Date().toISOString(),
+  const payload = buildConversionPayload({
+    formType: 'lead-magnet',
+    attribution: {
+      locale: 'uk',
+      vertical: 'beauty',
+      pageType: 'pillar',
+      slug: redirectUrl.pathname,
+      sourceSection,
+      ctaType,
+      ctaVariant,
+    },
+    lead,
     page: {
       path: redirectUrl.pathname,
       url: redirectUrl.toString(),
+      referer: request.headers.get('referer') || undefined,
     },
-    lead: {
-      name,
-      email,
-      salonSize,
-    },
-    utm,
-    context: {
-      ip,
-      userAgent,
-    },
-    telegram: {
-      message: telegramMessage,
-    },
-  };
+    utm: extractUtmFromUrl(redirectUrl),
+    context: getRequestContext(request),
+  });
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-    const res = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-      cache: 'no-store',
-    });
-    clearTimeout(timeout);
-
-    if (!res.ok) {
+    const result = await submitLeadToOps(payload);
+    if (!result.ok) {
       redirectUrl.searchParams.set('leadMagnet', 'error');
       return NextResponse.redirect(redirectUrl, 303);
     }

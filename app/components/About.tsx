@@ -207,7 +207,7 @@ export default function About() {
                     }}
                   />
 
-                  {/* SVG Neural Connections */}
+                  {/* SVG Neural Connections (CSS transitions, no per-frame JS) */}
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 520 520" fill="none">
                     <defs>
                       <linearGradient id="neural-grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -224,7 +224,7 @@ export default function About() {
                         <stop offset="100%" stopColor="rgba(236,72,153,0.4)" />
                       </linearGradient>
                       <filter id="glow">
-                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feGaussianBlur stdDeviation="2" result="blur" />
                         <feMerge>
                           <feMergeNode in="blur" />
                           <feMergeNode in="SourceGraphic" />
@@ -240,14 +240,13 @@ export default function About() {
                       const y2 = (nodePositions[b].y / 100) * 520;
                       const gradId = idx % 3 === 0 ? 'neural-grad-purple' : idx % 3 === 1 ? 'neural-grad-blue' : 'neural-grad-mixed';
                       return (
-                        <motion.line
+                        <line
                           key={`conn-${a}-${b}`}
                           x1={x1} y1={y1} x2={x2} y2={y2}
                           stroke={`url(#${gradId})`}
                           strokeWidth="1.5"
-                          initial={{ pathLength: 0, opacity: 0 }}
-                          animate={isInView ? { pathLength: 1, opacity: 0.35 } : {}}
-                          transition={{ duration: 1.2, delay: 0.4 + idx * 0.06, ease: 'easeOut' }}
+                          className="transition-opacity duration-1000 ease-out"
+                          style={{ opacity: isInView ? 0.35 : 0, transitionDelay: `${400 + idx * 30}ms` }}
                         />
                       );
                     })}
@@ -257,58 +256,29 @@ export default function About() {
                       const x2 = (pos.x / 100) * 520;
                       const y2 = (pos.y / 100) * 520;
                       return (
-                        <motion.line
+                        <line
                           key={`center-${i}`}
                           x1={260} y1={260} x2={x2} y2={y2}
                           stroke="url(#neural-grad-mixed)"
                           strokeWidth="2"
                           filter="url(#glow)"
-                          initial={{ pathLength: 0, opacity: 0 }}
-                          animate={isInView ? { pathLength: 1, opacity: 0.5 } : {}}
-                          transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
+                          className="transition-opacity duration-700 ease-out"
+                          style={{ opacity: isInView ? 0.5 : 0, transitionDelay: `${300 + i * 90}ms` }}
                         />
                       );
                     })}
 
-                    {/* Animated signal pulses (reduced to 3 for performance) */}
-                    {[0, 2, 4].map((i) => {
-                      const pos = nodePositions[i];
-                      const x2 = (pos.x / 100) * 520;
-                      const y2 = (pos.y / 100) * 520;
-                      return (
-                        <motion.circle
-                          key={`pulse-${i}`}
-                          r="3"
-                          fill="white"
-                          filter="url(#glow)"
-                          initial={{ cx: 260, cy: 260, opacity: 0 }}
-                          animate={isInView ? {
-                            cx: [260, x2, 260],
-                            cy: [260, y2, 260],
-                            opacity: [0, 0.8, 0],
-                          } : {}}
-                          transition={{
-                            duration: 4,
-                            delay: 2 + i * 0.8,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                          }}
-                        />
-                      );
-                    })}
-
-                    {/* Synaptic dots - static opacity, no infinite animation */}
+                    {/* Synaptic dots */}
                     {neuralConnections.map(([a, b], idx) => {
                       const mx = ((nodePositions[a].x + nodePositions[b].x) / 2 / 100) * 520;
                       const my = ((nodePositions[a].y + nodePositions[b].y) / 2 / 100) * 520;
                       return (
-                        <motion.circle
+                        <circle
                           key={`synapse-${idx}`}
                           cx={mx} cy={my} r="2"
                           fill="rgba(168,85,247,0.5)"
-                          initial={{ opacity: 0 }}
-                          animate={isInView ? { opacity: 0.6 } : {}}
-                          transition={{ duration: 0.8, delay: 1.2 + idx * 0.05 }}
+                          className="transition-opacity duration-700 ease-out"
+                          style={{ opacity: isInView ? 0.6 : 0, transitionDelay: `${1100 + idx * 25}ms` }}
                         />
                       );
                     })}
@@ -396,18 +366,6 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-
-      {/* Animations */}
-      <style jsx global>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.5); }
-        }
-      `}</style>
     </section>
   );
 }

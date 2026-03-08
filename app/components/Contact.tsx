@@ -1,24 +1,126 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Send, MessageCircle, Mail } from 'lucide-react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Send, MessageCircle, Mail, Loader2 } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useLanguage } from '../context/LanguageContext';
+import { getLastCtaAttribution, trackFormEvent } from '../lib/analytics';
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!isInView) return;
+    const slug = typeof window !== 'undefined' ? window.location.pathname : undefined;
+    const last = getLastCtaAttribution();
+    const ctaType = last.ctaType || 'generic';
+    const ctaVariant = last.ctaVariant || 'unknown';
+    trackFormEvent({
+      action: 'view',
+      formType: 'contact',
+      slug,
+      sourceSection: 'contact',
+      ctaType,
+      ctaVariant,
+      pageType: 'other',
+      vertical: 'general',
+      locale: lang === 'en' ? 'en' : 'uk',
+    });
+  }, [isInView, lang]);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    if (status === 'loading') return;
+
+    const slug = typeof window !== 'undefined' ? window.location.pathname : undefined;
+    const last = getLastCtaAttribution();
+    const ctaType = last.ctaType || 'generic';
+    const ctaVariant = last.ctaVariant || 'unknown';
+
+    setStatus('loading');
+    setErrorMessage(null);
+
+    trackFormEvent({
+      action: 'submit',
+      formType: 'contact',
+      slug,
+      sourceSection: 'contact',
+      ctaType,
+      ctaVariant,
+      pageType: 'other',
+      vertical: 'general',
+      locale: lang === 'en' ? 'en' : 'uk',
+    });
+
+    try {
+      const res = await fetch('/api/forms/submit', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'contact',
+          locale: lang === 'en' ? 'en' : 'uk',
+          vertical: 'general',
+          pageType: 'other',
+          slug,
+          sourceSection: 'contact',
+          ctaType,
+          ctaVariant,
+          lead: {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: formData.message.trim(),
+          },
+        }),
+      });
+
+      const data = (await res.json().catch(() => null)) as any;
+      const ok = Boolean(res.ok && data?.ok);
+
+      trackFormEvent({
+        action: ok ? 'success' : 'error',
+        formType: 'contact',
+        slug,
+        sourceSection: 'contact',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
+
+      if (!ok) {
+        setStatus('error');
+        setErrorMessage(data?.message || t('contact.submitError') || 'Failed to send. Please try again.');
+        return;
+      }
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch {
+      trackFormEvent({
+        action: 'error',
+        formType: 'contact',
+        slug,
+        sourceSection: 'contact',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
+      setStatus('error');
+      setErrorMessage(t('contact.submitError') || 'Failed to send. Please try again.');
+    }
   };
 
   return (
@@ -69,7 +171,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" data-form-type="contact" data-source-section="contact">
               {/* Name Input */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-white">
@@ -121,13 +223,24 @@ export default function Contact() {
               {/* Submit Button */}
               <button
                 type="submit"
+                disabled={status === 'loading'}
                 className="w-full px-8 py-4 bg-white text-black rounded-full font-semibold text-lg flex items-center justify-center gap-2 
-                  transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                  transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:hover:scale-100"
                 style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
               >
-                <span>{t('contact.sendMessage')}</span>
-                <Send className="w-5 h-5" />
+                <span>{status === 'loading' ? (t('contact.sending') || 'Sending...') : t('contact.sendMessage')}</span>
+                {status === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
               </button>
+
+              {status === 'success' ? (
+                <p className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                  {t('contact.successMessage') || 'Thanks! We’ll get back to you shortly.'}
+                </p>
+              ) : status === 'error' ? (
+                <p className="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
+                  {errorMessage || t('contact.submitError') || 'Failed to send. Please try again.'}
+                </p>
+              ) : null}
 
               {/* Book Call Button */}
               <a

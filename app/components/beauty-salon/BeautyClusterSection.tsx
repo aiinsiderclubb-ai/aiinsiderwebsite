@@ -102,7 +102,7 @@ const groups: ClusterGroup[] = [
 
 export default function BeautyClusterSection() {
   return (
-    <section className="py-12 px-6 content-visibility-auto" aria-labelledby="beauty-cluster-title">
+    <section className="py-12 px-6 content-visibility-auto" aria-labelledby="beauty-cluster-title" data-source-section="beauty-cluster">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div>

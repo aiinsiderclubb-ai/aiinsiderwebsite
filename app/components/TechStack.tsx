@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '../context/LanguageContext';
 
 const technologies = [
   { 
@@ -72,6 +73,8 @@ const duplicatedTechnologies = [...technologies, ...technologies, ...technologie
 
 export default function TechStack() {
   const [isPaused, setIsPaused] = useState(false);
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
 
   return (
     <section className="relative py-24 overflow-hidden content-visibility-auto">
@@ -96,11 +99,13 @@ export default function TechStack() {
             transition={{ duration: 0.6 }}
             className="inline-block px-6 py-3 glass-strong rounded-full mb-8 border border-white/20"
           >
-            <span className="text-sm font-medium text-white">Technology Stack</span>
+            <span className="text-sm font-medium text-white">
+              {isEn ? 'Technology Stack' : 'Технологічний стек'}
+            </span>
           </motion.div>
 
           <h2 className="text-4xl md:text-6xl font-bold font-heading mb-5 text-white">
-            Powered by
+            {isEn ? 'Powered by' : 'Працюємо на'}
           </h2>
           <h2 
             className="text-5xl md:text-7xl font-bold font-heading mb-6"
@@ -110,11 +115,13 @@ export default function TechStack() {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            Best-in-Class Tools
+            {isEn ? 'Best-in-Class Tools' : 'найкращих інструментах'}
           </h2>
 
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            We work with industry-leading platforms to deliver reliable, scalable AI solutions.
+            {isEn
+              ? 'We work with industry-leading platforms to deliver reliable, scalable AI solutions.'
+              : 'Ми використовуємо індустріальні платформи, щоб створювати надійні та масштабовані AI‑рішення.'}
           </p>
         </motion.div>
 

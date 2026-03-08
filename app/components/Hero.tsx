@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useMotionValue, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 const MOUSE_THROTTLE_MS = 120;
@@ -11,13 +11,18 @@ const PARTICLES_COUNT = 4;
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
   const lastUpdate = useRef(0);
   const rafId = useRef<number | null>(null);
   const { t } = useLanguage();
 
   useEffect(() => {
     if (typeof window === 'undefined' || shouldReduceMotion) return;
+
+    // Initialize to center so the first paint looks correct
+    cursorX.set(window.innerWidth / 2 - 250);
+    cursorY.set(window.innerHeight / 2 - 250);
 
     const handleMouseMove = (e: MouseEvent) => {
       const now = Date.now();
@@ -26,10 +31,8 @@ export default function Hero() {
       if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
       rafId.current = window.requestAnimationFrame(() => {
         lastUpdate.current = now;
-        setMousePosition({
-          x: (e.clientX / window.innerWidth) * 100,
-          y: (e.clientY / window.innerHeight) * 100,
-        });
+        cursorX.set(e.clientX - 250);
+        cursorY.set(e.clientY - 250);
         rafId.current = null;
       });
     };
@@ -39,7 +42,7 @@ export default function Hero() {
       if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [shouldReduceMotion]);
+  }, [cursorX, cursorY, shouldReduceMotion]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -113,10 +116,11 @@ export default function Hero() {
           className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-30"
           style={{
             background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.03) 60%, transparent 70%)',
-            left: `${mousePosition.x}%`,
-            top: `${mousePosition.y}%`,
-            transform: 'translate(-50%, -50%)',
-            willChange: 'transform, left, top',
+            left: 0,
+            top: 0,
+            x: cursorX,
+            y: cursorY,
+            willChange: 'transform',
           }}
           animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}

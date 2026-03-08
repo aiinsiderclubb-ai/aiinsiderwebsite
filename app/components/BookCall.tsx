@@ -1,9 +1,10 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, type FormEvent } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Clock, X, Loader2, Send, User, Mail, Building2, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { getLastCtaAttribution, trackFormEvent } from '../lib/analytics';
 
 type BookingsMap = Record<string, string[]>;
 
@@ -122,11 +123,28 @@ export default function BookCall() {
 
   const handleContinue = () => {
     if (!selectedDate || !selectedTime) return;
+    if (typeof window !== 'undefined') {
+      const slug = window.location.pathname;
+      const last = getLastCtaAttribution();
+      const ctaType = last.ctaType || 'generic';
+      const ctaVariant = last.ctaVariant || 'unknown';
+      trackFormEvent({
+        action: 'view',
+        formType: 'booking',
+        slug,
+        sourceSection: 'bookcall',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
+    }
     setShowBookingForm(true);
     setFormError(null);
   };
 
-  const handleSubmitBooking = async (e: React.FormEvent) => {
+  const handleSubmitBooking = async (e: FormEvent) => {
     e.preventDefault();
     
     if (!selectedDate || !selectedTime) return;
@@ -146,6 +164,27 @@ export default function BookCall() {
     setFormError(null);
 
     try {
+      const slug = typeof window !== 'undefined' ? window.location.pathname : undefined;
+      const last = getLastCtaAttribution();
+      const ctaType = last.ctaType || 'generic';
+      const ctaVariant = last.ctaVariant || 'unknown';
+      const pageType =
+        slug === `/${lang}` || slug === `/${lang}/`
+          ? 'home'
+          : 'other';
+
+      trackFormEvent({
+        action: 'submit',
+        formType: 'booking',
+        slug,
+        sourceSection: 'bookcall',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
+
       const response = await fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,14 +196,44 @@ export default function BookCall() {
           time: selectedTime,
           timezone: 'Central European Time (CET)',
           message: formData.message.trim() || undefined,
+          locale: lang === 'en' ? 'en' : 'uk',
+          vertical: 'general',
+          pageType,
+          slug,
+          sourceSection: 'bookcall',
+          ctaType,
+          ctaVariant,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        trackFormEvent({
+          action: 'error',
+          formType: 'booking',
+          slug,
+          sourceSection: 'bookcall',
+          ctaType,
+          ctaVariant,
+          pageType: 'other',
+          vertical: 'general',
+          locale: lang === 'en' ? 'en' : 'uk',
+        });
         throw new Error(data.error || 'Failed to book');
       }
+
+      trackFormEvent({
+        action: 'success',
+        formType: 'booking',
+        slug,
+        sourceSection: 'bookcall',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
 
       // Save booking locally
       const key = getDateKey(currentMonth, selectedDate);
@@ -188,6 +257,21 @@ export default function BookCall() {
 
     } catch (error) {
       console.error('Booking error:', error);
+      const slug = typeof window !== 'undefined' ? window.location.pathname : undefined;
+      const last = getLastCtaAttribution();
+      const ctaType = last.ctaType || 'generic';
+      const ctaVariant = last.ctaVariant || 'unknown';
+      trackFormEvent({
+        action: 'error',
+        formType: 'booking',
+        slug,
+        sourceSection: 'bookcall',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: lang === 'en' ? 'en' : 'uk',
+      });
       setFormError(error instanceof Error ? error.message : 'Failed to book. Please try again.');
     } finally {
       setIsSubmitting(false);

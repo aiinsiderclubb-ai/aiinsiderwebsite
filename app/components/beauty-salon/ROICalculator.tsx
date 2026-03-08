@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { trackRoiInteraction } from '@/app/lib/analytics';
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -20,6 +21,7 @@ export default function ROICalculator() {
   const [noShowRate, setNoShowRate] = useState(12);
   const [instagramLeads, setInstagramLeads] = useState(380);
   const [responseMinutes, setResponseMinutes] = useState(20);
+  const interacted = useRef(false);
 
   const result = useMemo(() => {
     const noShowLoss = monthlyBookings * (noShowRate / 100) * averageCheck;
@@ -38,7 +40,7 @@ export default function ROICalculator() {
   }, [averageCheck, instagramLeads, monthlyBookings, noShowRate, responseMinutes]);
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6">
+    <div className="grid lg:grid-cols-2 gap-6" data-source-section="roi-calculator">
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
         <h3 className="text-xl font-bold text-white mb-4">ROI-калькулятор салону краси</h3>
         <p className="text-sm text-gray-400 mb-6">
@@ -53,6 +55,11 @@ export default function ROICalculator() {
               min={0}
               value={monthlyBookings}
               onChange={(e) => setMonthlyBookings(Number(e.target.value) || 0)}
+              onFocus={() => {
+                if (interacted.current) return;
+                interacted.current = true;
+                trackRoiInteraction({ action: 'start', field: 'monthlyBookings', sourceSection: 'roi-calculator' });
+              }}
               className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
             />
           </label>
@@ -64,6 +71,11 @@ export default function ROICalculator() {
               min={0}
               value={averageCheck}
               onChange={(e) => setAverageCheck(Number(e.target.value) || 0)}
+              onFocus={() => {
+                if (interacted.current) return;
+                interacted.current = true;
+                trackRoiInteraction({ action: 'start', field: 'averageCheck', sourceSection: 'roi-calculator' });
+              }}
               className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
             />
           </label>
@@ -76,6 +88,11 @@ export default function ROICalculator() {
               max={100}
               value={noShowRate}
               onChange={(e) => setNoShowRate(Number(e.target.value) || 0)}
+              onFocus={() => {
+                if (interacted.current) return;
+                interacted.current = true;
+                trackRoiInteraction({ action: 'start', field: 'noShowRate', sourceSection: 'roi-calculator' });
+              }}
               className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
             />
           </label>
@@ -87,6 +104,11 @@ export default function ROICalculator() {
               min={0}
               value={instagramLeads}
               onChange={(e) => setInstagramLeads(Number(e.target.value) || 0)}
+              onFocus={() => {
+                if (interacted.current) return;
+                interacted.current = true;
+                trackRoiInteraction({ action: 'start', field: 'instagramLeads', sourceSection: 'roi-calculator' });
+              }}
               className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
             />
           </label>
@@ -98,6 +120,11 @@ export default function ROICalculator() {
               min={0}
               value={responseMinutes}
               onChange={(e) => setResponseMinutes(Number(e.target.value) || 0)}
+              onFocus={() => {
+                if (interacted.current) return;
+                interacted.current = true;
+                trackRoiInteraction({ action: 'start', field: 'responseMinutes', sourceSection: 'roi-calculator' });
+              }}
               className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
             />
           </label>

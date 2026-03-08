@@ -7,6 +7,7 @@ import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getBlogArticle, getBlogText, blogArticles } from '@/app/lib/blogData';
 import { getRelatedServicesForBlog, getSemanticAnchor } from '@/app/lib/internalLinks';
 import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
+import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
 
 type Params = { lang: string; slug: string };
 
@@ -24,6 +25,82 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
   const primaryCtaHref = article.ctaHref ? withLang(lang, article.ctaHref) : `${withLang(lang, '/')}#bookcall`;
+  const vertical = article.ctaType || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy') ? 'beauty' : 'general';
+
+  const beautyPillarBase = '/uk/avtomatizaciya-salonu-krasy';
+  const beautyTargets = {
+    checklist: `${beautyPillarBase}#lead-magnet`,
+    roi: `${beautyPillarBase}#roi-calculator`,
+    audit: `${beautyPillarBase}#audit-form`,
+  } as const;
+
+  type CtaType = 'checklist' | 'roi' | 'audit';
+  const ctaType = (article.ctaType || undefined) as CtaType | undefined;
+
+  const variantCopy = (type: CtaType) => {
+    if (isEn) {
+      if (type === 'checklist') {
+        return {
+          primary: 'Get the automation checklist',
+          secondary: 'Calculate ROI',
+        };
+      }
+      if (type === 'roi') {
+        return {
+          primary: 'Calculate losses & ROI',
+          secondary: 'Get the checklist',
+        };
+      }
+      return {
+        primary: 'Request a free audit',
+        secondary: 'Calculate ROI',
+      };
+    }
+
+    if (type === 'checklist') {
+      return {
+        primary: 'Завантажити чек-лист',
+        secondary: 'Порахувати ROI',
+      };
+    }
+    if (type === 'roi') {
+      return {
+        primary: 'Порахувати ROI та втрати',
+        secondary: 'Отримати чек-лист',
+      };
+    }
+    return {
+      primary: 'Замовити безкоштовний аудит',
+      secondary: 'Порахувати ROI',
+    };
+  };
+
+  const ctaButtons = (() => {
+    if (!ctaType) {
+      return {
+        primary: { href: primaryCtaHref, label: t(article.cta.bookConsultation), type: 'generic', variant: 'primary' as const },
+        secondary: { href: primaryCtaHref, label: t(article.cta.getAudit), type: 'generic', variant: 'secondary' as const },
+      };
+    }
+
+    const copy = variantCopy(ctaType);
+    if (ctaType === 'checklist') {
+      return {
+        primary: { href: beautyTargets.checklist, label: copy.primary, type: 'checklist' as const, variant: 'primary' as const },
+        secondary: { href: beautyTargets.roi, label: copy.secondary, type: 'roi' as const, variant: 'secondary' as const },
+      };
+    }
+    if (ctaType === 'roi') {
+      return {
+        primary: { href: beautyTargets.roi, label: copy.primary, type: 'roi' as const, variant: 'primary' as const },
+        secondary: { href: beautyTargets.checklist, label: copy.secondary, type: 'checklist' as const, variant: 'secondary' as const },
+      };
+    }
+    return {
+      primary: { href: beautyTargets.audit, label: copy.primary, type: 'audit' as const, variant: 'primary' as const },
+      secondary: { href: beautyTargets.roi, label: copy.secondary, type: 'roi' as const, variant: 'secondary' as const },
+    };
+  })();
 
   /* ── JSON-LD ── */
   const founderId = `${siteUrl}#vladyslav-archer`;
@@ -77,6 +154,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
+      <AnalyticsAutoCapture pageType="blog_article" vertical={vertical} locale={lang === 'en' ? 'en' : 'uk'} />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
@@ -281,7 +359,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
           </section>
 
           {/* ═══════════ CTA ═══════════ */}
-          <div className="relative rounded-[2rem] overflow-hidden mb-16 border border-white/[0.08]">
+          <div className="relative rounded-[2rem] overflow-hidden mb-16 border border-white/[0.08]" data-source-section="article-cta">
             {/* Animated gradient background */}
             <div className="absolute inset-0"
               style={{ 
@@ -369,25 +447,31 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link href={primaryCtaHref}
-                    className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                      transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)] overflow-hidden">
-                    {/* Shine effect */}
+                  <Link
+                    href={ctaButtons.primary.href}
+                    data-cta="blog-cta"
+                    data-cta-type={ctaButtons.primary.type}
+                    data-cta-variant={ctaButtons.primary.variant}
+                    className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.03] overflow-hidden ${
+                      ctaButtons.primary.type === 'checklist'
+                        ? 'bg-emerald-400 text-black hover:bg-emerald-300 shadow-[0_0_40px_rgba(52,211,153,0.25)]'
+                        : ctaButtons.primary.type === 'audit'
+                          ? 'bg-orange-500 text-white hover:bg-orange-400 shadow-[0_0_40px_rgba(249,115,22,0.25)]'
+                          : 'bg-white text-black hover:bg-gray-100 shadow-[0_0_40px_rgba(255,255,255,0.25)]'
+                    }`}
+                  >
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-black/10 to-transparent" />
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span>{t(article.cta.bookConsultation)}</span>
+                    <span>{ctaButtons.primary.label}</span>
                   </Link>
-                  
-                  <Link href={primaryCtaHref}
-                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg
-                      bg-white/10 backdrop-blur-sm text-white border border-white/20
-                      transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-[1.02]">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                    <span>{t(article.cta.getAudit)}</span>
+
+                  <Link
+                    href={ctaButtons.secondary.href}
+                    data-cta="blog-cta"
+                    data-cta-type={ctaButtons.secondary.type}
+                    data-cta-variant={ctaButtons.secondary.variant}
+                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg bg-white/10 backdrop-blur-sm text-white border border-white/20 transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-[1.02]"
+                  >
+                    <span>{ctaButtons.secondary.label}</span>
                   </Link>
                 </div>
 

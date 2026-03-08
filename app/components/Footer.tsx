@@ -31,7 +31,7 @@ export default function Footer() {
   ];
 
   const resourceLinks = [
-    { label: t('footer.linkBlog'), href: `${basePath}/blog` },
+    { label: `${t('footer.linkBlog')} (30+)`, href: `${basePath}/blog` },
     { label: t('footer.linkServices'), href: `${basePath}/services` },
     { label: t('footer.linkSolutions'), href: `${basePath}#solutions` },
   ];

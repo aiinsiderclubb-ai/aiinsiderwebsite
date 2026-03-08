@@ -77,7 +77,8 @@ const videoExamples = [
 
 export default function AIContentStudio() {
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const inViewOnce = useInView(sectionRef, { once: true, margin: '-100px' });
+  const isOnScreen = useInView(sectionRef, { once: false, amount: 0.25 });
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const basePath = `/${lang}`;
@@ -88,14 +89,21 @@ export default function AIContentStudio() {
   const phoneVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   useEffect(() => {
-    if (isPausedByUser) return;
+    if (!isOnScreen || isPausedByUser) return;
     const interval = setInterval(() => {
       setCurrentVideo((prev) => (prev + 1) % videoExamples.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [isPausedByUser]);
+  }, [isOnScreen, isPausedByUser]);
 
   useEffect(() => {
+    // Never autoplay / churn videos while offscreen
+    if (!isOnScreen) {
+      phoneVideoRefs.current.forEach((el) => el?.pause());
+      if (!isPausedByUser) setIsPlaying(false);
+      return;
+    }
+
     phoneVideoRefs.current.forEach((el, idx) => {
       if (!el) return;
       if (idx === currentVideo) return;
@@ -115,7 +123,7 @@ export default function AIContentStudio() {
       .play()
       .then(() => setIsPlaying(true))
       .catch(() => setIsPlaying(!active.paused));
-  }, [currentVideo, isPausedByUser]);
+  }, [currentVideo, isOnScreen, isPausedByUser]);
 
   const togglePhonePlayback = () => {
     const active = phoneVideoRefs.current[currentVideo];
@@ -161,7 +169,7 @@ export default function AIContentStudio() {
           <div className="md:col-span-3">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7 }}
             >
               {/* Badge */}
@@ -208,7 +216,7 @@ export default function AIContentStudio() {
                   <motion.div
                     key={service.slug}
                     initial={{ opacity: 0, x: -20 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    animate={inViewOnce ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.2 + index * 0.08 }}
                   >
                     <Link href={`${basePath}/services/${service.slug}`} className="group block">
@@ -248,7 +256,7 @@ export default function AIContentStudio() {
             {/* CTA + Stats row */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-wrap items-center gap-4 mb-6"
             >
@@ -271,7 +279,7 @@ export default function AIContentStudio() {
             {/* Inline stats */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
+              animate={inViewOnce ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex items-center gap-6"
             >
@@ -292,7 +300,7 @@ export default function AIContentStudio() {
           {/* Right: Phone mockup with info panel — 2 cols, visible from md */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            animate={inViewOnce ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="md:col-span-2 hidden md:flex items-center justify-center gap-4"
           >
@@ -329,8 +337,8 @@ export default function AIContentStudio() {
                           muted
                           playsInline
                           loop
-                          autoPlay={!isPausedByUser && idx === currentVideo}
-                          preload="metadata"
+                          autoPlay={isOnScreen && !isPausedByUser && idx === currentVideo}
+                          preload={isOnScreen ? 'metadata' : 'none'}
                         />
                       ))}
 

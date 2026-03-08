@@ -37,6 +37,8 @@ export interface BlogArticle {
   cta: { bookConsultation: L; getAudit: L };
   /** Optional CTA target path (without language prefix), ex: /avtomatizaciya-salonu-krasy#roi-calculator */
   ctaHref?: string;
+  /** CRO CTA intent mapping */
+  ctaType?: 'checklist' | 'roi' | 'audit';
   /** Internal links to service/case pages. */
   relatedLinks: { href: string; label: L }[];
 }
@@ -3443,6 +3445,7 @@ export const blogArticles: BlogArticle[] = [
       getAudit: { en: 'Get automation audit', uk: 'Отримати аудит автоматизації' },
     },
     ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaType: 'roi',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction system', uk: 'Система зниження no-show' } },
@@ -3579,6 +3582,7 @@ export const blogArticles: BlogArticle[] = [
       getAudit: { en: 'Request no-show audit', uk: 'Запросити аудит no-show' },
     },
     ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaType: 'roi',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/beauty-salon-reminders-sms-dm-workflows', label: { en: 'SMS/DM reminder workflows', uk: 'SMS/DM сценарії нагадувань' } },
@@ -3702,7 +3706,8 @@ export const blogArticles: BlogArticle[] = [
       bookConsultation: { en: 'Check your booking ROI', uk: 'Перевірити ROI запису' },
       getAudit: { en: 'Get booking flow audit', uk: 'Отримати аудит booking flow' },
     },
-    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaHref: '/avtomatizaciya-salonu-krasy#lead-magnet',
+    ctaType: 'checklist',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/instagram-direct-leads-beauty-salon', label: { en: 'Instagram Direct conversion', uk: 'Конверсія Instagram Direct' } },
@@ -3819,6 +3824,7 @@ export const blogArticles: BlogArticle[] = [
       getAudit: { en: 'Audit my reminder flow', uk: 'Аудит сценарію нагадувань' },
     },
     ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaType: 'roi',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction system', uk: 'Система зниження no-show' } },
@@ -3904,7 +3910,8 @@ export const blogArticles: BlogArticle[] = [
       bookConsultation: { en: 'Estimate retention ROI', uk: 'Оцінити ROI retention' },
       getAudit: { en: 'Get CRM segmentation audit', uk: 'Отримати аудит CRM-сегментації' },
     },
-    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaHref: '/avtomatizaciya-salonu-krasy#audit-form',
+    ctaType: 'audit',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/beauty-salon-repeat-sales-automation', label: { en: 'Repeat sales automation', uk: 'Автоматизація повторних продажів' } },
@@ -3982,7 +3989,8 @@ export const blogArticles: BlogArticle[] = [
       bookConsultation: { en: 'Open ROI calculator', uk: 'Відкрити ROI-калькулятор' },
       getAudit: { en: 'Audit repeat sales funnel', uk: 'Аудит воронки повторних продажів' },
     },
-    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaHref: '/avtomatizaciya-salonu-krasy#audit-form',
+    ctaType: 'audit',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation playbook', uk: 'Playbook CRM-сегментації' } },
@@ -4055,7 +4063,8 @@ export const blogArticles: BlogArticle[] = [
       bookConsultation: { en: 'Calculate ROI impact', uk: 'Порахувати ROI-вплив' },
       getAudit: { en: 'Get reputation workflow audit', uk: 'Аудит репутаційного workflow' },
     },
-    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaHref: '/avtomatizaciya-salonu-krasy#lead-magnet',
+    ctaType: 'checklist',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/beauty-salon-repeat-sales-automation', label: { en: 'Repeat sales automation', uk: 'Автоматизація повторних продажів' } },
@@ -4135,7 +4144,8 @@ export const blogArticles: BlogArticle[] = [
       bookConsultation: { en: 'Run ROI calculator', uk: 'Запустити ROI-калькулятор' },
       getAudit: { en: 'Get KPI system audit', uk: 'Отримати аудит KPI-системи' },
     },
-    ctaHref: '/avtomatizaciya-salonu-krasy#roi-calculator',
+    ctaHref: '/avtomatizaciya-salonu-krasy#lead-magnet',
+    ctaType: 'checklist',
     relatedLinks: [
       { href: '/avtomatizaciya-salonu-krasy', label: { en: 'Beauty salon automation pillar', uk: 'Pillar: автоматизація салону краси' } },
       { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation playbook', uk: 'Playbook CRM-сегментації' } },

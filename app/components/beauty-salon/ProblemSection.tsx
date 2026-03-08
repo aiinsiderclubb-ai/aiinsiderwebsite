@@ -23,7 +23,7 @@ const problemCards = [
 
 export default function ProblemSection() {
   return (
-    <section className="py-12 px-6 content-visibility-auto">
+    <section className="py-12 px-6 content-visibility-auto" data-source-section="problems">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Де салон втрачає гроші щодня</h2>
         <p className="text-gray-300 max-w-3xl mb-8">

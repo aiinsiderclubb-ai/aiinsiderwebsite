@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Link from 'next/link';
+import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
 import HeroSection from '@/app/components/beauty-salon/HeroSection';
 import ProblemSection from '@/app/components/beauty-salon/ProblemSection';
 import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
@@ -145,40 +146,7 @@ export default async function BeautySalonAutomationPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <Script
-        id="beauty-form-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function () {
-              try {
-                var params = new URLSearchParams(window.location.search);
-                var source = 'beauty-pillar';
-                var locale = 'uk';
-                var fired = false;
-                function fire(formType) {
-                  var payload = { event: 'aiinsider_form_submit_success', source: source, formType: formType, locale: locale };
-                  window.dataLayer = window.dataLayer || [];
-                  window.dataLayer.push(payload);
-                  if (typeof window.gtag === 'function') {
-                    window.gtag('event', payload.event, payload);
-                  }
-                  window.dispatchEvent(new CustomEvent('aiinsider:lead', { detail: payload }));
-                  fired = true;
-                }
-                if (params.get('leadMagnet') === 'success') fire('lead-magnet');
-                if (params.get('audit') === 'success') fire('audit-request');
-                if (fired) {
-                  params.delete('leadMagnet');
-                  params.delete('audit');
-                  var next = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
-                  window.history.replaceState({}, '', next);
-                }
-              } catch (e) {}
-            })();
-          `,
-        }}
-      />
+      <AnalyticsAutoCapture pageType="pillar" vertical="beauty" locale="uk" />
 
       <article>
         <section className="pt-6 px-6">

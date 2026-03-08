@@ -11,6 +11,7 @@ import {
   WELCOME_MESSAGE, CONVERSION_BUTTONS, LEAD_CAPTURE_PROMPT 
 } from '../lib/chatPrompts';
 import { useChatContext } from '../context/ChatContext';
+import { getLastCtaAttribution, trackFormEvent } from '../lib/analytics';
 
 interface Message {
   id: string;
@@ -153,6 +154,104 @@ export default function ChatWidget() {
     setInputValue('');
     setIsLoading(true);
 
+    // Lead capture mode: treat the next message as contact details
+    if (leadCaptureMode) {
+      const slug = typeof window !== 'undefined' ? window.location.pathname : undefined;
+      const locale = slug?.startsWith('/en') ? 'en' : 'uk';
+      const last = getLastCtaAttribution();
+      const ctaType = last.ctaType || 'generic';
+      const ctaVariant = last.ctaVariant || 'unknown';
+
+      trackFormEvent({
+        action: 'submit',
+        formType: 'chat-lead',
+        slug,
+        sourceSection: 'chat-widget',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale,
+      });
+
+      try {
+        const res = await fetch('/api/forms/submit', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            formType: 'chat-lead',
+            locale,
+            vertical: 'general',
+            pageType: 'other',
+            slug,
+            sourceSection: 'chat-widget',
+            ctaType,
+            ctaVariant,
+            lead: {
+              contact: userMessage.content,
+              industry: selectedIndustry,
+              industryLabel: industryLabels[selectedIndustry],
+              messageCount,
+            },
+          }),
+        });
+
+        const data = (await res.json().catch(() => null)) as any;
+        const ok = Boolean(res.ok && data?.ok);
+
+        trackFormEvent({
+          action: ok ? 'success' : 'error',
+          formType: 'chat-lead',
+          slug,
+          sourceSection: 'chat-widget',
+          ctaType,
+          ctaVariant,
+          pageType: 'other',
+          vertical: 'general',
+          locale,
+        });
+
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: ok
+            ? 'Дякуємо! Ми отримали ваш контакт і звʼяжемося з вами найближчим часом.'
+            : 'Не вдалося відправити контакт. Спробуйте ще раз або напишіть нам в Telegram: @aiinsider',
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+        if (ok) setLeadCaptureMode(false);
+      } catch {
+        const last = getLastCtaAttribution();
+        const ctaType = last.ctaType || 'generic';
+        const ctaVariant = last.ctaVariant || 'unknown';
+        trackFormEvent({
+          action: 'error',
+          formType: 'chat-lead',
+          slug,
+          sourceSection: 'chat-widget',
+          ctaType,
+          ctaVariant,
+          pageType: 'other',
+          vertical: 'general',
+          locale,
+        });
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: 'Помилка зʼєднання. Спробуйте ще раз або напишіть нам в Telegram: @aiinsider',
+            timestamp: new Date(),
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     const newMessageCount = messageCount + 1;
     setMessageCount(newMessageCount);
 
@@ -225,6 +324,23 @@ Would you like to learn more?`,
   const handleConversionAction = (action: string) => {
     setShowConversionButtons(false);
     setLeadCaptureMode(true);
+    if (typeof window !== 'undefined') {
+      const slug = window.location.pathname;
+      const last = getLastCtaAttribution();
+      const ctaType = last.ctaType || 'generic';
+      const ctaVariant = last.ctaVariant || 'unknown';
+      trackFormEvent({
+        action: 'view',
+        formType: 'chat-lead',
+        slug,
+        sourceSection: 'chat-widget',
+        ctaType,
+        ctaVariant,
+        pageType: 'other',
+        vertical: 'general',
+        locale: slug.startsWith('/en') ? 'en' : 'uk',
+      });
+    }
     
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -434,7 +550,7 @@ Would you like to learn more?`,
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Type a message..."
+                    placeholder={leadCaptureMode ? 'Your phone or email…' : 'Type a message...'}
                     className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white 
                       placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                     disabled={isLoading}
