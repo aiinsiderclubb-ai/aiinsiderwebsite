@@ -3,12 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { getLastCtaAttribution, trackFormEvent } from '@/app/lib/analytics';
+import type { FinalCtaConfig, VerticalId, VerticalLocale } from '@/app/lib/verticals/types';
 
 interface FinalCTAProps {
   status?: 'success' | 'error';
+  content: FinalCtaConfig;
+  vertical: VerticalId;
+  locale: VerticalLocale;
 }
 
-export default function FinalCTA({ status }: FinalCTAProps) {
+export default function FinalCTA({ status, content, vertical, locale }: FinalCTAProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [form, setForm] = useState({ name: '', phone: '', salonSize: '', monthlyBookings: '' });
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>(() => {
@@ -40,8 +44,8 @@ export default function FinalCTA({ status }: FinalCTAProps) {
             ctaType,
             ctaVariant,
             pageType: 'pillar',
-            vertical: 'beauty',
-            locale: 'uk',
+            vertical,
+            locale,
           });
         }
       },
@@ -49,7 +53,7 @@ export default function FinalCTA({ status }: FinalCTAProps) {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [locale, vertical]);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -71,8 +75,8 @@ export default function FinalCTA({ status }: FinalCTAProps) {
       ctaType,
       ctaVariant,
       pageType: 'pillar',
-      vertical: 'beauty',
-      locale: 'uk',
+      vertical,
+      locale,
     });
 
     try {
@@ -81,8 +85,8 @@ export default function FinalCTA({ status }: FinalCTAProps) {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           formType: 'audit-request',
-          locale: 'uk',
-          vertical: 'beauty',
+          locale,
+          vertical,
           pageType: 'pillar',
           slug,
           sourceSection: 'audit',
@@ -108,13 +112,13 @@ export default function FinalCTA({ status }: FinalCTAProps) {
         ctaType,
         ctaVariant,
         pageType: 'pillar',
-        vertical: 'beauty',
-        locale: 'uk',
+        vertical,
+        locale,
       });
 
       if (!ok) {
         setState('error');
-        setErrorMessage(data?.message || 'Не вдалося надіслати запит. Перевірте поля та спробуйте ще раз.');
+        setErrorMessage(data?.message || content.form.errorMessage);
         return;
       }
 
@@ -129,49 +133,47 @@ export default function FinalCTA({ status }: FinalCTAProps) {
         ctaType,
         ctaVariant,
         pageType: 'pillar',
-        vertical: 'beauty',
-        locale: 'uk',
+        vertical,
+        locale,
       });
       setState('error');
-      setErrorMessage('Не вдалося надіслати запит. Спробуйте ще раз.');
+      setErrorMessage(content.form.networkErrorMessage);
     }
   };
 
   return (
     <section ref={sectionRef} className="py-12 pb-20 px-6 content-visibility-auto" data-source-section="audit">
       <div className="max-w-6xl mx-auto rounded-3xl border border-white/15 bg-gradient-to-br from-white/10 to-white/[0.02] p-6 md:p-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white">Готові перейти від хаосу до прогнозованої виручки?</h2>
-        <p className="mt-3 text-gray-200 max-w-3xl">
-          Отримайте аудит процесів салону з дорожньою картою на 30 днів: що автоматизувати першими, який ROI очікувати і
-          як контролювати результат на рівні метрик.
-        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white">{content.title}</h2>
+        <p className="mt-3 text-gray-200 max-w-3xl">{content.subtitle}</p>
 
         <div className="mt-6 grid lg:grid-cols-2 gap-6">
           <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-            <h3 className="text-xl font-semibold text-white">Що входить в безкоштовний аудит</h3>
+            <h3 className="text-xl font-semibold text-white">{content.benefits.title}</h3>
             <ul className="mt-3 text-gray-300 space-y-2 text-sm">
-              <li>- Розбір воронки Instagram → запис → візит</li>
-              <li>- Оцінка втрат від no-show і повільної відповіді</li>
-              <li>- Пріоритетний план впровадження на 14–30 днів</li>
-              <li>- Рекомендований стек і порядок запуску</li>
+              {content.benefits.bullets.map((b) => (
+                <li key={b}>- {b}</li>
+              ))}
             </ul>
-            <div className="mt-4 text-xs text-gray-400">Risk-reversal: стартуємо з MVP-блоку, який найшвидше впливає на касу.</div>
+            <div className="mt-4 text-xs text-gray-400">{content.benefits.riskReversal}</div>
             <div className="mt-4 flex gap-2 flex-wrap">
-              <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/90">Прозорий KPI-план</span>
-              <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/90">Щотижневі ітерації</span>
-              <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/90">Без техно-хаосу</span>
+              {content.benefits.chips.map((c) => (
+                <span key={c} className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/90">
+                  {c}
+                </span>
+              ))}
             </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-            <h3 className="text-xl font-semibold text-white">Запит на аудит</h3>
+            <h3 className="text-xl font-semibold text-white">{content.form.title}</h3>
             {state === 'success' ? (
               <p className="mt-4 rounded-lg border border-emerald-400/30 bg-emerald-500/15 p-3 text-sm text-emerald-100">
-                Дякуємо! Ваш запит на аудит отримано. Ми зв’яжемося з вами найближчим часом.
+                {content.form.successMessage}
               </p>
             ) : state === 'error' ? (
               <p className="mt-4 rounded-lg border border-rose-400/30 bg-rose-500/10 p-3 text-sm text-rose-100">
-                {errorMessage || 'Не вдалося надіслати запит. Перевірте поля та спробуйте ще раз.'}
+                {errorMessage || content.form.errorMessage}
               </p>
             ) : null}
             <form
@@ -186,7 +188,7 @@ export default function FinalCTA({ status }: FinalCTAProps) {
               <input type="hidden" name="ctaType" value="generic" />
               <input type="hidden" name="ctaVariant" value="unknown" />
               <label className="block">
-                <span className="text-sm text-gray-300">Ім'я</span>
+                <span className="text-sm text-gray-300">{content.form.fields.nameLabel}</span>
                 <input
                   name="name"
                   required
@@ -197,7 +199,7 @@ export default function FinalCTA({ status }: FinalCTAProps) {
                 />
               </label>
               <label className="block">
-                <span className="text-sm text-gray-300">Телефон</span>
+                <span className="text-sm text-gray-300">{content.form.fields.phoneLabel}</span>
                 <input
                   name="phone"
                   required
@@ -208,7 +210,7 @@ export default function FinalCTA({ status }: FinalCTAProps) {
                 />
               </label>
               <label className="block">
-                <span className="text-sm text-gray-300">Розмір салону</span>
+                <span className="text-sm text-gray-300">{content.form.fields.salonSizeLabel}</span>
                 <select
                   name="salonSize"
                   required
@@ -216,15 +218,16 @@ export default function FinalCTA({ status }: FinalCTAProps) {
                   onChange={(e) => setForm((p) => ({ ...p, salonSize: e.target.value }))}
                   className="mt-1 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-white/40"
                 >
-                  <option value="">Оберіть</option>
-                  <option value="1-2">1–2 майстри</option>
-                  <option value="3-7">3–7 майстрів</option>
-                  <option value="8-15">8–15 майстрів</option>
-                  <option value="15+">15+ майстрів</option>
+                  <option value="">{content.form.fields.salonSizePlaceholder}</option>
+                  {content.form.fields.salonSizeOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </label>
               <label className="block">
-                <span className="text-sm text-gray-300">Записів на місяць</span>
+                <span className="text-sm text-gray-300">{content.form.fields.monthlyBookingsLabel}</span>
                 <input
                   type="number"
                   name="monthlyBookings"
@@ -241,16 +244,16 @@ export default function FinalCTA({ status }: FinalCTAProps) {
                 disabled={state === 'loading'}
                 className="w-full rounded-xl bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors disabled:opacity-60 disabled:hover:bg-white"
               >
-                {state === 'loading' ? 'Відправляємо…' : 'Отримати аудит і дорожню карту'}
+                {state === 'loading' ? content.form.submittingLabel : content.form.submitLabel}
               </button>
             </form>
           </div>
         </div>
 
         <div className="mt-6 text-sm text-gray-300">
-          Потрібні приклади впроваджень?{' '}
-          <Link href="/uk/cases" className="text-white underline underline-offset-4">
-            Переглянути кейси
+          {content.bottomLinkText}{' '}
+          <Link href={content.bottomLink.href} className="text-white underline underline-offset-4">
+            {content.bottomLink.label}
           </Link>
         </div>
       </div>

@@ -9,11 +9,11 @@ import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
 import BeautyClusterSection from '@/app/components/beauty-salon/BeautyClusterSection';
 import ROISection from '@/app/components/beauty-salon/ROISection';
 import LeadMagnetSection from '@/app/components/beauty-salon/LeadMagnetSection';
-import type { FaqEntry } from '@/app/lib/schema/faqSchema';
 import { buildFaqSchema } from '@/app/lib/schema/faqSchema';
 import { buildBreadcrumbSchema } from '@/app/lib/schema/breadcrumbSchema';
 import { buildBeautyServiceSchema } from '@/app/lib/schema/serviceSchema';
 import { getSiteUrl } from '@/app/lib/site';
+import { beautyPillarUk } from '@/app/lib/verticals/beauty';
 
 const CaseSection = dynamic(() => import('@/app/components/beauty-salon/CaseSection'));
 const ImplementationSection = dynamic(() => import('@/app/components/beauty-salon/ImplementationSection'));
@@ -22,66 +22,6 @@ const FAQSection = dynamic(() => import('@/app/components/beauty-salon/FAQSectio
 const FinalCTA = dynamic(() => import('@/app/components/beauty-salon/FinalCTA'));
 
 const PAGE_PATH = '/uk/avtomatizaciya-salonu-krasy';
-
-const FAQS: FaqEntry[] = [
-  {
-    question: 'Скільки коштує автоматизація салону краси?',
-    answer:
-      'Вартість залежить від кількості процесів та інтеграцій. Ми стартуємо з MVP-блоку (запис, нагадування, Direct), який дає фінансовий ефект найшвидше.',
-  },
-  {
-    question: 'За який час видно перші результати?',
-    answer:
-      'Перші зміни у швидкості відповіді та підтвердженні записів зазвичай видно протягом 7–14 днів після запуску.',
-  },
-  {
-    question: 'Чи можна запустити автоматизацію без зміни поточної CRM?',
-    answer: 'Так. У більшості салонів ми інтегруємося з наявним стеком і не ламаємо діючі процеси.',
-  },
-  {
-    question: 'Чи замінить AI адміністратора?',
-    answer:
-      'Ні. AI забирає рутину (первинні відповіді, нагадування, фіксація лідів), а адміністратор фокусується на сервісі та складних кейсах.',
-  },
-  {
-    question: 'Як ви знижуєте no-show?',
-    answer:
-      'Через сценарії нагадувань, підтвердження візиту, легкий перенос та контроль реакції клієнта в єдиному ланцюгу.',
-  },
-  {
-    question: 'Що робити, якщо команда не технічна?',
-    answer: 'Після налаштування ви отримуєте простий регламент дій, а команда проходить коротке навчання.',
-  },
-  {
-    question: 'Чи підходить це для малого салону 1–2 майстри?',
-    answer:
-      'Так. Саме малим салонам автоматизація часто дає найшвидшу окупність через чутливість до кожного втраченого запису.',
-  },
-  {
-    question: 'Чи працює інтеграція з Instagram Direct?',
-    answer:
-      'Так. Ми будуємо сценарії обробки Direct-запитів з передачею контактів у CRM і трекінгом конверсії до запису.',
-  },
-  {
-    question: 'Як перевірити, що автоматизація реально окупається?',
-    answer:
-      'Ми фіксуємо baseline метрики до запуску (FRT, no-show, conversion, repeat rate) і щотижня порівнюємо динаміку.',
-  },
-  {
-    question: 'Чи є ризик втратити дані клієнтів?',
-    answer: 'Впроваджуються рольовий доступ, логування змін, контроль дублювань і перевірки цілісності даних.',
-  },
-  {
-    question: 'Чи можна запускати поетапно?',
-    answer:
-      'Так. Рекомендований підхід: етап 1 — ліди та запис, етап 2 — retention і повторні продажі, етап 3 — масштабування.',
-  },
-  {
-    question: 'Що я отримаю на безкоштовному аудиті?',
-    answer:
-      'Розбір поточних вузьких місць, прогноз ROI на базі ваших цифр і дорожню карту впровадження на 14–30 днів.',
-  },
-];
 
 export async function generateMetadata(): Promise<Metadata> {
   const siteUrl = getSiteUrl();
@@ -122,11 +62,13 @@ export default async function BeautySalonAutomationPage({
   const siteUrl = getSiteUrl();
   const pageUrl = new URL(PAGE_PATH, siteUrl).toString();
 
-  const faqSchema = buildFaqSchema(FAQS);
+  const faqSchema = buildFaqSchema(beautyPillarUk.faq.items);
   const breadcrumbSchema = buildBreadcrumbSchema([
-    { name: 'Головна', item: new URL('/uk', siteUrl).toString() },
-    { name: 'Послуги', item: new URL('/uk/services', siteUrl).toString() },
-    { name: 'Автоматизація салону краси', item: pageUrl },
+    ...beautyPillarUk.chrome.breadcrumbs.items.map((b) => ({
+      name: b.label,
+      item: new URL(b.href, siteUrl).toString(),
+    })),
+    { name: beautyPillarUk.chrome.breadcrumbs.current, item: pageUrl },
   ]);
   const serviceSchema = buildBeautyServiceSchema({ url: pageUrl });
 
@@ -146,49 +88,60 @@ export default async function BeautySalonAutomationPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <AnalyticsAutoCapture pageType="pillar" vertical="beauty" locale="uk" />
+      <AnalyticsAutoCapture pageType="pillar" vertical={beautyPillarUk.vertical} locale={beautyPillarUk.locale} />
 
       <article>
         <section className="pt-6 px-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <Link href="/uk" className="text-sm text-white/90 font-semibold">
-              AI Insider
+            <Link href={beautyPillarUk.chrome.brand.href} className="text-sm text-white/90 font-semibold">
+              {beautyPillarUk.chrome.brand.label}
             </Link>
             <a
-              href="#audit-form"
+              href={beautyPillarUk.chrome.topCta.href}
               data-cta="top-nav-audit"
               className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs text-white hover:bg-white/10"
             >
-              Безкоштовний аудит
+              {beautyPillarUk.chrome.topCta.label}
             </a>
           </div>
         </section>
 
-        <HeroSection />
+        <HeroSection content={beautyPillarUk.hero} />
 
         <section className="px-6 pb-2">
           <div className="max-w-6xl mx-auto text-sm text-gray-400">
-            <Link href="/uk" className="hover:text-white">
-              Головна
-            </Link>{' '}
-            /{' '}
-            <Link href="/uk/services" className="hover:text-white">
-              Послуги
-            </Link>{' '}
-            / <span className="text-gray-200">Автоматизація салону краси</span>
+            {beautyPillarUk.chrome.breadcrumbs.items.map((b) => (
+              <span key={b.href}>
+                <Link href={b.href} className="hover:text-white">
+                  {b.label}
+                </Link>{' '}
+                /{' '}
+              </span>
+            ))}
+            <span className="text-gray-200">{beautyPillarUk.chrome.breadcrumbs.current}</span>
           </div>
         </section>
 
-        <ProblemSection />
-        <AutomationSection />
-        <BeautyClusterSection />
-        <ROISection />
-        <CaseSection />
-        <ImplementationSection />
-        <ObjectionSection />
-        <FAQSection faqs={FAQS} />
-        <LeadMagnetSection status={leadMagnetStatus} />
-        <FinalCTA status={auditStatus} />
+        <ProblemSection content={beautyPillarUk.problems} />
+        <AutomationSection content={beautyPillarUk.automation} />
+        <BeautyClusterSection content={beautyPillarUk.cluster} />
+        <ROISection content={beautyPillarUk.roi} />
+        <CaseSection content={beautyPillarUk.cases} />
+        <ImplementationSection content={beautyPillarUk.implementation} />
+        <ObjectionSection content={beautyPillarUk.objections} />
+        <FAQSection title={beautyPillarUk.faq.title} faqs={beautyPillarUk.faq.items} />
+        <LeadMagnetSection
+          status={leadMagnetStatus}
+          content={beautyPillarUk.leadMagnet}
+          vertical={beautyPillarUk.vertical}
+          locale={beautyPillarUk.locale}
+        />
+        <FinalCTA
+          status={auditStatus}
+          content={beautyPillarUk.finalCta}
+          vertical={beautyPillarUk.vertical}
+          locale={beautyPillarUk.locale}
+        />
       </article>
     </main>
   );

@@ -4,6 +4,7 @@ import './globals.css';
 import LazyChatWidget from './components/LazyChatWidget';
 import { ChatProvider } from './context/ChatContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME } from './lib/site';
 
 export const metadata: Metadata = {
@@ -163,6 +164,19 @@ export default async function RootLayout({
         {/* Preconnect to Google Fonts for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+  try {
+    var theme = localStorage.getItem('aiinsider-theme');
+    document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+  } catch (e) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+})();`,
+          }}
+        />
       </head>
       <body className="antialiased">
         <script
@@ -181,10 +195,12 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <LanguageProvider initialLang={lang}>
-          <ChatProvider>
-            {children}
-            <LazyChatWidget />
-          </ChatProvider>
+          <ThemeProvider>
+            <ChatProvider>
+              {children}
+              <LazyChatWidget />
+            </ChatProvider>
+          </ThemeProvider>
         </LanguageProvider>
       </body>
     </html>

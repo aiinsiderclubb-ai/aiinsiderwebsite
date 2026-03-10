@@ -1,5 +1,5 @@
 export type AnalyticsPageType = 'pillar' | 'blog_article' | 'blog_list' | 'service' | 'other';
-export type AnalyticsVertical = 'beauty' | 'real_estate' | 'ecommerce' | 'general';
+export type AnalyticsVertical = 'beauty' | 'real_estate' | 'ecommerce' | 'general' | 'flowers';
 export type AnalyticsLocale = 'uk' | 'en';
 
 export type AnalyticsEventName =

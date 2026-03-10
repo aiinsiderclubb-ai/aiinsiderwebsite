@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const SCROLL_THROTTLE_MS = 80;
 
@@ -141,6 +142,7 @@ export default function Navbar() {
           
           {/* Language Switcher */}
           <LanguageSwitcher />
+          <ThemeSwitcher />
           
           {/* CTA Button - Monochrome */}
           <a
@@ -228,7 +230,10 @@ export default function Navbar() {
               transition={{ delay: 0.35 }}
               className="py-3 border-b border-white/5"
             >
-              <LanguageSwitcher />
+              <div className="flex items-center gap-2">
+                <LanguageSwitcher />
+                <ThemeSwitcher />
+              </div>
             </motion.div>
             
             <motion.a
