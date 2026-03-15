@@ -12,6 +12,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import DashboardPreview from '../../components/cases/DashboardPreview';
 import { getCaseBySlug, casesData, getLocalizedText } from '../../lib/casesData';
+import { getServiceBySlug } from '../../lib/servicesData';
 import { useChatContext } from '../../context/ChatContext';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -63,6 +64,8 @@ export default function CaseDetailPage() {
     .slice(0, 3);
 
   const isSweezy = caseData.id === 'case-sweezy';
+  const relatedService = caseData.relatedServiceSlug ? getServiceBySlug(caseData.relatedServiceSlug) : undefined;
+  const relatedServiceName = relatedService ? getLocalizedText(relatedService.title, lang) : '';
 
   // Determine dashboard type based on case category
   const getDashboardType = () => {
@@ -492,6 +495,42 @@ export default function CaseDetailPage() {
           </div>
         </section>
       )}
+
+      {relatedService ? (
+        <section className="py-10 px-6">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-3xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 via-white/[0.03] to-transparent p-8"
+            >
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300/80">
+                    {lang === 'uk' ? 'Пов’язана послуга' : 'Related Service'}
+                  </p>
+                  <h3 className="mt-3 text-2xl font-bold text-white">
+                    {lang === 'uk' ? 'Хочете такий самий результат?' : 'Want the same result?'}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-gray-300">
+                    {lang === 'uk' ? 'Цей кейс реалізований за допомогою нашого сервісу' : 'This case was built using our'}
+                  </p>
+                </div>
+
+                <Link
+                  href={`${basePath}/services/${relatedService.slug}`}
+                  className="group inline-flex items-center gap-2 self-start rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-white/30 hover:bg-white/10"
+                >
+                  {relatedServiceName}
+                  {lang === 'en' ? ' service' : ''}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Dashboard Preview */}
       {dashboardType && (

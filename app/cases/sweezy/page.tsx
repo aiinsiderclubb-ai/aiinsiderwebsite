@@ -10,6 +10,9 @@ import {
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
+import { getCaseBySlug } from '../../lib/casesData';
+import { getLocalizedText as getLocalizedServiceText, getServiceBySlug } from '../../lib/servicesData';
+import { getSiteUrl } from '../../lib/site';
 
 const features = [
   {
@@ -94,9 +97,41 @@ const reviews = [
 export default function SweezyAppPage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
+  const siteUrl = getSiteUrl();
+  const sweezyCase = getCaseBySlug('sweezy');
+  const relatedService = sweezyCase?.relatedServiceSlug ? getServiceBySlug(sweezyCase.relatedServiceSlug) : undefined;
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: lang === 'en' ? 'Home' : 'Головна',
+        item: new URL(basePath, siteUrl).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: lang === 'en' ? 'Cases' : 'Кейси',
+        item: new URL(`${basePath}/cases`, siteUrl).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Sweezy',
+        item: new URL(`${basePath}/cases/sweezy`, siteUrl).toString(),
+      },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Navbar />
 
       {/* Hero Section - App Store Style */}
@@ -339,6 +374,45 @@ export default function SweezyAppPage() {
           </div>
         </div>
       </section>
+
+      {relatedService ? (
+        <section className="px-6 pb-10">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-3xl border border-blue-500/30 p-8"
+              style={{
+                background: 'linear-gradient(135deg, rgba(0,87,184,0.18) 0%, rgba(255,255,255,0.04) 55%, rgba(255,215,0,0.08) 100%)',
+              }}
+            >
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300/90">
+                    {lang === 'uk' ? 'Пов’язана послуга' : 'Related Service'}
+                  </p>
+                  <h3 className="mt-3 text-2xl font-bold text-white">
+                    {lang === 'uk' ? 'Хочете такий самий результат?' : 'Want the same result?'}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-gray-200">
+                    {lang === 'uk' ? 'Цей кейс реалізований за допомогою нашого сервісу' : 'This case was built using our'}
+                  </p>
+                </div>
+
+                <Link
+                  href={`${basePath}/services/${relatedService.slug}`}
+                  className="group inline-flex items-center gap-2 self-start rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/15"
+                >
+                  {getLocalizedServiceText(relatedService.title, lang)}
+                  {lang === 'en' ? ' service' : ''}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Features Section */}
       <section className="py-20 px-6">

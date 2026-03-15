@@ -33,6 +33,7 @@ export interface SystemCapability {
 export interface CaseStudy {
   id: string;
   slug: string;
+  relatedServiceSlug?: string;
   category: CaseCategory;
   industry?: Industry;
   icon: string;
@@ -100,6 +101,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-ecommerce',
     slug: 'ecommerce-ai-chatbot',
+    relatedServiceSlug: 'ai-chatbot-for-business',
     category: 'ecommerce',
     industry: 'ecommerce',
     icon: '🛒',
@@ -241,6 +243,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-beauty',
     slug: 'beauty-salon-ai-admin',
+    relatedServiceSlug: 'workflow-automation',
     category: 'beauty',
     industry: 'beauty',
     icon: '💄',
@@ -368,6 +371,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate',
     slug: 'real-estate-lead-qualification',
+    relatedServiceSlug: 'ai-lead-generation',
     category: 'realestate',
     industry: 'general',
     icon: '🏠',
@@ -480,6 +484,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-voice',
     slug: 'ai-voice-agent-calls',
+    relatedServiceSlug: 'ai-voice-agent',
     category: 'voice',
     industry: 'general',
     icon: '🎧',
@@ -571,6 +576,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-automation',
     slug: 'workflow-automation',
+    relatedServiceSlug: 'workflow-automation',
     category: 'automation',
     industry: 'general',
     icon: '⚙️',
@@ -636,6 +642,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-facebook-outreach',
     slug: 'facebook-outreach-automation',
+    relatedServiceSlug: 'ai-lead-generation',
     category: 'automation',
     industry: 'outreach',
     icon: '🚀',
@@ -697,6 +704,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-flowers',
     slug: 'flower-shop-ai-sales',
+    relatedServiceSlug: 'ai-chatbot-for-business',
     category: 'ecommerce',
     industry: 'flowers',
     icon: '🌸',
@@ -760,6 +768,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-sweezy',
     slug: 'sweezy',
+    relatedServiceSlug: 'custom-ai-models',
     category: 'social',
     industry: 'general',
     icon: '🇺🇦',
@@ -831,6 +840,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-ops-os',
     slug: 'real-estate-operations-os',
+    relatedServiceSlug: 'ai-automation-for-real-estate',
     category: 'realestate',
     industry: 'general',
     icon: '🏢',
@@ -913,6 +923,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-realtor-productivity',
     slug: 'realtor-productivity-system',
+    relatedServiceSlug: 'ai-automation-for-real-estate',
     category: 'realestate',
     industry: 'general',
     icon: '👔',
@@ -994,6 +1005,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-owner-dashboard',
     slug: 'owner-analytics-dashboard',
+    relatedServiceSlug: 'analytics-assistants',
     category: 'realestate',
     industry: 'general',
     icon: '📊',
@@ -1075,6 +1087,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-ad-analytics',
     slug: 'real-estate-ad-lead-analytics',
+    relatedServiceSlug: 'analytics-assistants',
     category: 'realestate',
     industry: 'general',
     icon: '📢',
@@ -1151,6 +1164,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-instagram-automation',
     slug: 'crm-instagram-automation',
+    relatedServiceSlug: 'workflow-automation',
     category: 'realestate',
     industry: 'general',
     icon: '📸',
@@ -1228,6 +1242,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-voice-concierge',
     slug: 'real-estate-voice-concierge',
+    relatedServiceSlug: 'ai-voice-agent',
     category: 'realestate',
     industry: 'general',
     icon: '🎧',
@@ -1309,6 +1324,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-task-control',
     slug: 'real-estate-task-control',
+    relatedServiceSlug: 'ai-automation-for-real-estate',
     category: 'realestate',
     industry: 'general',
     icon: '✅',
@@ -1386,6 +1402,7 @@ export const casesData: CaseStudy[] = [
   {
     id: 'case-realestate-listing-intelligence',
     slug: 'listing-performance-intelligence',
+    relatedServiceSlug: 'analytics-assistants',
     category: 'realestate',
     industry: 'general',
     icon: '🏆',

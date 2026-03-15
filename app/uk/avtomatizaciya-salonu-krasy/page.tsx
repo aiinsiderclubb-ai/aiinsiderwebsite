@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Link from 'next/link';
 import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
+import ThemeSwitcher from '@/app/components/ThemeSwitcher';
 import HeroSection from '@/app/components/beauty-salon/HeroSection';
 import ProblemSection from '@/app/components/beauty-salon/ProblemSection';
 import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
@@ -33,6 +34,10 @@ export async function generateMetadata(): Promise<Metadata> {
       'Автоматизація салону краси з фокусом на виручку: Instagram-ліди, онлайн-запис 24/7, нагадування, CRM-сегментація та повторні продажі.',
     alternates: {
       canonical: PAGE_PATH,
+      languages: {
+        'uk-UA': PAGE_PATH,
+        'x-default': PAGE_PATH,
+      },
     },
     openGraph: {
       type: 'article',
@@ -96,13 +101,16 @@ export default async function BeautySalonAutomationPage({
             <Link href={beautyPillarUk.chrome.brand.href} className="text-sm text-white/90 font-semibold">
               {beautyPillarUk.chrome.brand.label}
             </Link>
-            <a
-              href={beautyPillarUk.chrome.topCta.href}
-              data-cta="top-nav-audit"
-              className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs text-white hover:bg-white/10"
-            >
-              {beautyPillarUk.chrome.topCta.label}
-            </a>
+            <div className="flex items-center gap-2">
+              <ThemeSwitcher />
+              <a
+                href={beautyPillarUk.chrome.topCta.href}
+                data-cta="top-nav-audit"
+                className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs text-white hover:bg-white/10"
+              >
+                {beautyPillarUk.chrome.topCta.label}
+              </a>
+            </div>
           </div>
         </section>
 

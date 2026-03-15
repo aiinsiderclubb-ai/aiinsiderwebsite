@@ -18,6 +18,7 @@ export default function Footer() {
   const companyLinks = [
     { label: t('footer.linkAbout'), href: `${basePath}/about` },
     { label: t('footer.linkCases'), href: `${basePath}/cases` },
+    { label: t('footer.linkProjects'), href: `${basePath}/projects` },
     { label: t('footer.linkPricing'), href: `${basePath}#pricing` },
     { label: t('footer.linkContact'), href: `${basePath}#bookcall` },
   ];
@@ -28,12 +29,13 @@ export default function Footer() {
     { label: t('footer.linkVoiceAgents'), href: `${basePath}/services/ai-voice-agent` },
     { label: t('footer.linkAutomation'), href: `${basePath}/services/workflow-automation` },
     { label: t('footer.linkCustomAgents'), href: `${basePath}/services/custom-ai-models` },
+    { label: 'Sweezy', href: `${basePath}/cases/sweezy` },
   ];
 
   const resourceLinks = [
     { label: `${t('footer.linkBlog')} (30+)`, href: `${basePath}/blog` },
     { label: t('footer.linkServices'), href: `${basePath}/services` },
-    { label: t('footer.linkSolutions'), href: `${basePath}#solutions` },
+    { label: t('footer.linkSolutions'), href: `${basePath}/solutions` },
   ];
 
   return (
@@ -45,7 +47,7 @@ export default function Footer() {
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full gpu-accelerated"
         style={{
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0%, transparent 100%)',
+          background: 'linear-gradient(to bottom, rgba(var(--theme-glow-rgb), 0.08) 0%, transparent 100%)',
           filter: 'blur(60px)',
         }}
       />
@@ -65,7 +67,7 @@ export default function Footer() {
                 <div
                   className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
                     transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-                  style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
+                  style={{ boxShadow: 'var(--theme-shadow-glow)' }}
                 >
                   <Zap className="w-6 h-6 text-black" fill="currentColor" />
                 </div>

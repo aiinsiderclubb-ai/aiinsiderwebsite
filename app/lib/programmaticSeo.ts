@@ -19,6 +19,11 @@ export interface ProgrammaticPage {
   h1: { en: string; uk: string };
   intro: { en: string; uk: string };
   benefits: { en: string[]; uk: string[] };
+  spotlight?: {
+    metric: { en: string; uk: string };
+    context: { en: string; uk: string };
+    description: { en: string; uk: string };
+  };
   useCases: { en: string[]; uk: string[] };
   faq: { en: { q: string; a: string }[]; uk: { q: string; a: string }[] };
   relatedServices: string[];
@@ -786,7 +791,176 @@ const FUNCTION_PAGES: ProgrammaticPage[] = [
 // ========================
 // Combined pages array
 // ========================
-export const PROGRAMMATIC_PAGES: ProgrammaticPage[] = [...USE_CASE_PAGES, ...INDUSTRY_PAGES, ...FUNCTION_PAGES];
+const PROGRAMMATIC_SPOTLIGHTS: Record<
+  string,
+  NonNullable<ProgrammaticPage['spotlight']>
+> = {
+  'ai-for-lead-qualification': {
+    metric: { en: '82% faster qualification cycles', uk: '82% швидша кваліфікація лідів' },
+    context: { en: 'for a B2B SaaS team processing 1,500 demo requests per month', uk: 'для B2B SaaS команди, що обробляє 1 500 демо-запитів на місяць' },
+    description: {
+      en: 'An AI scoring layer enriched every form with company size, stack, and buying signals before routing it to SDRs. Sales stopped wasting time on weak-fit accounts and started prioritizing buyers with budget and urgency in the first minute.',
+      uk: 'AI-шар скорингу збагачував кожну форму даними про розмір компанії, стек і buying signals ще до передачі в SDR. Команда продажів перестала витрачати час на слабкі акаунти і почала пріоритезувати лідів з бюджетом та терміновістю вже в першу хвилину.',
+    },
+  },
+  'ai-for-appointment-booking': {
+    metric: { en: '37% fewer no-shows', uk: '37% менше no-show' },
+    context: { en: 'for a multi-location clinic with 20+ practitioners', uk: 'для мережі клінік із 20+ спеціалістами' },
+    description: {
+      en: 'The booking agent handled scheduling, reschedules, and confirmations across chat and phone, then triggered reminders based on visit type. Empty slots dropped because patients could rebook in seconds instead of disappearing after a missed call.',
+      uk: 'Агент бронювання обробляв запис, переноси та підтвердження через чат і телефон, а потім запускав нагадування залежно від типу візиту. Порожніх слотів стало менше, бо пацієнти могли перепланувати візит за секунди, а не зникали після пропущеного дзвінка.',
+    },
+  },
+  'ai-for-customer-support-automation': {
+    metric: { en: '68% of tickets resolved without an agent', uk: '68% тікетів закрито без участі агента' },
+    context: { en: 'for a global software platform with weekend support spikes', uk: 'для глобальної software-платформи з піками звернень у вихідні' },
+    description: {
+      en: 'Support AI answered repetitive billing, login, and setup questions directly from the knowledge base, while complex tickets arrived to humans with full summaries. Customers got instant answers and the support team finally had room to handle escalations properly.',
+      uk: 'Support AI закривав повторювані питання про білінг, логін і налаштування напряму з бази знань, а складні тікети передавав людям уже з підсумком контексту. Клієнти отримували миттєві відповіді, а команда підтримки нарешті мала час на справжні ескалації.',
+    },
+  },
+  'ai-for-data-entry-automation': {
+    metric: { en: '91% less manual copy-paste', uk: '91% менше ручного копіювання даних' },
+    context: { en: 'for an ops team rekeying supplier forms into three systems', uk: 'для операційної команди, що вручну переносила форми постачальників у три системи' },
+    description: {
+      en: 'AI extracted fields from PDFs and emails, validated them against master data, and synced records into CRM, ERP, and spreadsheets automatically. Instead of spending mornings fixing typos, the team started reviewing only the exceptions that actually needed judgment.',
+      uk: 'AI витягував поля з PDF та листів, валідовував їх по master data і автоматично синхронізував записи в CRM, ERP і таблиці. Замість щоденного виправлення опечаток команда перейшла до перевірки лише тих кейсів, де справді потрібне людське рішення.',
+    },
+  },
+  'ai-for-email-automation': {
+    metric: { en: '4x faster first-response SLA', uk: '4x швидший SLA першої відповіді' },
+    context: { en: 'for a professional services inbox receiving 600+ requests weekly', uk: 'для professional services inbox з 600+ запитами щотижня' },
+    description: {
+      en: 'The system classified incoming emails by intent, drafted replies in brand tone, and launched the correct follow-up flow automatically. Partners stopped triaging inboxes manually and urgent requests stopped getting buried under low-value threads.',
+      uk: 'Система класифікувала вхідні листи за інтентом, готувала відповіді в тоні бренду і автоматично запускала правильний follow-up flow. Партнери перестали вручну сортувати inbox, а термінові запити перестали губитися серед низькопріоритетних листів.',
+    },
+  },
+  'ai-for-crm-automation': {
+    metric: { en: '53% cleaner pipeline data', uk: '53% чистіший pipeline у CRM' },
+    context: { en: 'for a revenue team running HubSpot and Salesforce in parallel', uk: 'для revenue-команди, що одночасно працює з HubSpot і Salesforce' },
+    description: {
+      en: 'AI normalized lead records, filled missing fields, merged duplicates, and updated lifecycle stages based on live behavior. Forecasts became more reliable because reps were no longer closing the week with half-filled records and stale opportunities.',
+      uk: 'AI нормалізував lead records, заповнював пропущені поля, об\'єднував дублікати та оновлював стадії lifecycle за реальною поведінкою. Прогнози стали точнішими, бо менеджери більше не завершували тиждень із напівпорожніми картками та застарілими opportunity.',
+    },
+  },
+  'ai-for-document-processing': {
+    metric: { en: '76% faster document turnaround', uk: '76% швидша обробка документів' },
+    context: { en: 'for a finance back office reviewing contracts and invoices daily', uk: 'для фінансового back office, що щодня перевіряє контракти та інвойси' },
+    description: {
+      en: 'AI parsed incoming files, extracted the right fields, flagged anomalies, and pushed structured outputs into downstream systems. The workflow changed from line-by-line document review to high-confidence approval with only exceptions routed for manual review.',
+      uk: 'AI розбирав вхідні файли, витягував потрібні поля, позначав аномалії та передавав структуровані результати в downstream-системи. Процес змінився з покрокового перегляду документів на fast-lane approval, де вручну перевіряються лише винятки.',
+    },
+  },
+  'ai-for-real-estate-agencies': {
+    metric: { en: '3x more qualified leads per agent', uk: '3x більше кваліфікованих лідів на агента' },
+    context: { en: 'for an agency managing 200+ listings across two cities', uk: 'для агенції з 200+ об\'єктами у двох містах' },
+    description: {
+      en: 'An AI assistant answered listing questions instantly, scored inquiries by budget and move-in timeline, and booked viewings without waiting for a broker callback. Agents spent their time on serious buyers instead of chasing portal leads who were never ready to move.',
+      uk: 'AI-асистент миттєво відповідав на питання по лістингах, скорив запити за бюджетом і таймлайном переїзду та бронював перегляди без очікування дзвінка брокера. Агенти зосередились на серйозних покупцях замість нескінченного обзвону лідів з порталів.',
+    },
+  },
+  'ai-for-saas-companies': {
+    metric: { en: '29% higher trial-to-paid conversion', uk: '29% вища конверсія trial-to-paid' },
+    context: { en: 'for a product-led SaaS with 4,000 monthly signups', uk: 'для product-led SaaS із 4 000 реєстрацій на місяць' },
+    description: {
+      en: 'AI detected activation blockers, triggered the right onboarding nudges, and surfaced high-intent accounts to sales before the trial expired. Instead of generic nurture emails, users got context-specific help based on what they had actually done inside the product.',
+      uk: 'AI виявляв activation blockers, запускав потрібні onboarding nudges і підсвічував high-intent акаунти для sales ще до завершення trial. Замість загальних nurture-листів користувачі отримували контекстну допомогу на основі реальної поведінки в продукті.',
+    },
+  },
+  'ai-for-financial-services': {
+    metric: { en: '61% faster client onboarding', uk: '61% швидший онбординг клієнтів' },
+    context: { en: 'for a regulated advisory firm processing KYC-heavy applications', uk: 'для регульованої advisory-фірми з KYC-важкими заявками' },
+    description: {
+      en: 'AI pre-checked submitted documents, highlighted missing compliance elements, and routed only complete applications to human reviewers. Compliance stayed in control, but the team stopped spending hours each day on avoidable back-and-forth with clients.',
+      uk: 'AI попередньо перевіряв подані документи, виділяв відсутні compliance-елементи і передавав людям лише повні заявки. Контроль лишився за командою, але щоденні години на нескінченний back-and-forth з клієнтами зникли.',
+    },
+  },
+  'ai-for-healthcare': {
+    metric: { en: '44% lower admin workload at reception', uk: '44% менше адміністративного навантаження на reception' },
+    context: { en: 'for a private medical group managing appointment and follow-up volume', uk: 'для приватної медичної групи з великим потоком записів і follow-up' },
+    description: {
+      en: 'Patient-facing AI handled common pre-visit questions, booked appointments, and escalated urgent requests under clear rules. Front-desk staff stopped repeating the same answers all day and had more capacity for high-touch patient situations.',
+      uk: 'Patient-facing AI відповідав на типові pre-visit питання, бронював прийоми та ескалював термінові звернення за чіткими правилами. Адміністратори перестали весь день повторювати одне й те саме і отримали більше часу для складних ситуацій з пацієнтами.',
+    },
+  },
+  'ai-for-ecommerce': {
+    metric: { en: '40% reduction in cart abandonment', uk: '40% менше покинутих кошиків' },
+    context: { en: 'for an online fashion retailer with evening traffic spikes', uk: 'для fashion e-commerce магазину з вечірніми піками трафіку' },
+    description: {
+      en: 'An AI shopping assistant followed up on abandoned carts within minutes, answered sizing questions in real time, and recommended matching products based on browsing context. Recovery improved because shoppers got help when hesitation was highest, not the next morning.',
+      uk: 'AI shopping assistant повертався до покинутих кошиків за лічені хвилини, відповідав на питання про розміри в реальному часі та рекомендував сумісні товари за контекстом перегляду. Recovery зріс, бо покупці отримували допомогу саме в момент сумніву, а не наступного ранку.',
+    },
+  },
+  'ai-for-professional-services': {
+    metric: { en: '22% more billable capacity', uk: '22% більше білінгової ємності' },
+    context: { en: 'for a consulting firm juggling proposals, contracts, and client intake', uk: 'для консалтингової фірми, що веде пропозиції, контракти та intake клієнтів' },
+    description: {
+      en: 'AI automated intake summaries, first-pass document review, and internal knowledge lookup across prior engagements. Senior experts spent less time assembling background context and more time on the strategic work clients actually pay for.',
+      uk: 'AI автоматизував intake summaries, первинний перегляд документів і пошук по внутрішній базі попередніх проєктів. Senior-експерти витрачали менше часу на збирання контексту і більше — на стратегічну роботу, за яку клієнти реально платять.',
+    },
+  },
+  'ai-for-manufacturing': {
+    metric: { en: '18% lower production downtime', uk: '18% менше виробничого downtime' },
+    context: { en: 'for a manufacturer coordinating suppliers, quality checks, and shift reporting', uk: 'для виробництва, що координує постачальників, quality checks і shift reporting' },
+    description: {
+      en: 'Operational AI flagged defect patterns early, automated supplier follow-ups, and surfaced schedule risks before they delayed output. Teams moved from reactive firefighting to catching quality and supply chain issues before they disrupted the line.',
+      uk: 'Operational AI рано виявляв патерни дефектів, автоматизував follow-up з постачальниками та підсвічував schedule risks ще до того, як вони зупиняли випуск. Команди перейшли від пожежного режиму до превентивного керування якістю і supply chain.',
+    },
+  },
+  'ai-for-sales-teams': {
+    metric: { en: '31% more meetings booked per rep', uk: '31% більше заброньованих зустрічей на одного менеджера' },
+    context: { en: 'for an outbound team running multi-step follow-up across 5 markets', uk: 'для outbound-команди, що веде multi-step follow-up у 5 ринках' },
+    description: {
+      en: 'AI handled lead research, personalized outreach drafts, and next-step triggers after every interaction. Reps stopped losing momentum between touches and focused on live conversations instead of rebuilding context before every email and call.',
+      uk: 'AI брав на себе lead research, персоналізовані outreach drafts і next-step triggers після кожної взаємодії. Менеджери перестали втрачати темп між дотиками і зосередились на живих розмовах, а не на відновленні контексту перед кожним листом чи дзвінком.',
+    },
+  },
+  'ai-for-marketing-teams': {
+    metric: { en: '2.4x faster campaign reporting', uk: '2,4x швидша звітність по кампаніях' },
+    context: { en: 'for a growth team managing paid, email, and content channels together', uk: 'для growth-команди, що одночасно веде paid, email і content-канали' },
+    description: {
+      en: 'AI stitched campaign data across sources, summarized performance shifts, and recommended the next optimization moves before the weekly review. Marketers spent less time wrangling dashboards and more time testing creative and funnel changes that move revenue.',
+      uk: 'AI збирав дані кампаній з різних джерел, підсумовував зміни ефективності та пропонував наступні optimization moves ще до weekly review. Маркетологи витрачали менше часу на дашборди і більше — на тести креативів та funnel changes, що реально впливають на дохід.',
+    },
+  },
+  'ai-for-customer-success': {
+    metric: { en: '27% fewer surprise churn cases', uk: '27% менше неочікуваних churn-кейсів' },
+    context: { en: 'for a CS team managing renewals across enterprise accounts', uk: 'для CS-команди, що веде renewals по enterprise-акаунтах' },
+    description: {
+      en: 'AI watched product usage, support friction, and engagement signals, then alerted CSMs before accounts slipped into silence. Instead of discovering risk at renewal time, the team acted earlier with recovery plays tailored to each account pattern.',
+      uk: 'AI відстежував product usage, support friction і engagement signals, а потім попереджав CSM ще до того, як акаунти йшли в тишу. Замість виявлення ризику на етапі renewal команда діяла раніше, використовуючи recovery playbooks під патерн кожного акаунта.',
+    },
+  },
+  'ai-for-hr-teams': {
+    metric: { en: '55% faster candidate screening', uk: '55% швидший скринінг кандидатів' },
+    context: { en: 'for an HR team hiring across operations, sales, and support roles', uk: 'для HR-команди, що наймає в operations, sales і support' },
+    description: {
+      en: 'AI screened incoming resumes against role criteria, scheduled interviews automatically, and answered routine candidate questions 24/7. Recruiters regained hours each week and could spend that time with the finalists instead of calendar logistics.',
+      uk: 'AI перевіряв резюме за критеріями ролі, автоматично планував співбесіди та відповідав на типові питання кандидатів 24/7. Рекрутери повернули собі години щотижня і змогли витрачати їх на фіналістів, а не на календарну логістику.',
+    },
+  },
+  'ai-for-operations-teams': {
+    metric: { en: '46% faster cross-team approvals', uk: '46% швидші крос-командні погодження' },
+    context: { en: 'for an operations team coordinating procurement, vendors, and internal stakeholders', uk: 'для operations-команди, що координує закупівлі, вендорів і внутрішніх стейкхолдерів' },
+    description: {
+      en: 'AI orchestrated approval chains, synced status across tools, and escalated blocked requests before SLA breaches. Instead of hunting updates in chat and spreadsheets, ops leaders saw one live workflow with the next action already assigned.',
+      uk: 'AI оркестрував approval chains, синхронізував статус між інструментами та ескалював заблоковані запити ще до порушення SLA. Замість пошуку апдейтів у чатах і таблицях operations-лідери бачили один живий workflow з уже призначеним наступним кроком.',
+    },
+  },
+  'ai-for-finance-teams': {
+    metric: { en: '34% shorter month-end close', uk: '34% коротше month-end close' },
+    context: { en: 'for a finance team reconciling invoices, expenses, and reporting packs', uk: 'для фінансової команди, що звіряє інвойси, витрати та reporting packs' },
+    description: {
+      en: 'Finance AI extracted invoice data, flagged approval anomalies, and assembled reporting inputs automatically before close week. The team spent less time chasing receipts and correcting spreadsheets, and more time explaining the numbers to leadership.',
+      uk: 'Finance AI витягував дані з інвойсів, позначав approval anomalies та автоматично готував reporting inputs ще до close week. Команда витрачала менше часу на пошук чеків і виправлення таблиць та більше — на пояснення цифр керівництву.',
+    },
+  },
+};
+
+export const PROGRAMMATIC_PAGES: ProgrammaticPage[] = [...USE_CASE_PAGES, ...INDUSTRY_PAGES, ...FUNCTION_PAGES].map((page) => ({
+  ...page,
+  spotlight: PROGRAMMATIC_SPOTLIGHTS[page.slug],
+}));
 
 // ========================
 // Helper functions

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ProjectStructuredData from '../../components/ProjectStructuredData';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -64,6 +65,7 @@ export default function PredictAIAnalyticsPage() {
 
   return (
     <main className="min-h-screen">
+      <ProjectStructuredData slug="predictai-analytics" lang={lang} />
       <Navbar />
       
       {/* Hero Section */}

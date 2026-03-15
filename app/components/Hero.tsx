@@ -76,7 +76,7 @@ export default function Hero() {
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full gpu-accelerated"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.12) 0%, transparent 60%)',
           filter: 'blur(60px)',
           left: '20%',
           top: '20%',
@@ -88,7 +88,7 @@ export default function Hero() {
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full gpu-accelerated"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.09) 0%, transparent 60%)',
           filter: 'blur(50px)',
           right: '10%',
           top: '40%',
@@ -100,7 +100,7 @@ export default function Hero() {
       <motion.div
         className="absolute w-[400px] h-[400px] rounded-full gpu-accelerated"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.07) 0%, transparent 60%)',
           filter: 'blur(40px)',
           left: '50%',
           bottom: '10%',
@@ -115,7 +115,8 @@ export default function Hero() {
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-30"
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.03) 60%, transparent 70%)',
+            background:
+              'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.15) 0%, rgba(var(--theme-glow-rgb), 0.08) 30%, rgba(var(--theme-glow-rgb), 0.03) 60%, transparent 70%)',
             left: 0,
             top: 0,
             x: cursorX,
@@ -177,7 +178,7 @@ export default function Hero() {
         <motion.div 
           variants={itemVariants} 
           className="inline-flex items-center gap-3 glass-strong px-6 py-3 rounded-full mb-8 border border-white/20"
-          style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.1)' }}
+          style={{ boxShadow: 'var(--theme-shadow-soft)' }}
         >
           <motion.div
             animate={{ rotate: 360 }}
@@ -200,7 +201,7 @@ export default function Hero() {
         >
           <span 
             className="block text-white"
-            style={{ textShadow: '0 0 60px rgba(255, 255, 255, 0.3)' }}
+            style={{ textShadow: '0 0 32px rgba(var(--theme-glow-rgb), 0.35)' }}
           >
             {t('hero.title1')}
           </span>
@@ -274,7 +275,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
               className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300"
               style={{
-                boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)',
+                boxShadow: 'var(--theme-shadow-glow)',
               }}
             >
               <span className="relative z-10 flex items-center gap-3">

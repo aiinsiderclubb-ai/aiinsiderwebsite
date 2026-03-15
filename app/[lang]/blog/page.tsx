@@ -1,28 +1,150 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import { isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
 import { buildHubLinks } from '@/app/lib/internalLinks';
 
 type Params = { lang: string };
+type SearchParams = { page?: string | string[] };
+const BLOG_PAGE_SIZE = 12;
 
-export default async function BlogPage({ params }: { params: Promise<Params> }) {
+function getPageValue(page: string | string[] | undefined): string | undefined {
+  return Array.isArray(page) ? page[0] : page;
+}
+
+function parsePageNumber(page: string | string[] | undefined): number {
+  const rawPage = getPageValue(page);
+  if (!rawPage) return 1;
+  const parsed = Number(rawPage);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : NaN;
+}
+
+function getBlogPageHref(lang: string, page: number) {
+  const basePath = withLang(lang as 'uk' | 'en', '/blog');
+  return page === 1 ? basePath : `${basePath}?page=${page}`;
+}
+
+function getPaginationItems(currentPage: number, totalPages: number) {
+  if (totalPages <= 5) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  if (currentPage <= 3) {
+    return [1, 2, 3, 4, 'ellipsis', totalPages] as const;
+  }
+
+  if (currentPage >= totalPages - 2) {
+    return [1, 'ellipsis', totalPages - 3, totalPages - 2, totalPages - 1, totalPages] as const;
+  }
+
+  return [1, 'ellipsis', currentPage - 1, currentPage, currentPage + 1, 'ellipsis', totalPages] as const;
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
+}): Promise<Metadata> {
   const { lang } = await params;
+  const { page } = await searchParams;
+
+  if (!isSupportedLang(lang)) {
+    return { robots: { index: false, follow: false } };
+  }
+
+  const currentPage = parsePageNumber(page);
+  const pageNumber = Number.isNaN(currentPage) ? 1 : currentPage;
+  const canonicalPath = getBlogPageHref(lang, pageNumber);
+
+  const baseTitle = lang === 'en' ? 'AI Automation Blog' : 'Блог про AI автоматизацію';
+  const titleWithBrand =
+    pageNumber === 1 ? `${baseTitle} | AI Insider` : `${baseTitle} — Page ${pageNumber} | AI Insider`;
+  const description =
+    lang === 'en'
+      ? 'Practical B2B playbooks on AI automation, chatbots, voice agents, and integrations — focused on measurable results.'
+      : 'Практичні B2B‑матеріали про AI‑автоматизацію, чатботи, голосові агенти та інтеграції — з фокусом на вимірювані результати.';
+
+  const keywords =
+    lang === 'en'
+      ? [
+          'AI automation blog',
+          'AI chatbots for business',
+          'AI voice agents',
+          'workflow automation',
+          'lead generation automation',
+          'CRM automation',
+        ]
+      : [
+          'блог про AI автоматизацію',
+          'AI чатботи для бізнесу',
+          'AI голосові агенти',
+          'workflow автоматизація',
+          'автоматизація лідогенерації',
+          'автоматизація CRM',
+        ];
+
+  return {
+    title: titleWithBrand,
+    description,
+    keywords,
+    alternates: {
+      canonical: canonicalPath,
+      languages: buildHreflang('/blog'),
+    },
+    openGraph: {
+      title: titleWithBrand,
+      description,
+      url: canonicalPath,
+      type: 'website',
+      locale: lang === 'en' ? 'en_US' : 'uk_UA',
+      images: ['/opengraph-image'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: titleWithBrand,
+      description,
+      images: ['/twitter-image'],
+    },
+  };
+}
+
+export default async function BlogPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
+}) {
+  const { lang } = await params;
+  const { page } = await searchParams;
 
   if (!isSupportedLang(lang)) notFound();
 
+  const requestedPage = parsePageNumber(page);
+  if (Number.isNaN(requestedPage)) {
+    redirect(withLang(lang, '/blog'));
+  }
+  if (getPageValue(page) === '1') {
+    redirect(withLang(lang, '/blog'));
+  }
+
   const siteUrl = getSiteUrl();
-  const canonicalUrl = new URL(withLang(lang, '/blog'), siteUrl).toString();
   const isEn = lang === 'en';
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
+  const currentPage = requestedPage || 1;
 
   const title = isEn ? 'Blog' : '\u0411\u043b\u043e\u0433';
   const subtitle = isEn
     ? 'B2B playbooks on AI automation, chatbots, voice agents, and integrations \u2014 written for teams that care about measurable outcomes.'
     : 'B2B\u2011\u043f\u043b\u0435\u0439\u0431\u0443\u043a\u0438 \u043f\u0440\u043e AI\u2011\u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u044e, \u0447\u0430\u0442\u0431\u043e\u0442\u0438, \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0456 \u0430\u0433\u0435\u043d\u0442\u0438 \u0442\u0430 \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u0457 \u2014 \u0434\u043b\u044f \u043a\u043e\u043c\u0430\u043d\u0434, \u044f\u043a\u0438\u043c \u0432\u0430\u0436\u043b\u0438\u0432\u0456 \u0432\u0438\u043c\u0456\u0440\u044e\u0432\u0430\u043d\u0456 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0438.';
+  const canonicalPath = getBlogPageHref(lang, currentPage);
+  const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
 
   // Use centralized hub links with semantic anchors
   const hubLinks = buildHubLinks(lang);
@@ -54,6 +176,18 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
 
   // Sort articles by date (newest first)
   const sorted = [...blogArticles].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  const totalPages = Math.ceil(sorted.length / BLOG_PAGE_SIZE);
+
+  if (currentPage > totalPages) {
+    notFound();
+  }
+
+  const paginatedArticles = sorted.slice((currentPage - 1) * BLOG_PAGE_SIZE, currentPage * BLOG_PAGE_SIZE);
+  const pageStart = (currentPage - 1) * BLOG_PAGE_SIZE + 1;
+  const pageEnd = Math.min(currentPage * BLOG_PAGE_SIZE, sorted.length);
+  const prevPageHref = currentPage > 1 ? getBlogPageHref(lang, currentPage - 1) : null;
+  const nextPageHref = currentPage < totalPages ? getBlogPageHref(lang, currentPage + 1) : null;
+  const paginationItems = getPaginationItems(currentPage, totalPages);
 
   // Unique categories
   const categories = [
@@ -68,6 +202,8 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
+      {prevPageHref ? <link rel="prev" href={prevPageHref} /> : null}
+      {nextPageHref ? <link rel="next" href={nextPageHref} /> : null}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
@@ -115,17 +251,17 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
               <span className="text-sm text-gray-400">
-                {sorted.length} {isEn ? 'articles' : 'статей'}
+                {pageStart}-{pageEnd} {isEn ? 'of' : 'з'} {sorted.length} {isEn ? 'articles' : 'статей'}
               </span>
             </div>
             <div className="text-xs text-gray-500">
-              {isEn ? 'Sorted by newest' : 'Сортування за новизною'}
+              {isEn ? `Page ${currentPage} of ${totalPages} • Sorted by newest` : `Сторінка ${currentPage} з ${totalPages} • Сортування за новизною`}
             </div>
           </div>
 
           {/* Unified card grid */}
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {sorted.map((article) => (
+            {paginatedArticles.map((article) => (
               <Link
                 key={article.slug}
                 href={withLang(lang, `/blog/${article.slug}`)}
@@ -186,14 +322,65 @@ export default async function BlogPage({ params }: { params: Promise<Params> }) 
             ))}
           </div>
 
-          {/* View all note */}
-          <div className="mt-10 text-center">
-            <p className="text-sm text-gray-500">
-              {isEn 
-                ? `Showing all ${sorted.length} articles. New content published regularly.` 
-                : `Показано всі ${sorted.length} статей. Новий контент публікується регулярно.`}
-            </p>
-          </div>
+          {/* Pagination */}
+          {totalPages > 1 ? (
+            <nav aria-label={isEn ? 'Blog pagination' : 'Пагінація блогу'} className="mt-12 flex flex-col items-center gap-5">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {prevPageHref ? (
+                  <Link
+                    href={prevPageHref}
+                    className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/10 hover:border-white/30"
+                  >
+                    {isEn ? 'Previous' : 'Назад'}
+                  </Link>
+                ) : (
+                  <span className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-gray-600">
+                    {isEn ? 'Previous' : 'Назад'}
+                  </span>
+                )}
+
+                {paginationItems.map((item, index) =>
+                  item === 'ellipsis' ? (
+                    <span key={`ellipsis-${index}`} className="px-2 text-sm text-gray-500">
+                      ...
+                    </span>
+                  ) : (
+                    <Link
+                      key={item}
+                      href={getBlogPageHref(lang, item)}
+                      aria-current={item === currentPage ? 'page' : undefined}
+                      className={`min-w-11 rounded-full px-4 py-3 text-center text-sm font-semibold transition-all duration-200 ${
+                        item === currentPage
+                          ? 'bg-white text-black shadow-lg shadow-white/20'
+                          : 'border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/30'
+                      }`}
+                    >
+                      {item}
+                    </Link>
+                  )
+                )}
+
+                {nextPageHref ? (
+                  <Link
+                    href={nextPageHref}
+                    className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/10 hover:border-white/30"
+                  >
+                    {isEn ? 'Next' : 'Далі'}
+                  </Link>
+                ) : (
+                  <span className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-gray-600">
+                    {isEn ? 'Next' : 'Далі'}
+                  </span>
+                )}
+              </div>
+
+              <p className="text-sm text-gray-500">
+                {isEn
+                  ? `Showing ${pageStart}-${pageEnd} of ${sorted.length} articles.`
+                  : `Показано ${pageStart}-${pageEnd} з ${sorted.length} статей.`}
+              </p>
+            </nav>
+          ) : null}
         </div>
       </section>
 

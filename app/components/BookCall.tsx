@@ -290,7 +290,7 @@ export default function BookCall() {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full gpu-accelerated"
         style={{ 
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.10) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -504,7 +504,7 @@ export default function BookCall() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="relative w-full max-w-lg glass-strong rounded-3xl border border-white/20 overflow-hidden"
-            style={{ boxShadow: '0 0 60px rgba(255, 255, 255, 0.1)' }}
+            style={{ boxShadow: 'var(--theme-shadow-soft)' }}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">

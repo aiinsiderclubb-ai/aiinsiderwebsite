@@ -76,14 +76,14 @@ export default function Testimonials() {
         <div
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb),0.08) 0%, transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
         <div
           className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb),0.05) 0%, transparent 60%)',
             filter: 'blur(60px)',
           }}
         />
@@ -212,7 +212,7 @@ export default function Testimonials() {
           <a
             href="#bookcall"
             className="group inline-flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 relative"
-            style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)' }}
+            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
           >
             <span className="relative z-10">{t('testimonials.ctaButton')}</span>
             <span className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ProjectStructuredData from '../../components/ProjectStructuredData';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -95,6 +96,7 @@ export default function SweezyPage() {
 
   return (
     <main className="min-h-screen">
+      <ProjectStructuredData slug="sweezy" lang={lang} />
       <Navbar />
       
       {/* Hero Section */}

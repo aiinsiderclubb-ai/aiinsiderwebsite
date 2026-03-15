@@ -167,7 +167,7 @@ export default function Pricing() {
                   >
                     <div
                       className="px-6 py-2.5 bg-white text-black rounded-full text-sm font-bold flex items-center gap-2"
-                      style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.4), 0 0 80px rgba(147, 51, 234, 0.3)' }}
+                      style={{ boxShadow: 'var(--theme-shadow-glow)' }}
                     >
                       <Sparkles className="w-4 h-4" fill="currentColor" />
                       {t('pricing.popular')}
@@ -204,7 +204,7 @@ export default function Pricing() {
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3
                           ${plan.popular ? 'bg-white' : 'bg-white/10 border border-white/20'}`}
-                        style={plan.popular ? { boxShadow: '0 0 30px rgba(255, 255, 255, 0.3)' } : {}}
+                        style={plan.popular ? { boxShadow: 'var(--theme-shadow-glow)' } : {}}
                       >
                         <Icon className={`w-6 h-6 ${plan.popular ? 'text-black' : 'text-white'}`} />
                       </div>
@@ -277,7 +277,7 @@ export default function Pricing() {
                           ? 'bg-white text-black'
                           : 'bg-white/5 text-white border border-white/20 hover:bg-white/10 hover:border-white/30'
                         }`}
-                      style={plan.popular ? { boxShadow: '0 0 40px rgba(255, 255, 255, 0.3)' } : {}}
+                      style={plan.popular ? { boxShadow: 'var(--theme-shadow-glow)' } : {}}
                     >
                       <span className="relative z-10">{plan.popular ? t('pricing.startNow') : t('pricing.getStarted')}</span>
                       <ArrowRight className={`w-5 h-5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1 ${plan.popular ? 'text-black' : 'text-white'}`} />

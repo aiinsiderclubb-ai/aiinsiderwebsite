@@ -8,7 +8,9 @@ import { ArrowRight, Play, CheckCircle, Sparkles, Clock, ChevronDown, Users, Vid
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
-import { getLocalizedText, getServiceBySlug, servicesData } from '@/app/lib/servicesData';
+import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { getLocalizedText, getServiceBySlug } from '@/app/lib/servicesData';
+import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 
 const iconMap: Record<string, React.ReactNode> = {
   '🎭': <Users className="w-6 h-6" />,
@@ -71,6 +73,40 @@ export default function ServiceDetailPage() {
 
   const pageTitle = getLocalizedText(service.title, lang);
   const pageSubtitle = getLocalizedText(service.subtitle, lang);
+  const siteUrl = getSiteUrl();
+  const serviceUrl = new URL(`${basePath}/services/${service.slug}`, siteUrl).toString();
+  const serviceDescription = getLocalizedText(service.seoDescription, lang);
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: pageTitle,
+    description: serviceDescription,
+    provider: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: siteUrl.toString().replace(/\/$/, ''),
+    },
+    areaServed: 'Worldwide',
+    url: serviceUrl,
+  };
+  const faqJsonLd =
+    service.faq.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: service.faq.map((qa) => ({
+            '@type': 'Question',
+            name: getLocalizedText(qa.question, lang),
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: getLocalizedText(qa.answer, lang),
+            },
+          })),
+        }
+      : null;
+  const relatedArticles = (service.relatedArticleSlugs ?? [])
+    .map((articleSlug) => blogArticles.find((article) => article.slug === articleSlug))
+    .filter((article): article is (typeof blogArticles)[number] => Boolean(article));
 
   const servicesLabel = isEn ? 'Services' : 'Послуги';
   const homeLabel = isEn ? 'Home' : 'Головна';
@@ -81,9 +117,23 @@ export default function ServiceDetailPage() {
   const faqLabel = isEn ? 'FAQ' : 'Поширені питання';
   const bookCallLabel = isEn ? 'Book an intro call' : 'Замовити дзвінок';
   const viewCasesLabel = isEn ? 'View case studies' : 'Подивитись кейси';
+  const relatedArticlesLabel = isEn ? 'Related Articles' : 'Корисні статті';
+  const readMoreLabel = isEn ? 'Read more' : 'Читати далі';
 
   return (
     <main className="min-h-screen bg-black text-white overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      {faqJsonLd ? (
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      ) : null}
       <Navbar />
 
       {/* Hero Section */}
@@ -503,6 +553,60 @@ export default function ServiceDetailPage() {
           </div>
         </div>
       </section>
+
+      {relatedArticles.length > 0 ? (
+        <section className="relative py-20 px-6 overflow-hidden border-t border-white/5">
+          <div className="relative max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-center mb-12"
+            >
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+                <Sparkles className="w-4 h-4 text-white/70" />
+                <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                  {relatedArticlesLabel}
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading text-white">
+                {relatedArticlesLabel}
+              </h2>
+            </motion.div>
+
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {relatedArticles.map((article, idx) => (
+                <motion.article
+                  key={article.slug}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+                >
+                  <div className="mb-4 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                    {getBlogText(article.category, lang)}
+                  </div>
+                  <h3 className="text-2xl font-bold text-white leading-tight">
+                    {getBlogText(article.h1, lang)}
+                  </h3>
+                  <p className="mt-4 text-gray-400 leading-relaxed">
+                    {getBlogText(article.metaDescription, lang)}
+                  </p>
+                  <Link
+                    href={`${basePath}/blog/${article.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white"
+                  >
+                    {readMoreLabel}
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Final CTA */}
       <section className="relative py-20 px-6 overflow-hidden">

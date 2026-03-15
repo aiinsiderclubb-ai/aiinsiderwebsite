@@ -44,7 +44,7 @@ export default function CaseStudies() {
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[700px] h-[700px] opacity-20"
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 50%)',
+            background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb),0.10) 0%, transparent 50%)',
             filter: 'blur(100px)',
           }}
         />
@@ -194,7 +194,7 @@ export default function CaseStudies() {
           <Link
             href={`${basePath}/cases`}
             className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-base overflow-hidden transition-all duration-300 hover:scale-105 relative"
-            style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)' }}
+            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
           >
             <span className="relative z-10">{isEn ? 'See All Case Studies' : 'Всі кейси'}</span>
             <span className="relative z-10 w-7 h-7 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">

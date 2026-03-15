@@ -15,8 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/', changeFrequency: 'weekly', priority: 1.0 },
     { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
     { path: '/cases', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/contact', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/projects', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/services', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/ai-content-creation', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
     { path: '/solutions', changeFrequency: 'weekly', priority: 0.8 },
     // SEO landing pages
@@ -104,11 +106,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  const ukOnlyRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl.toString().replace(/\/$/, '')}/uk/avtomatizaciya-salonu-krasy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+  ];
+
   return [
     ...staticRoutes,
     ...serviceRoutes,
     ...blogRoutes,
     ...solutionRoutes,
+    ...ukOnlyRoutes,
     ...dedicatedCaseRoutes,
     ...caseRoutes,
     ...projectRoutes,

@@ -39,6 +39,7 @@ export interface ServicePage {
   useCases: { title: LocalizedText; description: LocalizedText }[];
   implementation: ServiceStep[];
   faq: ServiceFaq[];
+  relatedArticleSlugs?: string[];
   relatedCaseSlugs?: string[];
 }
 
@@ -219,6 +220,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['rag-chatbot-for-b2b-what-works', 'ai-whatsapp-sales-bot-for-ecommerce', 'ai-onboarding-assistant-for-saas'],
     relatedCaseSlugs: ['ecommerce-ai-chatbot', 'beauty-salon-ai-assistant', 'facebook-outreach-automation'],
   },
   {
@@ -378,6 +380,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['ai-voice-agent-for-real-estate', 'ai-cold-calling-agent-that-books-meetings', 'ai-receptionist-for-small-business'],
     relatedCaseSlugs: ['voice-agent-salon-bookings', 'real-estate-voice-agent'],
   },
   {
@@ -537,6 +540,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['how-to-automate-lead-routing-with-ai', 'ai-lead-scoring-how-to-separate-signal-from-noise', 'ai-sdr-workflow-for-b2b-outbound'],
     relatedCaseSlugs: ['facebook-outreach-automation', 'real-estate-lead-qualification'],
   },
   {
@@ -694,6 +698,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['ai-voice-agent-for-real-estate', 'ai-proposal-generator-for-agencies', 'how-to-automate-lead-routing-with-ai'],
     relatedCaseSlugs: ['real-estate-lead-qualification', 'real-estate-voice-agent'],
   },
   {
@@ -807,6 +812,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['crm-automation-without-data-drift', 'ai-invoice-processing-for-finance-teams', 'ai-competitor-monitoring-for-product-teams'],
     relatedCaseSlugs: ['crm-automation', 'facebook-outreach-automation'],
   },
   {
@@ -866,6 +872,7 @@ export const servicesData: ServicePage[] = [
       { question: { uk: 'Чи це замінює BI дашборди?', en: 'Does it replace BI dashboards?' }, answer: { uk: 'Не завжди. Часто ми доповнюємо BI: звітність + Q&A + алерти поверх ваших даних.', en: 'Not always. Often it complements BI: reporting + Q&A + alerts on top of your data.' } },
       { question: { uk: 'Які джерела можна підключити?', en: 'Which data sources can you connect?' }, answer: { uk: 'CRM, Google Sheets, аналітика, SQL‑бази, внутрішні API — залежить від вашого стеку.', en: 'CRMs, Google Sheets, analytics tools, SQL databases, internal APIs — depends on your stack.' } },
     ],
+    relatedArticleSlugs: ['ai-customer-feedback-analysis-system', 'ai-search-assistant-for-company-knowledge', 'ai-meeting-scheduler-that-handles-timezone-chaos'],
   },
   {
     slug: 'custom-ai-models',
@@ -912,6 +919,7 @@ export const servicesData: ServicePage[] = [
       { question: { uk: 'Чим RAG відрізняється від “просто GPT”?', en: 'How is RAG different from “just GPT”?' }, answer: { uk: 'RAG підтягує релевантні джерела з вашої бази знань для кожної відповіді, тому контент більш точний і контрольований.', en: 'RAG retrieves relevant sources from your knowledge base per answer, making outputs more grounded and controllable.' } },
       { question: { uk: 'Чи можна обмежити доступ до даних?', en: 'Can you restrict data access?' }, answer: { uk: 'Так. Робимо ролі, правила доступу та логування запитів.', en: 'Yes. We add roles, access rules, and request logging.' } },
     ],
+    relatedArticleSlugs: ['building-ai-agents-that-take-actions', 'multimodal-ai-agents-for-customer-experience', 'rag-chatbot-for-b2b-what-works'],
   },
   {
     slug: 'ai-influencers',
@@ -1061,6 +1069,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['ai-virtual-influencer-complete-business-guide', 'ai-influencers-for-brands-complete-guide', 'virtual-influencers-vs-real-influencers'],
     relatedCaseSlugs: [],
   },
   {
@@ -1213,6 +1222,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['ai-video-production-for-marketing', 'ai-video-sales-letter-production-system', 'ai-content-repurposing-system-for-marketing'],
     relatedCaseSlugs: [],
   },
   {
@@ -1363,6 +1373,7 @@ export const servicesData: ServicePage[] = [
         },
       },
     ],
+    relatedArticleSlugs: ['ai-ugc-ads-complete-guide', 'ai-ugc-avatars-for-performance-ads', 'ai-model-for-fashion-ecommerce'],
     relatedCaseSlugs: [],
   },
 ];

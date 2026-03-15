@@ -46,8 +46,9 @@ export default function Navbar() {
   const navLinks = [
     { name: t('nav.about'), href: `${basePath}/about` },
     { name: t('nav.services'), href: `${basePath}/services` },
+    { name: t('nav.solutions'), href: `${basePath}/solutions` },
     { name: t('nav.cases'), href: `${basePath}/cases` },
-    { name: t('nav.solutions'), href: isHomePage ? '#solutions' : `${basePath}#solutions` },
+    { name: t('nav.blog'), href: `${basePath}/blog` },
     { name: t('nav.pricing'), href: isHomePage ? '#pricing' : `${basePath}#pricing` },
     { name: t('nav.contact'), href: isHomePage ? '#bookcall' : `${basePath}#bookcall` },
   ];
@@ -79,6 +80,9 @@ export default function Navbar() {
               width: ['0%', '100%'],
             }}
             transition={{ duration: 1 }}
+            style={{
+              opacity: 0.9,
+            }}
           />
         </motion.div>
       )}
@@ -92,7 +96,7 @@ export default function Navbar() {
           <div
             className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
               transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-            style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
+            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
           >
             <Zap className="w-6 h-6 text-black" fill="currentColor" />
           </div>
@@ -110,7 +114,9 @@ export default function Navbar() {
               (!isExternal && pathname === link.href) ||
               (!isExternal && link.href.endsWith('/about') && pathname === `${basePath}/about`) ||
               (!isExternal && link.href.endsWith('/services') && pathname?.startsWith(`${basePath}/services`)) ||
-              (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`));
+              (!isExternal && link.href.endsWith('/solutions') && pathname?.startsWith(`${basePath}/solutions`)) ||
+              (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`)) ||
+              (!isExternal && link.href.endsWith('/blog') && pathname?.startsWith(`${basePath}/blog`));
             
             if (isExternal) {
               return (
@@ -152,7 +158,7 @@ export default function Navbar() {
             className="relative px-6 py-3 bg-white text-black rounded-full font-bold text-sm overflow-hidden group
               transition-all duration-200 hover:scale-105 active:scale-95"
             style={{
-              boxShadow: '0 0 25px rgba(255, 255, 255, 0.3)',
+              boxShadow: 'var(--theme-shadow-glow)',
             }}
           >
             <span className="relative z-10">{t('nav.bookCall')}</span>

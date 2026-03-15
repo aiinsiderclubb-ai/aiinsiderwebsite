@@ -19,6 +19,7 @@ interface Props {
 export default function ProgrammaticLanding({ page, lang }: Props) {
   const isEn = lang === 'en';
   const t = <T,>(v: { en: T; uk: T }) => getLocalizedProgrammatic(v, lang);
+  const solutionName = t(page.h1);
 
   const typeLabels = {
     'use-case': { en: 'Use Case', uk: 'Кейс використання' },
@@ -97,7 +98,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       <section className="py-16 px-6">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
-            {isEn ? 'Key Benefits' : 'Ключові переваги'}
+            {isEn ? `Key Benefits of ${solutionName}` : `${solutionName}: ключові переваги`}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {t(page.benefits).map((benefit, idx) => (
@@ -115,11 +116,42 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
         </div>
       </section>
 
+      {/* Spotlight Section */}
+      {page.spotlight ? (
+        <section className="py-16 px-6 border-t border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <div
+              className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-10"
+              style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)' }}
+            >
+              <div
+                className="absolute -top-16 right-0 h-56 w-56 rounded-full"
+                style={{ background: 'radial-gradient(circle, rgba(34,197,94,0.16) 0%, transparent 65%)', filter: 'blur(32px)' }}
+              />
+              <div className="relative">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+                  {isEn ? 'Spotlight' : 'Практичний сценарій'}
+                </span>
+                <div className="mt-6 text-4xl font-bold text-green-400 md:text-5xl">
+                  {t(page.spotlight.metric)}
+                </div>
+                <p className="mt-3 text-sm uppercase tracking-[0.2em] text-gray-500 md:text-base">
+                  {t(page.spotlight.context)}
+                </p>
+                <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/90">
+                  {t(page.spotlight.description)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Use Cases Section */}
       <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
-            {isEn ? 'Use Cases' : 'Приклади використання'}
+            {isEn ? `How ${solutionName} Works in Practice` : `Як ${solutionName} працює на практиці`}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {t(page.useCases).map((useCase, idx) => (

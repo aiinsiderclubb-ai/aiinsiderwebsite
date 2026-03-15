@@ -9,6 +9,7 @@ export const translations = {
     cases: { uk: 'Кейси', en: 'Cases' },
     services: { uk: 'Послуги', en: 'Services' },
     solutions: { uk: 'Рішення', en: 'Solutions' },
+    blog: { uk: 'Блог', en: 'Blog' },
     pricing: { uk: 'Ціни', en: 'Pricing' },
     contact: { uk: 'Контакт', en: 'Contact' },
     bookCall: { uk: 'Замовити дзвінок', en: 'Book a Call' },
@@ -148,6 +149,7 @@ export const translations = {
     linkBlog: { uk: 'Блог', en: 'Blog' },
     linkSolutions: { uk: 'Рішення', en: 'Solutions' },
     linkCases: { uk: 'Кейси', en: 'Case Studies' },
+    linkProjects: { uk: 'Проєкти', en: 'Projects' },
     linkPricing: { uk: 'Ціни', en: 'Pricing' },
     linkContact: { uk: 'Контакт', en: 'Contact' },
     // Footer sections

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import RetryButton from './RetryButton';
 import NotesEditor from './NotesEditor';
 import SalesStatusSelect from './SalesStatusSelect';
+import ThemeSwitcher from '@/app/components/ThemeSwitcher';
 import { listLeadSubmissions, type LeadDeliveryStatus, type LeadFilters, type LeadSortDir, type LeadSortKey, type SalesStatus } from '@/app/lib/leads/store';
 import type { LeadPriority } from '@/app/lib/leads/scoring';
 import type { ConversionFormType, ConversionLocale, ConversionVertical } from '@/app/lib/forms/types';
@@ -100,11 +101,14 @@ export default async function AdminLeadsPage({
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">Leads</h1>
-          <p className="text-sm text-white/60">
-            Internal lead ops: persisted submissions + webhook delivery status.
-          </p>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl font-bold">Leads</h1>
+            <p className="text-sm text-white/60">
+              Internal lead ops: persisted submissions + webhook delivery status.
+            </p>
+          </div>
+          <ThemeSwitcher />
         </div>
 
         <form className="mt-6 grid grid-cols-2 gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 md:grid-cols-4 lg:grid-cols-8">

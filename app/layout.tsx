@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import LazyChatWidget from './components/LazyChatWidget';
 import { ChatProvider } from './context/ChatContext';
@@ -7,14 +8,25 @@ import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME } from './lib/site';
 
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: DEFAULT_TITLE,
   description: DEFAULT_DESCRIPTION,
   keywords: DEFAULT_KEYWORDS,
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
@@ -159,18 +171,24 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={lang === 'uk' ? 'uk-UA' : 'en'} suppressHydrationWarning>
+    <html
+      lang={lang === 'uk' ? 'uk-UA' : 'en'}
+      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        {/* Preconnect to Google Fonts for faster loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: `(function() {
   try {
     var theme = localStorage.getItem('aiinsider-theme');
-    document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+      return;
+    }
+    var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    document.documentElement.dataset.theme = prefersLight ? 'light' : 'dark';
   } catch (e) {
     document.documentElement.dataset.theme = 'dark';
   }

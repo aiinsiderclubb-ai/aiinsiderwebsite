@@ -11,8 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/api/',
-          '/_next/',
-          '/icon.svg',
+          '/admin/',
         ],
       },
     ],
