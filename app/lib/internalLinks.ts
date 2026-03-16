@@ -40,6 +40,18 @@ const SERVICE_TO_TOPICS: Record<SeoServiceSlug, { categories: string[]; keywords
     categories: ['AI Content'],
     keywords: ['influencer', 'video', 'ugc', 'avatar', 'content', 'social media', 'TikTok', 'Reels', 'marketing video'],
   },
+  'ai-receptionist': {
+    categories: ['Voice Agents'],
+    keywords: ['receptionist', 'call answering', 'phone', 'booking', 'front desk', 'inbound calls'],
+  },
+  'ai-sdr': {
+    categories: ['Lead Gen', 'Voice Agents'],
+    keywords: ['sdr', 'outbound', 'prospecting', 'cold calling', 'lead qualification', 'meeting booking'],
+  },
+  'ai-proposal-generator': {
+    categories: ['Automation'],
+    keywords: ['proposal', 'commercial proposal', 'quote', 'document', 'agency proposal', 'sales proposal'],
+  },
 };
 
 /**
@@ -282,6 +294,48 @@ export const SERVICE_ANCHORS: Record<SeoServiceSlug, { en: string[]; uk: string[
       'AI відеопродакшн',
       'AI UGC для маркетингу',
       'синтетичний контент',
+    ],
+  },
+  'ai-receptionist': {
+    en: [
+      'AI receptionist',
+      'AI receptionist for business',
+      '24/7 call automation',
+      'AI call answering',
+    ],
+    uk: [
+      'AI ресепшн',
+      'AI ресепшн для бізнесу',
+      'автоматизація дзвінків',
+      'AI відповіді на дзвінки',
+    ],
+  },
+  'ai-sdr': {
+    en: [
+      'AI SDR',
+      'AI SDR for B2B sales',
+      'automated outreach',
+      'AI outbound sales',
+    ],
+    uk: [
+      'AI SDR',
+      'автоматизація B2B продажів',
+      'автоматичний аутріч',
+      'AI outbound sales',
+    ],
+  },
+  'ai-proposal-generator': {
+    en: [
+      'AI proposal generator',
+      'proposal automation',
+      'automated commercial proposals',
+      'AI proposal workflow',
+    ],
+    uk: [
+      'AI генератор пропозицій',
+      'автоматизація КП',
+      'автоматичні комерційні пропозиції',
+      'AI proposal workflow',
     ],
   },
 };

@@ -107,6 +107,8 @@ export default function ServiceDetailPage() {
   const relatedArticles = (service.relatedArticleSlugs ?? [])
     .map((articleSlug) => blogArticles.find((article) => article.slug === articleSlug))
     .filter((article): article is (typeof blogArticles)[number] => Boolean(article));
+  const showBeautyIndustrySpotlight = lang === 'uk' && service.slug === 'workflow-automation';
+  const showRealEstateGuideSpotlight = lang === 'uk' && service.slug === 'ai-automation-for-real-estate';
 
   const servicesLabel = isEn ? 'Services' : 'Послуги';
   const homeLabel = isEn ? 'Home' : 'Головна';
@@ -553,6 +555,64 @@ export default function ServiceDetailPage() {
           </div>
         </div>
       </section>
+
+      {showBeautyIndustrySpotlight ? (
+        <section className="relative py-12 px-6 border-t border-white/5">
+          <div className="max-w-6xl mx-auto">
+            <div className="rounded-3xl border border-pink-400/20 bg-gradient-to-r from-pink-500/10 via-white/[0.03] to-transparent p-8">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-pink-300/80">
+                    Beauty Spotlight
+                  </p>
+                  <h2 className="mt-3 text-2xl md:text-3xl font-bold text-white">
+                    Подивіться, як салони краси використовують автоматизацію процесів
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-gray-400">
+                    Детальний pillar page про Instagram-ліди, онлайн-запис, нагадування, CRM-сегментацію та KPI для beauty-бізнесу.
+                  </p>
+                </div>
+                <Link
+                  href="/uk/avtomatizaciya-salonu-krasy"
+                  className="group inline-flex items-center gap-2 self-start rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-white/30 hover:bg-white/10"
+                >
+                  Перейти до beauty pillar
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {showRealEstateGuideSpotlight ? (
+        <section className="relative py-12 px-6 border-t border-white/5">
+          <div className="max-w-6xl mx-auto">
+            <div className="rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 via-white/[0.03] to-transparent p-8">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300/80">
+                    Real Estate Guide
+                  </p>
+                  <h2 className="mt-3 text-2xl md:text-3xl font-bold text-white">
+                    Повний гід для агентств по AI-автоматизації нерухомості
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-gray-400">
+                    Окрема pillar page про кваліфікацію лідів, voice agents, CRM-автоматизацію та аналітику для real estate-команд.
+                  </p>
+                </div>
+                <Link
+                  href="/uk/avtomatizaciya-nerukhomosti"
+                  className="group inline-flex items-center gap-2 self-start rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-white/30 hover:bg-white/10"
+                >
+                  Повний гід для агентств
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {relatedArticles.length > 0 ? (
         <section className="relative py-20 px-6 overflow-hidden border-t border-white/5">

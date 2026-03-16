@@ -31,6 +31,16 @@ export default function HeroSection({ content }: { content: HeroConfig }) {
             {content.secondaryCta.label}
           </Link>
         </div>
+
+        {content.stats?.length ? (
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {content.stats.map((stat) => (
+              <div key={stat} className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-center text-sm font-semibold text-white/90">
+                {stat}
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -15,7 +15,8 @@ export default function Hero() {
   const cursorY = useMotionValue(0);
   const lastUpdate = useRef(0);
   const rafId = useRef<number | null>(null);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const basePath = `/${lang}`;
 
   useEffect(() => {
     if (typeof window === 'undefined' || shouldReduceMotion) return;
@@ -285,7 +286,7 @@ export default function Hero() {
             </motion.a>
 
             <motion.a
-              href="#solutions"
+              href={`${basePath}/solutions`}
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
               className="group px-10 py-5 glass-strong border border-white/30 rounded-full font-bold text-lg hover:border-white/60 hover:bg-white/5 transition-all duration-300"

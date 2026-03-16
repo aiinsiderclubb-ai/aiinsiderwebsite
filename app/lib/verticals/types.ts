@@ -24,6 +24,7 @@ export type HeroConfig = {
   subtitle: string;
   primaryCta: LinkConfig;
   secondaryCta: LinkConfig;
+  stats?: string[];
 };
 
 export type ProblemCardConfig = {
@@ -41,6 +42,8 @@ export type ProblemsConfig = {
 export type AutomationCardConfig = {
   title: string;
   text: string;
+  href?: string;
+  ctaLabel?: string;
 };
 
 export type AutomationConfig = {
@@ -109,6 +112,8 @@ export type CaseConfig = {
   implementation: string[];
   metrics: string[];
   timeline: string;
+  href?: string;
+  linkLabel?: string;
 };
 
 export type CasesConfig = {
@@ -205,6 +210,7 @@ export type FinalCtaConfig = {
 };
 
 export type BeautyClusterGroupId = 'lead-capture' | 'no-show' | 'retention' | 'ops';
+export type RealEstateClusterGroupId = 'current';
 
 export type VerticalPillarConfig<ClusterGroupId extends string = string> = {
   vertical: VerticalId;

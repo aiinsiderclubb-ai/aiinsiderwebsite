@@ -36,6 +36,12 @@ export default function Footer() {
     { label: `${t('footer.linkBlog')} (30+)`, href: `${basePath}/blog` },
     { label: t('footer.linkServices'), href: `${basePath}/services` },
     { label: t('footer.linkSolutions'), href: `${basePath}/solutions` },
+    ...(lang === 'uk'
+      ? [
+          { label: 'Автоматизація салону краси', href: '/uk/avtomatizaciya-salonu-krasy' },
+          { label: 'Автоматизація нерухомості', href: '/uk/avtomatizaciya-nerukhomosti' },
+        ]
+      : []),
   ];
 
   return (

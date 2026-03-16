@@ -7,7 +7,10 @@ export type SeoServiceSlug =
   | 'ai-chatbots-for-business'
   | 'ai-voice-agents'
   | 'custom-ai-agents'
-  | 'ai-content-creation';
+  | 'ai-content-creation'
+  | 'ai-receptionist'
+  | 'ai-sdr'
+  | 'ai-proposal-generator';
 
 export type SeoFaq = { q: string; a: string };
 
@@ -15,8 +18,10 @@ export interface SeoServicePage {
   slug: SeoServiceSlug;
   /** Main keyword (must appear in URL, title, H1, first 100 words). */
   keyword: string;
+  heroTitle?: Localized<string>;
   titleTag: Localized<string>;
   metaDescription: Localized<string>;
+  heroStats?: Localized<string[]>;
   intro: Localized<string[]>;
   whatIs: Localized<{
     paragraphs: string[];
@@ -36,12 +41,16 @@ export interface SeoServicePage {
     crm: string[];
     operations: string[];
   }>;
+  useCaseBlocks?: Localized<Array<{ title: string; items: string[] }>>;
   whyAiInsider: Localized<string[]>;
   faq: Localized<SeoFaq[]>;
   cta: Localized<{
     bookConsultation: string;
     getAudit: string;
   }>;
+  relatedBlogSlugs: string[];
+  relatedSolutionSlugs?: string[];
+  siblingLandingSlugs?: SeoServiceSlug[];
   /** Optional keywords list for the Metadata `keywords` field. */
   metaKeywords?: Localized<string[]>;
 }
@@ -212,6 +221,7 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
         getAudit: 'Отримати аудит AI‑автоматизації',
       },
     },
+    relatedBlogSlugs: ['building-ai-agents-that-take-actions', 'how-to-automate-lead-routing-with-ai'],
     metaKeywords: {
       en: [
         'AI automation for business',
@@ -387,6 +397,7 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
       en: { bookConsultation: 'Book a free AI consultation', getAudit: 'Get AI automation audit' },
       uk: { bookConsultation: 'Замовити безкоштовну AI‑консультацію', getAudit: 'Отримати аудит AI‑автоматизації' },
     },
+    relatedBlogSlugs: ['rag-chatbot-for-b2b-what-works', 'ai-whatsapp-sales-bot-for-ecommerce'],
     metaKeywords: {
       en: ['AI chatbots for business', 'B2B chatbot', 'AI customer support chatbot', 'RAG chatbot', 'website chatbot', 'chatbot lead generation'],
       uk: ['AI chatbots for business', 'B2B чатбот', 'чатбот підтримки', 'RAG чатбот', 'чатбот для сайту', 'чатбот для лідогенерації'],
@@ -548,6 +559,7 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
       en: { bookConsultation: 'Book a free AI consultation', getAudit: 'Get AI automation audit' },
       uk: { bookConsultation: 'Замовити безкоштовну AI‑консультацію', getAudit: 'Отримати аудит AI‑автоматизації' },
     },
+    relatedBlogSlugs: ['ai-cold-calling-agent-that-books-meetings', 'ai-voice-agent-for-real-estate'],
     metaKeywords: {
       en: ['AI voice agents', 'AI phone agent', 'voice agent for business', 'AI call assistant', 'appointment booking voice agent'],
       uk: ['AI voice agents', 'AI телефонний агент', 'голосовий агент для бізнесу', 'AI агент для дзвінків', 'бронювання зустрічей'],
@@ -709,6 +721,7 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
       en: { bookConsultation: 'Book a free AI consultation', getAudit: 'Get AI automation audit' },
       uk: { bookConsultation: 'Замовити безкоштовну AI‑консультацію', getAudit: 'Отримати аудит AI‑автоматизації' },
     },
+    relatedBlogSlugs: ['multimodal-ai-agents-for-customer-experience', 'ai-search-assistant-for-company-knowledge'],
     metaKeywords: {
       en: ['Custom AI agents', 'agentic AI', 'AI workflow agents', 'CRM automation agent', 'AI operations automation'],
       uk: ['Custom AI agents', 'агентні AI системи', 'AI агенти для процесів', 'агент для CRM', 'автоматизація операцій'],
@@ -869,9 +882,421 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
       en: { bookConsultation: 'Book a free AI content consultation', getAudit: 'Get AI content audit' },
       uk: { bookConsultation: 'Замовити безкоштовну AI-консультацію', getAudit: 'Отримати аудит AI-контенту' },
     },
+    relatedBlogSlugs: ['ai-virtual-influencer-complete-business-guide', 'ai-video-production-for-marketing'],
     metaKeywords: {
       en: ['AI content creation', 'AI influencer', 'AI video production', 'AI UGC', 'virtual influencer', 'AI avatar', 'synthetic media'],
       uk: ['AI контент', 'AI інфлюенсер', 'AI відеопродакшн', 'AI UGC', 'віртуальний інфлюенсер', 'AI аватар', 'синтетичні медіа'],
+    },
+  },
+  'ai-receptionist': {
+    slug: 'ai-receptionist',
+    keyword: 'AI receptionist',
+    heroTitle: {
+      en: 'AI Receptionist for Business',
+      uk: 'AI ресепшн для бізнесу',
+    },
+    titleTag: {
+      en: 'AI Receptionist for Business | 24/7 Call Automation — AI Insider',
+      uk: 'AI Ресепшн | Автоматична відповідь на дзвінки — AI Insider',
+    },
+    metaDescription: {
+      en: 'AI receptionist for business that answers calls 24/7, books appointments, and handles routine questions without human operators.',
+      uk: 'AI ресепшн для бізнесу: автоматична обробка дзвінків, запис клієнтів і відповіді 24/7 без перевантаження команди.',
+    },
+    heroStats: {
+      en: ['24/7 availability', '30 sec response time', '80% of calls handled without an operator'],
+      uk: ['24/7 доступність', '30 сек — час відповіді', '80% дзвінків без оператора'],
+    },
+    intro: {
+      en: [
+        'AI receptionist for business handles inbound calls, basic qualification, appointment booking, and after-hours coverage without forcing customers into voicemail.',
+        'It is designed for companies where missed calls mean lost revenue: clinics, service businesses, agencies, and local operators with uneven call load.',
+        'If your front desk spends too much time repeating the same answers, AI can absorb routine traffic and route important calls to the right human instantly.',
+      ],
+      uk: [
+        'AI ресепшн для бізнесу автоматично приймає дзвінки, відповідає на типові питання, бронює візити та тримає SLA навіть поза робочими годинами.',
+        'Це рішення для бізнесів, де пропущений дзвінок означає втрачений продаж: сервісні компанії, клініки, агентства, локальні мережі.',
+        'Якщо адміністратори весь день повторюють одні й ті самі відповіді, AI може забрати рутину й передавати важливі звернення потрібній людині за секунди.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI receptionist is a voice-first automation layer that:'],
+        bullets: [
+          'answers incoming calls and recognizes caller intent',
+          'books, confirms, or reschedules appointments automatically',
+          'routes urgent calls and creates clean call notes in CRM',
+        ],
+        outro: 'It gives businesses a front desk that never sleeps, never misses a queue, and always follows the script.',
+      },
+      uk: {
+        paragraphs: ['AI ресепшн — це голосовий automation layer, який:'],
+        bullets: [
+          'приймає вхідні дзвінки і визначає намір клієнта',
+          'автоматично бронює, підтверджує або переносить записи',
+          'маршрутизує термінові звернення і створює чисті нотатки в CRM',
+        ],
+        outro: 'Фактично це ваш front desk 24/7: без пропущених дзвінків, без черг і без хаотичних handoff між людьми.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Connect phone numbers, call flows, availability rules, and escalation logic.',
+        'Train the receptionist on FAQs, booking policies, business hours, and edge-case routing.',
+        'Integrate calendars and CRM so every call result creates a real business action.',
+        'Monitor transcripts, missed intents, and conversion rates, then refine weekly.',
+      ],
+      uk: [
+        'Підключаємо номер, call flow, правила доступності та логіку ескалації.',
+        'Навчаємо AI на FAQ, політиках запису, графіках роботи та edge-cases.',
+        'Інтегруємо календар і CRM, щоб кожен дзвінок завершувався реальною дією.',
+        'Моніторимо транскрипти, missed intents і конверсію, а потім покращуємо сценарії щотижня.',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: 'instant call pickup, shorter waiting time, and no voicemail dead ends',
+        costReduction: 'less front-desk overload and fewer missed calls requiring callbacks',
+        automation: 'booking, rescheduling, reminders, and call summaries run automatically',
+        scalability: 'cover evenings, weekends, and peak hours without adding operators',
+      },
+      uk: {
+        efficiency: 'миттєва відповідь на дзвінок і менше втрат через чергу або voicemail',
+        costReduction: 'менше перевантаження ресепшну і менше повторних передзвонів',
+        automation: 'бронювання, переноси, нагадування і підсумки дзвінків працюють автоматично',
+        scalability: 'можна покривати вечори, вихідні та піки без розширення штату',
+      },
+    },
+    useCases: {
+      en: { sales: [], customerSupport: [], crm: [], operations: [] },
+      uk: { sales: [], customerSupport: [], crm: [], operations: [] },
+    },
+    useCaseBlocks: {
+      en: [
+        { title: 'Clinics & wellness', items: ['book appointments automatically', 'confirm or reschedule visits', 'answer routine pre-visit questions'] },
+        { title: 'Service businesses', items: ['capture leads after-hours', 'route urgent calls by intent', 'reduce missed opportunities from unanswered calls'] },
+        { title: 'Real estate & local operators', items: ['book property viewings', 'qualify callers before handoff', 'log every conversation into CRM'] },
+      ],
+      uk: [
+        { title: 'Клініки та wellness', items: ['автоматичний запис клієнтів', 'підтвердження або перенос візитів', 'відповіді на типові питання до візиту'] },
+        { title: 'Сервісний бізнес', items: ['збір лідів після робочого часу', 'маршрутизація термінових дзвінків за наміром', 'менше втрат через пропущені звернення'] },
+        { title: 'Нерухомість і локальні оператори', items: ['бронювання переглядів або консультацій', 'первинна кваліфікація перед handoff', 'автоматичний лог кожної розмови в CRM'] },
+      ],
+    },
+    whyAiInsider: {
+      en: [
+        'We build voice automation around revenue-critical call flows, not generic call center scripts.',
+        'Every receptionist setup is tied to booking rate, missed-call recovery, and SLA metrics.',
+        'We integrate calls with calendars, CRM, and follow-up workflows from day one.',
+        'Launch starts with a practical MVP and improves using real transcripts and outcomes.',
+      ],
+      uk: [
+        'Ми будуємо voice automation навколо revenue-critical сценаріїв, а не шаблонного call center.',
+        'Кожен AI ресепшн прив’язаний до booking rate, missed-call recovery і SLA по дзвінках.',
+        'З першого дня інтегруємо телефонію з календарем, CRM і follow-up логікою.',
+        'Стартуємо з практичного MVP і покращуємо його на основі реальних транскриптів та результатів.',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Can an AI receptionist answer calls 24/7?', a: 'Yes. It can handle after-hours and peak-time calls continuously while following your business rules.' },
+        { q: 'Can it book appointments directly?', a: 'Yes, with calendar integrations for booking, confirmations, and rescheduling.' },
+        { q: 'What happens if a caller needs a human?', a: 'The system can transfer, escalate, or schedule a callback based on urgency and intent.' },
+        { q: 'Does it work for small businesses?', a: 'Yes. Small teams often see the fastest ROI because every missed call hurts more.' },
+        { q: 'How do you control call quality?', a: 'We review transcripts, monitor failed intents, add guardrails, and iterate on call flows weekly.' },
+      ],
+      uk: [
+        { q: 'Чи може AI ресепшн відповідати 24/7?', a: 'Так. Він покриває вечори, вихідні та піки навантаження, дотримуючись ваших правил і графіків.' },
+        { q: 'Чи може система сама бронювати записи?', a: 'Так, через інтеграцію з календарем, підтвердженням і сценаріями переносу.' },
+        { q: 'Що буде, якщо клієнту потрібна людина?', a: 'AI може переключити дзвінок, створити callback або передати кейс за правилом терміновості.' },
+        { q: 'Чи підходить це для малого бізнесу?', a: 'Так. Для малих команд ROI часто найшвидший, бо кожен пропущений дзвінок сильніше б’є по доходу.' },
+        { q: 'Як контролюється якість дзвінків?', a: 'Через транскрипти, моніторинг missed intents, guardrails і регулярні ітерації сценаріїв.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book a free AI receptionist consultation', getAudit: 'Get AI call flow audit' },
+      uk: { bookConsultation: 'Замовити консультацію по AI ресепшн', getAudit: 'Отримати аудит call flow' },
+    },
+    relatedBlogSlugs: ['ai-receptionist-for-small-business'],
+    relatedSolutionSlugs: ['ai-for-appointment-booking', 'ai-for-customer-support-automation'],
+    siblingLandingSlugs: ['ai-voice-agents', 'ai-chatbots-for-business'],
+    metaKeywords: {
+      en: ['AI receptionist', 'AI receptionist for business', '24/7 call automation', 'AI call answering', 'AI phone receptionist'],
+      uk: ['AI ресепшн', 'AI ресепшн для бізнесу', 'автоматизація дзвінків 24/7', 'AI відповіді на дзвінки', 'AI телефонний ресепшн'],
+    },
+  },
+  'ai-sdr': {
+    slug: 'ai-sdr',
+    keyword: 'AI SDR',
+    heroTitle: {
+      en: 'AI SDR for B2B Sales Automation',
+      uk: 'AI SDR — автоматизація продажів',
+    },
+    titleTag: {
+      en: 'AI SDR for B2B Sales | Automated Outreach — AI Insider',
+      uk: 'AI SDR | Автоматизація B2B Продажів — AI Insider',
+    },
+    metaDescription: {
+      en: 'AI SDR for B2B sales automation: outbound outreach, lead qualification, meeting booking, and pipeline growth without scaling SDR headcount.',
+      uk: 'AI SDR для B2B продажів: автоматичний аутріч, кваліфікація лідів і booking зустрічей без масштабування SDR-команди.',
+    },
+    heroStats: {
+      en: ['10x more contacts', '40% pipeline growth', 'no rep on repetitive cold outreach'],
+      uk: ['10x більше контактів', '40% зростання pipeline', 'без менеджера на холодних дзвінках'],
+    },
+    intro: {
+      en: [
+        'AI SDR automates the repetitive layer of outbound sales: prospect research, personalization, first-touch messaging, qualification, and meeting booking.',
+        'It is built for B2B teams that need more top-of-funnel volume without hiring a full SDR pod for every region, segment, or campaign.',
+        'If pipeline growth is limited by how many contacts your reps can manually reach, AI SDR expands coverage while keeping the process structured.',
+      ],
+      uk: [
+        'AI SDR автоматизує рутинний шар outbound-продажів: research, персоналізацію, перший дотик, кваліфікацію та booking зустрічей.',
+        'Це рішення для B2B-команд, яким потрібно наростити top-of-funnel без найму окремої SDR-команди під кожен сегмент або регіон.',
+        'Якщо pipeline впирається в те, скільки контактів команда встигає вручну опрацювати, AI SDR дає масштаб без хаосу в процесі.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI SDR is a sales automation system that:'],
+        bullets: [
+          'selects and enriches target accounts and contacts',
+          'launches personalized outreach across email, LinkedIn, and voice',
+          'qualifies interest and books meetings into your calendar or CRM',
+        ],
+        outro: 'Instead of replacing closers, it removes the repetitive top-of-funnel work that slows them down.',
+      },
+      uk: {
+        paragraphs: ['AI SDR — це sales automation система, яка:'],
+        bullets: [
+          'відбирає і збагачує цільові акаунти та контакти',
+          'запускає персоналізований аутріч через email, LinkedIn і voice',
+          'кваліфікує інтерес і бронює зустрічі в календар або CRM',
+        ],
+        outro: 'AI SDR не замінює closers, а прибирає рутинний top-of-funnel, який сповільнює команду продажів.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Define ICP, target segments, disqualification rules, and meeting criteria.',
+        'Connect data sources for prospect enrichment, messaging context, and CRM sync.',
+        'Launch outbound sequences with AI-written personalization and follow-up logic.',
+        'Score replies, route qualified prospects to AEs, and optimize based on reply-to-meeting conversion.',
+      ],
+      uk: [
+        'Фіксуємо ICP, сегменти, правила disqualification і критерії booking зустрічей.',
+        'Підключаємо джерела для enrichment, персоналізації та синхронізації з CRM.',
+        'Запускаємо outbound-послідовності з AI-персоналізацією і follow-up логікою.',
+        'Скоримо відповіді, передаємо qualified лідів AE і оптимізуємо по reply-to-meeting конверсії.',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: 'far more first touches and follow-ups without drowning reps in admin work',
+        costReduction: 'less dependency on headcount for repetitive outbound tasks',
+        automation: 'research, messaging, routing, and booking work in one coordinated flow',
+        scalability: 'you can test segments, geographies, and campaigns faster',
+      },
+      uk: {
+        efficiency: 'набагато більше first touch і follow-up без перевантаження reps рутиною',
+        costReduction: 'менша залежність від headcount для повторюваних outbound задач',
+        automation: 'research, messaging, routing і booking зібрані в один керований процес',
+        scalability: 'можна швидше тестувати сегменти, географії та кампанії',
+      },
+    },
+    useCases: {
+      en: { sales: [], customerSupport: [], crm: [], operations: [] },
+      uk: { sales: [], customerSupport: [], crm: [], operations: [] },
+    },
+    useCaseBlocks: {
+      en: [
+        { title: 'B2B SaaS', items: ['scale outbound by ICP and product use case', 'book demos with qualified accounts faster', 'keep CRM updated after every touchpoint'] },
+        { title: 'Agencies & services', items: ['personalize outreach from niche proof points', 'qualify inbound + outbound in one flow', 'reduce manual proposal follow-up'] },
+        { title: 'High-ticket sales teams', items: ['combine email, LinkedIn, and calling sequences', 'prioritize hot replies automatically', 'route only qualified meetings to closers'] },
+      ],
+      uk: [
+        { title: 'B2B SaaS', items: ['масштабування outbound по ICP і use case', 'швидше бронювання демо з qualified акаунтами', 'автоматичне оновлення CRM після кожного touchpoint'] },
+        { title: 'Агенції та сервісні компанії', items: ['персоналізація аутрічу від кейсів і proof points', 'єдиний потік для inbound + outbound qualification', 'менше ручного фоловапу по пропозиціях'] },
+        { title: 'High-ticket sales teams', items: ['поєднання email, LinkedIn і calling sequences', 'автоматичний пріоритет гарячих відповідей', 'до closers доходять лише кваліфіковані зустрічі'] },
+      ],
+    },
+    whyAiInsider: {
+      en: [
+        'We design AI SDR flows around ICP quality, booking criteria, and pipeline metrics, not vanity outreach volume.',
+        'Our systems combine messaging, qualification, and routing instead of treating outbound as disconnected tools.',
+        'We integrate CRM, data enrichment, and call workflows into one measurable outbound engine.',
+        'The rollout starts with one segment, proves reply-to-meeting economics, then scales safely.',
+      ],
+      uk: [
+        'Ми проєктуємо AI SDR навколо ICP-якості, критеріїв booking і pipeline-метрик, а не vanity outreach volume.',
+        'Наші системи поєднують messaging, qualification і routing замість набору розрізнених інструментів.',
+        'Інтегруємо CRM, enrichment і calling workflows в один вимірюваний outbound engine.',
+        'Запуск починається з одного сегмента, доводить reply-to-meeting економіку і тільки потім масштабується.',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Can AI SDR replace a full sales team?', a: 'No. It automates top-of-funnel outreach and qualification, while closers still handle strategic conversations and deal-making.' },
+        { q: 'Can it qualify replies automatically?', a: 'Yes. It can score interest, detect buying signals, and route prospects based on your qualification rules.' },
+        { q: 'Does AI SDR work with cold calling?', a: 'Yes. It can be paired with AI voice agents for first-touch calls, follow-up, and meeting confirmation.' },
+        { q: 'How is personalization handled at scale?', a: 'We combine CRM context, account data, and prompt logic to generate controlled personalization instead of generic spam.' },
+        { q: 'What do you need to launch?', a: 'ICP definition, offer positioning, CRM access, approved channels, and examples of successful outbound messaging.' },
+      ],
+      uk: [
+        { q: 'Чи може AI SDR замінити весь sales team?', a: 'Ні. Він автоматизує top-of-funnel аутріч і qualification, а closers залишаються на стратегічних розмовах і угодах.' },
+        { q: 'Чи може система сама кваліфікувати відповіді?', a: 'Так. Вона може скорити інтерес, визначати buying signals і маршрутизувати проспектів за вашими правилами.' },
+        { q: 'Чи працює AI SDR разом із cold calling?', a: 'Так. Його можна поєднати з AI voice agents для first-touch calls, follow-up і підтвердження зустрічей.' },
+        { q: 'Як робиться персоналізація у масштабі?', a: 'Через поєднання CRM-контексту, account data та prompt-логіки, а не через шаблонний spam.' },
+        { q: 'Що потрібно для старту?', a: 'Опис ICP, позиціонування офера, доступ до CRM, погоджені канали і приклади успішного outbound messaging.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book an AI SDR strategy call', getAudit: 'Get outbound automation audit' },
+      uk: { bookConsultation: 'Замовити консультацію по AI SDR', getAudit: 'Отримати аудит outbound-процесу' },
+    },
+    relatedBlogSlugs: ['ai-sdr-workflow-for-b2b-outbound', 'ai-cold-calling-agent-that-books-meetings'],
+    relatedSolutionSlugs: ['ai-for-lead-qualification', 'ai-for-sales-teams'],
+    siblingLandingSlugs: ['ai-automation-for-business', 'custom-ai-agents'],
+    metaKeywords: {
+      en: ['AI SDR', 'AI SDR for B2B sales', 'automated outreach', 'AI outbound sales', 'AI sales development representative'],
+      uk: ['AI SDR', 'AI SDR для B2B продажів', 'автоматичний аутріч', 'AI outbound sales', 'автоматизація SDR'],
+    },
+  },
+  'ai-proposal-generator': {
+    slug: 'ai-proposal-generator',
+    keyword: 'AI proposal generator',
+    heroTitle: {
+      en: 'AI Proposal Generator for Agencies',
+      uk: 'AI генератор комерційних пропозицій',
+    },
+    titleTag: {
+      en: 'AI Proposal Generator for Agencies — AI Insider',
+      uk: 'AI Генератор Пропозицій | Автоматичні КП — AI Insider',
+    },
+    metaDescription: {
+      en: 'AI proposal generator for agencies that creates tailored commercial proposals in minutes, shortens deal cycles, and scales personalization.',
+      uk: 'AI генератор комерційних пропозицій для агенцій: автоматичне створення КП, персоналізація під клієнта і коротший цикл угоди.',
+    },
+    heroStats: {
+      en: ['5 minutes instead of 5 hours', '3x more proposals sent', '20% higher conversion'],
+      uk: ['5 хвилин замість 5 годин', '3x більше відправлених КП', '20% зростання конверсії'],
+    },
+    intro: {
+      en: [
+        'AI proposal generator helps agencies and service firms build polished commercial proposals from CRM data, discovery notes, and reusable pricing logic in minutes.',
+        'It is for teams where deal velocity is limited by manual proposal writing, inconsistent formatting, and slow turnaround after discovery calls.',
+        'If sales reps or founders still spend evenings assembling decks and PDFs, this is one of the fastest automations to monetize.',
+      ],
+      uk: [
+        'AI генератор комерційних пропозицій допомагає агенціям і сервісним бізнесам збирати якісні КП з CRM-даних, discovery notes і шаблонів ціноутворення за хвилини.',
+        'Це рішення для команд, де швидкість угоди гальмується ручним складанням пропозицій, хаотичним форматуванням і довгим turnaround після discovery call.',
+        'Якщо sales або фаундери досі витрачають вечори на збирання PDF і слайдів, ця автоматизація окупається дуже швидко.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI proposal generator is a document automation workflow that:'],
+        bullets: [
+          'pulls client context, offer structure, pricing, and objections into one draft',
+          'adapts messaging to industry, scope, and maturity of the buyer',
+          'produces proposals fast enough to shorten the gap between call and send',
+        ],
+        outro: 'The goal is not generic copy generation, but repeatable, personalized proposals tied to your winning process.',
+      },
+      uk: {
+        paragraphs: ['AI генератор пропозицій — це document automation workflow, який:'],
+        bullets: [
+          'підтягує контекст клієнта, офер, pricing та objections в єдиний драфт',
+          'адаптує повідомлення під індустрію, scope і зрілість потенційного клієнта',
+          'дозволяє відправляти КП швидко, скорочуючи gap між дзвінком і send',
+        ],
+        outro: 'Мета не в “генерації тексту”, а в повторюваних персоналізованих КП, які підсилюють ваш winning process.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Collect deal context from CRM, forms, discovery notes, and pricing templates.',
+        'Use AI to structure scope, value framing, deliverables, timeline, and commercial terms.',
+        'Generate a proposal draft tailored to buyer segment, industry, and pain points.',
+        'Review, approve, send, and feed outcomes back into the system to improve win rates.',
+      ],
+      uk: [
+        'Збираємо контекст угоди з CRM, форм, discovery notes і pricing templates.',
+        'AI структурує scope, value framing, deliverables, timeline і комерційні умови.',
+        'Генеруємо драфт КП під buyer segment, індустрію та pain points клієнта.',
+        'Команда перевіряє, затверджує, відправляє і повертає outcomes назад у систему для покращення win rate.',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: 'proposal creation drops from hours to minutes',
+        costReduction: 'less founder or senior-sales time spent on repetitive drafting',
+        automation: 'scope, pricing logic, personalization, and formatting become repeatable',
+        scalability: 'the team can send more tailored proposals without quality collapse',
+      },
+      uk: {
+        efficiency: 'створення КП скорочується з годин до хвилин',
+        costReduction: 'менше часу фаундерів і senior sales на повторюване складання драфтів',
+        automation: 'scope, pricing logic, персоналізація і форматування стають повторюваними',
+        scalability: 'команда може відправляти більше якісних КП без падіння якості',
+      },
+    },
+    useCases: {
+      en: { sales: [], customerSupport: [], crm: [], operations: [] },
+      uk: { sales: [], customerSupport: [], crm: [], operations: [] },
+    },
+    useCaseBlocks: {
+      en: [
+        { title: 'Marketing & creative agencies', items: ['turn discovery notes into tailored scopes', 'assemble pricing options quickly', 'reduce lag between call and proposal send'] },
+        { title: 'Consulting & professional services', items: ['standardize proposal structure', 'personalize value framing by client type', 'keep commercial terms consistent'] },
+        { title: 'Complex B2B services', items: ['generate multi-option offers faster', 'reuse winning proposal patterns', 'increase follow-up speed after qualification'] },
+      ],
+      uk: [
+        { title: 'Маркетингові та creative агенції', items: ['перетворення discovery notes у персоналізований scope', 'швидке складання варіантів pricing', 'менший лаг між дзвінком і відправкою КП'] },
+        { title: 'Consulting та professional services', items: ['стандартизація структури пропозицій', 'персоналізація value framing під тип клієнта', 'консистентні комерційні умови'] },
+        { title: 'Складні B2B сервіси', items: ['швидша генерація multi-option оферів', 'повторне використання winning proposal patterns', 'швидший follow-up після qualification'] },
+      ],
+    },
+    whyAiInsider: {
+      en: [
+        'We connect proposal generation to your actual sales process, CRM data, and pricing logic instead of generic writing prompts.',
+        'The system is optimized for faster turnaround, cleaner personalization, and measurable proposal-to-close improvement.',
+        'We design review and approval layers so teams keep quality control over every commercial document.',
+        'The rollout can start with one offer line, then expand to full proposal automation.',
+      ],
+      uk: [
+        'Ми підв’язуємо генерацію КП до вашого sales process, CRM і pricing logic, а не до абстрактних prompt templates.',
+        'Система оптимізується під швидший turnaround, чистішу персоналізацію і measurable proposal-to-close improvement.',
+        'Закладаємо review та approval layers, щоб команда не втрачала контроль над якістю комерційних документів.',
+        'Запуск можна почати з однієї лінійки оферів, а потім розширити до повної proposal automation.',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Can AI generate proposals from CRM and call notes?', a: 'Yes. It can combine CRM data, discovery notes, pricing templates, and previous winning structures into one draft.' },
+        { q: 'Will proposals still feel personalized?', a: 'Yes, if the system is fed with real context and controlled templates instead of generic prompts.' },
+        { q: 'Can we keep human approval before sending?', a: 'Absolutely. Approval gates are standard for commercial and pricing-sensitive documents.' },
+        { q: 'How much faster can teams send proposals?', a: 'Many teams reduce turnaround from multiple hours to minutes for first drafts.' },
+        { q: 'What businesses benefit most?', a: 'Agencies, consultancies, and service companies with repeatable offer logic and frequent custom proposals.' },
+      ],
+      uk: [
+        { q: 'Чи може AI генерувати КП з CRM і call notes?', a: 'Так. Система може поєднати CRM-дані, discovery notes, pricing templates і структури виграшних пропозицій у єдиний драфт.' },
+        { q: 'Чи залишаться пропозиції персоналізованими?', a: 'Так, якщо система працює з реальним контекстом і контрольованими шаблонами, а не з generic prompts.' },
+        { q: 'Чи можна залишити людське затвердження перед відправкою?', a: 'Так. Approval gates — стандартна частина для комерційних документів і цінових умов.' },
+        { q: 'Наскільки швидше команда може відправляти КП?', a: 'У багатьох командах turnaround першого драфту скорочується з кількох годин до кількох хвилин.' },
+        { q: 'Кому це підходить найбільше?', a: 'Агенціям, consultancies і сервісним бізнесам із повторюваною логікою оферів та частими кастомними КП.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book a proposal automation consultation', getAudit: 'Get proposal workflow audit' },
+      uk: { bookConsultation: 'Замовити консультацію по AI КП', getAudit: 'Отримати аудит proposal workflow' },
+    },
+    relatedBlogSlugs: ['ai-proposal-generator-for-agencies'],
+    relatedSolutionSlugs: ['ai-for-professional-services', 'ai-for-document-processing'],
+    siblingLandingSlugs: ['custom-ai-agents', 'ai-automation-for-business'],
+    metaKeywords: {
+      en: ['AI proposal generator', 'AI proposal generator for agencies', 'proposal automation', 'automated commercial proposals', 'AI sales proposal'],
+      uk: ['AI генератор пропозицій', 'AI генератор комерційних пропозицій', 'автоматизація КП', 'автоматичні комерційні пропозиції', 'AI sales proposal'],
     },
   },
 };

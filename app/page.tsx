@@ -9,6 +9,7 @@ const About = dynamic(() => import('./components/About'), { ssr: true });
 const Solutions = dynamic(() => import('./components/Solutions'), { ssr: true });
 const AIContentStudio = dynamic(() => import('./components/AIContentStudio'), { ssr: true });
 const CaseStudies = dynamic(() => import('./components/CaseStudies'), { ssr: true });
+const LatestInsights = dynamic(() => import('./components/LatestInsights'), { ssr: true });
 const TechStack = dynamic(() => import('./components/TechStack'), { ssr: true });
 const Testimonials = dynamic(() => import('./components/Testimonials'), { ssr: true });
 const Pricing = dynamic(() => import('./components/Pricing'), { ssr: true });
@@ -24,6 +25,7 @@ export default function Home() {
       <Solutions />
       <AIContentStudio />
       <CaseStudies />
+      <LatestInsights />
       <TechStack />
       <Testimonials />
       <Pricing />

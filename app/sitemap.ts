@@ -25,6 +25,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/ai-automation-for-business', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-chatbots-for-business', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-voice-agents', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-receptionist', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-sdr', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-proposal-generator', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/custom-ai-agents', changeFrequency: 'monthly', priority: 0.9 },
   ];
 
@@ -109,6 +112,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const ukOnlyRoutes: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl.toString().replace(/\/$/, '')}/uk/avtomatizaciya-salonu-krasy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl.toString().replace(/\/$/, '')}/uk/avtomatizaciya-nerukhomosti`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

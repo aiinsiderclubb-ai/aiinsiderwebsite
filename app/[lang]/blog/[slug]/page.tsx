@@ -28,11 +28,22 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   const vertical = article.ctaType || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy') ? 'beauty' : 'general';
 
   const beautyPillarBase = '/uk/avtomatizaciya-salonu-krasy';
+  const beautyClusterSlugs = new Set([
+    'instagram-direct-leads-beauty-salon',
+    'beauty-salon-no-show-reduction-system',
+    'online-booking-automation-for-beauty-salon',
+    'beauty-salon-reminders-sms-dm-workflows',
+    'salon-crm-segmentation-playbook',
+    'beauty-salon-repeat-sales-automation',
+    'beauty-salon-review-automation-system',
+    'beauty-salon-kpi-dashboard-automation',
+  ]);
   const beautyTargets = {
     checklist: `${beautyPillarBase}#lead-magnet`,
     roi: `${beautyPillarBase}#roi-calculator`,
     audit: `${beautyPillarBase}#audit-form`,
   } as const;
+  const hasBeautyPillarCta = beautyClusterSlugs.has(slug) || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy');
 
   type CtaType = 'checklist' | 'roi' | 'audit';
   const ctaType = (article.ctaType || undefined) as CtaType | undefined;
@@ -357,6 +368,27 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                 })}
             </div>
           </section>
+
+          {hasBeautyPillarCta ? (
+            <section className="mb-10 pl-0 md:pl-[68px]">
+              <Link
+                href={beautyPillarBase}
+                className="group flex items-center justify-between gap-6 rounded-3xl border border-emerald-400/20 bg-gradient-to-r from-emerald-500/10 via-white/[0.03] to-transparent px-6 py-5 transition-all duration-200 hover:border-emerald-300/30 hover:bg-white/[0.05]"
+              >
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-emerald-300/80">
+                    {isEn ? 'Beauty automation guide' : 'Гід по beauty-автоматизації'}
+                  </p>
+                  <h3 className="mt-2 text-xl font-bold text-white">
+                    {isEn ? 'Full guide to beauty salon automation' : 'Повний гід по автоматизації салону краси'}
+                  </h3>
+                </div>
+                <span className="shrink-0 text-lg font-semibold text-white transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </section>
+          ) : null}
 
           {/* ═══════════ CTA ═══════════ */}
           <div className="relative rounded-[2rem] overflow-hidden mb-16 border border-white/[0.08]" data-source-section="article-cta">

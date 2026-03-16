@@ -4,35 +4,29 @@ import Script from 'next/script';
 import Link from 'next/link';
 import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
 import ThemeSwitcher from '@/app/components/ThemeSwitcher';
+import BookCall from '@/app/components/BookCall';
 import HeroSection from '@/app/components/beauty-salon/HeroSection';
 import ProblemSection from '@/app/components/beauty-salon/ProblemSection';
 import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
-import BeautyClusterSection from '@/app/components/beauty-salon/BeautyClusterSection';
-import ROISection from '@/app/components/beauty-salon/ROISection';
-import LeadMagnetSection from '@/app/components/beauty-salon/LeadMagnetSection';
+import RealEstateROISection from '@/app/components/real-estate/RealEstateROISection';
 import { buildFaqSchema } from '@/app/lib/schema/faqSchema';
 import { buildBreadcrumbSchema } from '@/app/lib/schema/breadcrumbSchema';
-import { buildBeautyServiceSchema } from '@/app/lib/schema/serviceSchema';
+import { buildRealEstateServiceSchema } from '@/app/lib/schema/serviceSchema';
 import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
 import { getSiteUrl } from '@/app/lib/site';
-import { beautyPillarUk } from '@/app/lib/verticals/beauty';
+import { realEstatePillarUk } from '@/app/lib/verticals/realEstate';
 
 const CaseSection = dynamic(() => import('@/app/components/beauty-salon/CaseSection'));
 const ImplementationSection = dynamic(() => import('@/app/components/beauty-salon/ImplementationSection'));
 const ObjectionSection = dynamic(() => import('@/app/components/beauty-salon/ObjectionSection'));
 const FAQSection = dynamic(() => import('@/app/components/beauty-salon/FAQSection'));
-const FinalCTA = dynamic(() => import('@/app/components/beauty-salon/FinalCTA'));
 
-const PAGE_PATH = '/uk/avtomatizaciya-salonu-krasy';
-const BEAUTY_CLUSTER_SLUGS = [
-  'instagram-direct-leads-beauty-salon',
-  'beauty-salon-no-show-reduction-system',
-  'online-booking-automation-for-beauty-salon',
-  'beauty-salon-reminders-sms-dm-workflows',
-  'salon-crm-segmentation-playbook',
-  'beauty-salon-repeat-sales-automation',
-  'beauty-salon-review-automation-system',
-  'beauty-salon-kpi-dashboard-automation',
+const PAGE_PATH = '/uk/avtomatizaciya-nerukhomosti';
+const REAL_ESTATE_CLUSTER_SLUGS = [
+  'ai-voice-agent-for-real-estate',
+  // Future slots:
+  // 'ai-lead-routing-for-real-estate-agencies',
+  // 'crm-automation-for-real-estate-teams',
 ] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,9 +34,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonicalUrl = new URL(PAGE_PATH, siteUrl).toString();
 
   return {
-    title: 'Автоматизація салону краси: менше no-show, більше записів | AI Insider',
+    title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
     description:
-      'Автоматизація салону краси з фокусом на виручку: Instagram-ліди, онлайн-запис 24/7, нагадування, CRM-сегментація та повторні продажі.',
+      'AI-автоматизація для агентств нерухомості: кваліфікація лідів, голосові агенти, CRM-автоматизація. Швейцарська AI-студія.',
+    keywords: [
+      'автоматизація нерухомості',
+      'AI для ріелторів',
+      'CRM автоматизація нерухомість',
+      'голосовий агент нерухомість',
+      'AI агентство нерухомості',
+    ],
     alternates: {
       canonical: PAGE_PATH,
       languages: {
@@ -52,87 +53,79 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       type: 'article',
-      title: 'Автоматизація салону краси: менше no-show, більше записів',
+      title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
       description:
-        'Практичний гайд по автоматизації салону краси: де втрачаються гроші, які рішення дають ROI і як запустити за 14–30 днів.',
+        'AI-автоматизація для агентств нерухомості: кваліфікація лідів, голосові агенти, CRM-автоматизація та контроль воронки.',
       url: canonicalUrl,
       locale: 'uk_UA',
       images: ['/opengraph-image'],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Автоматизація салону краси: менше no-show, більше записів',
+      title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
       description:
-        'ROI-driven підхід: Instagram-ліди, запис, нагадування, CRM і повторні продажі для салонів краси.',
+        'Від кваліфікації лідів до CRM і голосових агентів: practical pillar page для агентств нерухомості.',
       images: ['/twitter-image'],
     },
   };
 }
 
-export default async function BeautySalonAutomationPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ leadMagnet?: string; audit?: string }>;
-}) {
-  const params = await searchParams;
+export default function RealEstateAutomationPage() {
   const siteUrl = getSiteUrl();
   const pageUrl = new URL(PAGE_PATH, siteUrl).toString();
 
-  const faqSchema = buildFaqSchema(beautyPillarUk.faq.items);
+  const faqSchema = buildFaqSchema(realEstatePillarUk.faq.items);
   const breadcrumbSchema = buildBreadcrumbSchema([
-    ...beautyPillarUk.chrome.breadcrumbs.items.map((b) => ({
+    ...realEstatePillarUk.chrome.breadcrumbs.items.map((b) => ({
       name: b.label,
       item: new URL(b.href, siteUrl).toString(),
     })),
-    { name: beautyPillarUk.chrome.breadcrumbs.current, item: pageUrl },
+    { name: realEstatePillarUk.chrome.breadcrumbs.current, item: pageUrl },
   ]);
-  const serviceSchema = buildBeautyServiceSchema({ url: pageUrl });
-  const relatedBeautyArticles = BEAUTY_CLUSTER_SLUGS.map((slug) => getBlogArticle(slug)).filter(
+  const serviceSchema = buildRealEstateServiceSchema({ url: pageUrl });
+  const relatedArticles = REAL_ESTATE_CLUSTER_SLUGS.map((slug) => getBlogArticle(slug)).filter(
     (article): article is NonNullable<ReturnType<typeof getBlogArticle>> => Boolean(article),
   );
 
-  const leadMagnetStatus = params.leadMagnet === 'success' ? 'success' : params.leadMagnet === 'error' ? 'error' : undefined;
-  const auditStatus = params.audit === 'success' ? 'success' : params.audit === 'error' ? 'error' : undefined;
-
   return (
     <main className="min-h-screen bg-black text-white">
-      <Script id="beauty-faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <Script id="real-estate-faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script
-        id="beauty-breadcrumb-schema"
+        id="real-estate-breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Script
-        id="beauty-service-schema"
+        id="real-estate-service-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <AnalyticsAutoCapture pageType="pillar" vertical={beautyPillarUk.vertical} locale={beautyPillarUk.locale} />
+      <AnalyticsAutoCapture pageType="pillar" vertical={realEstatePillarUk.vertical} locale={realEstatePillarUk.locale} />
 
       <article>
         <section className="pt-6 px-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <Link href={beautyPillarUk.chrome.brand.href} className="text-sm text-white/90 font-semibold">
-              {beautyPillarUk.chrome.brand.label}
+            <Link href={realEstatePillarUk.chrome.brand.href} className="text-sm text-white/90 font-semibold">
+              {realEstatePillarUk.chrome.brand.label}
             </Link>
             <div className="flex items-center gap-2">
               <ThemeSwitcher />
               <a
-                href={beautyPillarUk.chrome.topCta.href}
-                data-cta="top-nav-audit"
+                href={realEstatePillarUk.chrome.topCta.href}
+                data-cta="top-nav-bookcall"
                 className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs text-white hover:bg-white/10"
               >
-                {beautyPillarUk.chrome.topCta.label}
+                {realEstatePillarUk.chrome.topCta.label}
               </a>
             </div>
           </div>
         </section>
 
-        <HeroSection content={beautyPillarUk.hero} />
+        <HeroSection content={realEstatePillarUk.hero} />
 
         <section className="px-6 pb-2">
           <div className="max-w-6xl mx-auto text-sm text-gray-400">
-            {beautyPillarUk.chrome.breadcrumbs.items.map((b) => (
+            {realEstatePillarUk.chrome.breadcrumbs.items.map((b) => (
               <span key={b.href}>
                 <Link href={b.href} className="hover:text-white">
                   {b.label}
@@ -140,34 +133,32 @@ export default async function BeautySalonAutomationPage({
                 /{' '}
               </span>
             ))}
-            <span className="text-gray-200">{beautyPillarUk.chrome.breadcrumbs.current}</span>
+            <span className="text-gray-200">{realEstatePillarUk.chrome.breadcrumbs.current}</span>
           </div>
         </section>
 
-        <ProblemSection content={beautyPillarUk.problems} />
-        <AutomationSection content={beautyPillarUk.automation} />
-        <BeautyClusterSection content={beautyPillarUk.cluster} />
-        <ROISection content={beautyPillarUk.roi} />
-        <CaseSection content={beautyPillarUk.cases} />
-        <ImplementationSection content={beautyPillarUk.implementation} />
-        <ObjectionSection content={beautyPillarUk.objections} />
-        <FAQSection title={beautyPillarUk.faq.title} faqs={beautyPillarUk.faq.items} />
+        <ProblemSection content={realEstatePillarUk.problems} />
+        <AutomationSection content={realEstatePillarUk.automation} />
+        <RealEstateROISection />
+        <CaseSection content={realEstatePillarUk.cases} />
+        <ImplementationSection content={realEstatePillarUk.implementation} />
+        <ObjectionSection content={realEstatePillarUk.objections} />
+        <FAQSection title={realEstatePillarUk.faq.title} faqs={realEstatePillarUk.faq.items} />
+
         <section className="px-6 py-16 border-t border-white/10">
           <div className="max-w-6xl mx-auto">
             <div className="max-w-3xl mb-10">
               <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-                Більше про автоматизацію салону
+                Більше про автоматизацію нерухомості
               </div>
-              <h2 className="mt-5 text-3xl md:text-4xl font-bold text-white">
-                Більше про автоматизацію салону
-              </h2>
+              <h2 className="mt-5 text-3xl md:text-4xl font-bold text-white">Більше про автоматизацію нерухомості</h2>
               <p className="mt-4 text-lg text-gray-400">
-                Поглиблені матеріали по Instagram-лідах, no-show, CRM, повторних продажах і KPI для салону краси.
+                Починаємо real estate cluster з матеріалу про voice agent, швидкість відповіді та призначення показів без ручного хаосу.
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {relatedBeautyArticles.map((article) => (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {relatedArticles.map((article) => (
                 <Link
                   key={article.slug}
                   href={`/uk/blog/${article.slug}`}
@@ -191,18 +182,8 @@ export default async function BeautySalonAutomationPage({
             </div>
           </div>
         </section>
-        <LeadMagnetSection
-          status={leadMagnetStatus}
-          content={beautyPillarUk.leadMagnet}
-          vertical={beautyPillarUk.vertical}
-          locale={beautyPillarUk.locale}
-        />
-        <FinalCTA
-          status={auditStatus}
-          content={beautyPillarUk.finalCta}
-          vertical={beautyPillarUk.vertical}
-          locale={beautyPillarUk.locale}
-        />
+
+        <BookCall />
       </article>
     </main>
   );

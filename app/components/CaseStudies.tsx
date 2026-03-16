@@ -37,6 +37,7 @@ export default function CaseStudies() {
   const homeCases = HOME_CASE_SLUGS
     .map((slug) => casesData.find((c) => c.slug === slug))
     .filter(Boolean) as CaseStudy[];
+  const sweezyProject = casesData.find((c) => c.slug === 'sweezy');
 
   return (
     <section id="cases" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
@@ -183,6 +184,69 @@ export default function CaseStudies() {
             );
           })}
         </div>
+
+        {sweezyProject ? (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.35 }}
+            className="mt-8"
+          >
+            <Link href={`${basePath}/cases/sweezy`} className="group block">
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-r from-cyan-500/[0.10] via-white/[0.04] to-blue-500/[0.08] p-6 md:p-8 transition-all duration-300 hover:border-white/20 hover:-translate-y-1">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+                      <span className="text-sm">🇺🇦</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+                        {isEn ? 'Featured Project' : 'Флагманський проєкт'}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                      Sweezy
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      {getLocalizedText(sweezyProject.shortDescription, lang)}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-start lg:items-end gap-3">
+                    <div className="text-left lg:text-right">
+                      <div className="text-3xl md:text-4xl font-bold text-white">
+                        {`${sweezyProject.results[0]?.prefix || ''}${sweezyProject.results[0]?.value}${sweezyProject.results[0]?.suffix || ''}`}
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        {sweezyProject.results[0] ? getLocalizedText(sweezyProject.results[0].label, lang) : ''}
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors group-hover:text-white">
+                      {isEn ? 'View project' : 'Переглянути проєкт'}
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ) : null}
+
+        {lang === 'uk' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.42 }}
+            className="mt-6 text-center"
+          >
+            <Link
+              href="/uk/avtomatizaciya-salonu-krasy"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 transition-colors hover:text-white"
+            >
+              Автоматизація для салонів краси — повний гід
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        ) : null}
 
         {/* Bottom CTA */}
         <motion.div

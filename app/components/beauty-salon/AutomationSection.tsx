@@ -15,6 +15,14 @@ export default function AutomationSection({ content }: { content: AutomationConf
             <article key={item.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <h3 className="text-xl font-semibold text-white">{item.title}</h3>
               <p className="mt-2 text-gray-300">{item.text}</p>
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4"
+                >
+                  {item.ctaLabel ?? 'Детальніше'} <span aria-hidden="true">→</span>
+                </Link>
+              ) : null}
             </article>
           ))}
         </div>

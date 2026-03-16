@@ -7,6 +7,8 @@ import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
+import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { SEO_SERVICE_PAGES, getLocalizedSeo } from '@/app/lib/seoServicePages';
 
 const services = [
   {
@@ -121,6 +123,18 @@ export default function AIContentCreationClient() {
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const basePath = `/${lang}`;
+  const landingPage = SEO_SERVICE_PAGES['ai-content-creation'];
+  const cleanLandingTitle = (title: string) => title.replace(/\s*\|\s*AI Insider$/, '').trim();
+  const relatedLandingPages = Object.values(SEO_SERVICE_PAGES)
+    .filter((page) => page.slug !== 'ai-content-creation')
+    .map((page) => ({
+      slug: page.slug,
+      title: cleanLandingTitle(getLocalizedSeo(page.titleTag, lang)),
+      description: getLocalizedSeo(page.metaDescription, lang),
+    }));
+  const relatedBlogArticles = landingPage.relatedBlogSlugs
+    .map((articleSlug) => blogArticles.find((article) => article.slug === articleSlug))
+    .filter((article): article is (typeof blogArticles)[number] => Boolean(article));
   
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
@@ -851,6 +865,107 @@ export default function AIContentCreationClient() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-20 px-6 overflow-hidden border-t border-white/5">
+        <div className="relative max-w-7xl mx-auto">
+          <div className="max-w-3xl mb-12">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+              <Sparkles className="w-4 h-4 text-purple-400" />
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'From the blog' : 'З блогу'}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              {isEn ? 'Related Articles' : 'Корисні статті'}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {relatedBlogArticles.map((article, index) => (
+              <motion.div
+                key={article.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+              >
+                <Link
+                  href={`${basePath}/blog/${article.slug}`}
+                  className="group block h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">{article.icon}</span>
+                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
+                      {getBlogText(article.category, lang)}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white leading-tight">
+                    {getBlogText(article.h1, lang)}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-400">
+                    {getBlogText(article.metaDescription, lang)}
+                  </p>
+                  <div className="mt-5 text-sm font-semibold text-white/70 transition-colors group-hover:text-white">
+                    {isEn ? 'Read article →' : 'Читати статтю →'}
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-20 px-6 overflow-hidden border-t border-white/5">
+        <div className="relative max-w-7xl mx-auto">
+          <div className="max-w-3xl mb-12">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+              <TrendingUp className="w-4 h-4 text-blue-400" />
+              <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                {isEn ? 'Explore Related Solutions' : 'Схожі рішення'}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              {isEn ? 'Explore Related Solutions' : 'Схожі рішення'}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+            {relatedLandingPages.map((page, index) => (
+              <motion.div
+                key={page.slug}
+                initial={{ opacity: 0, y: 20, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+                className="group relative"
+              >
+                <Link href={`${basePath}/${page.slug}`}>
+                  <div className="relative h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]">
+                    <h3 className="text-lg font-bold text-white leading-tight">
+                      {page.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-400">
+                      {page.description}
+                    </p>
+                    <div className="mt-5 text-sm font-semibold text-white/70 transition-colors group-hover:text-white">
+                      {isEn ? 'Open solution →' : 'Перейти до сторінки →'}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-10">
+            <Link
+              href={`${basePath}/solutions`}
+              className="text-sm font-semibold text-gray-400 transition-colors hover:text-white"
+            >
+              {isEn ? 'See all AI solutions for your industry →' : 'Переглянути всі AI-рішення для вашої галузі →'}
+            </Link>
           </div>
         </div>
       </section>
