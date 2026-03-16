@@ -5,7 +5,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
-import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { getPublishedBlogArticles, getBlogText } from '@/app/lib/blogData';
 import { buildHubLinks } from '@/app/lib/internalLinks';
 
 type Params = { lang: string };
@@ -175,7 +175,8 @@ export default async function BlogPage({
   };
 
   // Sort articles by date (newest first)
-  const sorted = [...blogArticles].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  const publishedArticles = getPublishedBlogArticles();
+  const sorted = [...publishedArticles].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   const totalPages = Math.ceil(sorted.length / BLOG_PAGE_SIZE);
 
   if (currentPage > totalPages) {
@@ -192,8 +193,8 @@ export default async function BlogPage({
   // Unique categories
   const categories = [
     { label: isEn ? 'All' : '\u0412\u0441\u0435', active: true },
-    ...Array.from(new Set(blogArticles.map((a) => a.category.en))).map((cat) => {
-      const found = blogArticles.find((a) => a.category.en === cat);
+    ...Array.from(new Set(publishedArticles.map((a) => a.category.en))).map((cat) => {
+      const found = publishedArticles.find((a) => a.category.en === cat);
       return { label: found ? t(found.category) : cat };
     }),
   ];

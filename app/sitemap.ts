@@ -3,7 +3,7 @@ import { casesData } from './lib/casesData';
 import { getSiteUrl } from './lib/site';
 import { SUPPORTED_LANGS, withLang } from './lib/i18n';
 import { servicesData } from './lib/servicesData';
-import { blogArticles } from './lib/blogData';
+import { getPublishedBlogArticles } from './lib/blogData';
 import { PROGRAMMATIC_PAGES } from './lib/programmaticSeo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -28,6 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/ai-receptionist', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-sdr', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-proposal-generator', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-automation-for-ecommerce', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/ai-automation-for-saas', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/custom-ai-agents', changeFrequency: 'monthly', priority: 0.9 },
   ];
 
@@ -90,8 +92,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   /* ── Blog articles ─────────────────────────────────────────── */
+  const publishedArticles = getPublishedBlogArticles();
   const blogRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>
-    blogArticles.map((a) => ({
+    publishedArticles.map((a) => ({
       url: new URL(withLang(lang, `/blog/${a.slug}`), siteUrl).toString(),
       lastModified: new Date(a.publishedAt),
       changeFrequency: 'monthly' as const,

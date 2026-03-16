@@ -10,7 +10,9 @@ export type SeoServiceSlug =
   | 'ai-content-creation'
   | 'ai-receptionist'
   | 'ai-sdr'
-  | 'ai-proposal-generator';
+  | 'ai-proposal-generator'
+  | 'ai-automation-for-ecommerce'
+  | 'ai-automation-for-saas';
 
 export type SeoFaq = { q: string; a: string };
 
@@ -42,6 +44,14 @@ export interface SeoServicePage {
     operations: string[];
   }>;
   useCaseBlocks?: Localized<Array<{ title: string; items: string[] }>>;
+  whatYouGetCards?: Localized<Array<{ title: string; description: string; href: string; ctaLabel: string }>>;
+  caseHighlight?: Localized<{
+    label: string;
+    title: string;
+    description: string;
+    href: string;
+    ctaLabel: string;
+  }>;
   whyAiInsider: Localized<string[]>;
   faq: Localized<SeoFaq[]>;
   cta: Localized<{
@@ -1297,6 +1307,324 @@ export const SEO_SERVICE_PAGES: Record<SeoServiceSlug, SeoServicePage> = {
     metaKeywords: {
       en: ['AI proposal generator', 'AI proposal generator for agencies', 'proposal automation', 'automated commercial proposals', 'AI sales proposal'],
       uk: ['AI генератор пропозицій', 'AI генератор комерційних пропозицій', 'автоматизація КП', 'автоматичні комерційні пропозиції', 'AI sales proposal'],
+    },
+  },
+  'ai-automation-for-ecommerce': {
+    slug: 'ai-automation-for-ecommerce',
+    keyword: 'AI automation for e-commerce',
+    heroTitle: {
+      en: 'AI Automation for E-commerce',
+      uk: 'AI автоматизація для інтернет-магазинів',
+    },
+    titleTag: {
+      en: 'AI Automation for E-commerce Businesses — AI Insider',
+      uk: 'AI Автоматизація для Інтернет-Магазинів — AI Insider',
+    },
+    metaDescription: {
+      en: 'AI automation for e-commerce: sales chatbots, cart recovery, customer support, and UGC content to grow revenue without growing support headcount.',
+      uk: 'AI автоматизація для інтернет-магазинів: продажі через чатботів, відновлення кошика, підтримка клієнтів і AI UGC для росту revenue без розширення команди.',
+    },
+    heroStats: {
+      en: ['40% fewer abandoned carts', '3x faster support', '80% of requests handled without a manager'],
+      uk: ['40% менше відмов від кошика', '3x швидша підтримка', '80% запитів без менеджера'],
+    },
+    intro: {
+      en: [
+        'AI automation for e-commerce helps online stores convert more traffic, recover lost carts, and reduce support load across chat, messaging, and post-purchase flows.',
+        'It is built for teams that are stuck between rising acquisition costs and the limits of human-first support, especially during traffic spikes and promotion periods.',
+        'If your growth depends on faster answers, better conversion, and repeatable retention workflows, this is one of the strongest AI use cases to implement first.',
+      ],
+      uk: [
+        'AI автоматизація для інтернет-магазинів допомагає e-commerce брендам краще конвертувати трафік, повертати покинуті кошики і знімати навантаження з підтримки через чат, месенджери та post-purchase сценарії.',
+        'Це рішення для команд, які затиснуті між дорожчим трафіком і межами людської підтримки, особливо під час акцій, піків навантаження та сезонних кампаній.',
+        'Якщо ваш ріст залежить від швидших відповідей, кращої конверсії і повторюваних retention workflows, це один із найсильніших AI use cases для запуску.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI automation for e-commerce combines sales, support, and retention flows into one operational layer:'],
+        bullets: [
+          'helps shoppers choose products and get answers in real time',
+          'recovers abandoned carts through timely messaging and follow-up',
+          'automates support requests, order updates, and post-purchase communication',
+        ],
+        outro: 'The goal is not just fewer tickets, but higher conversion per visitor and more revenue recovered from existing traffic.',
+      },
+      uk: {
+        paragraphs: ['AI автоматизація для e-commerce поєднує продажі, підтримку і retention в один операційний шар:'],
+        bullets: [
+          'допомагає покупцям вибрати товар і отримати відповідь у реальному часі',
+          'повертає покинуті кошики через своєчасний messaging і follow-up',
+          'автоматизує підтримку, оновлення по замовленню і post-purchase комунікацію',
+        ],
+        outro: 'Мета не лише в зменшенні кількості тікетів, а у вищій конверсії на кожного відвідувача і поверненні revenue з уже купленого трафіку.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Identify the highest-impact journeys: pre-sale questions, cart recovery, support, and retention.',
+        'Connect storefront, chat channels, CRM, order data, and campaign tools into one flow.',
+        'Deploy AI logic for recommendations, support replies, segmentation, and conversion triggers.',
+        'Measure conversion lift, support deflection, and recovered revenue, then optimize weekly.',
+      ],
+      uk: [
+        'Знаходимо journeys з найбільшим впливом: pre-sale питання, cart recovery, support і retention.',
+        'Підключаємо storefront, чат-канали, CRM, order data і campaign tools в один потік.',
+        'Вмикаємо AI-логіку для рекомендацій, support replies, сегментації і conversion triggers.',
+        'Міряємо uplift по конверсії, support deflection і recovered revenue, а потім оптимізуємо щотижня.',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: 'faster answers for shoppers and less manual work for support teams',
+        costReduction: 'more sales recovered from existing traffic without adding headcount',
+        automation: 'chat, support, messaging, and retention flows run on one logic layer',
+        scalability: 'stores can handle sales peaks and campaign volume without service collapse',
+      },
+      uk: {
+        efficiency: 'швидші відповіді для покупців і менше ручної роботи для support-команди',
+        costReduction: 'більше продажів із наявного трафіку без розширення штату',
+        automation: 'чат, підтримка, messaging і retention flows працюють в одній логіці',
+        scalability: 'магазин витримує sales peaks і campaign volume без провалу сервісу',
+      },
+    },
+    whatYouGetCards: {
+      en: [
+        { title: 'AI sales chatbot', description: 'Guide shoppers, answer objections, and push high-intent buyers into checkout faster.', href: '/services/ai-chatbot-for-business', ctaLabel: 'Open service →' },
+        { title: 'Cart recovery workflows', description: 'Recover lost revenue with AI-powered follow-up, segmentation, and timely reminders.', href: '/solutions/ai-for-ecommerce', ctaLabel: 'Open solution →' },
+        { title: 'AI customer support', description: 'Resolve order and product questions faster while reducing repetitive support volume.', href: '/solutions/ai-for-customer-support-automation', ctaLabel: 'Open solution →' },
+        { title: 'AI UGC ads', description: 'Scale creative production for paid traffic using AI-generated UGC content for performance campaigns.', href: '/services/ai-ugc-content', ctaLabel: 'Open service →' },
+      ],
+      uk: [
+        { title: 'AI чатбот для продажів', description: 'Супроводжує покупця, обробляє заперечення і швидше доводить high-intent трафік до checkout.', href: '/services/ai-chatbot-for-business', ctaLabel: 'Перейти до сервісу →' },
+        { title: 'Відновлення кошика', description: 'Повертає втрачений revenue через AI follow-up, сегментацію і своєчасні нагадування.', href: '/solutions/ai-for-ecommerce', ctaLabel: 'Перейти до рішення →' },
+        { title: 'AI підтримка клієнтів', description: 'Швидше закриває питання по товарах і замовленнях, зменшуючи обсяг повторюваної підтримки.', href: '/solutions/ai-for-customer-support-automation', ctaLabel: 'Перейти до рішення →' },
+        { title: 'AI UGC реклама', description: 'Масштабує creative production для paid traffic через AI-generated UGC контент.', href: '/services/ai-ugc-content', ctaLabel: 'Перейти до сервісу →' },
+      ],
+    },
+    caseHighlight: {
+      en: {
+        label: 'Case Study',
+        title: 'See how we improved sales flows for e-commerce',
+        description: 'A practical case showing how AI chatbot automation increased conversion speed and reduced missed purchase conversations.',
+        href: '/cases/ecommerce-ai-chatbot',
+        ctaLabel: 'View case study →',
+      },
+      uk: {
+        label: 'Кейс',
+        title: 'Подивіться, як AI покращив продажі для e-commerce',
+        description: 'Практичний кейс, де AI chatbot automation прискорила конверсію і зменшила кількість втрачених діалогів перед покупкою.',
+        href: '/cases/ecommerce-ai-chatbot',
+        ctaLabel: 'Переглянути кейс →',
+      },
+    },
+    useCases: {
+      en: { sales: [], customerSupport: [], crm: [], operations: [] },
+      uk: { sales: [], customerSupport: [], crm: [], operations: [] },
+    },
+    useCaseBlocks: {
+      en: [
+        { title: 'Product discovery', items: ['recommend products in chat', 'answer pre-sale questions instantly', 'remove hesitation before checkout'] },
+        { title: 'Cart recovery & conversion', items: ['trigger timely reminders', 'segment buyers by intent and order value', 'recover more abandoned carts automatically'] },
+        { title: 'Post-purchase support', items: ['handle delivery and order questions', 'deflect repetitive support tickets', 'create consistent follow-up after purchase'] },
+      ],
+      uk: [
+        { title: 'Вибір товару', items: ['рекомендації товарів у чаті', 'миттєві відповіді на pre-sale питання', 'менше вагань перед checkout'] },
+        { title: 'Cart recovery і конверсія', items: ['своєчасні нагадування про кошик', 'сегментація покупців за intent і order value', 'автоматичне повернення більшої кількості abandoned carts'] },
+        { title: 'Post-purchase підтримка', items: ['відповіді по доставці та замовленню', 'менше повторюваних support тікетів', 'послідовний follow-up після покупки'] },
+      ],
+    },
+    whyAiInsider: {
+      en: [
+        'We build e-commerce AI systems around conversion, cart recovery, and support economics, not generic chatbot scripts.',
+        'Our setups connect storefront, CRM, messaging, and post-purchase workflows into one measurable funnel.',
+        'We optimize for recovered revenue, support deflection, and customer experience at the same time.',
+        'Launches start with high-impact use cases and expand once unit economics are proven.',
+      ],
+      uk: [
+        'Ми будуємо e-commerce AI systems навколо conversion, cart recovery і support economics, а не навколо шаблонних chatbot scripts.',
+        'Наші впровадження з’єднують storefront, CRM, messaging і post-purchase workflows в один вимірюваний funnel.',
+        'Оптимізуємо одночасно recovered revenue, support deflection і customer experience.',
+        'Запуск починається з найсильніших use cases і масштабується після підтвердження unit economics.',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Can AI reduce cart abandonment for e-commerce?', a: 'Yes. Cart recovery flows can follow up quickly, answer objections, and bring buyers back before intent drops.' },
+        { q: 'Does this work with Shopify or custom stores?', a: 'Yes. We can connect AI workflows to Shopify, WooCommerce, and custom storefront stacks through APIs and messaging tools.' },
+        { q: 'Can AI handle customer support too?', a: 'Yes. AI can resolve repetitive order, shipping, and product questions while escalating exceptions to humans.' },
+        { q: 'What is the fastest win for an online store?', a: 'Usually cart recovery plus pre-sale chatbot support, because both directly affect conversion and recovered revenue.' },
+        { q: 'Can AI help with paid traffic creatives?', a: 'Yes. AI UGC and related content systems can produce more creative variations for testing without slowing the team down.' },
+      ],
+      uk: [
+        { q: 'Чи може AI реально зменшити покинуті кошики?', a: 'Так. Cart recovery flows можуть швидко повертати покупця, знімати заперечення і відновлювати намір до покупки, поки він не охолов.' },
+        { q: 'Чи працює це з Shopify або кастомними магазинами?', a: 'Так. Ми підключаємо AI workflows до Shopify, WooCommerce і кастомних storefront stacks через API та messaging tools.' },
+        { q: 'Чи може AI закривати підтримку клієнтів?', a: 'Так. AI може вирішувати повторювані питання по замовленнях, доставці та товарах, передаючи винятки людям.' },
+        { q: 'Який найшвидший win для інтернет-магазину?', a: 'Зазвичай це cart recovery плюс pre-sale chatbot support, бо обидва сценарії напряму впливають на conversion і recovered revenue.' },
+        { q: 'Чи може AI допомогти з paid traffic creatives?', a: 'Так. AI UGC та суміжні системи дозволяють швидше виробляти більше creative variations для тестування.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book an e-commerce AI consultation', getAudit: 'Get e-commerce AI audit' },
+      uk: { bookConsultation: 'Замовити e-commerce AI консультацію', getAudit: 'Отримати аудит e-commerce AI' },
+    },
+    relatedBlogSlugs: ['ai-whatsapp-sales-bot-for-ecommerce', 'ai-ugc-ads-complete-guide'],
+    relatedSolutionSlugs: ['ai-for-ecommerce', 'ai-for-customer-support-automation'],
+    siblingLandingSlugs: ['ai-automation-for-business', 'ai-chatbots-for-business'],
+    metaKeywords: {
+      en: ['AI automation for e-commerce', 'e-commerce AI automation', 'AI chatbot for online stores', 'cart recovery automation', 'AI support for e-commerce'],
+      uk: ['AI автоматизація для інтернет-магазинів', 'AI для e-commerce', 'AI чатбот для магазину', 'автоматизація відновлення кошика', 'AI підтримка для e-commerce'],
+    },
+  },
+  'ai-automation-for-saas': {
+    slug: 'ai-automation-for-saas',
+    keyword: 'AI automation for SaaS',
+    heroTitle: {
+      en: 'AI Automation for SaaS Companies',
+      uk: 'AI автоматизація для SaaS',
+    },
+    titleTag: {
+      en: 'AI Automation for SaaS Companies — AI Insider',
+      uk: 'AI Автоматизація для SaaS — AI Insider',
+    },
+    metaDescription: {
+      en: 'AI automation for SaaS companies: onboarding, support, AI SDR, and custom agents to grow pipeline and reduce churn without scaling team size.',
+      uk: 'AI автоматизація для SaaS: онбординг, підтримка, AI SDR і кастомні AI агенти для росту pipeline та зменшення churn без росту команди.',
+    },
+    heroStats: {
+      en: ['60% lower churn', '10x faster onboarding', '24/7 support without team growth'],
+      uk: ['60% менше churn', '10x швидший онбординг', '24/7 підтримка без росту команди'],
+    },
+    intro: {
+      en: [
+        'AI automation for SaaS helps product-led and sales-led software teams improve onboarding, support, expansion, and outbound without turning every workflow into manual operations.',
+        'It is a strong fit for SaaS businesses where user volume grows faster than the success, support, and sales teams that need to serve it.',
+        'If your growth is blocked by slow onboarding, reactive support, or weak outbound coverage, AI can unlock the next layer of efficiency quickly.',
+      ],
+      uk: [
+        'AI автоматизація для SaaS допомагає software-командам покращити онбординг, підтримку, expansion і outbound без перетворення кожного процесу на ручну операційку.',
+        'Це сильний fit для SaaS-бізнесів, де база користувачів або акаунтів зростає швидше, ніж success, support і sales команди можуть її обслуговувати.',
+        'Якщо ваш ріст гальмують повільний онбординг, реактивна підтримка або слабке outbound coverage, AI швидко відкриває новий рівень ефективності.',
+      ],
+    },
+    whatIs: {
+      en: {
+        paragraphs: ['AI automation for SaaS aligns customer-facing and internal workflows around growth metrics:'],
+        bullets: [
+          'accelerates onboarding, activation, and help delivery',
+          'automates support, qualification, and expansion signals across the lifecycle',
+          'connects product, CRM, and communication data into repeatable actions',
+        ],
+        outro: 'For SaaS teams, the value is not only cost reduction but cleaner lifecycle execution across acquisition, activation, and retention.',
+      },
+      uk: {
+        paragraphs: ['AI автоматизація для SaaS з’єднує customer-facing і внутрішні workflows навколо growth-метрик:'],
+        bullets: [
+          'прискорює онбординг, activation і доставку допомоги користувачу',
+          'автоматизує підтримку, qualification і expansion signals по всьому lifecycle',
+          'поєднує product, CRM і communication data в повторювані дії',
+        ],
+        outro: 'Для SaaS-команд цінність не лише в cost reduction, а в чистішому lifecycle execution між acquisition, activation і retention.',
+      },
+    },
+    howWorks: {
+      en: [
+        'Audit the biggest lifecycle bottlenecks: onboarding, support, churn risk, and outbound coverage.',
+        'Connect product events, support channels, CRM, docs, and sales tools into one AI-ready workflow.',
+        'Deploy AI for onboarding guidance, support deflection, qualification, and action-taking agents.',
+        'Track activation, pipeline, churn, and response metrics, then iterate using real product data.',
+      ],
+      uk: [
+        'Аудитуємо головні lifecycle bottlenecks: онбординг, підтримку, churn risk і outbound coverage.',
+        'З’єднуємо product events, support channels, CRM, docs і sales tools в один AI-ready workflow.',
+        'Запускаємо AI для onboarding guidance, support deflection, qualification і action-taking agents.',
+        'Вимірюємо activation, pipeline, churn і response metrics, а далі ітеруємося на реальних product data.',
+      ],
+    },
+    benefits: {
+      en: {
+        efficiency: 'faster onboarding, shorter response times, and cleaner lifecycle execution',
+        costReduction: 'more coverage across onboarding and support without adding specialists linearly',
+        automation: 'product signals, CRM workflows, support, and sales tasks work together',
+        scalability: 'the team can support more users, accounts, and pipeline with less operational drag',
+      },
+      uk: {
+        efficiency: 'швидший онбординг, коротший response time і чистіший lifecycle execution',
+        costReduction: 'більше покриття онбордингу і підтримки без лінійного росту команди',
+        automation: 'product signals, CRM workflows, support і sales tasks працюють разом',
+        scalability: 'команда може тягнути більше користувачів, акаунтів і pipeline з меншим операційним тертям',
+      },
+    },
+    whatYouGetCards: {
+      en: [
+        { title: 'AI onboarding', description: 'Accelerate activation with guided onboarding, contextual help, and lifecycle nudges based on user behavior.', href: '/solutions/ai-for-saas-companies', ctaLabel: 'Open solution →' },
+        { title: 'AI support', description: 'Reduce repetitive tickets and improve customer experience with always-on support automation.', href: '/solutions/ai-for-customer-support-automation', ctaLabel: 'Open solution →' },
+        { title: 'AI SDR', description: 'Scale B2B outreach, lead qualification, and meeting booking without building a larger outbound team.', href: '/ai-sdr', ctaLabel: 'Open page →' },
+        { title: 'Custom AI agents', description: 'Deploy agents that take real actions across CRM, product ops, and internal workflows.', href: '/services/custom-ai-models', ctaLabel: 'Open service →' },
+      ],
+      uk: [
+        { title: 'AI онбординг', description: 'Прискорює activation через guided onboarding, contextual help і lifecycle nudges на основі user behavior.', href: '/solutions/ai-for-saas-companies', ctaLabel: 'Перейти до рішення →' },
+        { title: 'AI підтримка', description: 'Зменшує обсяг повторюваних тікетів і покращує customer experience через always-on support automation.', href: '/solutions/ai-for-customer-support-automation', ctaLabel: 'Перейти до рішення →' },
+        { title: 'AI SDR', description: 'Масштабує B2B outreach, qualification і booking зустрічей без розширення outbound-команди.', href: '/ai-sdr', ctaLabel: 'Перейти до сторінки →' },
+        { title: 'Кастомні AI агенти', description: 'Запускає агентів, які виконують реальні дії в CRM, product ops і внутрішніх workflows.', href: '/services/custom-ai-models', ctaLabel: 'Перейти до сервісу →' },
+      ],
+    },
+    useCases: {
+      en: { sales: [], customerSupport: [], crm: [], operations: [] },
+      uk: { sales: [], customerSupport: [], crm: [], operations: [] },
+    },
+    useCaseBlocks: {
+      en: [
+        { title: 'Onboarding & activation', items: ['guide users to first value faster', 'answer setup questions in-product or in chat', 'reduce drop-off in critical onboarding steps'] },
+        { title: 'Support & retention', items: ['deflect repetitive support volume', 'surface churn risk signals earlier', 'improve response quality across time zones'] },
+        { title: 'Growth & outbound', items: ['expand outreach without linear headcount growth', 'sync qualification with CRM and product context', 'help teams act on account signals faster'] },
+      ],
+      uk: [
+        { title: 'Онбординг і activation', items: ['швидше доводити користувача до first value', 'відповідати на setup питання в продукті або чаті', 'зменшувати drop-off на критичних onboarding steps'] },
+        { title: 'Підтримка і retention', items: ['зменшення повторюваного support volume', 'раннє виявлення churn risk signals', 'краща якість response across time zones'] },
+        { title: 'Growth і outbound', items: ['масштабування outreach без лінійного headcount growth', 'синхронізація qualification з CRM і product context', 'швидша реакція команди на account signals'] },
+      ],
+    },
+    whyAiInsider: {
+      en: [
+        'We build SaaS AI systems around activation, support economics, churn reduction, and pipeline growth.',
+        'Our automations combine product data, support knowledge, CRM context, and outbound flows instead of treating them separately.',
+        'We optimize for measurable lifecycle outcomes, not just chatbot or workflow usage.',
+        'Rollouts start with one painful bottleneck and expand once the data proves the ROI.',
+      ],
+      uk: [
+        'Ми будуємо SaaS AI systems навколо activation, support economics, churn reduction і pipeline growth.',
+        'Наші automation flows поєднують product data, support knowledge, CRM context і outbound, а не існують окремо.',
+        'Оптимізуємося під вимірювані lifecycle outcomes, а не просто під usage чатбота чи workflow.',
+        'Запуск починається з одного болючого bottleneck і масштабується після підтвердження ROI на даних.',
+      ],
+    },
+    faq: {
+      en: [
+        { q: 'Can AI really improve onboarding for SaaS?', a: 'Yes. AI can guide users to first value, answer setup questions, and trigger the right nudges based on user behavior.' },
+        { q: 'Can AI support reduce churn?', a: 'Indirectly, yes. Faster help, better onboarding, and earlier churn-risk detection all improve retention outcomes.' },
+        { q: 'Does this work for B2B SaaS with a sales team?', a: 'Yes. AI can support both product-led onboarding and sales-led outbound or qualification workflows.' },
+        { q: 'Can custom AI agents act inside our stack?', a: 'Yes. We can connect agents to CRM, support tools, docs, product data, and internal workflows with controlled permissions.' },
+        { q: 'What is the best place to start?', a: 'Usually with the lifecycle bottleneck that is closest to revenue: onboarding, support load, or outbound qualification.' },
+      ],
+      uk: [
+        { q: 'Чи може AI реально покращити онбординг у SaaS?', a: 'Так. AI може доводити користувача до first value, відповідати на setup питання і запускати потрібні nudges на основі user behavior.' },
+        { q: 'Чи може AI support зменшити churn?', a: 'Непрямо — так. Швидша допомога, кращий онбординг і раннє виявлення churn-risk signals покращують retention.' },
+        { q: 'Чи підходить це для B2B SaaS із sales-командою?', a: 'Так. AI може одночасно підтримувати і product-led onboarding, і sales-led qualification або outbound workflows.' },
+        { q: 'Чи можуть кастомні AI агенти діяти в нашому стеку?', a: 'Так. Ми можемо підключити агентів до CRM, support tools, docs, product data і внутрішніх workflows з контрольованими permissions.' },
+        { q: 'З чого найкраще почати?', a: 'Зазвичай із lifecycle bottleneck, який найближче до revenue: онбординг, support load або outbound qualification.' },
+      ],
+    },
+    cta: {
+      en: { bookConsultation: 'Book a SaaS AI consultation', getAudit: 'Get SaaS AI audit' },
+      uk: { bookConsultation: 'Замовити SaaS AI консультацію', getAudit: 'Отримати аудит SaaS AI' },
+    },
+    relatedBlogSlugs: ['ai-onboarding-assistant-for-saas', 'building-ai-agents-that-take-actions'],
+    relatedSolutionSlugs: ['ai-for-saas-companies', 'ai-for-customer-support-automation'],
+    siblingLandingSlugs: ['ai-automation-for-business', 'ai-sdr', 'custom-ai-agents'],
+    metaKeywords: {
+      en: ['AI automation for SaaS', 'AI for SaaS companies', 'SaaS onboarding automation', 'AI support for SaaS', 'AI SDR for SaaS'],
+      uk: ['AI автоматизація для SaaS', 'AI для SaaS компаній', 'автоматизація онбордингу SaaS', 'AI підтримка для SaaS', 'AI SDR для SaaS'],
     },
   },
 };

@@ -41,6 +41,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
           whatIs: `What is ${pageHeading}`,
           howWorks: `How ${pageHeading} works`,
           benefits: `Benefits of ${pageHeading}`,
+          whatYouGet: 'What you get',
           useCases: 'Use cases',
           why: 'Why AI Insider',
           faq: 'FAQ',
@@ -52,6 +53,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
           whatIs: `Що таке ${pageHeading}`,
           howWorks: `Як працює ${pageHeading}`,
           benefits: `Переваги ${pageHeading}`,
+          whatYouGet: 'Що ви отримуєте',
           useCases: 'Сценарії використання',
           why: 'Чому AI Insider',
           faq: 'FAQ',
@@ -61,6 +63,8 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
         };
 
   const cta = getLocalizedSeo(page.cta, lang);
+  const whatYouGetCards = page.whatYouGetCards ? getLocalizedSeo(page.whatYouGetCards, lang) : [];
+  const caseHighlight = page.caseHighlight ? getLocalizedSeo(page.caseHighlight, lang) : null;
 
   const serviceJsonLd = {
     '@context': 'https://schema.org',
@@ -291,6 +295,53 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
               ))}
             </div>
           </div>
+
+          {whatYouGetCards.length > 0 ? (
+            <div className="max-w-6xl mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{headings.whatYouGet}</h2>
+              <div className="grid md:grid-cols-2 gap-4">
+                {whatYouGetCards.map((card) => (
+                  <Link
+                    key={`${card.href}-${card.title}`}
+                    href={withLang(lang, card.href)}
+                    className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-200 hover:border-white/20 hover:-translate-y-0.5"
+                  >
+                    <h3 className="text-xl font-bold text-white leading-snug group-hover:text-white/80 transition-colors">
+                      {card.title}
+                    </h3>
+                    <p className="mt-3 text-base leading-relaxed text-gray-400">
+                      {card.description}
+                    </p>
+                    <div className="mt-4 text-sm font-semibold text-white/70 group-hover:text-white transition-colors">
+                      {card.ctaLabel}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {caseHighlight ? (
+            <div className="max-w-6xl mb-12">
+              <Link
+                href={withLang(lang, caseHighlight.href)}
+                className="group block rounded-3xl border border-white/10 bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent p-6 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.06]"
+              >
+                <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                  {caseHighlight.label}
+                </div>
+                <h2 className="mt-4 text-2xl md:text-3xl font-bold text-white group-hover:text-white/85 transition-colors">
+                  {caseHighlight.title}
+                </h2>
+                <p className="mt-3 max-w-3xl text-base leading-relaxed text-gray-400">
+                  {caseHighlight.description}
+                </p>
+                <div className="mt-5 text-sm font-semibold text-white/80 group-hover:text-white transition-colors">
+                  {caseHighlight.ctaLabel}
+                </div>
+              </Link>
+            </div>
+          ) : null}
 
           {/* Use cases */}
           <div className="max-w-6xl mb-12">

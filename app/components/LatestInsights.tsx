@@ -5,7 +5,7 @@ import { useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { blogArticles, getBlogText } from '../lib/blogData';
+import { getPublishedBlogArticles, getBlogText } from '../lib/blogData';
 
 export default function LatestInsights() {
   const ref = useRef(null);
@@ -16,7 +16,7 @@ export default function LatestInsights() {
 
   const latestArticles = useMemo(
     () =>
-      [...blogArticles]
+      [...getPublishedBlogArticles()]
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
         .slice(0, 3),
     [],

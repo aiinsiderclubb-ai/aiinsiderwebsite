@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
-import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
+import { getPublishedBlogArticle, getBlogText } from '@/app/lib/blogData';
 
 type Params = { lang: string; slug: string };
 
@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     return { robots: { index: false, follow: false } };
   }
 
-  const article = getBlogArticle(slug);
+  const article = getPublishedBlogArticle(slug);
   const path = `/blog/${slug}`;
 
   if (!article) {

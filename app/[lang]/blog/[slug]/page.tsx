@@ -4,7 +4,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
-import { getBlogArticle, getBlogText, blogArticles } from '@/app/lib/blogData';
+import { getPublishedBlogArticle, getBlogText, getPublishedBlogArticles } from '@/app/lib/blogData';
 import { getRelatedServicesForBlog, getSemanticAnchor } from '@/app/lib/internalLinks';
 import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
 import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
@@ -16,7 +16,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
   if (!isSupportedLang(lang)) notFound();
 
-  const article = getBlogArticle(slug);
+  const article = getPublishedBlogArticle(slug);
   if (!article) notFound();
 
   const siteUrl = getSiteUrl();
@@ -155,11 +155,12 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   };
 
   /* ── Related articles ── */
-  const relatedArticles = blogArticles
+  const publishedArticles = getPublishedBlogArticles();
+  const relatedArticles = publishedArticles
     .filter((a) => a.slug !== slug && a.category.en === article.category.en)
     .slice(0, 2);
   const allOther = relatedArticles.length < 2
-    ? [...relatedArticles, ...blogArticles.filter((a) => a.slug !== slug && !relatedArticles.includes(a)).slice(0, 2 - relatedArticles.length)]
+    ? [...relatedArticles, ...publishedArticles.filter((a) => a.slug !== slug && !relatedArticles.includes(a)).slice(0, 2 - relatedArticles.length)]
     : relatedArticles;
 
   return (

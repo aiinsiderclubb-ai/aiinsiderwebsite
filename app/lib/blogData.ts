@@ -21,9 +21,11 @@ export interface BlogArticle {
   /** Primary keyword — appears in URL, H1, first 100 words. */
   keyword: L;
   category: L;
+  tags?: string[];
   icon: string;
   readTime: number; // minutes
   publishedAt: string; // ISO date
+  published?: boolean;
   titleTag: L;
   metaDescription: L;
   metaKeywords: { en: string[]; uk: string[] };
@@ -53,7 +55,15 @@ export function getBlogArticle(slug: string): BlogArticle | undefined {
   return blogArticles.find((a) => a.slug === slug);
 }
 
-export const blogSlugs = (): string[] => blogArticles.map((a) => a.slug);
+export function getPublishedBlogArticles(): BlogArticle[] {
+  return blogArticles.filter((a) => a.published !== false);
+}
+
+export function getPublishedBlogArticle(slug: string): BlogArticle | undefined {
+  return getPublishedBlogArticles().find((a) => a.slug === slug);
+}
+
+export const blogSlugs = (): string[] => getPublishedBlogArticles().map((a) => a.slug);
 
 /* ── Articles ──────────────────────────────────────────────── */
 
@@ -4074,6 +4084,7 @@ export const blogArticles: BlogArticle[] = [
   /* ─── Article 42 ─── */
   {
     slug: 'beauty-salon-kpi-dashboard-automation',
+    tags: ['beauty salon', 'kpi dashboard', 'analytics automation'],
     keyword: { en: 'beauty salon KPI dashboard automation', uk: 'автоматизація KPI-дашборду салону краси' },
     category: { en: 'Beauty Automation', uk: 'Автоматизація салону' },
     icon: '📊',
@@ -4151,5 +4162,365 @@ export const blogArticles: BlogArticle[] = [
       { href: '/blog/salon-crm-segmentation-playbook', label: { en: 'CRM segmentation playbook', uk: 'Playbook CRM-сегментації' } },
       { href: '/blog/beauty-salon-no-show-reduction-system', label: { en: 'No-show reduction', uk: 'Зниження no-show' } },
     ],
+  },
+  {
+    slug: 'what-is-an-ai-agent-vs-chatbot',
+    tags: ['AI agent', 'chatbot', 'AI automation'],
+    published: false,
+    keyword: { en: 'AI agent vs chatbot', uk: 'AI агент vs чатбот' },
+    category: { en: 'AI Education', uk: 'AI освіта' },
+    icon: '🧠',
+    readTime: 7,
+    publishedAt: '2026-03-16',
+    titleTag: {
+      en: "AI Agent vs Chatbot: What's the Difference? | AI Insider",
+      uk: 'AI агент vs чатбот: у чому різниця? | AI Insider',
+    },
+    metaDescription: {
+      en: 'AI agents take actions, chatbots answer questions. Learn the key differences and when to use each for your business.',
+      uk: 'AI агенти виконують дії, а чатботи відповідають на питання. Дізнайтесь ключові відмінності та коли використовувати кожен підхід для бізнесу.',
+    },
+    metaKeywords: {
+      en: ['AI agent', 'chatbot', 'AI automation'],
+      uk: ['AI агент', 'чатбот', 'AI автоматизація'],
+    },
+    h1: { en: "AI Agent vs Chatbot: What's the Difference?", uk: 'AI агент vs чатбот: у чому різниця?' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'how-much-does-ai-automation-cost',
+    tags: ['AI automation cost', 'AI pricing', 'ROI'],
+    published: false,
+    keyword: { en: 'AI automation cost', uk: 'скільки коштує AI автоматизація' },
+    category: { en: 'Pricing', uk: 'Ціноутворення' },
+    icon: '💸',
+    readTime: 8,
+    publishedAt: '2026-03-17',
+    titleTag: {
+      en: 'How Much Does AI Automation Cost in 2025? | AI Insider',
+      uk: 'Скільки коштує AI автоматизація у 2025 році? | AI Insider',
+    },
+    metaDescription: {
+      en: 'Full pricing breakdown for AI automation projects: chatbots, voice agents, workflow automation. Real numbers, no fluff.',
+      uk: 'Повний розбір вартості AI автоматизації: чатботи, voice agents, workflow automation. Реальні цифри без води.',
+    },
+    metaKeywords: {
+      en: ['AI automation cost', 'AI pricing', 'ROI'],
+      uk: ['вартість AI автоматизації', 'AI ціноутворення', 'ROI автоматизації'],
+    },
+    h1: { en: 'How Much Does AI Automation Cost in 2025?', uk: 'Скільки коштує AI автоматизація у 2025 році?' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'ai-automation-for-dental-clinic',
+    tags: ['AI dental', 'clinic automation', 'appointment booking AI'],
+    published: false,
+    keyword: { en: 'AI automation for dental clinics', uk: 'AI автоматизація для стоматологій' },
+    category: { en: 'Industry', uk: 'Індустрія' },
+    icon: '🦷',
+    readTime: 6,
+    publishedAt: '2026-03-18',
+    titleTag: {
+      en: 'AI Automation for Dental Clinics: Bookings, Reminders & More',
+      uk: 'AI автоматизація для стоматологій: записи, нагадування та більше',
+    },
+    metaDescription: {
+      en: 'How dental clinics use AI to automate appointment booking, reduce no-shows and manage patient communication.',
+      uk: 'Як стоматології використовують AI для автоматизації запису, зменшення no-show та комунікації з пацієнтами.',
+    },
+    metaKeywords: {
+      en: ['AI dental', 'clinic automation', 'appointment booking AI'],
+      uk: ['AI для стоматології', 'автоматизація клініки', 'AI запис на прийом'],
+    },
+    h1: { en: 'AI Automation for Dental Clinics', uk: 'AI автоматизація для стоматологій' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'how-to-choose-ai-automation-agency',
+    tags: ['AI agency', 'AI automation agency', 'hire AI developer'],
+    published: false,
+    keyword: { en: 'choose AI automation agency', uk: 'як вибрати AI automation agency' },
+    category: { en: 'Guide', uk: 'Гайд' },
+    icon: '🏢',
+    readTime: 7,
+    publishedAt: '2026-03-19',
+    titleTag: {
+      en: 'How to Choose an AI Automation Agency: 7 Key Questions',
+      uk: 'Як вибрати AI automation agency: 7 ключових запитань',
+    },
+    metaDescription: {
+      en: 'What to ask before hiring an AI agency. Red flags, green flags, and what separates great AI partners from bad ones.',
+      uk: 'Що запитати перед наймом AI agency. Red flags, green flags і те, що відрізняє сильних AI-партнерів від слабких.',
+    },
+    metaKeywords: {
+      en: ['AI agency', 'AI automation agency', 'hire AI developer'],
+      uk: ['AI agency', 'AI automation agency', 'найм AI розробника'],
+    },
+    h1: { en: 'How to Choose an AI Automation Agency', uk: 'Як вибрати AI automation agency' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'n8n-vs-make-for-business-automation',
+    tags: ['n8n', 'Make', 'workflow automation', 'no-code AI'],
+    published: false,
+    keyword: { en: 'n8n vs Make', uk: 'n8n vs Make' },
+    category: { en: 'Tools', uk: 'Інструменти' },
+    icon: '🛠️',
+    readTime: 9,
+    publishedAt: '2026-03-20',
+    titleTag: {
+      en: 'n8n vs Make: Which is Better for Business Automation?',
+      uk: 'n8n vs Make: що краще для бізнес-автоматизації?',
+    },
+    metaDescription: {
+      en: 'In-depth comparison of n8n and Make (Integromat) for business workflow automation. Pricing, features, use cases.',
+      uk: 'Детальне порівняння n8n і Make для workflow automation у бізнесі: pricing, можливості та use cases.',
+    },
+    metaKeywords: {
+      en: ['n8n', 'Make', 'workflow automation', 'no-code AI'],
+      uk: ['n8n', 'Make', 'workflow automation', 'no-code AI'],
+    },
+    h1: { en: 'n8n vs Make for Business Automation', uk: 'n8n vs Make для бізнес-автоматизації' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'rag-vs-fine-tuning-when-to-use-each',
+    tags: ['RAG', 'fine-tuning', 'custom AI', 'LLM'],
+    published: false,
+    keyword: { en: 'RAG vs fine-tuning', uk: 'RAG vs fine-tuning' },
+    category: { en: 'Technical', uk: 'Технічне' },
+    icon: '🔬',
+    readTime: 8,
+    publishedAt: '2026-03-21',
+    titleTag: {
+      en: 'RAG vs Fine-Tuning: When to Use Each for Your AI System',
+      uk: 'RAG vs Fine-Tuning: коли використовувати кожен підхід для AI-системи',
+    },
+    metaDescription: {
+      en: 'RAG or fine-tuning? A practical guide for businesses choosing between retrieval-augmented generation and model fine-tuning.',
+      uk: 'RAG чи fine-tuning? Практичний гайд для бізнесів, які обирають між retrieval-augmented generation і fine-tuning моделі.',
+    },
+    metaKeywords: {
+      en: ['RAG', 'fine-tuning', 'custom AI', 'LLM'],
+      uk: ['RAG', 'fine-tuning', 'custom AI', 'LLM'],
+    },
+    h1: { en: 'RAG vs Fine-Tuning: When to Use Each', uk: 'RAG vs Fine-Tuning: коли використовувати кожен підхід' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'ai-for-hr-recruitment-automation',
+    tags: ['AI HR', 'recruitment automation', 'AI onboarding'],
+    published: false,
+    keyword: { en: 'AI for HR recruitment automation', uk: 'AI для HR та recruitment automation' },
+    category: { en: 'Industry', uk: 'Індустрія' },
+    icon: '🧑‍💼',
+    readTime: 7,
+    publishedAt: '2026-03-22',
+    titleTag: {
+      en: 'AI for HR: Automate Recruitment and Onboarding in 2025',
+      uk: 'AI для HR: автоматизація recruitment та onboarding у 2025',
+    },
+    metaDescription: {
+      en: 'How HR teams use AI to screen candidates, automate onboarding and reduce time-to-hire by 60%.',
+      uk: 'Як HR-команди використовують AI для screening кандидатів, автоматизації onboarding і скорочення time-to-hire на 60%.',
+    },
+    metaKeywords: {
+      en: ['AI HR', 'recruitment automation', 'AI onboarding'],
+      uk: ['AI для HR', 'автоматизація recruitment', 'AI onboarding'],
+    },
+    h1: { en: 'AI for HR: Automate Recruitment and Onboarding', uk: 'AI для HR: автоматизуйте recruitment та onboarding' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'how-to-measure-ai-automation-roi',
+    tags: ['AI ROI', 'automation ROI', 'AI metrics'],
+    published: false,
+    keyword: { en: 'measure AI automation ROI', uk: 'як вимірювати ROI від AI автоматизації' },
+    category: { en: 'Guide', uk: 'Гайд' },
+    icon: '📈',
+    readTime: 8,
+    publishedAt: '2026-03-23',
+    titleTag: {
+      en: 'How to Measure ROI from AI Automation | AI Insider',
+      uk: 'Як вимірювати ROI від AI автоматизації | AI Insider',
+    },
+    metaDescription: {
+      en: 'Framework for calculating the real ROI of AI automation projects. KPIs, metrics, and what to track from week one.',
+      uk: 'Фреймворк для розрахунку реального ROI від AI automation projects: KPI, метрики і те, що варто трекати з першого тижня.',
+    },
+    metaKeywords: {
+      en: ['AI ROI', 'automation ROI', 'AI metrics'],
+      uk: ['ROI від AI', 'ROI автоматизації', 'AI метрики'],
+    },
+    h1: { en: 'How to Measure ROI from AI Automation', uk: 'Як вимірювати ROI від AI автоматизації' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'ai-voice-agent-setup-guide',
+    tags: ['AI voice agent', 'voice AI setup', 'ElevenLabs', 'voice automation'],
+    published: false,
+    keyword: { en: 'AI voice agent setup guide', uk: 'гайд по налаштуванню AI voice agent' },
+    category: { en: 'Tutorial', uk: 'Туторіал' },
+    icon: '🎙️',
+    readTime: 12,
+    publishedAt: '2026-03-24',
+    titleTag: {
+      en: 'AI Voice Agent: Complete Setup Guide for Businesses',
+      uk: 'AI Voice Agent: повний гайд по запуску для бізнесу',
+    },
+    metaDescription: {
+      en: 'Step-by-step guide to building and deploying an AI voice agent for your business. Tools, workflow, and real examples.',
+      uk: 'Покроковий гайд по створенню та запуску AI voice agent для бізнесу: інструменти, workflow і реальні приклади.',
+    },
+    metaKeywords: {
+      en: ['AI voice agent', 'voice AI setup', 'ElevenLabs', 'voice automation'],
+      uk: ['AI voice agent', 'voice AI setup', 'ElevenLabs', 'голосова автоматизація'],
+    },
+    h1: { en: 'AI Voice Agent: Complete Setup Guide for Businesses', uk: 'AI Voice Agent: повний гайд по запуску для бізнесу' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
+  },
+  {
+    slug: 'instagram-automation-lead-to-sale',
+    tags: ['Instagram automation', 'Instagram AI', 'DM automation'],
+    published: false,
+    keyword: { en: 'Instagram automation with AI', uk: 'Instagram automation з AI' },
+    category: { en: 'Social Media', uk: 'Соцмережі' },
+    icon: '📱',
+    readTime: 7,
+    publishedAt: '2026-03-25',
+    titleTag: {
+      en: 'Instagram Automation: From Lead to Sale with AI',
+      uk: 'Instagram Automation: від ліда до продажу з AI',
+    },
+    metaDescription: {
+      en: 'How to automate Instagram DMs, lead qualification and follow-ups using AI — full workflow with real examples.',
+      uk: 'Як автоматизувати Instagram DM, qualification лідів і follow-up через AI — повний workflow з реальними прикладами.',
+    },
+    metaKeywords: {
+      en: ['Instagram automation', 'Instagram AI', 'DM automation'],
+      uk: ['Instagram automation', 'Instagram AI', 'автоматизація DM'],
+    },
+    h1: { en: 'Instagram Automation: From Lead to Sale with AI', uk: 'Instagram Automation: від ліда до продажу з AI' },
+    intro: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+    sections: [
+      {
+        heading: { en: 'Article content coming soon', uk: 'Контент статті скоро буде додано' },
+        body: [{ en: '[Article content coming soon]', uk: '[Контент статті скоро буде додано]' }],
+      },
+    ],
+    faq: [],
+    cta: {
+      bookConsultation: { en: 'Book a free AI consultation', uk: 'Замовити безкоштовну AI-консультацію' },
+      getAudit: { en: 'Get AI automation audit', uk: 'Отримати аудит AI-автоматизації' },
+    },
+    relatedLinks: [],
   },
 ];

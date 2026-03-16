@@ -1,5 +1,5 @@
 import type { Language } from './translations';
-import { blogArticles, type BlogArticle } from './blogData';
+import { getPublishedBlogArticles, type BlogArticle } from './blogData';
 import { SEO_SERVICE_PAGES, type SeoServiceSlug } from './seoServicePages';
 import { servicesData, type ServicePage } from './servicesData';
 import { PROGRAMMATIC_PAGES, type ProgrammaticPage, getLocalizedProgrammatic } from './programmaticSeo';
@@ -52,6 +52,14 @@ const SERVICE_TO_TOPICS: Record<SeoServiceSlug, { categories: string[]; keywords
     categories: ['Automation'],
     keywords: ['proposal', 'commercial proposal', 'quote', 'document', 'agency proposal', 'sales proposal'],
   },
+  'ai-automation-for-ecommerce': {
+    categories: ['Chatbots', 'Automation', 'AI Content'],
+    keywords: ['ecommerce', 'cart recovery', 'whatsapp sales', 'ugc ads', 'online store', 'customer support'],
+  },
+  'ai-automation-for-saas': {
+    categories: ['Automation', 'Custom AI'],
+    keywords: ['saas', 'onboarding', 'churn', 'support', 'activation', 'ai agents'],
+  },
 };
 
 /**
@@ -77,7 +85,7 @@ export function getRelatedBlogForService(slug: SeoServiceSlug, limit = 3): BlogA
   const topics = SERVICE_TO_TOPICS[slug];
   if (!topics) return [];
 
-  const scored = blogArticles.map((article) => {
+  const scored = getPublishedBlogArticles().map((article) => {
     let score = 0;
 
     // Category match (strong signal)
@@ -336,6 +344,34 @@ export const SERVICE_ANCHORS: Record<SeoServiceSlug, { en: string[]; uk: string[
       'автоматизація КП',
       'автоматичні комерційні пропозиції',
       'AI proposal workflow',
+    ],
+  },
+  'ai-automation-for-ecommerce': {
+    en: [
+      'AI automation for e-commerce',
+      'AI for online stores',
+      'e-commerce AI automation',
+      'AI growth for e-commerce',
+    ],
+    uk: [
+      'AI автоматизація для інтернет-магазинів',
+      'AI для e-commerce',
+      'автоматизація онлайн-магазину',
+      'AI automation для e-commerce',
+    ],
+  },
+  'ai-automation-for-saas': {
+    en: [
+      'AI automation for SaaS',
+      'AI for SaaS companies',
+      'SaaS AI automation',
+      'AI workflows for SaaS',
+    ],
+    uk: [
+      'AI автоматизація для SaaS',
+      'AI для SaaS компаній',
+      'SaaS AI automation',
+      'AI workflows для SaaS',
     ],
   },
 };
