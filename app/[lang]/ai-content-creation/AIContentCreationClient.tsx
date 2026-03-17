@@ -428,7 +428,7 @@ export default function AIContentCreationClient() {
                           <div className="text-xs text-gray-400">{isEn ? '2.5M followers' : '2.5M підписників'}</div>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-300">
+                      <p className="text-sm text-gray-400">
                         {isEn ? 'Creating content 24/7 without breaks' : 'Створює контент 24/7 без перерв'}
                       </p>
                     </div>
@@ -462,7 +462,7 @@ export default function AIContentCreationClient() {
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative text-center p-6 md:p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-white/20 transition-all duration-300">
+                <div className="relative text-center p-6 md:p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.06] transition-all duration-300">
                   <div className="text-3xl mb-3">{stat.icon}</div>
                   <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
                     {isEn ? stat.valueEn : stat.valueUk}
@@ -611,7 +611,7 @@ export default function AIContentCreationClient() {
                           <h3 className="text-2xl font-bold mb-2">
                             {isEn ? video.titleEn : video.titleUk}
                           </h3>
-                          <p className="text-gray-300">
+                          <p className="text-gray-400">
                             {isEn ? video.descEn : video.descUk}
                           </p>
                           <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
@@ -742,7 +742,7 @@ export default function AIContentCreationClient() {
                   />
                   
                   <Link href={`${basePath}/services/${service.slug}`}>
-                    <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-white/25">
+                    <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-white/20">
                       {/* Gradient top strip */}
                       <div className={`h-1.5 bg-gradient-to-r ${service.gradient}`} />
 
@@ -779,7 +779,7 @@ export default function AIContentCreationClient() {
                         {/* Features */}
                         <ul className="space-y-3 mb-8">
                           {(isEn ? service.featuresEn : service.featuresUk).map((feature, fIndex) => (
-                            <li key={fIndex} className="flex items-center gap-3 text-sm text-gray-300">
+                            <li key={fIndex} className="flex items-center gap-3 text-sm text-gray-400">
                               <div className={`w-5 h-5 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center`}>
                                 <CheckCircle className="w-3 h-3 text-white" />
                               </div>
@@ -878,7 +878,7 @@ export default function AIContentCreationClient() {
                 {isEn ? 'From the blog' : 'З блогу'}
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">
               {isEn ? 'Related Articles' : 'Корисні статті'}
             </h2>
           </div>
@@ -927,7 +927,7 @@ export default function AIContentCreationClient() {
                 {isEn ? 'Explore Related Solutions' : 'Схожі рішення'}
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">
               {isEn ? 'Explore Related Solutions' : 'Схожі рішення'}
             </h2>
           </div>

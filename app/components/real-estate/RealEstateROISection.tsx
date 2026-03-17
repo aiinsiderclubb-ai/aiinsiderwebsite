@@ -35,15 +35,22 @@ export default function RealEstateROISection() {
   }, [monthlyLeads]);
 
   return (
-    <section id="roi-calculator" className="py-12 px-6 content-visibility-auto" data-source-section="roi">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Порахуйте вашу економію</h2>
-        <p className="text-gray-300 max-w-3xl mb-8">
+    <section id="roi-calculator" className="relative py-20 px-6 overflow-hidden" data-source-section="roi">
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-1/4 w-[500px] h-[400px] opacity-10" style={{ background: 'radial-gradient(ellipse, rgba(16, 185, 129, 0.1) 0%, transparent 60%)', filter: 'blur(80px)' }} />
+      </div>
+      <div className="relative max-w-6xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 mb-6">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span className="text-xs font-semibold text-white/70 uppercase tracking-[0.2em]">ROI</span>
+        </div>
+        <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-4">Порахуйте вашу економію</h2>
+        <p className="text-gray-400 max-w-3xl mb-10 leading-relaxed">
           Введіть кількість лідів на місяць і подивіться, скільки годин забирає ручна обробка та як змінюється економіка між AI-автоматизацією й наймом окремого менеджера.
         </p>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20">
             <h3 className="text-xl font-bold text-white">Вхідні дані</h3>
             <label className="mt-5 block">
               <span className="text-sm text-gray-300">Кількість лідів на місяць</span>
@@ -60,7 +67,7 @@ export default function RealEstateROISection() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6">
             <h3 className="text-xl font-bold text-white">Оцінка ефекту / місяць</h3>
             <div className="mt-5 space-y-4">
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
@@ -84,7 +91,7 @@ export default function RealEstateROISection() {
             <a
               href="#bookcall"
               data-cta="real-estate-roi"
-              className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-white px-5 py-3 font-semibold text-black transition-colors hover:bg-gray-100"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 font-semibold text-black transition-colors hover:bg-gray-100"
             >
               Замовити консультацію
             </a>

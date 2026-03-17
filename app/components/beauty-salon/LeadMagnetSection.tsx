@@ -140,19 +140,19 @@ export default function LeadMagnetSection({ status, content, vertical, locale }:
   };
 
   return (
-    <section ref={sectionRef} id="lead-magnet" className="py-12 px-6 content-visibility-auto" data-source-section="lead-magnet">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
-        <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-          <h2 className="text-2xl font-bold text-white">{content.title}</h2>
-          <p className="mt-3 text-gray-300">{content.description}</p>
-          <ul className="mt-4 list-disc ml-5 text-sm text-gray-300 space-y-1">
+    <section ref={sectionRef} id="lead-magnet" className="relative py-20 px-6 overflow-hidden" data-source-section="lead-magnet">
+      <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
+        <article className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20">
+          <h2 className="text-2xl font-bold font-heading text-white">{content.title}</h2>
+          <p className="mt-3 text-gray-400">{content.description}</p>
+          <ul className="mt-4 list-disc ml-5 text-sm text-gray-400 space-y-1">
             {content.bullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
           </ul>
         </article>
 
-        <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+        <article className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20">
           <h3 className="text-xl font-bold text-white">{content.form.title}</h3>
           <p className="mt-2 text-sm text-gray-400">{content.form.subtitle}</p>
 
@@ -219,7 +219,7 @@ export default function LeadMagnetSection({ status, content, vertical, locale }:
               type="submit"
               data-cta="lead-magnet-submit"
               disabled={state === 'loading'}
-              className="w-full rounded-xl bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors disabled:opacity-60 disabled:hover:bg-white"
+              className="w-full rounded-full bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors disabled:opacity-60 disabled:hover:bg-white"
             >
               {state === 'loading' ? content.form.submittingLabel : content.form.submitLabel}
             </button>

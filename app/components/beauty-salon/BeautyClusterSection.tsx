@@ -3,21 +3,25 @@ import type { ClusterConfig, BeautyClusterGroupId } from '@/app/lib/verticals/ty
 
 export default function BeautyClusterSection({ content }: { content: ClusterConfig<BeautyClusterGroupId> }) {
   return (
-    <section className="py-12 px-6 content-visibility-auto" aria-labelledby="beauty-cluster-title" data-source-section="beauty-cluster">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative py-20 px-6 overflow-hidden" aria-labelledby="beauty-cluster-title" data-source-section="beauty-cluster">
+      <div className="relative max-w-6xl mx-auto">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div>
-            <h2 id="beauty-cluster-title" className="text-3xl md:text-4xl font-bold text-white">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 mb-6">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-xs font-semibold text-white/70 uppercase tracking-[0.2em]">Блог</span>
+            </div>
+            <h2 id="beauty-cluster-title" className="text-3xl md:text-4xl font-bold font-heading text-white">
               {content.title}
             </h2>
-            <p className="mt-3 text-gray-300 max-w-3xl">
+            <p className="mt-3 text-gray-400 max-w-3xl leading-relaxed">
               {content.subtitle}
             </p>
           </div>
           <Link
             href={content.viewAll.href}
             data-cta="beauty-cluster-view-blog"
-            className="rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            className="rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
           >
             {content.viewAll.label}{' '}
           </Link>
@@ -27,7 +31,7 @@ export default function BeautyClusterSection({ content }: { content: ClusterConf
           {content.groups.map((group) => (
             <section key={group.id} aria-label={group.title}>
               <div className="mb-4">
-                <h3 className="text-xl font-bold text-white">{group.title}</h3>
+                <h3 className="text-xl font-bold font-heading text-white">{group.title}</h3>
                 <p className="mt-1 text-sm text-gray-400">{group.description}</p>
               </div>
 
@@ -37,7 +41,7 @@ export default function BeautyClusterSection({ content }: { content: ClusterConf
                   return (
                     <article
                       key={a.slug}
-                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-white/20 transition-colors"
+                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300"
                     >
                       <h4 className="text-lg font-semibold text-white leading-snug">
                         <Link

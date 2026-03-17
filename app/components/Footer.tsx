@@ -1,6 +1,6 @@
 'use client';
 
-import { Youtube, Linkedin, MessageCircle, Mail, MapPin, Zap } from 'lucide-react';
+import { Instagram, Linkedin, MessageCircle, MapPin, Zap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import Link from 'next/link';
 
@@ -10,8 +10,8 @@ export default function Footer() {
 
   const socialLinks = [
     { name: 'Telegram', icon: MessageCircle, url: 'https://t.me/aiinsider' },
-    { name: 'YouTube', icon: Youtube, url: 'https://youtube.com/@aiinsider' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/company/aiinsider' },
+    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/insider__ai?igsh=djc3d3hydzJkam9s&utm_source=qr' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/company/ai-insiderr' },
   ];
 
   const companyLinks = [
@@ -146,13 +146,6 @@ export default function Footer() {
               {t('footer.getInTouch')}
             </h3>
             <div className="space-y-2.5">
-              <a
-                href="mailto:hello@aiinsider.it.com"
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                <Mail className="w-4 h-4 shrink-0" />
-                hello@aiinsider.it.com
-              </a>
               <a
                 href="https://t.me/aiinsider"
                 target="_blank"

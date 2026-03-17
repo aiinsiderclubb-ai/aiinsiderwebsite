@@ -219,7 +219,7 @@ export default async function BlogPage({
         <div className="relative max-w-6xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-            <span className="text-sm font-medium text-gray-300">{isEn ? 'Knowledge hub' : '\u0425\u0430\u0431 \u0437\u043d\u0430\u043d\u044c'}</span>
+            <span className="text-sm font-medium text-gray-400">{isEn ? 'Knowledge hub' : '\u0425\u0430\u0431 \u0437\u043d\u0430\u043d\u044c'}</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading mb-5 leading-[0.95]">
@@ -234,7 +234,7 @@ export default async function BlogPage({
 
           <div className="flex flex-wrap items-center justify-center gap-2">
             {categories.map((cat) => (
-              <span key={cat.label} className={`text-xs md:text-sm px-4 py-2 rounded-full border cursor-default ${'active' in cat && cat.active ? 'bg-white text-black border-white font-bold' : 'bg-white/5 text-gray-300 border-white/10'}`}>
+              <span key={cat.label} className={`text-xs md:text-sm px-4 py-2 rounded-full border cursor-default ${'active' in cat && cat.active ? 'bg-white text-black border-white font-bold' : 'bg-white/5 text-gray-400 border-white/10'}`}>
                 {cat.label}
               </span>
             ))}
@@ -264,7 +264,7 @@ export default async function BlogPage({
               <Link
                 key={article.slug}
                 href={withLang(lang, `/blog/${article.slug}`)}
-                className="group relative flex flex-col h-full rounded-3xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/25 hover:-translate-y-1.5 hover:shadow-[0_8px_60px_rgba(255,255,255,0.08)]"
+                className="group relative flex flex-col h-full rounded-3xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_60px_rgba(255,255,255,0.08)]"
                 style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' }}
               >
                 {/* Top accent line */}

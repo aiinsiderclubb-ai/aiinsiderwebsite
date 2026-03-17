@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Link from 'next/link';
 import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
-import ThemeSwitcher from '@/app/components/ThemeSwitcher';
+import Navbar from '@/app/components/Navbar';
 import HeroSection from '@/app/components/beauty-salon/HeroSection';
 import ProblemSection from '@/app/components/beauty-salon/ProblemSection';
 import AutomationSection from '@/app/components/beauty-salon/AutomationSection';
@@ -111,25 +111,9 @@ export default async function BeautySalonAutomationPage({
       />
       <AnalyticsAutoCapture pageType="pillar" vertical={beautyPillarUk.vertical} locale={beautyPillarUk.locale} />
 
-      <article>
-        <section className="pt-6 px-6">
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <Link href={beautyPillarUk.chrome.brand.href} className="text-sm text-white/90 font-semibold">
-              {beautyPillarUk.chrome.brand.label}
-            </Link>
-            <div className="flex items-center gap-2">
-              <ThemeSwitcher />
-              <a
-                href={beautyPillarUk.chrome.topCta.href}
-                data-cta="top-nav-audit"
-                className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs text-white hover:bg-white/10"
-              >
-                {beautyPillarUk.chrome.topCta.label}
-              </a>
-            </div>
-          </div>
-        </section>
+      <Navbar />
 
+      <article>
         <HeroSection content={beautyPillarUk.hero} />
 
         <section className="px-6 pb-2">

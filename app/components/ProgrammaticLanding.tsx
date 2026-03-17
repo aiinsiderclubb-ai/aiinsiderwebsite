@@ -98,7 +98,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Benefits Section */}
       <section className="py-16 px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? `Key Benefits of ${solutionName}` : `${solutionName}: ключові переваги`}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -110,7 +110,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
                 <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-lg shrink-0">
                   ✓
                 </div>
-                <p className="text-gray-300 leading-relaxed">{benefit}</p>
+                <p className="text-gray-400 leading-relaxed">{benefit}</p>
               </div>
             ))}
           </div>
@@ -151,7 +151,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Use Cases Section */}
       <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? `How ${solutionName} Works in Practice` : `Як ${solutionName} працює на практиці`}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -175,18 +175,21 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* FAQ Section */}
       <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? 'Frequently Asked Questions' : 'Часті питання'}
           </h2>
           <div className="space-y-4">
             {t(page.faq).map((item, idx) => (
-              <div
+              <details
                 key={idx}
-                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]"
+                className="group p-6 rounded-2xl border border-white/10 bg-white/[0.03] transition-colors open:border-white/20 open:bg-white/[0.06]"
               >
-                <h3 className="text-lg font-bold text-white mb-3">{item.q}</h3>
-                <p className="text-gray-400 leading-relaxed">{item.a}</p>
-              </div>
+                <summary className="cursor-pointer list-none flex items-start justify-between gap-6">
+                  <span className="text-lg font-bold text-white">{item.q}</span>
+                  <span className="text-gray-400 group-open:rotate-45 transition-transform duration-200">+</span>
+                </summary>
+                <p className="mt-3 text-gray-400 leading-relaxed">{item.a}</p>
+              </details>
             ))}
           </div>
         </div>
@@ -196,7 +199,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {relatedServicePages.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Related Services' : 'Пов\'язані сервіси'}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -221,7 +224,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {relatedBlogArticles.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Related Articles' : 'Пов\'язані статті'}
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -251,7 +254,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {relatedProgrammatic.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Explore More Solutions' : 'Більше рішень'}
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -275,9 +278,9 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Hub Links Section */}
       <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
-            {isEn ? 'Explore Core AI Solutions' : 'Основні AI-рішення'}
-          </h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
+              {isEn ? 'Explore Core AI Solutions' : 'Основні AI-рішення'}
+            </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {seoHubLinks.map((seo) => (
               <Link

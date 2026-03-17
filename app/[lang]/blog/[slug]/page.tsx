@@ -180,12 +180,12 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
               {article.sections.map((section, si) => (
                 <li key={si} className="flex items-start gap-3">
                   <span className="text-xs font-bold text-white/30 mt-0.5 w-5 text-right shrink-0">{String(si + 1).padStart(2, '0')}</span>
-                  <span className="text-sm text-gray-300">{t(section.heading)}</span>
+                  <span className="text-sm text-gray-400">{t(section.heading)}</span>
                 </li>
               ))}
               <li className="flex items-start gap-3">
                 <span className="text-xs font-bold text-white/30 mt-0.5 w-5 text-right shrink-0">{String(article.sections.length + 1).padStart(2, '0')}</span>
-                <span className="text-sm text-gray-300">FAQ</span>
+                <span className="text-sm text-gray-400">FAQ</span>
               </li>
             </ol>
           </div>
@@ -203,14 +203,14 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                   style={{ boxShadow: '0 0 20px rgba(255,255,255,0.05)' }}>
                   <span className="text-sm font-bold text-white/50">{String(si + 1).padStart(2, '0')}</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug pt-1.5">
+                <h2 className="text-2xl md:text-3xl font-bold font-heading text-white leading-snug pt-1.5">
                   {t(section.heading)}
                 </h2>
               </div>
 
               {/* Body paragraphs */}
               {section.body.map((p, pi) => (
-                <p key={pi} className="text-base md:text-lg text-gray-300 leading-[1.8] mb-5 pl-0 md:pl-[68px]">
+                <p key={pi} className="text-base md:text-lg text-gray-400 leading-[1.8] mb-5 pl-0 md:pl-[68px]">
                   {t(p)}
                 </p>
               ))}
@@ -225,7 +225,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                         <div className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
                           <span className="text-[10px] font-bold text-white/50">{bi + 1}</span>
                         </div>
-                        <span className="text-[15px] text-gray-300 leading-relaxed">{t(b)}</span>
+                        <span className="text-[15px] text-gray-400 leading-relaxed">{t(b)}</span>
                       </div>
                     ))}
                   </div>
@@ -249,12 +249,12 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                 style={{ boxShadow: '0 0 20px rgba(255,255,255,0.05)' }}>
                 <span className="text-sm font-bold text-white/50">?</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug pt-1.5">FAQ</h2>
+              <h2 className="text-2xl md:text-3xl font-bold font-heading text-white leading-snug pt-1.5">FAQ</h2>
             </div>
 
             <div className="pl-0 md:pl-[68px] space-y-3">
               {article.faq.map((qa, i) => (
-                <details key={i} className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden transition-colors hover:border-white/15">
+                <details key={i} className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden transition-colors hover:border-white/15 open:border-white/20 open:bg-white/[0.06]">
                   <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6">
                     <span className="text-base font-bold text-white leading-snug">{t(qa.q)}</span>
                     <span className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0
@@ -279,7 +279,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
               {/* Existing article-defined links */}
               {article.relatedLinks.map((link) => (
                 <Link key={link.href} href={withLang(lang, link.href)}
-                  className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                  className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-400 border border-white/10
                     transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]">
                   <span>{t(link.label)}</span>
                   <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>
@@ -293,7 +293,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                   if (!page) return null;
                   return (
                     <Link key={slug} href={withLang(lang, `/${slug}`)}
-                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-300 border border-white/10
+                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-400 border border-white/10
                         transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]">
                       <span>{getSemanticAnchor(slug, lang, idx + 1)}</span>
                       <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>

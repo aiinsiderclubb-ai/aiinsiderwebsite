@@ -238,7 +238,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
           {/* Intro */}
           <div className="max-w-4xl space-y-4 mb-12">
             {getLocalizedSeo(page.intro, lang).map((p, idx) => (
-              <p key={idx} className="text-lg text-gray-300 leading-relaxed">
+              <p key={idx} className="text-lg text-gray-400 leading-relaxed">
                 {p}
               </p>
             ))}
@@ -246,13 +246,13 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* What is */}
           <div className="max-w-4xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">{headings.whatIs}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-5">{headings.whatIs}</h2>
             {getLocalizedSeo(page.whatIs, lang).paragraphs.map((p, idx) => (
-              <p key={idx} className="text-lg text-gray-300 leading-relaxed mb-4">
+              <p key={idx} className="text-lg text-gray-400 leading-relaxed mb-4">
                 {p}
               </p>
             ))}
-            <ul className="space-y-2 pl-5 list-disc text-gray-300">
+            <ul className="space-y-2 pl-5 list-disc text-gray-400">
               {getLocalizedSeo(page.whatIs, lang).bullets.map((b, idx) => (
                 <li key={idx} className="text-lg leading-relaxed">
                   {b}
@@ -260,16 +260,16 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
               ))}
             </ul>
             {getLocalizedSeo(page.whatIs, lang).outro && (
-              <p className="text-lg text-gray-300 leading-relaxed mt-4">{getLocalizedSeo(page.whatIs, lang).outro}</p>
+              <p className="text-lg text-gray-400 leading-relaxed mt-4">{getLocalizedSeo(page.whatIs, lang).outro}</p>
             )}
           </div>
 
           {/* How it works */}
           <div className="max-w-4xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">{headings.howWorks}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-5">{headings.howWorks}</h2>
             <ul className="space-y-3">
               {getLocalizedSeo(page.howWorks, lang).map((step, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-lg text-gray-300 leading-relaxed">
+                <li key={idx} className="flex items-start gap-3 text-lg text-gray-400 leading-relaxed">
                   <span className="mt-1 text-white/60">•</span>
                   <span>{step}</span>
                 </li>
@@ -279,7 +279,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* Benefits */}
           <div className="max-w-4xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">{headings.benefits}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-5">{headings.benefits}</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {[
                 { icon: '⚡', text: getLocalizedSeo(page.benefits, lang).efficiency },
@@ -291,7 +291,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
                   <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg">
                     {benefit.icon}
                   </div>
-                  <p className="mt-4 text-lg leading-relaxed text-gray-300">{benefit.text}</p>
+                  <p className="mt-4 text-lg leading-relaxed text-gray-400">{benefit.text}</p>
                 </div>
               ))}
             </div>
@@ -299,7 +299,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {whatYouGetCards.length > 0 ? (
             <div className="max-w-6xl mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{headings.whatYouGet}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-6">{headings.whatYouGet}</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {whatYouGetCards.map((card) => (
                   <Link
@@ -331,7 +331,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
                 <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
                   {caseHighlight.label}
                 </div>
-                <h2 className="mt-4 text-2xl md:text-3xl font-bold text-white group-hover:text-white/85 transition-colors">
+                <h2 className="mt-4 text-2xl md:text-3xl font-bold font-heading text-white group-hover:text-white/85 transition-colors">
                   {caseHighlight.title}
                 </h2>
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-gray-400">
@@ -346,7 +346,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* Use cases */}
           <div className="max-w-6xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{headings.useCases}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-6">{headings.useCases}</h2>
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {(page.useCaseBlocks
                 ? getLocalizedSeo(page.useCaseBlocks, lang)
@@ -363,7 +363,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
                   <h3 className="text-xl font-bold text-white mb-3">{block.title}</h3>
                   <ul className="space-y-2">
                     {block.items.map((it, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-gray-300 leading-relaxed">
+                      <li key={idx} className="flex items-start gap-3 text-gray-400 leading-relaxed">
                         <span className="mt-1 text-white/60">•</span>
                         <span>{it}</span>
                       </li>
@@ -376,10 +376,10 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* Why */}
           <div className="max-w-4xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">{headings.why}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-5">{headings.why}</h2>
             <ul className="space-y-3">
               {getLocalizedSeo(page.whyAiInsider, lang).map((w, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-lg text-gray-300 leading-relaxed">
+                <li key={idx} className="flex items-start gap-3 text-lg text-gray-400 leading-relaxed">
                   <span className="mt-1 text-white/60">•</span>
                   <span>{w}</span>
                 </li>
@@ -389,15 +389,15 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* FAQ */}
           <div className="max-w-4xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{headings.faq}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-6">{headings.faq}</h2>
             <div className="space-y-4">
               {getLocalizedSeo(page.faq, lang).map((qa, idx) => (
-                <details key={idx} className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+                <details key={idx} className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-colors open:border-white/20 open:bg-white/[0.06]">
                   <summary className="cursor-pointer list-none flex items-start justify-between gap-6">
                     <span className="text-lg font-bold text-white">{qa.q}</span>
                     <span className="text-gray-400 group-open:rotate-45 transition-transform duration-200">+</span>
                   </summary>
-                  <div className="mt-3 text-base text-gray-300 leading-relaxed">{qa.a}</div>
+                  <div className="mt-3 text-base text-gray-400 leading-relaxed">{qa.a}</div>
                 </details>
               ))}
             </div>
@@ -406,7 +406,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
           {/* Related blog articles */}
           {relatedBlogArticles.length > 0 && (
             <div className="max-w-6xl mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
+              <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-5">
                 {lang === 'en' ? 'From the blog' : 'З блогу'}
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -439,7 +439,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
           {/* Related solutions */}
           {relatedSolutions.length > 0 && (
             <div className="max-w-6xl mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">{headings.relatedSolutions}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-5">{headings.relatedSolutions}</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {relatedSolutions.map((solution) => (
                   <Link
@@ -464,7 +464,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* Sibling SEO service pages for cross-linking */}
           <div className="max-w-6xl mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-5">
               {lang === 'en' ? 'Explore Related Solutions' : 'Схожі рішення'}
             </h2>
             <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">

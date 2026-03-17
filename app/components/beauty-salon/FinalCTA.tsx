@@ -142,13 +142,13 @@ export default function FinalCTA({ status, content, vertical, locale }: FinalCTA
   };
 
   return (
-    <section ref={sectionRef} className="py-12 pb-20 px-6 content-visibility-auto" data-source-section="audit">
-      <div className="max-w-6xl mx-auto rounded-3xl border border-white/15 bg-gradient-to-br from-white/10 to-white/[0.02] p-6 md:p-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white">{content.title}</h2>
+    <section ref={sectionRef} className="relative py-20 px-6 overflow-hidden" data-source-section="audit">
+      <div className="max-w-6xl mx-auto rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 md:p-8">
+        <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">{content.title}</h2>
         <p className="mt-3 text-gray-200 max-w-3xl">{content.subtitle}</p>
 
         <div className="mt-6 grid lg:grid-cols-2 gap-6">
-          <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
             <h3 className="text-xl font-semibold text-white">{content.benefits.title}</h3>
             <ul className="mt-3 text-gray-300 space-y-2 text-sm">
               {content.benefits.bullets.map((b) => (
@@ -165,7 +165,7 @@ export default function FinalCTA({ status, content, vertical, locale }: FinalCTA
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
             <h3 className="text-xl font-semibold text-white">{content.form.title}</h3>
             {state === 'success' ? (
               <p className="mt-4 rounded-lg border border-emerald-400/30 bg-emerald-500/15 p-3 text-sm text-emerald-100">
@@ -242,7 +242,7 @@ export default function FinalCTA({ status, content, vertical, locale }: FinalCTA
                 type="submit"
                 data-cta="audit-submit"
                 disabled={state === 'loading'}
-                className="w-full rounded-xl bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors disabled:opacity-60 disabled:hover:bg-white"
+                className="w-full rounded-full bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors disabled:opacity-60 disabled:hover:bg-white"
               >
                 {state === 'loading' ? content.form.submittingLabel : content.form.submitLabel}
               </button>
