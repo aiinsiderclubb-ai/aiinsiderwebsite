@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
@@ -89,102 +88,55 @@ export default function CasesPage() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
-      {/* Hero Section - Redesigned */}
+      {/* Hero Section */}
       <section className="relative pt-28 pb-20 px-6 overflow-hidden">
-        {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
           <div
-            className="absolute top-0 left-0 w-full h-full"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 50% at 20% 30%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 80% 70%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 30% at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%)
-              `,
-            }}
-          />
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: '60px 60px',
-            }}
-          />
-          {/* Floating orbs */}
-          <div
-            className="absolute top-20 left-1/4 w-96 h-96 rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%)',
-              filter: 'blur(80px)',
-              animation: 'float 20s ease-in-out infinite',
-            }}
+            className="absolute -top-32 left-1/3 w-[800px] h-[800px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%)', filter: 'blur(100px)' }}
           />
           <div
-            className="absolute bottom-20 right-1/4 w-80 h-80 rounded-full"
+            className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 55%)', filter: 'blur(80px)' }}
+          />
+          <div
+            className="absolute inset-0 opacity-[0.025]"
             style={{
-              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%)',
-              filter: 'blur(60px)',
-              animation: 'float 15s ease-in-out infinite reverse',
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+              backgroundSize: '80px 80px',
             }}
           />
         </div>
 
         <div className="relative max-w-6xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-violet-500/30 bg-violet-500/10 backdrop-blur-xl"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
-            </span>
-            <span className="text-sm font-semibold text-violet-300 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/10 bg-white/5">
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <span className="text-sm font-medium text-gray-300">
               {t('cases.badge')}
             </span>
-          </motion.div>
+          </div>
 
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-[1.1]"
-          >
-            {t('cases.title1')}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading mb-6 leading-[0.95]">
+            <span className="text-white">{t('cases.title1')}</span>
             <br />
             <span
+              className="inline-block mt-2"
               style={{
-                background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #10b981 100%)',
+                background: 'linear-gradient(135deg, #ffffff 0%, #666666 50%, #ffffff 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
             >
               {t('cases.title2')}
             </span>
-          </motion.h1>
+          </h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10"
-          >
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
             {t('cases.subtitle')}
-          </motion.p>
+          </p>
 
           {qRaw && (
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
-            >
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
               <span className="text-sm text-gray-400">{lang === 'en' ? 'Search' : 'Пошук'}:</span>
               <span className="text-sm font-semibold text-white">{qRaw}</span>
               <Link
@@ -193,36 +145,28 @@ export default function CasesPage() {
               >
                 {lang === 'en' ? 'Clear' : 'Очистити'}
               </Link>
-            </motion.div>
+            </div>
           )}
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => openChat()}
-              className="group relative flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]"
+              className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg transition-all duration-300 hover:scale-105"
+              style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.15)' }}
             >
-              <MessageCircle className="w-5 h-5 relative z-10" />
-              <span className="relative z-10">{t('cases.tryDemo')}</span>
-              <ArrowRight className="w-5 h-5 relative z-10" />
-              {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <MessageCircle className="w-5 h-5" />
+              <span>{t('cases.tryDemo')}</span>
+              <ArrowRight className="w-5 h-5" />
             </button>
 
             <Link
               href={`${basePath}#bookcall`}
-              className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                border border-white/20 transition-all duration-300 hover:bg-white/10 hover:border-white/30 hover:scale-105"
+              className="flex items-center gap-3 px-8 py-4 text-white/70 hover:text-white font-semibold transition-colors"
             >
               <Phone className="w-5 h-5" />
               {t('cases.bookDemo')}
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -269,18 +213,11 @@ export default function CasesPage() {
       {/* Filters Section */}
       <section className="py-12 px-6 border-y border-white/5">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <CaseFilters 
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
-              caseCounts={caseCounts}
-            />
-          </motion.div>
+          <CaseFilters 
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            caseCounts={caseCounts}
+          />
         </div>
       </section>
 
@@ -301,12 +238,7 @@ export default function CasesPage() {
       <section className="py-16 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-end justify-between mb-12"
-          >
+          <div className="flex items-end justify-between mb-12">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 {lang === 'en' ? 'All Case Studies' : 'Всі кейси'}
@@ -318,7 +250,7 @@ export default function CasesPage() {
                 )}
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* Carousel */}
           {filteredCases.length > 0 ? (
@@ -327,90 +259,42 @@ export default function CasesPage() {
               onDemoClick={handleDemoClick}
             />
           ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
-            >
+            <div className="text-center py-20">
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-xl font-bold text-white mb-2">{t('cases.noCases')}</h3>
               <p className="text-gray-400">{t('cases.tryDifferent')}</p>
-            </motion.div>
+            </div>
           )}
         </div>
       </section>
 
-      {/* Stats Section - Redesigned */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] opacity-20"
-            style={{
-              background: 'radial-gradient(ellipse, rgba(139, 92, 246, 0.3) 0%, transparent 60%)',
-              filter: 'blur(80px)',
-            }}
-          />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-          >
+      {/* Stats Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { value: '50+', labelKey: 'cases.stat1', icon: '🏢', gradient: 'from-violet-500 to-purple-500', glow: 'rgba(139, 92, 246, 0.3)' },
-              { value: '70%', labelKey: 'cases.stat2', icon: '⏱️', gradient: 'from-blue-500 to-cyan-500', glow: 'rgba(59, 130, 246, 0.3)' },
-              { value: '24/7', labelKey: 'cases.stat3', icon: '🤖', gradient: 'from-emerald-500 to-teal-500', glow: 'rgba(16, 185, 129, 0.3)' },
-              { value: '3x', labelKey: 'cases.stat4', icon: '📈', gradient: 'from-orange-500 to-amber-500', glow: 'rgba(249, 115, 22, 0.3)' },
+              { value: '50+', labelKey: 'cases.stat1', icon: '🏢' },
+              { value: '70%', labelKey: 'cases.stat2', icon: '⏱️' },
+              { value: '24/7', labelKey: 'cases.stat3', icon: '🤖' },
+              { value: '3x', labelKey: 'cases.stat4', icon: '📈' },
             ].map((stat, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative"
+                className="group text-center p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-white/15 transition-all duration-300"
               >
-                {/* Glow on hover */}
-                <div
-                  className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
-                  style={{ background: `linear-gradient(135deg, ${stat.glow} 0%, transparent 100%)` }}
-                />
-
-                <div className="relative text-center p-6 md:p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-sm hover:border-white/20 transition-all duration-300">
-                  <div className="text-3xl mb-3">{stat.icon}</div>
-                  <div
-                    className="text-4xl md:text-5xl font-bold mb-2"
-                    style={{
-                      background: `linear-gradient(135deg, #fff 0%, #a1a1aa 100%)`,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-400">{t(stat.labelKey)}</div>
+                <div className="text-3xl mb-3">{stat.icon}</div>
+                <div className="text-4xl md:text-5xl font-bold mb-2 text-white">
+                  {stat.value}
                 </div>
-              </motion.div>
+                <div className="text-sm text-gray-500">{t(stat.labelKey)}</div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <PageCTA />
-
-      {/* CSS Animations */}
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(3deg); }
-        }
-      `}</style>
 
       <Footer />
     </main>
