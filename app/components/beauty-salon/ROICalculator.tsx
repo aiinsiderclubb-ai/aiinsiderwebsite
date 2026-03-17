@@ -16,7 +16,13 @@ function formatUAH(value: number) {
   }).format(value);
 }
 
-export default function ROICalculator({ content }: { content: RoiCalculatorConfig }) {
+interface ROICalculatorProps {
+  content: RoiCalculatorConfig;
+  glowRgb?: string;
+  accentGradient?: string;
+}
+
+export default function ROICalculator({ content, glowRgb = '244, 63, 94', accentGradient = 'from-rose-400 to-pink-500' }: ROICalculatorProps) {
   const getDefault = (key: RoiCalculatorFieldConfig['key']) =>
     content.fields.find((f) => f.key === key)?.defaultValue ?? 0;
 
@@ -145,7 +151,10 @@ export default function ROICalculator({ content }: { content: RoiCalculatorConfi
         </div>
       </div>
 
-      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 sm:p-6">
+      <div
+        className="rounded-2xl border p-5 sm:p-6"
+        style={{ borderColor: `rgba(${glowRgb}, 0.25)`, background: `rgba(${glowRgb}, 0.06)` }}
+      >
         <h3 className="text-xl font-bold text-white mb-5">{content.resultsTitle}</h3>
 
         <div className="space-y-4">
@@ -161,19 +170,26 @@ export default function ROICalculator({ content }: { content: RoiCalculatorConfi
 
           <div className="rounded-xl border border-white/10 bg-black/30 p-4">
             <p className="text-sm text-gray-400">{resultLabel('estimatedMonthlyLoss')}</p>
-            <p className="text-3xl font-bold text-rose-300">{formatUAH(result.estimatedMonthlyLoss)}</p>
+            <p className={`text-3xl font-bold bg-gradient-to-r ${accentGradient} bg-clip-text text-transparent`}>{formatUAH(result.estimatedMonthlyLoss)}</p>
           </div>
 
-          <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/15 p-4">
-            <p className="text-sm text-emerald-100">{resultLabel('potentialRevenueRecovery')}</p>
-            <p className="text-3xl font-bold text-emerald-200">{formatUAH(result.potentialRevenueRecovery)}</p>
+          <div
+            className="rounded-xl border p-4"
+            style={{ borderColor: `rgba(${glowRgb}, 0.3)`, background: `rgba(${glowRgb}, 0.1)` }}
+          >
+            <p className="text-sm text-white/70">{resultLabel('potentialRevenueRecovery')}</p>
+            <p className="text-3xl font-bold text-white">{formatUAH(result.potentialRevenueRecovery)}</p>
           </div>
         </div>
 
         <a
           href={content.cta.href}
           data-cta="roi-calculator"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-white px-5 py-3 font-semibold text-black hover:bg-gray-100 transition-colors"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-full px-5 py-3.5 font-bold text-white transition-all duration-300 hover:scale-[1.02]"
+          style={{
+            background: `linear-gradient(135deg, rgba(${glowRgb}, 1) 0%, rgba(${glowRgb}, 0.7) 100%)`,
+            boxShadow: `0 10px 30px rgba(${glowRgb}, 0.35)`,
+          }}
         >
           {content.cta.label}
         </a>

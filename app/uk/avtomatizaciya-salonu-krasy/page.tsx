@@ -137,45 +137,46 @@ export default async function BeautySalonAutomationPage({
 
         <ProblemSection content={beautyPillarUk.problems} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
         <AutomationSection content={beautyPillarUk.automation} accentGradient="from-pink-400 to-rose-500" glowRgb="236, 72, 153" />
-        <BeautyClusterSection content={beautyPillarUk.cluster} />
-        <ROISection content={beautyPillarUk.roi} />
+        <BeautyClusterSection content={beautyPillarUk.cluster} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
+        <ROISection content={beautyPillarUk.roi} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
         <CaseSection content={beautyPillarUk.cases} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
         <ImplementationSection content={beautyPillarUk.implementation} accentGradient="from-pink-400 to-purple-500" glowRgb="168, 85, 247" />
         <ObjectionSection content={beautyPillarUk.objections} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
         <FAQSection title={beautyPillarUk.faq.title} faqs={beautyPillarUk.faq.items} accentGradient="from-pink-400 to-rose-500" glowRgb="236, 72, 153" />
-        <section className="px-6 py-16 border-t border-white/10">
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-3xl mb-10">
-              <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-                Більше про автоматизацію салону
+        <section className="relative px-6 py-16 overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-1/4 w-[600px] h-[300px]" style={{ background: 'radial-gradient(ellipse, rgba(244, 63, 94, 0.07) 0%, transparent 60%)', filter: 'blur(80px)' }} />
+          </div>
+          <div className="relative max-w-6xl mx-auto">
+            <div className="flex items-start justify-between gap-4 flex-wrap mb-10">
+              <div>
+                <div className="inline-flex items-center px-4 py-2 rounded-full border border-white/15 mb-4" style={{ background: 'rgba(244, 63, 94, 0.07)' }}>
+                  <div className="w-1.5 h-1.5 rounded-full mr-2" style={{ background: 'rgba(244, 63, 94, 1)' }} />
+                  <span className="text-xs font-semibold text-white/70 uppercase tracking-[0.2em]">Більше про автоматизацію</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold font-heading text-white">Більше про автоматизацію салону</h2>
+                <p className="mt-3 text-gray-400 max-w-2xl leading-relaxed">Поглиблені матеріали по Instagram-лідах, no-show, CRM, повторних продажах і KPI для салону краси.</p>
               </div>
-              <h2 className="mt-5 text-3xl md:text-4xl font-bold text-white">
-                Більше про автоматизацію салону
-              </h2>
-              <p className="mt-4 text-lg text-gray-400">
-                Поглиблені матеріали по Instagram-лідах, no-show, CRM, повторних продажах і KPI для салону краси.
-              </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {relatedBeautyArticles.map((article) => (
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {relatedBeautyArticles.map((article, idx) => (
                 <Link
                   key={article.slug}
                   href={`/uk/blog/${article.slug}`}
-                  className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05]"
+                  className="group relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-white/25 hover:-translate-y-1"
                 >
-                  <div className="mb-4 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+                  <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, rgba(244, 63, 94, 0.7), transparent 70%)' }} />
+                  <div className="absolute top-4 right-4 font-black text-3xl leading-none select-none" style={{ color: 'rgba(244, 63, 94, 0.07)' }}>{String(idx + 1).padStart(2, '0')}</div>
+                  <div className="mb-4 inline-flex items-center rounded-full border border-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-white/60" style={{ background: 'rgba(244, 63, 94, 0.06)' }}>
                     {article.icon} {getBlogText(article.category, 'uk')}
                   </div>
-                  <h3 className="text-xl font-bold leading-tight text-white group-hover:text-white/90">
+                  <h3 className="text-base font-bold leading-snug text-white group-hover:text-white/90 transition-colors">
                     {getBlogText(article.h1, 'uk')}
                   </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-gray-400">
-                    {getBlogText(article.metaDescription, 'uk')}
-                  </p>
-                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors group-hover:text-white">
-                    Читати статтю
-                    <span aria-hidden="true">→</span>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-400">{getBlogText(article.metaDescription, 'uk')}</p>
+                  <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">
+                    Читати статтю <span className="text-white/50" aria-hidden="true">→</span>
                   </div>
                 </Link>
               ))}
@@ -187,6 +188,8 @@ export default async function BeautySalonAutomationPage({
           content={beautyPillarUk.leadMagnet}
           vertical={beautyPillarUk.vertical}
           locale={beautyPillarUk.locale}
+          accentGradient="from-rose-400 to-pink-500"
+          glowRgb="244, 63, 94"
         />
         <PageCTA />
         <FinalCTA
@@ -194,6 +197,8 @@ export default async function BeautySalonAutomationPage({
           content={beautyPillarUk.finalCta}
           vertical={beautyPillarUk.vertical}
           locale={beautyPillarUk.locale}
+          accentGradient="from-rose-400 to-pink-500"
+          glowRgb="244, 63, 94"
         />
       </article>
       <Footer />
