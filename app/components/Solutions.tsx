@@ -1,18 +1,15 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Mic, Workflow, LineChart, Sparkles, ArrowRight, Clock, Users, Zap, ChevronRight } from 'lucide-react';
+import { Mic, Workflow, LineChart, Sparkles, ArrowRight, Clock, Users, Zap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useReveal } from '../hooks/useReveal';
 import Link from 'next/link';
 
 export default function Solutions() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { ref, isVisible } = useReveal();
   const { t, lang } = useLanguage();
   const basePath = `/${lang}`;
   const isEn = lang === 'en';
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const seoPages = [
     { href: `${basePath}/ai-automation-for-business`, label: isEn ? 'AI automation' : 'AI автоматизація' },
@@ -32,7 +29,7 @@ export default function Solutions() {
       accentColor: '#10b981',
       timeframe: isEn ? '2-4 weeks' : '2-4 тижні',
       clients: '+50',
-      tags: isEn 
+      tags: isEn
         ? ['24/7 calls & chat', 'Meeting booking', 'CRM handoff']
         : ['24/7 дзвінки та чат', 'Бронювання зустрічей', 'Передача в CRM'],
     },
@@ -46,7 +43,7 @@ export default function Solutions() {
       accentColor: '#8b5cf6',
       timeframe: isEn ? '2-5 weeks' : '2-5 тижнів',
       clients: '+50',
-      tags: isEn 
+      tags: isEn
         ? ['Lead routing', 'CRM sync', 'No manual ops']
         : ['Маршрутизація лідів', 'Синхронізація з CRM', 'Без ручної рутини'],
     },
@@ -60,7 +57,7 @@ export default function Solutions() {
       accentColor: '#3b82f6',
       timeframe: isEn ? '3-6 weeks' : '3-6 тижнів',
       clients: '+50',
-      tags: isEn 
+      tags: isEn
         ? ['Weekly reports', 'Alerts', 'Actionable insights']
         : ['Щотижневі звіти', 'Алерти', 'Інсайти для дій'],
     },
@@ -74,7 +71,7 @@ export default function Solutions() {
       accentColor: '#f97316',
       timeframe: isEn ? '3-8 weeks' : '3-8 тижнів',
       clients: '+50',
-      tags: isEn 
+      tags: isEn
         ? ['RAG knowledge base', 'Custom GPT', 'Stack integration']
         : ['RAG база знань', 'Кастомний GPT', 'Інтеграція в стек'],
     },
@@ -82,43 +79,22 @@ export default function Solutions() {
 
   return (
     <section id="solutions" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
-      {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
         <div
           className="absolute top-0 left-0 w-full h-full"
           style={{
             background: `
-              radial-gradient(ellipse 80% 50% at 20% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse 60% 40% at 80% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse 50% 30% at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)
+              radial-gradient(ellipse 80% 50% at 20% 30%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%)
             `,
-          }}
-        />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
           }}
         />
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-14"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-xl"
-          >
+        <div className={`text-center mb-14 reveal ${isVisible ? 'visible' : ''}`}>
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-emerald-500/25 bg-emerald-500/[0.08]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -126,7 +102,7 @@ export default function Solutions() {
             <span className="text-sm font-semibold text-emerald-300 uppercase tracking-wider">
               {t('solutions.badge')}
             </span>
-          </motion.div>
+          </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-5 leading-[1.1]">
             <span className="text-white">{t('solutions.title1')}</span>
@@ -145,62 +121,39 @@ export default function Solutions() {
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
             {t('solutions.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Bento Grid */}
+        {/* Grid */}
         <div className="grid md:grid-cols-2 gap-5">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
-            const isHovered = hoveredCard === index;
             return (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className="group relative"
+                className={`reveal reveal-delay-${index + 1} ${isVisible ? 'visible' : ''} group relative`}
               >
                 <Link href={solution.href} className="block h-full">
-                  {/* Outer glow */}
-                  <div
-                    className="absolute -inset-0.5 rounded-[1.75rem] opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500"
-                    style={{
-                      background: `linear-gradient(135deg, ${solution.glowColor} 0%, transparent 100%)`,
-                    }}
-                  />
-
-                  {/* Card */}
-                  <div className="relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-white/25 hover:-translate-y-1 hover:shadow-2xl">
-                    {/* Top accent line */}
+                  <div className="relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.01] overflow-hidden transition-all duration-300 hover:border-white/20 hover:-translate-y-1">
                     <div
                       className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${solution.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}
                     />
 
-                    {/* Corner decoration */}
                     <div
-                      className="absolute top-0 right-0 w-40 h-40 opacity-20 group-hover:opacity-40 transition-opacity duration-500"
+                      className="absolute top-0 right-0 w-32 h-32 opacity-15 group-hover:opacity-25 transition-opacity duration-300"
                       style={{
                         background: `radial-gradient(circle at top right, ${solution.accentColor} 0%, transparent 70%)`,
                       }}
                     />
 
-                    {/* Content */}
                     <div className="relative z-10 p-6 lg:p-7">
-                      {/* Header row */}
                       <div className="flex items-start justify-between mb-5">
-                        {/* Icon */}
-                        <motion.div
-                          animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${solution.gradient} flex items-center justify-center shadow-lg`}
-                          style={{ boxShadow: `0 8px 32px ${solution.glowColor}` }}
+                        <div
+                          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${solution.gradient} flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110`}
+                          style={{ boxShadow: `0 8px 24px ${solution.glowColor}` }}
                         >
                           <Icon className="w-7 h-7 text-white" />
-                        </motion.div>
+                        </div>
 
-                        {/* Timeframe badge */}
                         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
                           <Clock className="w-3.5 h-3.5 text-gray-400" />
                           <span className="text-xs font-medium text-gray-300">
@@ -209,31 +162,26 @@ export default function Solutions() {
                         </div>
                       </div>
 
-                      {/* Title */}
                       <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 leading-tight">
                         {t(solution.titleKey)}
                       </h3>
 
-                      {/* Description */}
                       <p className="text-sm lg:text-base text-gray-400 leading-relaxed mb-5 line-clamp-2">
                         {t(solution.descKey)}
                       </p>
 
-                      {/* Tags */}
                       <div className="flex flex-wrap gap-2 mb-5">
                         {solution.tags.map((tag, tagIndex) => (
                           <span
                             key={tagIndex}
-                            className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-gray-400 transition-colors group-hover:border-white/20 group-hover:text-gray-300"
+                            className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-gray-400 transition-colors group-hover:border-white/15 group-hover:text-gray-300"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      {/* Footer */}
                       <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        {/* Clients indicator */}
                         <div className="flex items-center gap-3">
                           <div className="flex -space-x-2">
                             {[0, 1, 2].map((i) => (
@@ -250,9 +198,8 @@ export default function Solutions() {
                           </span>
                         </div>
 
-                        {/* CTA */}
                         <div
-                          className={`flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 group-hover:gap-2.5`}
+                          className="flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 group-hover:gap-2.5"
                           style={{ color: solution.accentColor }}
                         >
                           <span>{isEn ? 'Learn more' : 'Детальніше'}</span>
@@ -260,67 +207,47 @@ export default function Solutions() {
                         </div>
                       </div>
                     </div>
-
-                    {/* Animated border gradient on hover */}
-                    <div
-                      className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: `linear-gradient(135deg, ${solution.accentColor}20 0%, transparent 50%, ${solution.accentColor}10 100%)`,
-                      }}
-                    />
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
         {/* SEO quick links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-10"
-        >
+        <div className={`mt-10 reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '400ms' }}>
           <div className="flex flex-wrap items-center justify-center gap-2">
             {seoPages.map((p) => (
               <Link
                 key={p.href}
                 href={p.href}
-                className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/5 text-gray-400 border border-white/10
-                  transition-all duration-300 hover:border-white/25 hover:text-white hover:bg-white/10"
+                className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/[0.03] text-gray-400 border border-white/10
+                  transition-all duration-300 hover:border-white/20 hover:text-white hover:bg-white/[0.06]"
               >
                 {p.label}
               </Link>
             ))}
             <Link
               href={`${basePath}/blog`}
-              className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/5 text-gray-400 border border-white/10
-                transition-all duration-300 hover:border-white/25 hover:text-white hover:bg-white/10"
+              className="text-xs md:text-sm px-4 py-2 rounded-full bg-white/[0.03] text-gray-400 border border-white/10
+                transition-all duration-300 hover:border-white/20 hover:text-white hover:bg-white/[0.06]"
             >
               {isEn ? 'AI insights & guides' : 'AI інсайти та гайди'}
             </Link>
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-center mt-14"
-        >
+        <div className={`text-center mt-14 reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '500ms' }}>
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-lg 
-              overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-lg
+              overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
           >
             <span className="relative z-10">{t('solutions.cta')}</span>
             <Zap className="relative z-10 w-5 h-5" />
-            {/* Shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

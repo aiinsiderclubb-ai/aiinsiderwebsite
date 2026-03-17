@@ -10,6 +10,7 @@ import {
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
+import PageCTA from '../../components/PageCTA';
 import { getCaseBySlug } from '../../lib/casesData';
 import { getLocalizedText as getLocalizedServiceText, getServiceBySlug } from '../../lib/servicesData';
 import { getSiteUrl } from '../../lib/site';
@@ -645,6 +646,8 @@ export default function SweezyAppPage() {
           </motion.div>
         </div>
       </section>
+
+      <PageCTA />
 
       {/* Back Link */}
       <section className="py-12 px-6">

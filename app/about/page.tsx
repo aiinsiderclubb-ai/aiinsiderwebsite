@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
+import PageCTA from '../components/PageCTA';
 
 type TeamMember = {
   id?: string;
@@ -1110,34 +1111,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Section - Monochrome */}
-      <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
-        
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              {t('about.readyToWork')}
-            </h2>
-            <p className="text-xl text-gray-400 mb-10">
-              {t('about.letsDiscuss')}
-            </p>
-            <Link
-              href={`${basePath}#bookcall`}
-              className="inline-block px-10 py-4 bg-white text-black rounded-full 
-                font-bold text-lg transition-all duration-300 hover:scale-105"
-              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
-            >
-              {t('about.bookFreeConsult')}
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* CTA Section */}
+      <PageCTA />
 
       <Footer />
     </main>

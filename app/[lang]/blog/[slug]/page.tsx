@@ -8,6 +8,7 @@ import { getPublishedBlogArticle, getBlogText, getPublishedBlogArticles } from '
 import { getRelatedServicesForBlog, getSemanticAnchor } from '@/app/lib/internalLinks';
 import { SEO_SERVICE_PAGES } from '@/app/lib/seoServicePages';
 import AnalyticsAutoCapture from '@/app/components/analytics/AnalyticsAutoCapture';
+import PageCTA from '@/app/components/PageCTA';
 
 type Params = { lang: string; slug: string };
 
@@ -24,7 +25,6 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   const isEn = lang === 'en';
 
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
-  const primaryCtaHref = article.ctaHref ? withLang(lang, article.ctaHref) : `${withLang(lang, '/')}#bookcall`;
   const vertical = article.ctaType || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy') ? 'beauty' : 'general';
 
   const beautyPillarBase = '/uk/avtomatizaciya-salonu-krasy';
@@ -45,73 +45,6 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
   } as const;
   const hasBeautyPillarCta = beautyClusterSlugs.has(slug) || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy');
 
-  type CtaType = 'checklist' | 'roi' | 'audit';
-  const ctaType = (article.ctaType || undefined) as CtaType | undefined;
-
-  const variantCopy = (type: CtaType) => {
-    if (isEn) {
-      if (type === 'checklist') {
-        return {
-          primary: 'Get the automation checklist',
-          secondary: 'Calculate ROI',
-        };
-      }
-      if (type === 'roi') {
-        return {
-          primary: 'Calculate losses & ROI',
-          secondary: 'Get the checklist',
-        };
-      }
-      return {
-        primary: 'Request a free audit',
-        secondary: 'Calculate ROI',
-      };
-    }
-
-    if (type === 'checklist') {
-      return {
-        primary: 'Завантажити чек-лист',
-        secondary: 'Порахувати ROI',
-      };
-    }
-    if (type === 'roi') {
-      return {
-        primary: 'Порахувати ROI та втрати',
-        secondary: 'Отримати чек-лист',
-      };
-    }
-    return {
-      primary: 'Замовити безкоштовний аудит',
-      secondary: 'Порахувати ROI',
-    };
-  };
-
-  const ctaButtons = (() => {
-    if (!ctaType) {
-      return {
-        primary: { href: primaryCtaHref, label: t(article.cta.bookConsultation), type: 'generic', variant: 'primary' as const },
-        secondary: { href: primaryCtaHref, label: t(article.cta.getAudit), type: 'generic', variant: 'secondary' as const },
-      };
-    }
-
-    const copy = variantCopy(ctaType);
-    if (ctaType === 'checklist') {
-      return {
-        primary: { href: beautyTargets.checklist, label: copy.primary, type: 'checklist' as const, variant: 'primary' as const },
-        secondary: { href: beautyTargets.roi, label: copy.secondary, type: 'roi' as const, variant: 'secondary' as const },
-      };
-    }
-    if (ctaType === 'roi') {
-      return {
-        primary: { href: beautyTargets.roi, label: copy.primary, type: 'roi' as const, variant: 'primary' as const },
-        secondary: { href: beautyTargets.checklist, label: copy.secondary, type: 'checklist' as const, variant: 'secondary' as const },
-      };
-    }
-    return {
-      primary: { href: beautyTargets.audit, label: copy.primary, type: 'audit' as const, variant: 'primary' as const },
-      secondary: { href: beautyTargets.roi, label: copy.secondary, type: 'roi' as const, variant: 'secondary' as const },
-    };
-  })();
 
   /* ── JSON-LD ── */
   const founderId = `${siteUrl}#vladyslav-archer`;
@@ -392,133 +325,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
           ) : null}
 
           {/* ═══════════ CTA ═══════════ */}
-          <div className="relative rounded-[2rem] overflow-hidden mb-16 border border-white/[0.08]" data-source-section="article-cta">
-            {/* Animated gradient background */}
-            <div className="absolute inset-0"
-              style={{ 
-                background: 'linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.1) 25%, rgba(236,72,153,0.08) 50%, rgba(99,102,241,0.12) 75%, rgba(59,130,246,0.1) 100%)',
-              }} />
-            
-            {/* Mesh gradient overlay */}
-            <div className="absolute inset-0 opacity-60"
-              style={{
-                background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120,119,198,0.3), transparent), radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168,85,247,0.2), transparent)',
-              }} />
-            
-            {/* Animated orbs */}
-            <div className="absolute -top-20 -left-20 w-[300px] h-[300px] rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 60%)', filter: 'blur(60px)' }} />
-            <div className="absolute -bottom-20 -right-20 w-[350px] h-[350px] rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(236,72,153,0.3) 0%, transparent 60%)', filter: 'blur(80px)' }} />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%)', filter: 'blur(50px)' }} />
-            
-            {/* Noise texture overlay */}
-            <div className="absolute inset-0 opacity-[0.03]"
-              style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
-            
-            {/* Top shine line */}
-            <div className="absolute top-0 left-0 right-0 h-px"
-              style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)' }} />
-
-            <div className="relative px-8 py-12 md:px-16 md:py-16">
-              {/* Badge */}
-              <div className="flex justify-center mb-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                  </span>
-                  <span className="text-xs font-medium text-white/90">
-                    {isEn ? 'Free consultation available' : 'Безкоштовна консультація доступна'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Main content - centered */}
-              <div className="text-center max-w-2xl mx-auto">
-                {/* Icon cluster */}
-                <div className="flex justify-center items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/25 rotate-[-6deg]">
-                    🚀
-                  </div>
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white to-gray-100 flex items-center justify-center text-3xl shadow-xl shadow-white/20">
-                    ⚡
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-xl shadow-lg shadow-pink-500/25 rotate-[6deg]">
-                    🎯
-                  </div>
-                </div>
-
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                  {isEn ? 'Ready to automate with AI?' : 'Готові автоматизувати з AI?'}
-                </h2>
-                
-                <p className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed">
-                  {isEn
-                    ? 'Get a free strategy session and discover how AI can transform your business operations.'
-                    : 'Отримайте безкоштовну стратегічну сесію та дізнайтесь, як AI може трансформувати ваші бізнес-процеси.'}
-                </p>
-
-                {/* Stats row */}
-                <div className="flex flex-wrap justify-center gap-8 mb-10">
-                  <div className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-white">50+</div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'Projects' : 'Проєктів'}</div>
-                  </div>
-                  <div className="w-px h-12 bg-white/20 hidden sm:block" />
-                  <div className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-white">80%</div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'Cost reduction' : 'Зниження витрат'}</div>
-                  </div>
-                  <div className="w-px h-12 bg-white/20 hidden sm:block" />
-                  <div className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-white">24/7</div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider">{isEn ? 'AI availability' : 'Доступність AI'}</div>
-                  </div>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link
-                    href={ctaButtons.primary.href}
-                    data-cta="blog-cta"
-                    data-cta-type={ctaButtons.primary.type}
-                    data-cta-variant={ctaButtons.primary.variant}
-                    className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.03] overflow-hidden ${
-                      ctaButtons.primary.type === 'checklist'
-                        ? 'bg-emerald-400 text-black hover:bg-emerald-300 shadow-[0_0_40px_rgba(52,211,153,0.25)]'
-                        : ctaButtons.primary.type === 'audit'
-                          ? 'bg-orange-500 text-white hover:bg-orange-400 shadow-[0_0_40px_rgba(249,115,22,0.25)]'
-                          : 'bg-white text-black hover:bg-gray-100 shadow-[0_0_40px_rgba(255,255,255,0.25)]'
-                    }`}
-                  >
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-black/10 to-transparent" />
-                    <span>{ctaButtons.primary.label}</span>
-                  </Link>
-
-                  <Link
-                    href={ctaButtons.secondary.href}
-                    data-cta="blog-cta"
-                    data-cta-type={ctaButtons.secondary.type}
-                    data-cta-variant={ctaButtons.secondary.variant}
-                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg bg-white/10 backdrop-blur-sm text-white border border-white/20 transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-[1.02]"
-                  >
-                    <span>{ctaButtons.secondary.label}</span>
-                  </Link>
-                </div>
-
-                {/* Trust text */}
-                <p className="mt-8 text-sm text-white/40">
-                  {isEn ? 'No commitment required. 30-minute call.' : 'Без зобовʼязань. 30-хвилинний дзвінок.'}
-                </p>
-              </div>
-            </div>
-            
-            {/* Bottom shine line */}
-            <div className="absolute bottom-0 left-0 right-0 h-px"
-              style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)' }} />
-          </div>
+          <PageCTA />
 
           {/* ═══════════ READ NEXT ═══════════ */}
           {allOther.length > 0 && (

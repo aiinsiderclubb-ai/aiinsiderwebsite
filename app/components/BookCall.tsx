@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Clock, X, Loader2, Send, User, Mail, Building2, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useReveal } from '../hooks/useReveal';
 import { getLastCtaAttribution, trackFormEvent } from '../lib/analytics';
 
 type BookingsMap = Record<string, string[]>;
@@ -52,8 +52,7 @@ const formatDateForEmail = (monthDate: Date, day: number) => {
 };
 
 export default function BookCall() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { ref, isVisible: isInView } = useReveal();
   const { t, lang } = useLanguage();
   
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -298,10 +297,8 @@ export default function BookCall() {
       <div ref={ref} className="relative max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+          <div
+            className={`reveal ${isInView ? 'visible' : ''}`}
           >
             <p className="text-gray-400 uppercase tracking-wider text-sm mb-4">
               {t('bookCall.question')}
@@ -332,14 +329,12 @@ export default function BookCall() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Right: Calendar */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="glass-strong rounded-3xl p-6 border border-white/10"
+          <div
+            className={`rounded-3xl p-6 border border-white/10 bg-white/[0.04] reveal ${isInView ? 'visible' : ''}`}
+            style={{ transitionDelay: '200ms' }}
           >
             <h3 className="text-2xl font-bold mb-6 text-center">{t('bookCall.selectDay')}</h3>
 
@@ -485,7 +480,7 @@ export default function BookCall() {
                 <CheckCircle2 className="w-4 h-4" /> {confirmation}
               </p>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -493,17 +488,15 @@ export default function BookCall() {
       {showBookingForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          <div
+            className="absolute inset-0 bg-black/80"
+            style={{ backdropFilter: 'blur(4px)' }}
             onClick={closeBookingForm}
           />
-          
+
           {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg glass-strong rounded-3xl border border-white/20 overflow-hidden"
+          <div
+            className="relative w-full max-w-lg rounded-3xl border border-white/15 bg-[#0a0a0a] overflow-hidden animate-modal-in"
             style={{ boxShadow: 'var(--theme-shadow-soft)' }}
           >
             {/* Header */}
@@ -630,18 +623,14 @@ export default function BookCall() {
             ) : (
               /* Success State */
               <div className="p-8 text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center"
-                >
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center animate-scale-in">
                   <CheckCircle2 className="w-10 h-10 text-green-400" />
-                </motion.div>
+                </div>
                 <h4 className="text-2xl font-bold text-white mb-2">{t('bookCall.confirmed')}</h4>
                 <p className="text-gray-400 mb-4">
                   {t('bookCall.checkEmail')}
                 </p>
-                <div className="glass rounded-xl p-4 text-left">
+                <div className="rounded-xl p-4 text-left bg-white/[0.04] border border-white/10">
                   <p className="text-sm text-gray-300">
                     <strong className="text-white">{t('bookCall.date')}</strong> {formatDateForEmail(currentMonth, selectedDate!)}
                   </p>
@@ -651,7 +640,7 @@ export default function BookCall() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       )}
     </section>

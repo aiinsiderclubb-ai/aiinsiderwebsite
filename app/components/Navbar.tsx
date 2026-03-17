@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useState, useEffect, useRef } from 'react';
@@ -10,12 +9,12 @@ import { useLanguage } from '../context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';
 
-const SCROLL_THROTTLE_MS = 80;
+const SCROLL_THROTTLE_MS = 100;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [navVisible, setNavVisible] = useState(false);
   const lastScrollUpdate = useRef(0);
   const rafId = useRef<number | null>(null);
   const pathname = usePathname();
@@ -32,16 +31,19 @@ export default function Navbar() {
         lastScrollUpdate.current = now;
         const y = window.scrollY;
         setIsScrolled(y > 50);
-        setScrollProgress(Math.min(y / 100, 1));
+        if (isHomePage) {
+          setNavVisible(y > 30);
+        }
       });
     };
+    if (!isHomePage) setNavVisible(true);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isHomePage]);
 
   const navLinks = [
     { name: t('nav.about'), href: `${basePath}/about` },
@@ -53,54 +55,34 @@ export default function Navbar() {
     { name: t('nav.contact'), href: isHomePage ? '#bookcall' : `${basePath}#bookcall` },
   ];
 
-  const navOpacity = isHomePage ? scrollProgress : 1;
-  const navBlur = isHomePage ? scrollProgress * 20 : 20;
-
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled || !isHomePage ? 'py-4' : 'py-6'
+      } ${
+        isHomePage && !navVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
-      style={{ 
-        opacity: isHomePage ? navOpacity : 1,
-        backdropFilter: (isScrolled || !isHomePage) ? `blur(${navBlur}px)` : 'none',
-      }}
     >
-      {/* Background with border */}
       {(isScrolled || !isHomePage) && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="absolute inset-0 glass-strong border-b border-white/10"
-        >
-          {/* Animated line - monochrome */}
-          <motion.div
-            className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent"
-            animate={{
-              width: ['0%', '100%'],
-            }}
-            transition={{ duration: 1 }}
-            style={{
-              opacity: 0.9,
-            }}
-          />
-        </motion.div>
+        <div
+          className="absolute inset-0 border-b border-white/10 transition-opacity duration-300"
+          style={{
+            background: 'rgba(0, 0, 0, 0.75)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+          }}
+        />
       )}
 
       <div className="relative max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo - Monochrome */}
-        <Link
-          href={basePath}
-          className="flex items-center gap-3 group"
-        >
+        <Link href={basePath} className="flex items-center gap-3 group">
           <div
             className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
-              transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              transition-transform duration-300 group-hover:scale-110"
             style={{ boxShadow: 'var(--theme-shadow-glow)' }}
           >
             <Zap className="w-6 h-6 text-black" fill="currentColor" />
           </div>
-          
           <span className="text-2xl font-bold font-heading text-white">
             AI Insider
           </span>
@@ -117,7 +99,7 @@ export default function Navbar() {
               (!isExternal && link.href.endsWith('/solutions') && pathname?.startsWith(`${basePath}/solutions`)) ||
               (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`)) ||
               (!isExternal && link.href.endsWith('/blog') && pathname?.startsWith(`${basePath}/blog`));
-            
+
             if (isExternal) {
               return (
                 <a
@@ -131,7 +113,7 @@ export default function Navbar() {
                 </a>
               );
             }
-            
+
             return (
               <Link
                 key={link.name}
@@ -145,21 +127,17 @@ export default function Navbar() {
               </Link>
             );
           })}
-          
-          {/* Language Switcher */}
+
           <LanguageSwitcher />
           <ThemeSwitcher />
-          
-          {/* CTA Button - Monochrome */}
+
           <a
             href={SCHEDULING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative px-6 py-3 bg-white text-black rounded-full font-bold text-sm overflow-hidden group
+            className="relative px-6 py-3 bg-white text-black rounded-full font-bold text-sm overflow-hidden
               transition-all duration-200 hover:scale-105 active:scale-95"
-            style={{
-              boxShadow: 'var(--theme-shadow-glow)',
-            }}
+            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
           >
             <span className="relative z-10">{t('nav.bookCall')}</span>
           </a>
@@ -168,95 +146,66 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden relative w-10 h-10 rounded-lg glass-strong border border-white/20 flex items-center justify-center
+          className="md:hidden relative w-10 h-10 rounded-lg border border-white/15 bg-white/[0.04] flex items-center justify-center
             transition-transform duration-200 active:scale-95"
         >
-          <motion.div
-            animate={{ rotate: isOpen ? 90 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {isOpen ? (
-              <X size={24} className="text-white" />
-            ) : (
-              <Menu size={24} className="text-white" />
-            )}
-          </motion.div>
+          {isOpen ? (
+            <X size={24} className="text-white" />
+          ) : (
+            <Menu size={24} className="text-white" />
+          )}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="md:hidden absolute top-full left-0 right-0 mt-2 mx-6"
-        >
-          <div className="glass-strong rounded-2xl p-6 border border-white/10">
-            {navLinks.map((link, index) => {
+        <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-6 animate-fade-in">
+          <div className="rounded-2xl p-6 border border-white/10 bg-black/90" style={{ backdropFilter: 'blur(16px)' }}>
+            {navLinks.map((link) => {
               const isExternal = link.href.startsWith('#');
-              
+
               if (isExternal) {
                 return (
-                  <motion.a
+                  <a
                     key={link.name}
                     href={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
                     onClick={() => setIsOpen(false)}
                     className="block py-3 text-gray-300 hover:text-white font-semibold transition-colors border-b border-white/5 last:border-0"
                   >
                     {link.name}
-                  </motion.a>
+                  </a>
                 );
               }
-              
+
               return (
-                <motion.div
+                <Link
                   key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="block py-3 text-gray-300 hover:text-white font-semibold transition-colors border-b border-white/5"
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block py-3 text-gray-300 hover:text-white font-semibold transition-colors border-b border-white/5"
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
+                  {link.name}
+                </Link>
               );
             })}
-            {/* Mobile Language Switcher */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.35 }}
-              className="py-3 border-b border-white/5"
-            >
+            <div className="py-3 border-b border-white/5">
               <div className="flex items-center gap-2">
                 <LanguageSwitcher />
                 <ThemeSwitcher />
               </div>
-            </motion.div>
-            
-            <motion.a
+            </div>
+            <a
               href={SCHEDULING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
               onClick={() => setIsOpen(false)}
               className="block mt-4 px-6 py-3 bg-white text-black rounded-full font-bold text-center"
             >
               {t('nav.bookCall')}
-            </motion.a>
+            </a>
           </div>
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </nav>
   );
 }

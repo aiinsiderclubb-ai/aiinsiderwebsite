@@ -1,14 +1,12 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
 import { Check, Sparkles, Zap, Rocket, ArrowRight, Shield, Clock, Star } from 'lucide-react';
 import { SCHEDULING_URL } from '../lib/config';
 import { useLanguage } from '../context/LanguageContext';
+import { useReveal } from '../hooks/useReveal';
 
 export default function Pricing() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { ref, isVisible } = useReveal();
   const { t, lang } = useLanguage();
   const isEn = lang === 'en';
 
@@ -79,44 +77,20 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="relative py-24 px-6 overflow-hidden content-visibility-auto">
-      {/* Premium Background */}
       <div className="absolute inset-0">
-        {/* Large gradient orbs */}
         <div
-          className="absolute top-0 left-1/4 w-[900px] h-[900px] rounded-full opacity-30"
+          className="absolute top-0 left-1/4 w-[700px] h-[700px] rounded-full opacity-20"
           style={{
-            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 50%)',
-            filter: 'blur(120px)',
-          }}
-        />
-        <div
-          className="absolute bottom-0 right-1/4 w-[700px] h-[700px] rounded-full opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 50%)',
+            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.12) 0%, transparent 50%)',
             filter: 'blur(100px)',
-          }}
-        />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '80px 80px',
           }}
         />
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto">
-        {/* Header — Premium Design */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          {/* Animated badge */}
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5 backdrop-blur-xl">
+        {/* Header */}
+        <div className={`text-center mb-16 reveal ${isVisible ? 'visible' : ''}`}>
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-6 border border-white/10 bg-white/[0.03]">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
@@ -127,15 +101,7 @@ export default function Pricing() {
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-[1.1]">
             <span className="block text-white">{t('pricing.title1')}</span>
-            <span
-              className="block mt-2"
-              style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #666666 40%, #ffffff 60%, #888888 100%)',
-                backgroundSize: '200% 200%',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
+            <span className="block mt-2 gradient-text">
               {t('pricing.title2')}
             </span>
           </h2>
@@ -143,28 +109,19 @@ export default function Pricing() {
           <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
             {t('pricing.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Pricing Cards — Premium Bento Design */}
+        {/* Pricing Cards */}
         <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
             return (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                className={`relative group ${plan.popular ? 'md:-mt-3 md:mb-3' : ''}`}
+                className={`reveal reveal-delay-${index + 1} ${isVisible ? 'visible' : ''} relative group ${plan.popular ? 'md:-mt-3 md:mb-3' : ''}`}
               >
-                {/* Popular Badge — Floating */}
                 {plan.popular && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="absolute -top-5 left-1/2 -translate-x-1/2 z-20"
-                  >
+                  <div className={`absolute -top-5 left-1/2 -translate-x-1/2 z-20 reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '500ms' }}>
                     <div
                       className="px-6 py-2.5 bg-white text-black rounded-full text-sm font-bold flex items-center gap-2"
                       style={{ boxShadow: 'var(--theme-shadow-glow)' }}
@@ -172,38 +129,30 @@ export default function Pricing() {
                       <Sparkles className="w-4 h-4" fill="currentColor" />
                       {t('pricing.popular')}
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
-                {/* Outer glow on hover */}
-                <div className={`absolute -inset-1 rounded-[2.5rem] bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500`} />
-
-                {/* Card */}
                 <div
-                  className={`relative h-full rounded-[2rem] overflow-hidden border backdrop-blur-xl transition-all duration-500
+                  className={`relative h-full rounded-[2rem] overflow-hidden border transition-all duration-300
                     ${plan.popular
-                      ? 'border-white/30 bg-gradient-to-br from-white/[0.12] to-white/[0.04]'
-                      : 'border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02]'
+                      ? 'border-white/25 bg-gradient-to-br from-white/[0.10] to-white/[0.03]'
+                      : 'border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.01]'
                     }
-                    hover:border-white/40 hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(255,255,255,0.12)]`}
+                    hover:border-white/30 hover:-translate-y-1`}
                 >
-                  {/* Top gradient accent */}
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${plan.gradient.replace('to-transparent', 'to-transparent')}`} />
 
-                  {/* Decorative corner */}
-                  <div className="absolute top-0 right-0 w-40 h-40 opacity-30"
+                  <div className="absolute top-0 right-0 w-32 h-32 opacity-20"
                     style={{
-                      background: `radial-gradient(circle at top right, ${plan.popular ? 'rgba(147, 51, 234, 0.3)' : 'rgba(255,255,255,0.1)'} 0%, transparent 70%)`,
+                      background: `radial-gradient(circle at top right, ${plan.popular ? 'rgba(147, 51, 234, 0.3)' : 'rgba(255,255,255,0.08)'} 0%, transparent 70%)`,
                     }}
                   />
 
-                  {/* Content */}
                   <div className="relative z-10 p-6 lg:p-8">
-                    {/* Top row: Icon + Badge */}
                     <div className="flex items-start justify-between mb-5">
                       <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3
-                          ${plan.popular ? 'bg-white' : 'bg-white/10 border border-white/20'}`}
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110
+                          ${plan.popular ? 'bg-white' : 'bg-white/10 border border-white/15'}`}
                         style={plan.popular ? { boxShadow: 'var(--theme-shadow-glow)' } : {}}
                       >
                         <Icon className={`w-6 h-6 ${plan.popular ? 'text-black' : 'text-white'}`} />
@@ -213,61 +162,39 @@ export default function Pricing() {
                       </span>
                     </div>
 
-                    {/* Plan Name */}
                     <h3 className="text-2xl md:text-3xl font-bold font-heading mb-2 text-white">
                       {plan.name}
                     </h3>
-
-                    {/* Description */}
                     <p className="text-gray-400 mb-5 leading-relaxed text-sm">{t(plan.descKey)}</p>
 
-                    {/* Price */}
                     <div className="mb-6">
                       <div className="flex items-baseline gap-1">
-                        <span
-                          className={`text-3xl md:text-4xl font-bold text-white ${
-                            plan.popular
-                              ? 'drop-shadow-[0_0_28px_rgba(192,132,252,0.22)]'
-                              : 'drop-shadow-[0_0_20px_rgba(255,255,255,0.12)]'
-                          }`}
-                        >
+                        <span className="text-3xl md:text-4xl font-bold text-white">
                           {plan.price}
                         </span>
-                        {plan.priceNote && (
-                          <span className="text-lg text-gray-400 font-medium">{plan.priceNote}</span>
-                        )}
                       </div>
                       <p className="text-sm text-gray-500 mt-2">
-                        {plan.name === 'Enterprise' 
+                        {plan.name === 'Enterprise'
                           ? (isEn ? 'Custom pricing based on scope' : 'Індивідуальна ціна за обсягом')
                           : (isEn ? 'Starting price' : 'Стартова ціна')}
                       </p>
                     </div>
 
-                    {/* Divider */}
-                    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-5" />
+                    <div className="h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mb-5" />
 
-                    {/* Features */}
                     <ul className="space-y-3 mb-6">
                       {plan.featureKeys.map((featureKey, idx) => (
-                        <motion.li
-                          key={idx}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={isInView ? { opacity: 1, x: 0 } : {}}
-                          transition={{ duration: 0.4, delay: 0.3 + idx * 0.05 }}
-                          className="flex items-start gap-3"
-                        >
+                        <li key={idx} className="flex items-start gap-3">
                           <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5
-                            ${plan.popular ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-white/10 border border-white/20'}`}
+                            ${plan.popular ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-white/10 border border-white/15'}`}
                           >
                             <Check className={`w-3 h-3 ${plan.popular ? 'text-purple-300' : 'text-white'}`} />
                           </div>
                           <span className="text-gray-300 leading-relaxed text-sm">{t(featureKey)}</span>
-                        </motion.li>
+                        </li>
                       ))}
                     </ul>
 
-                    {/* CTA Button */}
                     <a
                       href={SCHEDULING_URL}
                       target="_blank"
@@ -275,35 +202,22 @@ export default function Pricing() {
                       className={`group/btn relative flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-base overflow-hidden transition-all duration-300 hover:scale-[1.02]
                         ${plan.popular
                           ? 'bg-white text-black'
-                          : 'bg-white/5 text-white border border-white/20 hover:bg-white/10 hover:border-white/30'
+                          : 'bg-white/5 text-white border border-white/15 hover:bg-white/10 hover:border-white/25'
                         }`}
                       style={plan.popular ? { boxShadow: 'var(--theme-shadow-glow)' } : {}}
                     >
                       <span className="relative z-10">{plan.popular ? t('pricing.startNow') : t('pricing.getStarted')}</span>
                       <ArrowRight className={`w-5 h-5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1 ${plan.popular ? 'text-black' : 'text-white'}`} />
-                      {/* Shine effect for popular */}
-                      {plan.popular && (
-                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-                      )}
                     </a>
                   </div>
-
-                  {/* Bottom corner decoration */}
-                  <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/10 rounded-br-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
-        {/* Bottom Section — Trust Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-14"
-        >
-          {/* Custom solution note */}
+        {/* Trust Badges */}
+        <div className={`mt-14 reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '600ms' }}>
           <div className="text-center mb-6">
             <p className="text-gray-400 text-base">
               {t('pricing.needCustom')}{' '}
@@ -313,27 +227,23 @@ export default function Pricing() {
             </p>
           </div>
 
-          {/* Trust badges row */}
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
             {trustBadges.map((badge, idx) => {
               const BadgeIcon = badge.icon;
               return (
-                <motion.div
+                <div
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.7 + idx * 0.1 }}
-                  className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-white/10"
+                  className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.03] border border-white/10"
                 >
                   <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
                     <BadgeIcon className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-sm text-gray-400">{badge.label}</span>
-                </motion.div>
+                </div>
               );
             })}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

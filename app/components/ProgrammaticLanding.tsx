@@ -10,6 +10,7 @@ import { withLang } from '@/app/lib/i18n';
 import { servicesData, getLocalizedText } from '@/app/lib/servicesData';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
 import { SEO_SERVICE_PAGES, getLocalizedSeo } from '@/app/lib/seoServicePages';
+import PageCTA from '@/app/components/PageCTA';
 
 interface Props {
   page: ProgrammaticPage;
@@ -294,37 +295,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div
-            className="rounded-3xl border border-white/10 p-8 md:p-12 relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}
-          >
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%)', filter: 'blur(60px)' }}
-            />
-            <div className="relative text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {isEn ? 'Ready to automate with AI?' : 'Готові автоматизувати з AI?'}
-              </h2>
-              <p className="text-lg text-gray-400 mb-8">
-                {isEn
-                  ? 'Book a free consultation — we\'ll map your processes, find quick wins, and build a plan.'
-                  : 'Замовте безкоштовну консультацію — ми розберемо процеси, знайдемо quick wins і побудуємо план.'}
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href={`${withLang(lang, '/')}#bookcall`}
-                  className="px-8 py-4 bg-white text-black rounded-full font-bold text-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25"
-                >
-                  {ctaBook}
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageCTA />
     </div>
   );
 }

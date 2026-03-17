@@ -1,15 +1,14 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useReveal } from '../hooks/useReveal';
 import { getPublishedBlogArticles, getBlogText } from '../lib/blogData';
 
 export default function LatestInsights() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { ref, isVisible } = useReveal();
   const { lang } = useLanguage();
   const isEn = lang === 'en';
   const basePath = `/${lang}`;
@@ -24,100 +23,75 @@ export default function LatestInsights() {
 
   return (
     <section className="relative py-24 px-6 overflow-hidden content-visibility-auto">
-      <div className="absolute inset-0">
-        <div
-          className="absolute top-0 right-1/4 w-[700px] h-[700px] opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb),0.10) 0%, transparent 50%)',
-            filter: 'blur(100px)',
-          }}
-        />
-      </div>
-
       <div ref={ref} className="relative max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5 backdrop-blur-xl">
-            <Sparkles className="w-4 h-4 text-white" />
-            <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">
+        {/* Header — minimal & clean */}
+        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 reveal ${isVisible ? 'visible' : ''}`}>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/40 mb-3">
+              {isEn ? 'From the blog' : 'З блогу'}
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white leading-[1.1]">
               {isEn ? 'Latest Insights' : 'Останні статті'}
-            </span>
+            </h2>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-5 text-white leading-[1.1]">
-            {isEn ? 'Latest Insights' : 'Останні статті'}
-          </h2>
-
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            {isEn
-              ? 'Fresh articles on AI automation, sales workflows, content systems, and real-world implementation.'
-              : 'Свіжі статті про AI-автоматизацію, sales workflow, контент-системи та практичне впровадження.'}
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-3 gap-4">
-          {latestArticles.map((article, index) => (
-            <motion.div
-              key={article.slug}
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link
-                href={`${basePath}/blog/${article.slug}`}
-                className="group block h-full rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:-translate-y-1"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xl">{article.icon}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
-                    {getBlogText(article.category, lang)}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white leading-tight mb-3 group-hover:text-white/85 transition-colors">
-                  {getBlogText(article.h1, lang)}
-                </h3>
-
-                <p className="text-sm text-gray-400 leading-relaxed mb-5">
-                  {getBlogText(article.metaDescription, lang)}
-                </p>
-
-                <div className="mt-auto flex items-center justify-between gap-3 text-sm">
-                  <time className="text-gray-500" dateTime={article.publishedAt}>
-                    {new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'uk-UA', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  <span className="inline-flex items-center gap-2 font-semibold text-white/70 transition-colors group-hover:text-white">
-                    {isEn ? 'Read article' : 'Читати'}
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.45 }}
-          className="mt-10 text-center"
-        >
           <Link
             href={`${basePath}/blog`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-400 transition-colors hover:text-white"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 transition-colors hover:text-white shrink-0"
           >
-            {isEn ? 'View all articles' : 'Всі статті'}
+            {isEn ? 'All articles' : 'Всі статті'}
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </motion.div>
+        </div>
+
+        {/* Articles — clean card layout */}
+        <div className="grid lg:grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden">
+          {latestArticles.map((article, index) => (
+            <Link
+              key={article.slug}
+              href={`${basePath}/blog/${article.slug}`}
+              className={`group relative bg-[#0a0a0a] p-7 flex flex-col transition-colors duration-300 hover:bg-white/[0.03] reveal ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+            >
+              {/* Number / index */}
+              <span className="text-[80px] font-bold font-heading leading-none text-white/[0.04] select-none absolute top-4 right-6">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+
+              {/* Category */}
+              <div className="mb-6">
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-white/30">
+                  {getBlogText(article.category, lang)}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-bold text-white leading-snug mb-3 group-hover:text-white/90 transition-colors relative z-10">
+                {getBlogText(article.h1, lang)}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-white/40 leading-relaxed mb-6 line-clamp-2 flex-1 relative z-10">
+                {getBlogText(article.metaDescription, lang)}
+              </p>
+
+              {/* Bottom row: date + read link */}
+              <div className="flex items-center justify-between gap-3 pt-5 border-t border-white/[0.06] relative z-10">
+                <time className="text-xs text-white/25" dateTime={article.publishedAt}>
+                  {new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'uk-UA', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 transition-all duration-300 group-hover:text-white group-hover:gap-2.5">
+                  {isEn ? 'Read' : 'Читати'}
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

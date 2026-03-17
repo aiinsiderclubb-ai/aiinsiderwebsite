@@ -10,6 +10,7 @@ import {
   getProgrammaticPagesByType,
   getLocalizedProgrammatic,
 } from '@/app/lib/programmaticSeo';
+import PageCTA from '@/app/components/PageCTA';
 
 type Params = { lang: string };
 
@@ -167,31 +168,7 @@ export default async function SolutionsIndexPage({ params }: { params: Promise<P
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div
-            className="rounded-3xl border border-white/10 p-6 md:p-10 relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}
-          >
-            <div className="relative text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {isEn ? 'Can\'t find what you need?' : 'Не знайшли що шукаєте?'}
-              </h2>
-              <p className="text-lg text-gray-400 mb-8">
-                {isEn
-                  ? 'Book a free consultation and we\'ll build a custom AI solution for your specific needs.'
-                  : 'Замовте безкоштовну консультацію і ми побудуємо кастомне AI рішення під ваші потреби.'}
-              </p>
-              <Link
-                href={`${withLang(lang, '/')}#bookcall`}
-                className="inline-block px-8 py-4 bg-white text-black rounded-full font-bold text-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25"
-              >
-                {isEn ? 'Book a free AI consultation' : 'Замовити безкоштовну AI-консультацію'}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageCTA />
 
       <Footer />
     </main>

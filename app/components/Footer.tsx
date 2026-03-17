@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Youtube, Linkedin, MessageCircle, Mail, MapPin, Zap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import Link from 'next/link';
@@ -24,7 +23,6 @@ export default function Footer() {
   ];
 
   const serviceLinks = [
-    // Link to offer pages (not SEO landing "article" pages)
     { label: t('footer.linkChatbots'), href: `${basePath}/services/ai-chatbot-for-business` },
     { label: t('footer.linkVoiceAgents'), href: `${basePath}/services/ai-voice-agent` },
     { label: t('footer.linkAutomation'), href: `${basePath}/services/workflow-automation` },
@@ -46,53 +44,43 @@ export default function Footer() {
 
   return (
     <footer className="relative py-20 px-6 overflow-hidden border-t border-white/10">
-      {/* Gradient Line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-      {/* Background Glow */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full gpu-accelerated"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full"
         style={{
-          background: 'linear-gradient(to bottom, rgba(var(--theme-glow-rgb), 0.08) 0%, transparent 100%)',
+          background: 'linear-gradient(to bottom, rgba(var(--theme-glow-rgb), 0.06) 0%, transparent 100%)',
           filter: 'blur(60px)',
         }}
       />
 
       <div className="relative max-w-7xl mx-auto">
-        {/* Main grid: Brand | Company | Services | Resources | Contact */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-8 mb-16">
-          {/* Brand — spans 2 cols on lg */}
+          {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link href={basePath} className="flex items-center gap-3 group mb-5">
-                <div
-                  className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
-                    transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-                  style={{ boxShadow: 'var(--theme-shadow-glow)' }}
-                >
-                  <Zap className="w-6 h-6 text-black" fill="currentColor" />
-                </div>
-                <span className="text-2xl font-bold font-heading text-white">AI Insider</span>
-              </Link>
-
-              <p className="text-gray-400 leading-relaxed max-w-sm mb-5 text-sm">
-                {t('footer.description')}
-              </p>
-
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <MapPin className="w-4 h-4 text-white shrink-0" />
-                <span>
-                  {t('footer.location')}{' '}
-                  <span className="text-white font-semibold">{t('footer.switzerland')}</span>{' '}
-                  {t('footer.workingGlobally')}
-                </span>
+            <Link href={basePath} className="flex items-center gap-3 group mb-5">
+              <div
+                className="w-10 h-10 rounded-xl bg-white flex items-center justify-center
+                  transition-transform duration-300 group-hover:scale-110"
+                style={{ boxShadow: 'var(--theme-shadow-glow)' }}
+              >
+                <Zap className="w-6 h-6 text-black" fill="currentColor" />
               </div>
-            </motion.div>
+              <span className="text-2xl font-bold font-heading text-white">AI Insider</span>
+            </Link>
+
+            <p className="text-gray-400 leading-relaxed max-w-sm mb-5 text-sm">
+              {t('footer.description')}
+            </p>
+
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <MapPin className="w-4 h-4 text-white shrink-0" />
+              <span>
+                {t('footer.location')}{' '}
+                <span className="text-white font-semibold">{t('footer.switzerland')}</span>{' '}
+                {t('footer.workingGlobally')}
+              </span>
+            </div>
           </div>
 
           {/* Company */}
@@ -176,7 +164,6 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Social icons inline under contact */}
             <div className="flex items-center gap-3 mt-5">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
@@ -189,8 +176,8 @@ export default function Footer() {
                     className="group relative"
                   >
                     <div
-                      className="w-9 h-9 rounded-lg glass-strong flex items-center justify-center border border-white/10
-                        transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:border-white/30 text-white"
+                      className="w-9 h-9 rounded-lg bg-white/[0.04] flex items-center justify-center border border-white/10
+                        transition-all duration-200 group-hover:scale-110 group-hover:border-white/25 text-white"
                     >
                       <Icon className="w-4 h-4" />
                     </div>
@@ -201,7 +188,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
             © 2025 AI Insider —{' '}

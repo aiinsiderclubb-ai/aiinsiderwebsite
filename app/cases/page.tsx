@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import CaseFilters from '../components/cases/CaseFilters';
 import CasesCarousel from '../components/cases/CasesCarousel';
 import FeaturedCaseStack from '../components/cases/FeaturedCaseStack';
-import ConversionSection from '../components/cases/ConversionSection';
+import PageCTA from '../components/PageCTA';
 import { casesData, CaseCategory, CaseStudy, categoryFilters, getLocalizedText } from '../lib/casesData';
 import { useChatContext } from '../context/ChatContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -401,8 +401,8 @@ export default function CasesPage() {
         </div>
       </section>
 
-      {/* Conversion Section */}
-      <ConversionSection onOpenChat={openChat} />
+      {/* CTA Section */}
+      <PageCTA />
 
       {/* CSS Animations */}
       <style jsx global>{`

@@ -15,6 +15,7 @@ import { getCaseBySlug, casesData, getLocalizedText } from '../../lib/casesData'
 import { getServiceBySlug } from '../../lib/servicesData';
 import { useChatContext } from '../../context/ChatContext';
 import { useLanguage } from '../../context/LanguageContext';
+import PageCTA from '../../components/PageCTA';
 
 export default function CaseDetailPage() {
   const params = useParams();
@@ -717,51 +718,7 @@ export default function CaseDetailPage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-20 px-6 border-t border-white/5">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
-              <Zap className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm text-gray-300">{lang === 'uk' ? 'Готові почати?' : 'Ready to Start?'}</span>
-            </div>
-            
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {lang === 'uk' ? 'Хочете такі самі результати?' : 'Want Similar Results?'}
-            </h2>
-            
-            <p className="text-lg text-gray-400 mb-8">
-              {lang === 'uk' 
-                ? 'Ми створимо кастомне AI-рішення під ваші потреби' 
-                : 'We\'ll create a custom AI solution for your needs'}
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href={`${basePath}#bookcall`}
-                className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold
-                  transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20"
-              >
-                <Phone className="w-5 h-5" />
-                {lang === 'uk' ? 'Замовити демо' : 'Book Demo'}
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              
-              <button
-                onClick={handleDemoClick}
-                className="flex items-center gap-2 px-8 py-4 bg-white/5 text-white rounded-full font-bold
-                  border border-white/10 transition-all duration-200 hover:bg-white/10"
-              >
-                <MessageCircle className="w-5 h-5" />
-                {lang === 'uk' ? 'AI Демо' : 'AI Demo'}
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageCTA />
 
       {/* Related Cases */}
       {relatedCases.length > 0 && (

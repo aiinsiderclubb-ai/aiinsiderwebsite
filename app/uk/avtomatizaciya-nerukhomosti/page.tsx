@@ -12,6 +12,8 @@ import RealEstateROISection from '@/app/components/real-estate/RealEstateROISect
 import { buildFaqSchema } from '@/app/lib/schema/faqSchema';
 import { buildBreadcrumbSchema } from '@/app/lib/schema/breadcrumbSchema';
 import { buildRealEstateServiceSchema } from '@/app/lib/schema/serviceSchema';
+import PageCTA from '@/app/components/PageCTA';
+import Footer from '@/app/components/Footer';
 import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
 import { getSiteUrl } from '@/app/lib/site';
 import { realEstatePillarUk } from '@/app/lib/verticals/realEstate';
@@ -183,8 +185,10 @@ export default function RealEstateAutomationPage() {
           </div>
         </section>
 
+        <PageCTA />
         <BookCall />
       </article>
+      <Footer />
     </main>
   );
 }

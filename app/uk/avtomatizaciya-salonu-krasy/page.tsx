@@ -13,6 +13,8 @@ import LeadMagnetSection from '@/app/components/beauty-salon/LeadMagnetSection';
 import { buildFaqSchema } from '@/app/lib/schema/faqSchema';
 import { buildBreadcrumbSchema } from '@/app/lib/schema/breadcrumbSchema';
 import { buildBeautyServiceSchema } from '@/app/lib/schema/serviceSchema';
+import PageCTA from '@/app/components/PageCTA';
+import Footer from '@/app/components/Footer';
 import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
 import { getSiteUrl } from '@/app/lib/site';
 import { beautyPillarUk } from '@/app/lib/verticals/beauty';
@@ -197,6 +199,7 @@ export default async function BeautySalonAutomationPage({
           vertical={beautyPillarUk.vertical}
           locale={beautyPillarUk.locale}
         />
+        <PageCTA />
         <FinalCTA
           status={auditStatus}
           content={beautyPillarUk.finalCta}
@@ -204,6 +207,7 @@ export default async function BeautySalonAutomationPage({
           locale={beautyPillarUk.locale}
         />
       </article>
+      <Footer />
     </main>
   );
 }

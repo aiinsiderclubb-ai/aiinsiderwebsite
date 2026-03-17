@@ -8,6 +8,7 @@ import { getLocalizedSeo, getSeoServicePage, SEO_SERVICE_PAGES, type SeoServiceS
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
 import { getSemanticAnchor } from '@/app/lib/internalLinks';
 import { getLocalizedProgrammatic, getProgrammaticPage } from '@/app/lib/programmaticSeo';
+import PageCTA from '@/app/components/PageCTA';
 
 type Props = {
   lang: string;
@@ -498,26 +499,7 @@ export default function SeoServiceLanding({ lang, slug }: Props) {
 
           {/* CTA */}
           <div className="max-w-6xl">
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{headings.ctaTitle}</h2>
-              <p className="text-gray-400 mb-6 max-w-3xl">{headings.ctaSubtitle}</p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href={`${withLang(lang, '/')}#bookcall`}
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                    transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25"
-                >
-                  {cta.bookConsultation}
-                </Link>
-                <Link
-                  href={`${withLang(lang, '/')}#bookcall`}
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                    border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
-                >
-                  {cta.getAudit}
-                </Link>
-              </div>
-            </div>
+            <PageCTA />
           </div>
         </div>
       </section>

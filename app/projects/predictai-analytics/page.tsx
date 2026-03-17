@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import PageCTA from '../../components/PageCTA';
 import ProjectStructuredData from '../../components/ProjectStructuredData';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
@@ -265,6 +266,7 @@ export default function PredictAIAnalyticsPage() {
         </div>
       </section>
 
+      <PageCTA />
       <Footer />
     </main>
   );
