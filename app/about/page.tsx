@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Instagram, Linkedin, Mail, Twitter, Zap, Target, Rocket, Users } from 'lucide-react';
+import { Instagram, Linkedin, Mail, Twitter, Zap, Target, Rocket, Users, Palette, Search, Share2, Sparkles, Bot } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
@@ -42,11 +42,10 @@ const TEAM_MEMBERS: TeamMember[] = [
     id: 'designer',
     nameKey: 'about.member2Name',
     roleKey: 'about.member2Role',
-    imageCandidates: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face'],
+    imageCandidates: [],
     bioKey: 'about.member2Bio',
     social: {
       linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
       email: 'hello@aiinsider.it.com',
     },
   },
@@ -79,12 +78,16 @@ function useResolvedImage(candidates: string[]): string {
   const [src, setSrc] = useState<string>(initial);
 
   useEffect(() => {
+    if (candidates.length === 0) {
+      setSrc('');
+      return;
+    }
+
     let cancelled = false;
 
     async function run() {
       setSrc(initial);
       for (const candidate of candidates) {
-        // Only check existence client-side.
         const ok = await canLoadImage(candidate);
         if (cancelled) return;
         if (ok) {
@@ -103,6 +106,169 @@ function useResolvedImage(candidates: string[]): string {
   }, [candidates, initial, fallback]);
 
   return src;
+}
+
+const AI_ASSISTANTS = [
+  {
+    id: 'ai-design',
+    nameKey: 'about.aiAssistant1Name',
+    roleKey: 'about.aiAssistant1Role',
+    bioKey: 'about.aiAssistant1Bio',
+    icon: Palette,
+    gradient: 'from-fuchsia-500 to-purple-600',
+    glowColor: 'rgba(192, 38, 211, 0.4)',
+    abilities: [
+      { uk: 'Генерація лейаутів', en: 'Layout generation' },
+      { uk: 'Підбір палітр', en: 'Color palette matching' },
+      { uk: 'UI компоненти', en: 'UI components' },
+    ],
+  },
+  {
+    id: 'ai-seo',
+    nameKey: 'about.aiAssistant2Name',
+    roleKey: 'about.aiAssistant2Role',
+    bioKey: 'about.aiAssistant2Bio',
+    icon: Search,
+    gradient: 'from-emerald-500 to-teal-600',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
+    abilities: [
+      { uk: 'Аналіз ключових слів', en: 'Keyword analysis' },
+      { uk: 'Технічний SEO аудит', en: 'Technical SEO audit' },
+      { uk: 'Контент-оптимізація', en: 'Content optimization' },
+    ],
+  },
+  {
+    id: 'ai-smm',
+    nameKey: 'about.aiAssistant3Name',
+    roleKey: 'about.aiAssistant3Role',
+    bioKey: 'about.aiAssistant3Bio',
+    icon: Share2,
+    gradient: 'from-sky-500 to-blue-600',
+    glowColor: 'rgba(14, 165, 233, 0.4)',
+    isNew: true,
+    abilities: [
+      { uk: 'Контент-календар', en: 'Content calendar' },
+      { uk: 'Аналітика engagement', en: 'Engagement analytics' },
+      { uk: 'Мульти-платформа', en: 'Multi-platform' },
+    ],
+  },
+];
+
+function AiAssistantsSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const { t, lang } = useLanguage();
+  const isEn = lang === 'en';
+
+  return (
+    <section ref={ref} className="relative py-24 px-6 overflow-hidden">
+      <div className="absolute inset-0">
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] opacity-15"
+          style={{
+            background: 'radial-gradient(ellipse, rgba(139, 92, 246, 0.15) 0%, transparent 60%)',
+            filter: 'blur(100px)',
+          }}
+        />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5">
+            <Bot className="w-5 h-5 text-purple-400" />
+            <span className="text-sm font-semibold text-white/80 uppercase tracking-wider">
+              {t('about.aiAssistantsTitle')}
+            </span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 text-white leading-[1.1]">
+            {isEn ? 'Powered by' : 'Підсилені'}{' '}
+            <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
+              AI
+            </span>
+          </h2>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
+            {t('about.aiAssistantsSubtitle')}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+          {AI_ASSISTANTS.map((assistant, index) => {
+            const Icon = assistant.icon;
+            return (
+              <motion.div
+                key={assistant.id}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                className="group relative"
+              >
+                <div
+                  className="absolute -inset-1 rounded-[2rem] opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-700"
+                  style={{ background: `radial-gradient(circle, ${assistant.glowColor}, transparent 70%)` }}
+                />
+
+                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] overflow-hidden transition-all duration-500 hover:border-white/20 hover:-translate-y-2">
+                  <div className="relative px-8 pt-10 pb-8">
+                    {'isNew' in assistant && assistant.isNew && (
+                      <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-[10px] font-bold text-white uppercase tracking-widest">
+                        {t('about.aiAssistantNewBadge')}
+                      </div>
+                    )}
+
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${assistant.gradient} flex items-center justify-center mb-6 shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
+                      style={{ boxShadow: `0 10px 40px ${assistant.glowColor}` }}
+                    >
+                      <Icon className="w-7 h-7 text-white" />
+                    </div>
+
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 mb-4">
+                      <Sparkles className="w-3 h-3 text-white/50" />
+                      <span className="text-[11px] font-semibold text-white/60 uppercase tracking-wider">
+                        {t(assistant.roleKey)}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-3 text-white">{t(assistant.nameKey)}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6">{t(assistant.bioKey)}</p>
+
+                    <div className="space-y-2">
+                      {assistant.abilities.map((ability, i) => (
+                        <div key={i} className="flex items-center gap-2.5 text-sm text-gray-500">
+                          <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${assistant.gradient} flex-shrink-0`} />
+                          <span>{isEn ? ability.en : ability.uk}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+                  <div className="px-8 py-5 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="relative w-2 h-2">
+                        <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${assistant.gradient} animate-ping opacity-75`} />
+                        <div className={`relative w-2 h-2 rounded-full bg-gradient-to-r ${assistant.gradient}`} />
+                      </div>
+                      <span className="text-xs text-gray-500 font-medium">
+                        {isEn ? 'Active 24/7' : 'Активний 24/7'}
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-600">AI-powered</div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function AboutPage() {
@@ -161,26 +327,24 @@ export default function AboutPage() {
               <div className="absolute -inset-2 rounded-full border border-dashed border-white/10 group-hover:border-white/20 transition-colors duration-500 group-hover:rotate-12" 
                 style={{ transition: 'all 0.7s ease' }} />
               
-              {/* Inner image */}
               <div className="absolute inset-2 rounded-full overflow-hidden bg-gradient-to-br from-white/10 to-white/5">
-                {/* Fallback initials */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-4xl font-bold text-white/20 tracking-tight">{initials}</span>
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white/[0.06] to-white/[0.02]">
+                  <span className="text-5xl font-bold text-white/30 tracking-tight">{initials}</span>
                 </div>
-                
-                {/* Photo */}
-                <img
-                  src={imageSrc}
-                  alt={name}
-                  loading="lazy"
-                  decoding="async"
-                  onLoad={(e) => {
-                    e.currentTarget.dataset.loaded = 'true';
-                  }}
-                  className="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out opacity-0 data-[loaded=true]:opacity-100"
-                />
-                
-                {/* Overlay gradient */}
+
+                {imageSrc && (
+                  <img
+                    src={imageSrc}
+                    alt={name}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={(e) => {
+                      e.currentTarget.dataset.loaded = 'true';
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out opacity-0 data-[loaded=true]:opacity-100"
+                  />
+                )}
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
               
@@ -631,6 +795,9 @@ export default function AboutPage() {
           />
         </div>
       </section>
+
+      {/* AI Assistants Section */}
+      <AiAssistantsSection />
 
       {/* GEO / AI Search Clarity — Premium Design */}
       <section className="relative py-24 px-6 overflow-hidden">

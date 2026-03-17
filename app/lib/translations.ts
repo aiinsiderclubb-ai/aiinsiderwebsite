@@ -358,7 +358,7 @@ export const translations = {
       uk: 'CEO AI Insider. Поєднує інженерне мислення з growth-підходом — від стратегії автоматизації до запуску production-ready AI систем, які реально знімають рутину з команди. Фокус: чисті процеси, зрозумілі метрики та швидкі ітерації.',
       en: 'CEO at AI Insider. Blends engineering with growth thinking — from automation strategy to production-ready AI systems that remove bottlenecks and deliver measurable ROI. Focused on clean processes, clear metrics, and fast iteration.',
     },
-    member2Name: { uk: 'Дизайнер', en: 'Designer' },
+    member2Name: { uk: 'Юлія', en: 'Yuliia' },
     member2Role: { uk: 'Product Designer (UI/UX)', en: 'Product Designer (UI/UX)' },
     member2Bio: {
       uk: 'Перетворює складні AI-процеси на зрозумілий UX, який хочеться використовувати. Відповідає за UI/UX, дизайн-систему та креативи для лендингів і performance-кампаній — з фокусом на ясність і конверсію.',
@@ -370,6 +370,30 @@ export const translations = {
       uk: 'Відповідає за операційну частину: процеси, CRM-дисципліну, контроль якості та SLA. Також веде лідогенерацію — налаштовує воронки, тестує канали і забезпечує стабільний потік кваліфікованих лідів.',
       en: 'Owns operations: processes, CRM hygiene, quality control, and SLA. Also runs lead generation — builds funnels, tests channels, and keeps a steady flow of qualified leads.',
     },
+    aiAssistant1Name: { uk: 'AI Помічник Дизайнера', en: 'AI Design Assistant' },
+    aiAssistant1Role: { uk: 'AI Assistant · Design', en: 'AI Assistant · Design' },
+    aiAssistant1Bio: {
+      uk: 'Генерує варіанти лейаутів, підбирає палітри та створює мокапи за секунди. Автоматизує рутину дизайн-процесу — від ресайзу банерів до генерації UI-компонентів, звільняючи час на стратегічні рішення.',
+      en: 'Generates layout variations, selects color palettes and creates mockups in seconds. Automates design routine — from banner resizing to UI component generation, freeing time for strategic decisions.',
+    },
+    aiAssistant2Name: { uk: 'AI SEO Спеціаліст', en: 'AI SEO Specialist' },
+    aiAssistant2Role: { uk: 'AI Assistant · SEO', en: 'AI Assistant · SEO' },
+    aiAssistant2Bio: {
+      uk: 'Аналізує ключові слова, аудитує технічне SEO та генерує оптимізований контент. Моніторить позиції, знаходить точки росту трафіку і формує рекомендації на основі актуальних алгоритмів пошукових систем.',
+      en: 'Analyzes keywords, audits technical SEO and generates optimized content. Monitors rankings, finds traffic growth opportunities and forms recommendations based on current search engine algorithms.',
+    },
+    aiAssistant3Name: { uk: 'AI SMM Менеджер', en: 'AI Social Media Manager' },
+    aiAssistant3Role: { uk: 'AI Assistant · SMM', en: 'AI Assistant · SMM' },
+    aiAssistant3Bio: {
+      uk: 'Планує контент-календар, генерує пости та аналізує engagement. Відповідає за tone of voice бренду в соціальних мережах, автоматизує публікації та адаптує контент під кожну платформу.',
+      en: 'Plans content calendar, generates posts and analyzes engagement. Maintains brand tone of voice across social media, automates publishing and adapts content for each platform.',
+    },
+    aiAssistantsTitle: { uk: 'AI Асистенти', en: 'AI Assistants' },
+    aiAssistantsSubtitle: {
+      uk: 'Наші AI-помічники працюють 24/7 — підсилюючи кожного члена команди',
+      en: 'Our AI assistants work 24/7 — amplifying every team member',
+    },
+    aiAssistantNewBadge: { uk: 'Новий', en: 'New' },
   },
   
   // Testimonials Section (Roadmap Style)
