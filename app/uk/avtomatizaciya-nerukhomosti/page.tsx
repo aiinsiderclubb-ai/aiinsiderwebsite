@@ -107,7 +107,12 @@ export default function RealEstateAutomationPage() {
       <Navbar />
 
       <article>
-        <HeroSection content={realEstatePillarUk.hero} />
+        <HeroSection
+          content={realEstatePillarUk.hero}
+          accentGradient="from-blue-400 via-cyan-400 to-emerald-400"
+          glowRgb="59, 130, 246"
+          ctaGradient="linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #10b981 100%)"
+        />
 
         <section className="px-6 pb-2">
           <div className="max-w-6xl mx-auto text-sm text-gray-400">
@@ -123,13 +128,13 @@ export default function RealEstateAutomationPage() {
           </div>
         </section>
 
-        <ProblemSection content={realEstatePillarUk.problems} />
-        <AutomationSection content={realEstatePillarUk.automation} />
+        <ProblemSection content={realEstatePillarUk.problems} accentGradient="from-blue-400 to-cyan-500" glowRgb="59, 130, 246" />
+        <AutomationSection content={realEstatePillarUk.automation} accentGradient="from-cyan-400 to-blue-500" glowRgb="6, 182, 212" />
         <RealEstateROISection />
-        <CaseSection content={realEstatePillarUk.cases} />
-        <ImplementationSection content={realEstatePillarUk.implementation} />
-        <ObjectionSection content={realEstatePillarUk.objections} />
-        <FAQSection title={realEstatePillarUk.faq.title} faqs={realEstatePillarUk.faq.items} />
+        <CaseSection content={realEstatePillarUk.cases} accentGradient="from-blue-400 to-cyan-500" glowRgb="59, 130, 246" />
+        <ImplementationSection content={realEstatePillarUk.implementation} accentGradient="from-cyan-400 to-emerald-500" glowRgb="16, 185, 129" />
+        <ObjectionSection content={realEstatePillarUk.objections} accentGradient="from-blue-400 to-cyan-500" glowRgb="59, 130, 246" />
+        <FAQSection title={realEstatePillarUk.faq.title} faqs={realEstatePillarUk.faq.items} accentGradient="from-cyan-400 to-blue-500" glowRgb="6, 182, 212" />
 
         <section className="px-6 py-16 border-t border-white/10">
           <div className="max-w-6xl mx-auto">

@@ -114,7 +114,12 @@ export default async function BeautySalonAutomationPage({
       <Navbar />
 
       <article>
-        <HeroSection content={beautyPillarUk.hero} />
+        <HeroSection
+          content={beautyPillarUk.hero}
+          accentGradient="from-rose-400 via-pink-400 to-purple-400"
+          glowRgb="244, 63, 94"
+          ctaGradient="linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #a855f7 100%)"
+        />
 
         <section className="px-6 pb-2">
           <div className="max-w-6xl mx-auto text-sm text-gray-400">
@@ -130,14 +135,14 @@ export default async function BeautySalonAutomationPage({
           </div>
         </section>
 
-        <ProblemSection content={beautyPillarUk.problems} />
-        <AutomationSection content={beautyPillarUk.automation} />
+        <ProblemSection content={beautyPillarUk.problems} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
+        <AutomationSection content={beautyPillarUk.automation} accentGradient="from-pink-400 to-rose-500" glowRgb="236, 72, 153" />
         <BeautyClusterSection content={beautyPillarUk.cluster} />
         <ROISection content={beautyPillarUk.roi} />
-        <CaseSection content={beautyPillarUk.cases} />
-        <ImplementationSection content={beautyPillarUk.implementation} />
-        <ObjectionSection content={beautyPillarUk.objections} />
-        <FAQSection title={beautyPillarUk.faq.title} faqs={beautyPillarUk.faq.items} />
+        <CaseSection content={beautyPillarUk.cases} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
+        <ImplementationSection content={beautyPillarUk.implementation} accentGradient="from-pink-400 to-purple-500" glowRgb="168, 85, 247" />
+        <ObjectionSection content={beautyPillarUk.objections} accentGradient="from-rose-400 to-pink-500" glowRgb="244, 63, 94" />
+        <FAQSection title={beautyPillarUk.faq.title} faqs={beautyPillarUk.faq.items} accentGradient="from-pink-400 to-rose-500" glowRgb="236, 72, 153" />
         <section className="px-6 py-16 border-t border-white/10">
           <div className="max-w-6xl mx-auto">
             <div className="max-w-3xl mb-10">
