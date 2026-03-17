@@ -12,6 +12,24 @@ import PageCTA from '@/app/components/PageCTA';
 
 type Params = { lang: string; slug: string };
 
+const CATEGORY_ACCENTS: Record<string, { glowRgb: string; gradient: string }> = {
+  'AI Education': { glowRgb: '99, 102, 241', gradient: 'from-indigo-400 to-violet-500' },
+  'Pricing': { glowRgb: '16, 185, 129', gradient: 'from-emerald-400 to-teal-500' },
+  'Industry': { glowRgb: '59, 130, 246', gradient: 'from-blue-400 to-cyan-500' },
+  'Guide': { glowRgb: '168, 85, 247', gradient: 'from-purple-400 to-pink-500' },
+  'Tools': { glowRgb: '245, 158, 11', gradient: 'from-amber-400 to-orange-500' },
+  'Technical': { glowRgb: '6, 182, 212', gradient: 'from-cyan-400 to-blue-500' },
+  'Tutorial': { glowRgb: '34, 197, 94', gradient: 'from-green-400 to-emerald-500' },
+  'Social Media': { glowRgb: '244, 63, 94', gradient: 'from-rose-400 to-pink-500' },
+  'Лідогенерація': { glowRgb: '249, 115, 22', gradient: 'from-orange-400 to-red-500' },
+  'Автоматизація': { glowRgb: '16, 185, 129', gradient: 'from-emerald-400 to-cyan-500' },
+  'AI контент': { glowRgb: '168, 85, 247', gradient: 'from-purple-400 to-fuchsia-500' },
+  'Кастомний AI': { glowRgb: '99, 102, 241', gradient: 'from-indigo-400 to-violet-500' },
+  'Голосові агенти': { glowRgb: '59, 130, 246', gradient: 'from-blue-400 to-sky-500' },
+  'Автоматизація салону': { glowRgb: '244, 63, 94', gradient: 'from-rose-400 to-pink-500' },
+};
+const DEFAULT_ACCENT = { glowRgb: '255, 255, 255', gradient: 'from-white to-gray-400' };
+
 export default async function BlogArticlePage({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
@@ -26,6 +44,10 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
   const t = (v: { en: string; uk: string }) => getBlogText(v, lang);
   const vertical = article.ctaType || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy') ? 'beauty' : 'general';
+
+  const categoryKey = article.category.en || article.category.uk;
+  const accent = CATEGORY_ACCENTS[categoryKey] || CATEGORY_ACCENTS[article.category.uk] || DEFAULT_ACCENT;
+  const { glowRgb, gradient: accentGradient } = accent;
 
   const beautyPillarBase = '/uk/avtomatizaciya-salonu-krasy';
   const beautyClusterSlugs = new Set([
@@ -107,15 +129,19 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        {/* Background orbs */}
+        {/* Colored glow orbs */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-40 left-1/4 w-[900px] h-[900px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 50%)', filter: 'blur(120px)' }} />
-          <div className="absolute top-1/2 right-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 50%)', filter: 'blur(80px)' }} />
+          <div
+            className="absolute -top-32 left-1/4 w-[900px] h-[900px] rounded-full"
+            style={{ background: `radial-gradient(circle, rgba(${glowRgb}, 0.12) 0%, transparent 50%)`, filter: 'blur(120px)' }}
+          />
+          <div
+            className="absolute top-1/2 right-0 w-[600px] h-[600px] rounded-full"
+            style={{ background: `radial-gradient(circle, rgba(${glowRgb}, 0.06) 0%, transparent 50%)`, filter: 'blur(80px)' }}
+          />
         </div>
 
-        {/* Grid pattern */}
+        {/* Grid */}
         <div className="absolute inset-0 opacity-[0.025]">
           <div className="absolute inset-0"
             style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
@@ -133,12 +159,25 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
 
           {/* Icon + category badge */}
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-16 h-16 rounded-3xl bg-white flex items-center justify-center text-3xl shrink-0"
-              style={{ boxShadow: '0 0 40px rgba(255,255,255,0.25), 0 0 80px rgba(255,255,255,0.1)' }}>
+            <div
+              className="w-16 h-16 rounded-3xl flex items-center justify-center text-3xl shrink-0"
+              style={{
+                background: `linear-gradient(135deg, rgba(${glowRgb}, 0.3), rgba(${glowRgb}, 0.1))`,
+                boxShadow: `0 0 40px rgba(${glowRgb}, 0.3), 0 0 80px rgba(${glowRgb}, 0.1)`,
+                border: `1px solid rgba(${glowRgb}, 0.3)`,
+              }}
+            >
               {article.icon}
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-white/10 text-white border border-white/15">
+              <span
+                className="text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border"
+                style={{
+                  background: `rgba(${glowRgb}, 0.1)`,
+                  borderColor: `rgba(${glowRgb}, 0.3)`,
+                  color: 'white',
+                }}
+              >
                 {t(article.category)}
               </span>
               <span className="text-xs text-gray-500">{article.readTime} {isEn ? 'min read' : '\u0445\u0432'}</span>
@@ -149,16 +188,18 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
             </div>
           </div>
 
-          {/* H1 */}
+          {/* H1 with accent gradient */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading leading-[1.1] mb-8">
-            <span className="text-white">{t(article.h1)}</span>
+            <span className={`bg-gradient-to-r ${accentGradient} bg-clip-text text-transparent`}>{t(article.h1)}</span>
           </h1>
 
           {/* Accent line */}
-          <div className="h-[2px] w-24 rounded-full mb-10"
-            style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.05))' }} />
+          <div
+            className="h-[2px] w-24 rounded-full mb-10"
+            style={{ background: `linear-gradient(90deg, rgba(${glowRgb}, 0.8), transparent)` }}
+          />
 
-          {/* Intro — slightly larger, first paragraph bold */}
+          {/* Intro */}
           <div className="space-y-5">
             {article.intro.map((p, i) => (
               <p key={i} className={`leading-relaxed ${i === 0 ? 'text-xl md:text-2xl text-gray-200 font-medium' : 'text-lg text-gray-400'}`}>
@@ -172,19 +213,36 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
       {/* ═══════════ TABLE OF CONTENTS ═══════════ */}
       <section className="px-6 pb-12">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm">
+          <div
+            className="rounded-2xl border bg-white/[0.03] p-6 overflow-hidden relative"
+            style={{ borderColor: `rgba(${glowRgb}, 0.15)` }}
+          >
+            <div
+              className="absolute top-0 left-0 right-0 h-[2px]"
+              style={{ background: `linear-gradient(90deg, rgba(${glowRgb}, 0.7), transparent 70%)` }}
+            />
             <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
               {isEn ? 'In this article' : '\u0423 \u0446\u0456\u0439 \u0441\u0442\u0430\u0442\u0442\u0456'}
             </h2>
             <ol className="space-y-2">
               {article.sections.map((section, si) => (
                 <li key={si} className="flex items-start gap-3">
-                  <span className="text-xs font-bold text-white/30 mt-0.5 w-5 text-right shrink-0">{String(si + 1).padStart(2, '0')}</span>
+                  <span
+                    className="text-xs font-bold mt-0.5 w-5 text-right shrink-0"
+                    style={{ color: `rgba(${glowRgb}, 0.5)` }}
+                  >
+                    {String(si + 1).padStart(2, '0')}
+                  </span>
                   <span className="text-sm text-gray-400">{t(section.heading)}</span>
                 </li>
               ))}
               <li className="flex items-start gap-3">
-                <span className="text-xs font-bold text-white/30 mt-0.5 w-5 text-right shrink-0">{String(article.sections.length + 1).padStart(2, '0')}</span>
+                <span
+                  className="text-xs font-bold mt-0.5 w-5 text-right shrink-0"
+                  style={{ color: `rgba(${glowRgb}, 0.5)` }}
+                >
+                  {String(article.sections.length + 1).padStart(2, '0')}
+                </span>
                 <span className="text-sm text-gray-400">FAQ</span>
               </li>
             </ol>
@@ -199,31 +257,53 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
             <section key={si} className="relative mb-16 last:mb-12">
               {/* Section number + heading */}
               <div className="flex items-start gap-5 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0"
-                  style={{ boxShadow: '0 0 20px rgba(255,255,255,0.05)' }}>
-                  <span className="text-sm font-bold text-white/50">{String(si + 1).padStart(2, '0')}</span>
+                <div
+                  className="w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0"
+                  style={{
+                    background: `rgba(${glowRgb}, 0.08)`,
+                    borderColor: `rgba(${glowRgb}, 0.2)`,
+                    boxShadow: `0 0 20px rgba(${glowRgb}, 0.1)`,
+                  }}
+                >
+                  <span
+                    className="text-sm font-bold"
+                    style={{ color: `rgba(${glowRgb}, 0.7)` }}
+                  >
+                    {String(si + 1).padStart(2, '0')}
+                  </span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-heading text-white leading-snug pt-1.5">
                   {t(section.heading)}
                 </h2>
               </div>
 
-              {/* Body paragraphs */}
+              {/* Body */}
               {section.body.map((p, pi) => (
                 <p key={pi} className="text-base md:text-lg text-gray-400 leading-[1.8] mb-5 pl-0 md:pl-[68px]">
                   {t(p)}
                 </p>
               ))}
 
-              {/* Bullets — styled as cards */}
+              {/* Bullets */}
               {section.bullets && section.bullets.length > 0 && (
                 <div className="pl-0 md:pl-[68px] mt-4">
                   <div className="space-y-2.5">
                     {section.bullets.map((b, bi) => (
                       <div key={bi}
-                        className="flex items-start gap-4 rounded-xl border border-white/[0.07] bg-white/[0.02] px-5 py-3.5 transition-colors hover:border-white/15 hover:bg-white/[0.04]">
-                        <div className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                          <span className="text-[10px] font-bold text-white/50">{bi + 1}</span>
+                        className="group flex items-start gap-4 rounded-xl border px-5 py-3.5 transition-all duration-300 hover:-translate-y-0.5"
+                        style={{
+                          borderColor: 'rgba(255,255,255,0.07)',
+                          background: 'rgba(255,255,255,0.02)',
+                        }}
+                      >
+                        <div
+                          className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                          style={{
+                            background: `rgba(${glowRgb}, 0.12)`,
+                            border: `1px solid rgba(${glowRgb}, 0.25)`,
+                          }}
+                        >
+                          <span className="text-[10px] font-bold" style={{ color: `rgba(${glowRgb}, 0.8)` }}>{bi + 1}</span>
                         </div>
                         <span className="text-[15px] text-gray-400 leading-relaxed">{t(b)}</span>
                       </div>
@@ -232,11 +312,13 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                 </div>
               )}
 
-              {/* Section divider */}
+              {/* Divider */}
               {si < article.sections.length - 1 && (
                 <div className="mt-14 pl-0 md:pl-[68px]">
-                  <div className="h-px w-full"
-                    style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.12), transparent 80%)' }} />
+                  <div
+                    className="h-px w-full"
+                    style={{ background: `linear-gradient(90deg, rgba(${glowRgb}, 0.2), transparent 80%)` }}
+                  />
                 </div>
               )}
             </section>
@@ -245,9 +327,15 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
           {/* ═══════════ FAQ ═══════════ */}
           <section className="relative mb-16">
             <div className="flex items-start gap-5 mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0"
-                style={{ boxShadow: '0 0 20px rgba(255,255,255,0.05)' }}>
-                <span className="text-sm font-bold text-white/50">?</span>
+              <div
+                className="w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0"
+                style={{
+                  background: `rgba(${glowRgb}, 0.08)`,
+                  borderColor: `rgba(${glowRgb}, 0.2)`,
+                  boxShadow: `0 0 20px rgba(${glowRgb}, 0.1)`,
+                }}
+              >
+                <span className="text-sm font-bold" style={{ color: `rgba(${glowRgb}, 0.7)` }}>?</span>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold font-heading text-white leading-snug pt-1.5">FAQ</h2>
             </div>
@@ -257,9 +345,14 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                 <details key={i} className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden transition-colors hover:border-white/15 open:border-white/20 open:bg-white/[0.06]">
                   <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6">
                     <span className="text-base font-bold text-white leading-snug">{t(qa.q)}</span>
-                    <span className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0
-                      group-open:rotate-45 transition-all duration-300 group-open:bg-white/10">
-                      <span className="text-sm text-gray-400">+</span>
+                    <span
+                      className="w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 group-open:rotate-45 transition-all duration-300"
+                      style={{
+                        background: `rgba(${glowRgb}, 0.08)`,
+                        borderColor: `rgba(${glowRgb}, 0.2)`,
+                      }}
+                    >
+                      <span className={`text-sm font-bold bg-gradient-to-r ${accentGradient} bg-clip-text text-transparent`}>+</span>
                     </span>
                   </summary>
                   <div className="px-6 pb-5 text-[15px] text-gray-400 leading-relaxed border-t border-white/5 pt-4">
@@ -276,16 +369,18 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
               {isEn ? 'Related services' : '\u041f\u043e\u0432\u02bc\u044f\u0437\u0430\u043d\u0456 \u043f\u043e\u0441\u043b\u0443\u0433\u0438'}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {/* Existing article-defined links */}
               {article.relatedLinks.map((link) => (
                 <Link key={link.href} href={withLang(lang, link.href)}
-                  className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-400 border border-white/10
-                    transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]">
+                  className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full text-gray-400 border transition-all duration-200 hover:text-white hover:-translate-y-0.5"
+                  style={{
+                    background: `rgba(${glowRgb}, 0.05)`,
+                    borderColor: `rgba(${glowRgb}, 0.15)`,
+                  }}
+                >
                   <span>{t(link.label)}</span>
                   <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>
                 </Link>
               ))}
-              {/* Dynamically generated SEO service links */}
               {getRelatedServicesForBlog(article)
                 .filter((slug) => !article.relatedLinks.some((l) => l.href === `/${slug}`))
                 .map((slug, idx) => {
@@ -293,8 +388,12 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                   if (!page) return null;
                   return (
                     <Link key={slug} href={withLang(lang, `/${slug}`)}
-                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-white/5 text-gray-400 border border-white/10
-                        transition-all duration-200 hover:border-white/25 hover:text-white hover:bg-white/[0.08]">
+                      className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full text-gray-400 border transition-all duration-200 hover:text-white hover:-translate-y-0.5"
+                      style={{
+                        background: `rgba(${glowRgb}, 0.05)`,
+                        borderColor: `rgba(${glowRgb}, 0.15)`,
+                      }}
+                    >
                       <span>{getSemanticAnchor(slug, lang, idx + 1)}</span>
                       <span className="text-white/30 group-hover:text-white/60 transition-colors">\u2192</span>
                     </Link>
@@ -307,18 +406,25 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
             <section className="mb-10 pl-0 md:pl-[68px]">
               <Link
                 href={beautyPillarBase}
-                className="group flex items-center justify-between gap-6 rounded-3xl border border-emerald-400/20 bg-gradient-to-r from-emerald-500/10 via-white/[0.03] to-transparent px-6 py-5 transition-all duration-200 hover:border-emerald-300/30 hover:bg-white/[0.05]"
+                className="group flex items-center justify-between gap-6 rounded-3xl border px-6 py-5 transition-all duration-300 hover:-translate-y-0.5"
+                style={{
+                  borderColor: `rgba(${glowRgb}, 0.2)`,
+                  background: `linear-gradient(135deg, rgba(${glowRgb}, 0.1), rgba(255,255,255,0.02))`,
+                }}
               >
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-emerald-300/80">
-                    {isEn ? 'Beauty automation guide' : 'Гід по beauty-автоматизації'}
+                  <p
+                    className="text-xs font-bold uppercase tracking-widest mb-2"
+                    style={{ color: `rgba(${glowRgb}, 0.7)` }}
+                  >
+                    {isEn ? 'Beauty automation guide' : '\u0413\u0456\u0434 \u043f\u043e beauty-\u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u0457'}
                   </p>
-                  <h3 className="mt-2 text-xl font-bold text-white">
-                    {isEn ? 'Full guide to beauty salon automation' : 'Повний гід по автоматизації салону краси'}
+                  <h3 className="text-xl font-bold text-white">
+                    {isEn ? 'Full guide to beauty salon automation' : '\u041f\u043e\u0432\u043d\u0438\u0439 \u0433\u0456\u0434 \u043f\u043e \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0437\u0430\u0446\u0456\u0457 \u0441\u0430\u043b\u043e\u043d\u0443 \u043a\u0440\u0430\u0441\u0438'}
                   </h3>
                 </div>
                 <span className="shrink-0 text-lg font-semibold text-white transition-transform duration-200 group-hover:translate-x-1">
-                  →
+                  \u2192
                 </span>
               </Link>
             </section>
@@ -334,38 +440,49 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
                 {isEn ? 'Read next' : '\u0427\u0438\u0442\u0430\u0442\u0438 \u0434\u0430\u043b\u0456'}
               </h2>
               <div className="grid sm:grid-cols-2 gap-5">
-                {allOther.map((ra) => (
-                  <Link key={ra.slug} href={withLang(lang, `/blog/${ra.slug}`)}
-                    className="group relative rounded-3xl border border-white/10 overflow-hidden
-                      transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_0_60px_rgba(255,255,255,0.05)]"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}>
-                    {/* Top accent */}
-                    <div className="h-[2px] w-full"
-                      style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 50%, transparent)' }} />
+                {allOther.map((ra) => {
+                  const raCategory = ra.category.en || ra.category.uk;
+                  const raAccent = CATEGORY_ACCENTS[raCategory] || CATEGORY_ACCENTS[ra.category.uk] || DEFAULT_ACCENT;
+                  return (
+                    <Link key={ra.slug} href={withLang(lang, `/blog/${ra.slug}`)}
+                      className="group relative rounded-3xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20 hover:-translate-y-1"
+                      style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' }}
+                    >
+                      {/* Top accent line */}
+                      <div
+                        className="h-[2px] w-full"
+                        style={{ background: `linear-gradient(90deg, rgba(${raAccent.glowRgb}, 0.6), transparent 60%)` }}
+                      />
 
-                    <div className="p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-xl
-                          transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                          {ra.icon}
+                      <div className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div
+                            className="w-10 h-10 rounded-xl border flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                            style={{
+                              background: `rgba(${raAccent.glowRgb}, 0.1)`,
+                              borderColor: `rgba(${raAccent.glowRgb}, 0.2)`,
+                            }}
+                          >
+                            {ra.icon}
+                          </div>
+                          <div className="flex-1">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{t(ra.category)}</span>
+                          </div>
+                          <span className="text-xs text-gray-500">{ra.readTime} {isEn ? 'min' : '\u0445\u0432'}</span>
                         </div>
-                        <div className="flex-1">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{t(ra.category)}</span>
+                        <h3 className="text-lg font-bold text-white leading-snug group-hover:text-white/85 transition-colors mb-3">
+                          {t(ra.h1)}
+                        </h3>
+                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">
+                          {t(ra.metaDescription)}
+                        </p>
+                        <div className={`mt-4 text-sm font-semibold bg-gradient-to-r ${raAccent.gradient} bg-clip-text text-transparent`}>
+                          {isEn ? 'Read article' : '\u0427\u0438\u0442\u0430\u0442\u0438'} <span className="text-white/50 inline-block transition-transform duration-200 group-hover:translate-x-1">\u2192</span>
                         </div>
-                        <span className="text-xs text-gray-500">{ra.readTime} {isEn ? 'min' : '\u0445\u0432'}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-white/85 transition-colors mb-3">
-                        {t(ra.h1)}
-                      </h3>
-                      <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">
-                        {t(ra.metaDescription)}
-                      </p>
-                      <div className="mt-4 text-sm font-semibold text-white/70 group-hover:text-white transition-colors">
-                        {isEn ? 'Read article' : '\u0427\u0438\u0442\u0430\u0442\u0438'} <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">\u2192</span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </section>
           )}
