@@ -424,7 +424,7 @@ export default function ServiceDetailPage() {
                 >
                   <div className={`relative ${n === 1 ? 'aspect-[3/4]' : n === 4 ? 'aspect-[2/1]' : 'aspect-square'}`}>
                     <Image
-                      src={`/images/ai-creatives/${n}.jpg`}
+                      src={`/images/ai-creatives/${n}.jpeg`}
                       alt={`AI creative example ${n}`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -441,11 +441,7 @@ export default function ServiceDetailPage() {
               ))}
             </div>
 
-            <p className="mt-8 text-center text-sm text-gray-500">
-              {isEn
-                ? 'Drop your images into public/images/ai-creatives/ (1.jpg through 6.jpg)'
-                : 'Додайте зображення у public/images/ai-creatives/ (1.jpg — 6.jpg)'}
-            </p>
+            
           </div>
         </section>
       )}
