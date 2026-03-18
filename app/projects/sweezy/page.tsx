@@ -197,8 +197,7 @@ export default function SweezyPage() {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4">
-                <a href="#" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg
-                  transition-all duration-300 hover:scale-105"
+                <a href="https://apps.apple.com/app/sweezy/id6759244315" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105"
                   style={{ 
                     background: 'linear-gradient(90deg, #0057B8 0%, #1e40af 100%)',
                     boxShadow: '0 0 30px rgba(0, 87, 184, 0.5)',
@@ -206,8 +205,7 @@ export default function SweezyPage() {
                   <Download className="w-5 h-5" />
                   Download App
                 </a>
-                <a href="#" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg
-                  border-2 transition-all duration-300 hover:scale-105 hover:bg-white/5"
+                <a href="#" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg border-2 transition-all duration-300 hover:scale-105 hover:bg-white/5"
                   style={{ borderColor: '#FFD700', color: '#FFD700' }}>
                   <ExternalLink className="w-5 h-5" />
                   Visit Website
@@ -415,8 +413,7 @@ export default function SweezyPage() {
                     borderColor: `${feature.color}33`,
                   }}
                 >
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4
-                    transition-transform duration-300 group-hover:scale-110"
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
                     style={{ backgroundColor: `${feature.color}20` }}>
                     <Icon className="w-7 h-7" style={{ color: feature.color }} />
                   </div>
@@ -587,8 +584,7 @@ export default function SweezyPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105"
+              <a href="https://apps.apple.com/app/sweezy/id6759244315" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105"
                 style={{ 
                   background: 'linear-gradient(90deg, #0057B8 0%, #1e40af 100%)',
                   boxShadow: '0 0 30px rgba(0, 87, 184, 0.5)',
@@ -596,8 +592,7 @@ export default function SweezyPage() {
                 <Download className="w-5 h-5" />
                 Download Sweezy
               </a>
-              <Link href={`${basePath}#contact`} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg
-                border-2 transition-all duration-300 hover:scale-105 hover:bg-white/5"
+              <Link href={`${basePath}#contact`} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg border-2 transition-all duration-300 hover:scale-105 hover:bg-white/5"
                 style={{ borderColor: '#FFD700', color: '#FFD700' }}>
                 Partner With Us
               </Link>

@@ -137,25 +137,38 @@ export default function SweezyAppPage() {
 
       {/* Hero Section - App Store Style */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        {/* Ukrainian Flag Gradient Background */}
+        {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute top-0 left-0 w-full h-1/2"
+          <div className="absolute inset-0 opacity-[0.02]"
             style={{
-              background: 'linear-gradient(180deg, rgba(0,87,184,0.15) 0%, transparent 100%)',
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px',
             }}
           />
-          <div 
-            className="absolute bottom-0 left-0 w-full h-1/2"
+          <div
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              background: 'linear-gradient(0deg, rgba(255,215,0,0.1) 0%, transparent 100%)',
+              background: `
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0,87,184,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(255,215,0,0.12) 0%, transparent 50%)
+              `,
             }}
           />
-          <div 
-            className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full"
+          <div
+            className="absolute top-20 right-1/4 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(0,87,184,0.2) 0%, transparent 60%)',
-              filter: 'blur(60px)',
+              background: 'radial-gradient(circle, rgba(0,87,184,0.25) 0%, transparent 60%)',
+              filter: 'blur(80px)',
+              animation: 'float 20s ease-in-out infinite',
+            }}
+          />
+          <div
+            className="absolute bottom-20 left-1/4 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%)',
+              filter: 'blur(80px)',
+              animation: 'float 15s ease-in-out infinite reverse',
             }}
           />
         </div>
@@ -181,11 +194,14 @@ export default function SweezyAppPage() {
             >
               {/* App Icon */}
               <div className="flex items-start gap-6 mb-8">
-                <div 
-                  className="w-28 h-28 rounded-[28px] bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-2xl"
-                  style={{ boxShadow: '0 20px 60px rgba(0,87,184,0.4)' }}
-                >
-                  <span className="text-5xl">🇺🇦</span>
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-blue-500 via-blue-400 to-yellow-400 opacity-60 blur-lg" />
+                  <div 
+                    className="relative w-28 h-28 rounded-[28px] bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center"
+                    style={{ boxShadow: '0 20px 60px rgba(0,87,184,0.4)' }}
+                  >
+                    <span className="text-5xl">🇺🇦</span>
+                  </div>
                 </div>
                 <div>
                   <h1 className="text-4xl md:text-5xl font-bold font-heading text-white mb-2">
@@ -217,9 +233,10 @@ export default function SweezyAppPage() {
               {/* Download Buttons */}
               <div className="flex flex-wrap gap-4 mb-8">
                 <a
-                  href="#"
-                  className="flex items-center gap-3 px-6 py-3 bg-white text-black rounded-xl font-bold
-                    hover:scale-[1.02] transition-transform"
+                  href="https://apps.apple.com/app/sweezy/id6759244315"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-6 py-3 bg-white text-black rounded-xl font-bold hover:scale-[1.02] transition-transform"
                 >
                   <Apple className="w-6 h-6" />
                   <div className="text-left">
@@ -229,8 +246,7 @@ export default function SweezyAppPage() {
                 </a>
                 <a
                   href="#"
-                  className="flex items-center gap-3 px-6 py-3 bg-white/10 text-white rounded-xl font-bold
-                    border border-white/20 hover:bg-white/15 transition-colors"
+                  className="flex items-center gap-3 px-6 py-3 bg-white/10 text-white rounded-xl font-bold border border-white/20 hover:bg-white/15 transition-colors"
                 >
                   <Play className="w-6 h-6" />
                   <div className="text-left">
@@ -446,10 +462,11 @@ export default function SweezyAppPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all group"
+                className="group relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] hover:border-white/20 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
               >
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
                 <div 
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
                   style={{ background: `${feature.color}20`, border: `1px solid ${feature.color}40` }}
                 >
                   <feature.icon className="w-7 h-7" style={{ color: feature.color }} />
@@ -463,7 +480,8 @@ export default function SweezyAppPage() {
       </section>
 
       {/* AI Section */}
-      <section className="py-20 px-6 border-y border-white/5">
+      <section className="relative py-20 px-6 border-y border-white/5 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 60%)', filter: 'blur(80px)' }} />
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -508,7 +526,8 @@ export default function SweezyAppPage() {
               className="relative"
             >
               {/* Chat Mockup */}
-              <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+              <div className="relative p-6 rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent" />
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
                   <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
                     <Brain className="w-5 h-5 text-white" />
@@ -577,8 +596,10 @@ export default function SweezyAppPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="p-6 rounded-2xl bg-white/5 border border-white/10"
+                className="group relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] hover:border-white/20 transition-all duration-300 overflow-hidden"
               >
+                <div className="absolute top-3 right-4 text-6xl font-bold text-white/[0.03] select-none">{String(index + 1).padStart(2, '0')}</div>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
                 <div className="flex mb-4">
                   {[...Array(review.rating)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -607,40 +628,41 @@ export default function SweezyAppPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center p-12 rounded-3xl"
+            className="relative text-center p-10 md:p-14 rounded-[2.5rem] border border-white/15 overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(0,87,184,0.2) 0%, rgba(255,215,0,0.1) 100%)',
-              border: '1px solid rgba(0,87,184,0.3)',
+              background: 'linear-gradient(135deg, rgba(0,87,184,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,215,0,0.08) 100%)',
             }}
           >
-            <div className="text-5xl mb-6">🇺🇦</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/10 via-transparent to-yellow-500/10 rounded-[3rem] blur-xl" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
+            <div className="relative text-5xl mb-6">🇺🇦</div>
+            <h2 className="relative text-3xl md:text-4xl font-bold font-heading mb-4">
               Завантажте Sweezy сьогодні
             </h2>
-            <p className="text-xl text-gray-400 mb-8 max-w-xl mx-auto">
+            <p className="relative text-xl text-gray-400 mb-8 max-w-xl mx-auto">
               Приєднуйтесь до тисяч користувачів, які вже користуються Sweezy для вирішення своїх завдань.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="relative flex flex-wrap justify-center gap-4">
               <a
-                href="#"
-                className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold text-lg
-                  hover:scale-[1.02] transition-transform"
+                href="https://apps.apple.com/app/sweezy/id6759244315"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform"
               >
                 <Apple className="w-6 h-6" />
                 App Store
               </a>
               <a
                 href="#"
-                className="flex items-center gap-3 px-8 py-4 bg-white/10 text-white rounded-xl font-bold text-lg
-                  border border-white/20 hover:bg-white/15 transition-colors"
+                className="flex items-center gap-3 px-8 py-4 bg-white/10 text-white rounded-xl font-bold text-lg border border-white/20 hover:bg-white/15 transition-colors"
               >
                 <Play className="w-6 h-6" />
                 Google Play
               </a>
             </div>
 
-            <p className="mt-8 text-sm text-gray-500">
+            <p className="relative mt-8 text-sm text-gray-500">
               Безкоштовно • Без реклами • Для всіх українців
             </p>
           </motion.div>
@@ -661,6 +683,13 @@ export default function SweezyAppPage() {
           </Link>
         </div>
       </section>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+      `}</style>
 
       <Footer />
     </main>
