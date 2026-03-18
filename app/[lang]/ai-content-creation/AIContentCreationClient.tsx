@@ -440,28 +440,37 @@ export default function AIContentCreationClient() {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="mt-10 block lg:hidden"
               >
-                <div className="relative max-w-[280px] mx-auto">
-                  <div className="absolute -inset-3 rounded-[2rem] opacity-40 blur-xl" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.4), rgba(59,130,246,0.4), rgba(236,72,153,0.4))' }} />
-                  <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] overflow-hidden">
-                    <div className="aspect-[9/16] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
-                          <div className="relative w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20">
-                            <Play className="w-6 h-6 text-white fill-white ml-0.5" />
-                          </div>
+                <div className="relative max-w-[260px] mx-auto">
+                  <div className="absolute -inset-3 rounded-[2.5rem] opacity-40 blur-xl" style={{ background: `radial-gradient(circle, ${videoShowcase[currentVideo]?.glowColor || 'rgba(168,85,247,0.4)'} 0%, transparent 70%)`, transition: 'background 0.5s ease' }} />
+                  <div className="relative rounded-[2.5rem] bg-gray-900 p-[6px] shadow-2xl" style={{ boxShadow: '0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)' }}>
+                    <div className="w-full rounded-[2.2rem] overflow-hidden relative bg-black">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-b-2xl z-20" />
+                      <div className="aspect-[9/16] relative overflow-hidden">
+                        {videoShowcase.map((v, idx) => (
+                          <video
+                            key={`mobile-${v.id}`}
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${idx === currentVideo ? 'opacity-100' : 'opacity-0'}`}
+                            src={v.src}
+                            poster={v.poster}
+                            muted
+                            playsInline
+                            loop
+                            autoPlay={idx === currentVideo}
+                            preload="metadata"
+                          />
+                        ))}
+                        <div className="absolute inset-0 bg-black/10" />
+                        <div className="absolute top-8 left-3 px-2.5 py-1 bg-red-500 rounded-full text-[10px] font-bold flex items-center gap-1 z-10">
+                          <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                          LIVE
                         </div>
-                      </div>
-                      <div className="absolute top-3 left-3 px-2.5 py-1 bg-red-500 rounded-full text-[10px] font-bold flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                        LIVE
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
-                          <div>
-                            <div className="font-bold text-xs">AI Creator</div>
-                            <div className="text-[10px] text-gray-400">2.5M</div>
+                        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+                            <div>
+                              <div className="font-bold text-[11px]">{isEn ? 'AI Creator' : 'AI-креатор'}</div>
+                              <div className="text-[9px] text-gray-400">2.5M</div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -471,68 +480,127 @@ export default function AIContentCreationClient() {
               </motion.div>
             </div>
 
-            {/* Right: Video Preview Card */}
+            {/* Right: Phone with live video */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative hidden lg:block"
+              className="relative hidden lg:flex justify-center"
             >
-              <div className="relative">
-                {/* Glow effect */}
+              {/* Glow behind phone */}
+              <div
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
                 <div
-                  className="absolute -inset-4 rounded-[2.5rem] opacity-50 blur-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(168,85,247,0.4) 0%, rgba(59,130,246,0.4) 50%, rgba(236,72,153,0.4) 100%)',
-                  }}
+                  className="w-[350px] h-[500px] rounded-full opacity-50 blur-[100px] transition-all duration-700"
+                  style={{ background: `radial-gradient(circle, ${videoShowcase[currentVideo]?.glowColor || 'rgba(168,85,247,0.4)'} 0%, transparent 70%)` }}
                 />
-                
-                {/* Main card */}
-                <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
-                  {/* Video placeholder */}
-                  <div className="aspect-[9/16] max-h-[600px] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
-                    {/* Animated play button */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
-                        <div className="relative w-20 h-20 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 cursor-pointer hover:scale-110 transition-transform">
-                          <Play className="w-8 h-8 text-white fill-white ml-1" />
-                        </div>
+              </div>
+
+              {/* Phone frame */}
+              <div className="relative">
+                <div
+                  className="relative w-[300px] rounded-[3rem] bg-gray-900 p-[7px] shadow-2xl"
+                  style={{ boxShadow: '0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)' }}
+                >
+                  <div className="w-full rounded-[2.6rem] overflow-hidden relative bg-black">
+                    {/* Notch */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-b-3xl z-20" />
+
+                    {/* Video content */}
+                    <div className="aspect-[9/16] relative overflow-hidden">
+                      {videoShowcase.map((v, idx) => (
+                        <video
+                          key={`hero-${v.id}`}
+                          ref={(el) => { showcaseVideoRefs.current[idx] = el; }}
+                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${idx === currentVideo ? 'opacity-100' : 'opacity-0'}`}
+                          src={v.src}
+                          poster={v.poster}
+                          muted
+                          playsInline
+                          loop
+                          autoPlay={!isPausedByUser && idx === currentVideo}
+                          preload="metadata"
+                        />
+                      ))}
+
+                      <div className="absolute inset-0 bg-black/10" />
+
+                      {/* Top overlays */}
+                      <div className="absolute top-10 left-4 px-3 py-1.5 bg-red-500 rounded-full text-xs font-bold flex items-center gap-1.5 z-10">
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                        {isEn ? 'LIVE' : 'НАЖИВО'}
                       </div>
-                    </div>
-                    
-                    {/* Floating elements */}
-                    <div className="absolute top-4 left-4 px-3 py-1.5 bg-red-500 rounded-full text-xs font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      {isEn ? 'LIVE' : 'НАЖИВО'}
-                    </div>
-                    <div className="absolute top-4 right-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium">
-                      @ai_influencer
-                    </div>
-                    
-                    {/* Bottom info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
-                        <div>
-                          <div className="font-bold text-sm">{isEn ? 'AI Creator' : 'AI-креатор'}</div>
-                          <div className="text-xs text-gray-400">{isEn ? '2.5M followers' : '2.5M підписників'}</div>
-                        </div>
+                      <div className="absolute top-10 right-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium z-10">
+                        @ai_influencer
                       </div>
-                      <p className="text-sm text-gray-400">
-                        {isEn ? 'Creating content 24/7 without breaks' : 'Створює контент 24/7 без перерв'}
-                      </p>
+
+                      {/* Bottom info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${videoShowcase[currentVideo]?.gradient || 'from-purple-500 to-pink-500'}`} />
+                          <div>
+                            <div className="font-bold text-sm">{isEn ? 'AI Creator' : 'AI-креатор'}</div>
+                            <div className="text-xs text-gray-400">{isEn ? '2.5M followers' : '2.5M підписників'}</div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-400">
+                          {isEn ? 'Creating content 24/7 without breaks' : 'Створює контент 24/7 без перерв'}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Floating badges */}
-                <div className="absolute -right-6 top-1/4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
-                  {isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер'}
-                </div>
-                <div className="absolute -left-6 bottom-1/4 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}>
+                {/* Side info card */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="absolute -right-44 top-16 w-40 space-y-3"
+                >
+                  <div className={`px-4 py-2.5 rounded-xl bg-gradient-to-r ${videoShowcase[currentVideo]?.gradient || 'from-purple-500 to-pink-500'} text-sm font-bold shadow-lg transition-all duration-500`}>
+                    {(() => {
+                      const v = videoShowcase[currentVideo];
+                      if (v?.category === 'influencer') return isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер';
+                      if (v?.category === 'video') return isEn ? '🎬 AI Video' : '🎬 AI-відео';
+                      return isEn ? '⚡ AI UGC' : '⚡ AI UGC';
+                    })()}
+                  </div>
+                  <div className="p-3 rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm">
+                    <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">{isEn ? 'Metrics' : 'Показники'}</div>
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs"><span className="text-gray-400">{isEn ? 'Engagement' : 'Залучення'}</span><span className="font-bold text-green-400">+340%</span></div>
+                      <div className="flex justify-between text-xs"><span className="text-gray-400">{isEn ? 'Content/mo' : 'Контент/міс'}</span><span className="font-bold text-white">500+</span></div>
+                      <div className="flex justify-between text-xs"><span className="text-gray-400">{isEn ? 'Savings' : 'Економія'}</span><span className="font-bold text-white">80%</span></div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {videoShowcase.map((v, idx) => (
+                      <button
+                        key={`badge-${v.id}`}
+                        onClick={() => { setCurrentVideo(idx); setIsAutoplay(false); setIsPausedByUser(false); }}
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-semibold border transition-all duration-300 ${
+                          idx === currentVideo
+                            ? 'border-white/40 bg-white/15 text-white'
+                            : 'border-white/10 bg-white/5 text-gray-500 hover:text-white hover:border-white/20'
+                        }`}
+                      >
+                        {v.category === 'influencer' ? (isEn ? 'AI Influencers' : 'AI-інфлюенсери') : v.category === 'video' ? (isEn ? 'AI Video' : 'AI-відео') : 'AI UGC'}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Floating badge left */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="absolute -left-12 bottom-32 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30"
+                >
                   {isEn ? '🎬 AI Video' : '🎬 AI-відео'}
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -615,10 +683,23 @@ export default function AIContentCreationClient() {
             </p>
           </motion.div>
 
-          {/* Carousel */}
+          {/* Carousel — 9:16 portrait */}
           <div className="relative">
-            {/* Main video display */}
-            <div className="relative max-w-4xl mx-auto">
+            <div className="relative max-w-sm mx-auto">
+              {/* Navigation buttons */}
+              <button
+                onClick={prevVideo}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-20"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextVideo}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-20"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
               {(() => {
                 const video = videoShowcase[currentVideo];
                 return (
@@ -631,84 +712,70 @@ export default function AIContentCreationClient() {
                   >
                     {/* Glow */}
                     <div
-                      className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl transition-all duration-500"
-                      style={{
-                        background: `radial-gradient(circle at 30% 30%, ${video.glowColor} 0%, transparent 60%)`,
-                      }}
+                      className="absolute -inset-6 rounded-[2.5rem] opacity-40 blur-2xl transition-all duration-700"
+                      style={{ background: `radial-gradient(circle, ${video.glowColor} 0%, transparent 60%)` }}
                     />
 
-                    {/* Video Card */}
-                    <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
-                      <div className={`aspect-video bg-black relative overflow-hidden`}>
-                        {/* Keep all videos mounted to avoid flashes */}
-                        {videoShowcase.map((v, idx) => (
-                          <video
-                            key={v.id}
-                            ref={(el) => {
-                              showcaseVideoRefs.current[idx] = el;
-                            }}
-                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                              idx === currentVideo ? 'opacity-100' : 'opacity-0'
-                            }`}
-                            src={v.src}
-                            poster={v.poster}
-                            muted
-                            playsInline
-                            loop
-                            autoPlay={!isPausedByUser && idx === currentVideo}
-                            preload="metadata"
-                          />
-                        ))}
+                    {/* Phone frame */}
+                    <div
+                      className="relative rounded-[2.5rem] bg-gray-900 p-[7px] shadow-2xl mx-auto"
+                      style={{ boxShadow: '0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)' }}
+                    >
+                      <div className="w-full rounded-[2.2rem] overflow-hidden relative bg-black">
+                        {/* Notch */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-b-3xl z-20" />
 
-                        {/* Dark overlay for readable text */}
-                        <div className="absolute inset-0 bg-black/25" />
+                        <div className="aspect-[9/16] relative overflow-hidden">
+                          {videoShowcase.map((v, idx) => (
+                            <video
+                              key={v.id}
+                              ref={(el) => { showcaseVideoRefs.current[idx] = el; }}
+                              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${idx === currentVideo ? 'opacity-100' : 'opacity-0'}`}
+                              src={v.src}
+                              poster={v.poster}
+                              muted
+                              playsInline
+                              loop
+                              autoPlay={!isPausedByUser && idx === currentVideo}
+                              preload="metadata"
+                            />
+                          ))}
 
-                        {/* Play/Pause button */}
-                        <button
-                          type="button"
-                          aria-label={isPlaying ? (isEn ? 'Pause video' : 'Пауза') : (isEn ? 'Play video' : 'Відтворити')}
-                          onClick={toggleCurrentVideoPlayback}
-                          className="absolute inset-0 flex items-center justify-center"
-                        >
-                          <span className="relative group">
-                            <span className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-175 transition-transform" />
-                            <span className="relative w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                              {isPlaying ? (
-                                <Pause className="w-10 h-10 text-white" />
-                              ) : (
-                                <Play className="w-10 h-10 text-white fill-white ml-1" />
-                              )}
+                          <div className="absolute inset-0 bg-black/15" />
+
+                          {/* Play/Pause */}
+                          <button
+                            type="button"
+                            aria-label={isPlaying ? (isEn ? 'Pause' : 'Пауза') : (isEn ? 'Play' : 'Відтворити')}
+                            onClick={toggleCurrentVideoPlayback}
+                            className="absolute inset-0 flex items-center justify-center z-10"
+                          >
+                            <span className="relative group">
+                              <span className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-150 group-hover:scale-[1.75] transition-transform" />
+                              <span className="relative w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                                {isPlaying ? <Pause className="w-7 h-7 text-white" /> : <Play className="w-7 h-7 text-white fill-white ml-0.5" />}
+                              </span>
                             </span>
-                          </span>
-                        </button>
+                          </button>
 
-                        {/* Video info overlay */}
-                        <div className="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
-                          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm">
-                            {video.category === 'influencer' && (isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер')}
-                            {video.category === 'ugc' && (isEn ? '⚡ UGC' : '⚡ UGC')}
-                            {video.category === 'video' && (isEn ? '🎬 AI Video' : '🎬 AI-відео')}
-                          </span>
-                        </div>
-
-                        <div className="absolute top-4 right-4 flex items-center gap-2 pointer-events-none">
-                          <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
-                            <Play className="w-3 h-3" /> {video.duration}
-                          </span>
-                        </div>
-
-                        {/* Bottom info */}
-                        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
-                          <h3 className="text-2xl font-bold mb-2">
-                            {isEn ? video.titleEn : video.titleUk}
-                          </h3>
-                          <p className="text-gray-400">
-                            {isEn ? video.descEn : video.descUk}
-                          </p>
-                          <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-                            <span>
-                              {video.views} {isEn ? 'views' : 'переглядів'}
+                          {/* Top badges */}
+                          <div className="absolute top-10 left-4 z-10">
+                            <span className={`px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r ${video.gradient} shadow-lg`}>
+                              {video.category === 'influencer' && (isEn ? '🎭 AI Influencer' : '🎭 AI-інфлюенсер')}
+                              {video.category === 'ugc' && (isEn ? '⚡ UGC' : '⚡ UGC')}
+                              {video.category === 'video' && (isEn ? '🎬 AI Video' : '🎬 AI-відео')}
                             </span>
+                          </div>
+                          <div className="absolute top-10 right-4 z-10">
+                            <span className="px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs font-medium flex items-center gap-1">
+                              <Play className="w-3 h-3" /> {video.duration}
+                            </span>
+                          </div>
+
+                          {/* Bottom info */}
+                          <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none z-10">
+                            <h3 className="text-lg font-bold mb-1">{isEn ? video.titleEn : video.titleUk}</h3>
+                            <p className="text-sm text-gray-400 line-clamp-2">{isEn ? video.descEn : video.descUk}</p>
                           </div>
                         </div>
                       </div>
@@ -716,41 +783,30 @@ export default function AIContentCreationClient() {
                   </motion.div>
                 );
               })()}
-
-              {/* Navigation buttons */}
-              <button
-                onClick={prevVideo}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-10"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextVideo}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors z-10"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
             </div>
 
-            {/* Thumbnails */}
-            <div className="mt-8 flex items-center justify-center gap-3">
+            {/* Thumbnail cards */}
+            <div className="mt-10 flex items-center justify-center gap-4">
               {videoShowcase.map((video, index) => (
                 <button
                   key={video.id}
-                  onClick={() => {
-                    setCurrentVideo(index);
-                    setIsAutoplay(false);
-                    setIsPausedByUser(false);
-                  }}
-                  className={`relative w-20 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                    index === currentVideo
-                      ? 'border-white scale-110'
-                      : 'border-white/20 opacity-50 hover:opacity-80'
+                  onClick={() => { setCurrentVideo(index); setIsAutoplay(false); setIsPausedByUser(false); }}
+                  className={`group relative rounded-2xl overflow-hidden transition-all duration-300 ${
+                    index === currentVideo ? 'ring-2 ring-white scale-105' : 'opacity-60 hover:opacity-90 hover:scale-[1.02]'
                   }`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${video.gradient}`} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Play className="w-4 h-4 text-white/80" />
+                  <div className={`w-24 h-14 sm:w-32 sm:h-20 bg-gradient-to-br ${video.gradient} relative`}>
+                    <div className="absolute inset-0 bg-black/30" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
+                      <Play className={`w-5 h-5 text-white/90 ${index === currentVideo ? 'fill-white/50' : ''}`} />
+                      <span className="text-[10px] font-semibold text-white/80">
+                        {video.category === 'influencer' ? '🎭' : video.category === 'video' ? '🎬' : '⚡'}
+                        {' '}{isEn ? video.titleEn.replace('AI ', '').replace(' Example', '') : video.titleUk.replace('Приклад ', '')}
+                      </span>
+                    </div>
+                    {index === currentVideo && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white" />
+                    )}
                   </div>
                 </button>
               ))}
@@ -759,11 +815,7 @@ export default function AIContentCreationClient() {
             {/* Autoplay control */}
             <div className="mt-6 flex items-center justify-center">
               <button
-                onClick={() => {
-                  const next = !isAutoplay;
-                  setIsAutoplay(next);
-                  if (next) setIsPausedByUser(false);
-                }}
+                onClick={() => { const next = !isAutoplay; setIsAutoplay(next); if (next) setIsPausedByUser(false); }}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors"
               >
                 {isAutoplay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}

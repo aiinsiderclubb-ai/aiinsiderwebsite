@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Users, Video, Sparkles, Play, Pause, CheckCircle } from 'lucide-react';
+import { ArrowRight, Users, Video, Sparkles, Play, Pause, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
 
 const services = [
@@ -42,6 +42,18 @@ const services = [
     descUk: 'UGC-реклама у масштабі',
     statValue: '80%',
     statLabel: { en: 'cost cut', uk: 'економія' },
+  },
+  {
+    slug: 'ai-creative-studio',
+    icon: ImageIcon,
+    gradient: 'from-green-500 to-emerald-500',
+    glowColor: 'rgba(16, 185, 129, 0.3)',
+    titleEn: 'AI Creative Studio',
+    titleUk: 'AI Креативна студія',
+    descEn: 'Static creatives & banners without designers',
+    descUk: 'Креативи та банери без дизайнерів',
+    statValue: '100+',
+    statLabel: { en: 'creatives/mo', uk: 'креативів/міс' },
   },
 ];
 
@@ -203,13 +215,13 @@ export default function AIContentStudio() {
               {/* Subtitle */}
               <p className="text-base text-gray-400 mb-6 max-w-lg">
                 {isEn
-                  ? 'AI influencers, video production, and UGC ads — without shoots, creators, or content bottlenecks'
-                  : 'AI-інфлюенсери, відеопродакшн та UGC-реклама — без зйомок, креаторів та контентних "затичок"'}
+                  ? 'AI influencers, video production, UGC ads and static creatives — without shoots, designers, or content bottlenecks'
+                  : 'AI-інфлюенсери, відеопродакшн, UGC-реклама та креативи — без зйомок, дизайнерів та контентних "затичок"'}
               </p>
             </motion.div>
 
             {/* Service Cards */}
-            <div className="space-y-3 mb-6">
+            <div className="space-y-2 mb-6">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 return (
@@ -220,7 +232,7 @@ export default function AIContentStudio() {
                     transition={{ duration: 0.5, delay: 0.2 + index * 0.08 }}
                   >
                     <Link href={`${basePath}/services/${service.slug}`} className="group block">
-                      <div className="relative flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300">
+                      <div className="relative flex items-center gap-2.5 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300">
                         <div
                           className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                           style={{
@@ -228,8 +240,8 @@ export default function AIContentStudio() {
                             filter: 'blur(20px)',
                           }}
                         />
-                        <div className={`relative w-10 h-10 rounded-lg bg-gradient-to-br ${service.gradient} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110`}>
-                          <Icon className="w-5 h-5 text-white" />
+                        <div className={`relative w-9 h-9 rounded-lg bg-gradient-to-br ${service.gradient} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110`}>
+                          <Icon className="w-4 h-4 text-white" />
                         </div>
                         <div className="relative flex-1 min-w-0">
                           <div className="flex items-center justify-between">
@@ -315,7 +327,7 @@ export default function AIContentStudio() {
               />
 
               {/* Phone frame */}
-              <div className="relative w-[180px] lg:w-[200px]">
+              <div className="relative w-[210px] lg:w-[240px]">
                 <div className="relative rounded-[2rem] border-[3px] border-white/15 bg-black overflow-hidden shadow-2xl shadow-purple-500/20">
                   {/* Notch */}
                   <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-14 h-4 bg-black rounded-full z-20" />
@@ -466,7 +478,7 @@ export default function AIContentStudio() {
 
               {/* Category tags */}
               <div className="relative flex flex-wrap gap-1.5">
-                {services.map((s, i) => (
+                {services.slice(0, 3).map((s, i) => (
                   <motion.span
                     key={s.slug}
                     animate={{ scale: currentVideo === i ? 1.05 : 1 }}
