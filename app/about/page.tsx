@@ -53,7 +53,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     id: 'volodymyr',
     nameKey: 'about.member3Name',
     roleKey: 'about.member3Role',
-    imageCandidates: ['https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'],
+    imageCandidates: [],
     bioKey: 'about.member3Bio',
     social: {
       linkedin: 'https://linkedin.com',

@@ -410,30 +410,28 @@ export default function ServiceDetailPage() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-              {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[280px] md:auto-rows-[320px]">
+              {[1, 2, 3, 4, 5].map((n) => (
                 <motion.div
                   key={n}
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: n * 0.08 }}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300"
+                  className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300${n === 1 ? ' row-span-2' : ''}`}
                 >
-                  <div className="relative aspect-[4/5]">
-                    <Image
-                      src={`/images/ai-creatives/${n}.jpeg`}
-                      alt={`AI creative example ${n}`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${gradient} text-white`}>
-                        {isEn ? 'AI Generated' : 'AI-генерація'}
-                      </span>
-                    </div>
+                  <Image
+                    src={`/images/ai-creatives/${n}.jpeg`}
+                    alt={`AI creative example ${n}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${gradient} text-white`}>
+                      {isEn ? 'AI Generated' : 'AI-генерація'}
+                    </span>
                   </div>
                 </motion.div>
               ))}
