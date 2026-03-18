@@ -341,9 +341,48 @@ export default function AIContentCreationClient() {
                 className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed"
               >
                 {isEn
-                  ? 'AI influencers, video production, and UGC ads — without shoots, creators, or content bottlenecks.'
-                  : 'AI-інфлюенсери, відеопродакшн та UGC-реклама — без зйомок, креаторів та контентних "затичок".'}
+                  ? 'AI influencers, video production, UGC ads and static creatives — without shoots, designers, or content bottlenecks.'
+                  : 'AI-інфлюенсери, відеопродакшн, UGC-реклама та креативи — без зйомок, дизайнерів та контентних "затичок".'}
               </motion.p>
+
+              {/* Service rows */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="space-y-2.5 mb-10"
+              >
+                {services.map((service) => {
+                  const Icon = service.icon;
+                  return (
+                    <Link
+                      key={service.slug}
+                      href={`${basePath}/services/${service.slug}`}
+                      className="group flex items-center gap-3 px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-white/20 transition-all duration-300"
+                    >
+                      <div
+                        className={`w-10 h-10 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110`}
+                        style={{ boxShadow: `0 4px 15px ${service.glowColor}` }}
+                      >
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-white truncate">
+                          {isEn ? service.titleEn : service.titleUk}
+                        </div>
+                        <div className="text-xs text-gray-500 truncate">
+                          {isEn ? service.subtitleEn : service.subtitleUk}
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0 hidden sm:block">
+                        <span className="text-sm font-bold text-white">{service.statValue}</span>
+                        <span className="text-xs text-gray-500 ml-1">{isEn ? service.statLabel.en : service.statLabel.uk}</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors shrink-0" />
+                    </Link>
+                  );
+                })}
+              </motion.div>
 
               {/* CTA Buttons */}
               <motion.div
