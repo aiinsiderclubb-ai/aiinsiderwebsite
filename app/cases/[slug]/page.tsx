@@ -104,7 +104,7 @@ export default function CaseDetailPage() {
           />
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           {/* Breadcrumb */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -243,7 +243,7 @@ export default function CaseDetailPage() {
 
       {/* Problem & Solution - Side by Side */}
       <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Problem */}
             <motion.div
@@ -309,7 +309,7 @@ export default function CaseDetailPage() {
             />
           </div>
 
-          <div className="relative max-w-5xl mx-auto">
+          <div className="relative max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -411,7 +411,7 @@ export default function CaseDetailPage() {
             />
           </div>
 
-          <div className="relative max-w-5xl mx-auto">
+          <div className="relative max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -499,7 +499,7 @@ export default function CaseDetailPage() {
 
       {relatedService ? (
         <section className="py-10 px-6">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -536,7 +536,7 @@ export default function CaseDetailPage() {
       {/* Dashboard Preview */}
       {dashboardType && (
         <section className="py-16 px-6 border-y border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <DashboardPreview type={dashboardType} />
           </div>
         </section>
@@ -545,7 +545,7 @@ export default function CaseDetailPage() {
       {/* Process Timeline */}
       {caseData.process && caseData.process.length > 0 && (
         <section className="py-16 px-6 border-y border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -611,7 +611,7 @@ export default function CaseDetailPage() {
       {/* Features Grid */}
       {caseData.features && caseData.features.length > 0 && (
         <section className="py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -648,7 +648,7 @@ export default function CaseDetailPage() {
 
       {/* What's Included */}
       <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -723,7 +723,7 @@ export default function CaseDetailPage() {
       {/* Related Cases */}
       {relatedCases.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -759,7 +759,7 @@ export default function CaseDetailPage() {
 
       {/* Back Link */}
       <section className="py-10 px-6">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <Link
             href={`${basePath}/cases`}
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"

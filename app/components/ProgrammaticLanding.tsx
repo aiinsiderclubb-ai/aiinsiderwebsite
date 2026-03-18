@@ -58,7 +58,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
           />
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           {/* Badge */}
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-gray-300">
@@ -97,7 +97,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
 
       {/* Benefits Section */}
       <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? `Key Benefits of ${solutionName}` : `${solutionName}: ключові переваги`}
           </h2>
@@ -120,7 +120,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Spotlight Section */}
       {page.spotlight ? (
         <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div
               className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-10"
               style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)' }}
@@ -150,7 +150,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
 
       {/* Use Cases Section */}
       <section className="py-16 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? `How ${solutionName} Works in Practice` : `Як ${solutionName} працює на практиці`}
           </h2>
@@ -174,7 +174,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
 
       {/* FAQ Section */}
       <section className="py-16 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold font-heading text-white mb-10">
             {isEn ? 'Frequently Asked Questions' : 'Часті питання'}
           </h2>
@@ -198,7 +198,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Related Services Section */}
       {relatedServicePages.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Related Services' : 'Пов\'язані сервіси'}
             </h2>
@@ -223,7 +223,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Related Blog Articles */}
       {relatedBlogArticles.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Related Articles' : 'Пов\'язані статті'}
             </h2>
@@ -253,7 +253,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
       {/* Related Programmatic Pages */}
       {relatedProgrammatic.length > 0 && (
         <section className="py-16 px-6 border-t border-white/5">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Explore More Solutions' : 'Більше рішень'}
             </h2>
@@ -277,7 +277,7 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
 
       {/* Hub Links Section */}
       <section className="py-16 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-8">
               {isEn ? 'Explore Core AI Solutions' : 'Основні AI-рішення'}
             </h2>

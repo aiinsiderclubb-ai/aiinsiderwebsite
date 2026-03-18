@@ -418,11 +418,9 @@ export default function ServiceDetailPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: n * 0.08 }}
-                  className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300 ${
-                    n === 1 ? 'md:row-span-2' : ''
-                  } ${n === 4 ? 'md:col-span-2' : ''}`}
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300"
                 >
-                  <div className={`relative ${n === 1 ? 'aspect-[3/4]' : n === 4 ? 'aspect-[2/1]' : 'aspect-square'}`}>
+                  <div className="relative aspect-[4/5]">
                     <Image
                       src={`/images/ai-creatives/${n}.jpeg`}
                       alt={`AI creative example ${n}`}
