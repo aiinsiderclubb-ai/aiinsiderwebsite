@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp, ChevronLeft, ChevronRight, Volume2, VolumeX, Pause } from 'lucide-react';
+import { ArrowRight, Play, Sparkles, Video, Users, Zap, CheckCircle, Star, Globe, Palette, TrendingUp, ChevronLeft, ChevronRight, Volume2, VolumeX, Pause, Image as ImageIcon } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
@@ -55,6 +55,21 @@ const services = [
     featuresUk: ['100+ різних аватарів', 'Скрипти під конверсії', 'Оптимізовано під платформи', 'Вартість у 5-10 разів нижча'],
     statValue: '80%',
     statLabel: { en: 'cost reduction', uk: 'економія витрат' },
+  },
+  {
+    slug: 'ai-creative-studio',
+    icon: ImageIcon,
+    gradient: 'from-green-500 to-emerald-500',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
+    emoji: '🎨',
+    titleEn: 'AI Creative Studio',
+    titleUk: 'AI Креативна студія',
+    subtitleEn: 'Static creatives, banners and content without designers',
+    subtitleUk: 'Статичні креативи, банери та контент без дизайнерів',
+    featuresEn: ['Brand-consistent visuals', 'Product photography', 'Ad creatives at scale', 'Social media graphics'],
+    featuresUk: ['Візуали у стилі бренду', 'Продуктова фотографія', 'Рекламні креативи у масштабі', 'Графіка для соцмереж'],
+    statValue: '100+',
+    statLabel: { en: 'creatives/month', uk: 'креативів/місяць' },
   },
 ];
 
@@ -238,7 +253,7 @@ export default function AIContentCreationClient() {
             }}
           />
           <div
-            className="absolute top-20 left-1/4 w-[800px] h-[800px] rounded-full"
+            className="absolute top-20 left-1/4 w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] rounded-full"
             style={{
               background: 'radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 50%)',
               filter: 'blur(120px)',
@@ -246,7 +261,7 @@ export default function AIContentCreationClient() {
             }}
           />
           <div
-            className="absolute bottom-20 right-1/4 w-[600px] h-[600px] rounded-full"
+            className="absolute bottom-20 right-1/4 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] rounded-full"
             style={{
               background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 50%)',
               filter: 'blur(100px)',
@@ -365,7 +380,7 @@ export default function AIContentCreationClient() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="mt-12 flex items-center gap-8"
+                className="mt-12 flex flex-wrap items-center gap-4 sm:gap-8"
               >
                 {[
                   { value: '10x', label: isEn ? 'faster' : 'швидше' },
@@ -377,6 +392,43 @@ export default function AIContentCreationClient() {
                     <span className="text-sm text-gray-500">{stat.label}</span>
                   </div>
                 ))}
+              </motion.div>
+
+              {/* Mobile phone preview */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="mt-10 block lg:hidden"
+              >
+                <div className="relative max-w-[280px] mx-auto">
+                  <div className="absolute -inset-3 rounded-[2rem] opacity-40 blur-xl" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.4), rgba(59,130,246,0.4), rgba(236,72,153,0.4))' }} />
+                  <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] overflow-hidden">
+                    <div className="aspect-[9/16] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
+                          <div className="relative w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20">
+                            <Play className="w-6 h-6 text-white fill-white ml-0.5" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="absolute top-3 left-3 px-2.5 py-1 bg-red-500 rounded-full text-[10px] font-bold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                        LIVE
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+                          <div>
+                            <div className="font-bold text-xs">AI Creator</div>
+                            <div className="text-[10px] text-gray-400">2.5M</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
 
@@ -399,7 +451,7 @@ export default function AIContentCreationClient() {
                 {/* Main card */}
                 <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl overflow-hidden">
                   {/* Video placeholder */}
-                  <div className="aspect-[9/16] max-h-[500px] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
+                  <div className="aspect-[9/16] max-h-[600px] bg-gradient-to-br from-purple-900/50 via-blue-900/50 to-pink-900/50 relative">
                     {/* Animated play button */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative">
@@ -723,7 +775,7 @@ export default function AIContentCreationClient() {
           </motion.div>
 
           {/* Service Cards - Premium Bento Style */}
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (

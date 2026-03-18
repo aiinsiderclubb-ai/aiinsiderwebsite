@@ -233,7 +233,7 @@ export default function SweezyPage() {
               </div>
 
               {/* Phone */}
-              <div className="relative w-72 h-[580px] rounded-[3rem] p-2"
+              <div className="relative w-56 h-[440px] sm:w-72 sm:h-[580px] rounded-[3rem] p-2"
                 style={{
                   background: 'linear-gradient(180deg, #0057B8 0%, #FFD700 100%)',
                   boxShadow: '0 0 60px rgba(0, 87, 184, 0.4), 0 0 120px rgba(255, 215, 0, 0.2)',

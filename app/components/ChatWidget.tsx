@@ -405,7 +405,7 @@ Would you like to learn more?`,
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] h-[600px] max-h-[80vh] flex flex-col rounded-3xl overflow-hidden border border-white/20"
+            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[80vh] flex flex-col rounded-3xl overflow-hidden border border-white/20"
             style={{ 
               background: 'rgba(10, 10, 15, 0.95)',
               backdropFilter: 'blur(20px)',

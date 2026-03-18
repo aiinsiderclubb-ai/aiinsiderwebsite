@@ -117,7 +117,7 @@ export default function CaseDetailPage() {
           </motion.div>
 
           {/* Main Hero Content */}
-          <div className="grid lg:grid-cols-[1fr,400px] gap-12 items-start">
+          <div className="grid lg:grid-cols-[1fr,minmax(280px,400px)] gap-12 items-start">
             {/* Left - Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}

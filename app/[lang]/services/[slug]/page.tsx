@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ArrowRight, Play, CheckCircle, Sparkles, Clock, ChevronDown, Users, Video, Zap, Globe, Star, Target, Layers, MessageCircle } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, Sparkles, Clock, ChevronDown, Users, Video, Zap, Globe, Star, Target, Layers, MessageCircle, Image as ImageIcon } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
@@ -28,6 +29,8 @@ const iconMap: Record<string, React.ReactNode> = {
   '🤖': <Users className="w-6 h-6" />,
   '📈': <Target className="w-6 h-6" />,
   '🛠️': <Layers className="w-6 h-6" />,
+  '🎨': <Sparkles className="w-6 h-6" />,
+  '📸': <ImageIcon className="w-6 h-6" />,
   '💡': <Sparkles className="w-6 h-6" />,
 };
 
@@ -35,6 +38,7 @@ const serviceGradients: Record<string, { gradient: string; glowColor: string }> 
   'ai-influencers': { gradient: 'from-purple-500 to-pink-500', glowColor: 'rgba(168, 85, 247, 0.4)' },
   'ai-video-production': { gradient: 'from-blue-500 to-cyan-500', glowColor: 'rgba(59, 130, 246, 0.4)' },
   'ai-ugc-content': { gradient: 'from-orange-500 to-red-500', glowColor: 'rgba(249, 115, 22, 0.4)' },
+  'ai-creative-studio': { gradient: 'from-green-500 to-emerald-500', glowColor: 'rgba(16, 185, 129, 0.4)' },
 };
 
 const defaultGradient = { gradient: 'from-white/20 to-white/10', glowColor: 'rgba(255, 255, 255, 0.2)' };
@@ -371,6 +375,80 @@ export default function ServiceDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* Photo Gallery — AI Creative Studio only */}
+      {service.slug === 'ai-creative-studio' && (
+        <section className="relative py-20 px-6 overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-15"
+            style={{ background: `radial-gradient(ellipse at 30% 50%, ${glowColor} 0%, transparent 50%)` }}
+          />
+          <div className="relative max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-center mb-14"
+            >
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
+                <ImageIcon className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+                  {isEn ? 'Portfolio' : 'Портфоліо'}
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+                {isEn ? 'Our ' : 'Наші '}
+                <span className={`bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+                  {isEn ? 'Creatives' : 'креативи'}
+                </span>
+              </h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                {isEn
+                  ? 'Examples of AI-generated creatives, product photos and graphics'
+                  : 'Приклади AI-генерованих креативів, продуктових фото та графіки'}
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <motion.div
+                  key={n}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: n * 0.08 }}
+                  className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300 ${
+                    n === 1 ? 'md:row-span-2' : ''
+                  } ${n === 4 ? 'md:col-span-2' : ''}`}
+                >
+                  <div className={`relative ${n === 1 ? 'aspect-[3/4]' : n === 4 ? 'aspect-[2/1]' : 'aspect-square'}`}>
+                    <Image
+                      src={`/images/ai-creatives/${n}.jpg`}
+                      alt={`AI creative example ${n}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${gradient} text-white`}>
+                        {isEn ? 'AI Generated' : 'AI-генерація'}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <p className="mt-8 text-center text-sm text-gray-500">
+              {isEn
+                ? 'Drop your images into public/images/ai-creatives/ (1.jpg through 6.jpg)'
+                : 'Додайте зображення у public/images/ai-creatives/ (1.jpg — 6.jpg)'}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Use Cases & Timeline */}
       <section className="relative py-20 px-6 overflow-hidden">

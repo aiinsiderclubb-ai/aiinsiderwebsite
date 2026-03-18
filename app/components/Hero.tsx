@@ -37,7 +37,7 @@ export default function Hero() {
         }}
       />
       <div
-        className="absolute w-[400px] h-[400px] rounded-full"
+        className="absolute w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] rounded-full"
         style={{
           background: 'radial-gradient(circle, rgba(var(--theme-glow-rgb), 0.06) 0%, transparent 60%)',
           filter: 'blur(60px)',
@@ -83,7 +83,7 @@ export default function Hero() {
 
         {/* Main Heading */}
         <h1
-          className={`text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-6 leading-[0.9] transition-all duration-700 delay-300 ${
+          className={`text-4xl md:text-7xl lg:text-8xl font-bold font-heading mb-6 leading-[0.9] transition-all duration-700 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

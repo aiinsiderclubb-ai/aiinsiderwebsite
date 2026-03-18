@@ -1376,6 +1376,102 @@ export const servicesData: ServicePage[] = [
     relatedArticleSlugs: ['ai-ugc-ads-complete-guide', 'ai-ugc-avatars-for-performance-ads', 'ai-model-for-fashion-ecommerce'],
     relatedCaseSlugs: [],
   },
+  {
+    slug: 'ai-creative-studio',
+    category: 'content',
+    title: { uk: 'AI Креативна студія', en: 'AI Creative Studio' },
+    subtitle: {
+      uk: 'Статичні креативи, банери, продуктові фото та графіка для соцмереж — без дизайнерів і фотозйомок.',
+      en: 'Static creatives, banners, product photos and social media graphics — without designers or photoshoots.',
+    },
+    seoTitle: {
+      uk: 'AI Креативна студія | Генерація зображень | AI Insider',
+      en: 'AI Creative Studio | Image Generation | AI Insider',
+    },
+    seoDescription: {
+      uk: 'Генеруємо статичні креативи, продуктові фото, банери та графіку для соцмереж з AI. Без дизайнерів, без зйомок.',
+      en: 'Generate static creatives, product photos, banners and social media graphics with AI. No designers, no photoshoots.',
+    },
+    keywords: {
+      en: ['AI creative studio', 'AI image generation', 'AI product photography', 'AI ad creatives', 'AI banners', 'AI graphic design'],
+      uk: ['AI креативна студія', 'AI генерація зображень', 'AI продуктова фотографія', 'AI рекламні креативи', 'AI банери'],
+    },
+    timeline: { uk: '1–2 тижні до перших креативів', en: '1–2 weeks to first creatives' },
+    outcomes: [
+      { uk: '100+ унікальних креативів на місяць', en: '100+ unique creatives per month' },
+      { uk: 'Повна відповідність бренд-гайдлайнам', en: 'Full brand guideline compliance' },
+      { uk: '80% економія порівняно з дизайнерами', en: '80% cost savings vs designers' },
+    ],
+    features: [
+      {
+        icon: '🎨',
+        title: { uk: 'Рекламні креативи', en: 'Ad Creatives' },
+        description: { uk: 'Генеруємо банери, карусельні зображення та статичну рекламу для Meta, Google та інших платформ.', en: 'Generate banners, carousel images and static ads for Meta, Google and other platforms.' },
+      },
+      {
+        icon: '📸',
+        title: { uk: 'Продуктова фотографія', en: 'Product Photography' },
+        description: { uk: 'AI-фото продуктів у різних сценах, ракурсах і стилях без реальної зйомки.', en: 'AI product photos in different scenes, angles and styles without real photoshoots.' },
+      },
+      {
+        icon: '📱',
+        title: { uk: 'Графіка для соцмереж', en: 'Social Media Graphics' },
+        description: { uk: 'Пости, stories, обкладинки та візуали для Instagram, Facebook, LinkedIn і TikTok.', en: 'Posts, stories, covers and visuals for Instagram, Facebook, LinkedIn and TikTok.' },
+      },
+      {
+        icon: '✨',
+        title: { uk: 'Бренд-консистентність', en: 'Brand Consistency' },
+        description: { uk: 'Всі креативи відповідають вашому бренд-гайдлайну: кольори, шрифти, стиль.', en: 'All creatives match your brand guidelines: colors, fonts, style.' },
+      },
+    ],
+    useCases: [
+      {
+        title: { uk: 'E-commerce продуктові фото', en: 'E-commerce Product Photos' },
+        description: { uk: 'Генеруйте сотні варіацій продуктових фото для каталогів і маркетплейсів.', en: 'Generate hundreds of product photo variations for catalogs and marketplaces.' },
+      },
+      {
+        title: { uk: 'Performance-маркетинг', en: 'Performance Marketing' },
+        description: { uk: 'A/B тестуйте десятки креативних варіацій без додаткових витрат на дизайн.', en: 'A/B test dozens of creative variations without additional design costs.' },
+      },
+      {
+        title: { uk: 'Контент для соцмереж', en: 'Social Media Content' },
+        description: { uk: 'Щоденні пости та stories з унікальними візуалами під ваш бренд.', en: 'Daily posts and stories with unique visuals matching your brand.' },
+      },
+    ],
+    implementation: [
+      {
+        title: { uk: 'Бренд-аналіз', en: 'Brand Analysis' },
+        description: { uk: 'Аналізуємо ваш бренд-гайдлайн, стиль та цільову аудиторію.', en: 'Analyze your brand guidelines, style and target audience.' },
+        duration: { uk: '2–3 дні', en: '2–3 days' },
+      },
+      {
+        title: { uk: 'Налаштування пайплайну', en: 'Pipeline Setup' },
+        description: { uk: 'Налаштовуємо AI-генерацію під ваші формати, платформи та стиль.', en: 'Set up AI generation for your formats, platforms and style.' },
+        duration: { uk: '3–5 днів', en: '3–5 days' },
+      },
+      {
+        title: { uk: 'Масштабування', en: 'Scaling' },
+        description: { uk: 'Запускаємо регулярну генерацію креативів з контролем якості.', en: 'Launch regular creative generation with quality control.' },
+        duration: { uk: 'постійно', en: 'ongoing' },
+      },
+    ],
+    faq: [
+      {
+        question: { uk: 'Чи можна генерувати фото реальних продуктів?', en: 'Can you generate photos of real products?' },
+        answer: { uk: 'Так. Ми використовуємо референсні фото вашого продукту і генеруємо нові сцени, фони та композиції.', en: 'Yes. We use reference photos of your product and generate new scenes, backgrounds and compositions.' },
+      },
+      {
+        question: { uk: 'Як забезпечується бренд-консистентність?', en: 'How is brand consistency ensured?' },
+        answer: { uk: 'Ми налаштовуємо AI під ваш бренд-гайдлайн: кольори, шрифти, стиль фотографії. Кожен креатив проходить контроль якості.', en: 'We configure AI to your brand guidelines: colors, fonts, photography style. Every creative goes through quality control.' },
+      },
+      {
+        question: { uk: 'Скільки креативів можна генерувати на місяць?', en: 'How many creatives can be generated per month?' },
+        answer: { uk: 'Від 50 до 500+ залежно від складності та формату. Типовий клієнт отримує 100-200 унікальних креативів.', en: 'From 50 to 500+ depending on complexity and format. A typical client receives 100-200 unique creatives.' },
+      },
+    ],
+    relatedArticleSlugs: ['ai-generated-models-for-advertising', 'ai-ugc-ads-complete-guide'],
+    relatedCaseSlugs: [],
+  },
 ];
 
 export function getServiceBySlug(slug: string): ServicePage | undefined {

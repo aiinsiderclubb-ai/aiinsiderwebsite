@@ -160,7 +160,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-6 animate-fade-in">
-          <div className="rounded-2xl p-6 border border-white/10 bg-black/90" style={{ backdropFilter: 'blur(16px)' }}>
+          <div className="rounded-2xl p-6 border border-white/10 bg-black/90 max-h-[80vh] overflow-y-auto" style={{ backdropFilter: 'blur(16px)' }}>
             {navLinks.map((link) => {
               const isExternal = link.href.startsWith('#');
 

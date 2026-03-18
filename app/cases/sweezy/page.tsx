@@ -263,7 +263,7 @@ export default function SweezyAppPage() {
             >
               {/* Phone Frame */}
               <div 
-                className="relative w-[280px] h-[560px] rounded-[50px] bg-gradient-to-b from-gray-800 to-gray-900 p-3 shadow-2xl"
+                className="relative w-[220px] h-[440px] sm:w-[280px] sm:h-[560px] rounded-[50px] bg-gradient-to-b from-gray-800 to-gray-900 p-3 shadow-2xl"
                 style={{ boxShadow: '0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)' }}
               >
                 {/* Screen */}
