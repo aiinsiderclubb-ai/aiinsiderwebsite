@@ -45,6 +45,12 @@ export interface BlogArticle {
   relatedLinks: { href: string; label: L }[];
 }
 
+declare global {
+  interface Window {
+    __AIINSIDER_BLOG_ARTICLES__?: BlogArticle[];
+  }
+}
+
 /* ── Helpers ───────────────────────────────────────────────── */
 
 export function getBlogText(value: L, lang: Language): string {
@@ -67,7 +73,118 @@ export const blogSlugs = (): string[] => getPublishedBlogArticles().map((a) => a
 
 /* ── Articles ──────────────────────────────────────────────── */
 
-export const blogArticles: BlogArticle[] = [
+type PipelineFaq = {
+  question: L;
+  answer: L;
+};
+
+type PipelineSection = {
+  h2: L;
+  body: L[];
+  bullets?: L[];
+};
+
+type PipelineArticle = Omit<BlogArticle, 'sections' | 'faq'> & {
+  sections: PipelineSection[];
+  faq: PipelineFaq[];
+  _pipeline?: unknown;
+};
+
+function normalizeDynamicArticle(article: BlogArticle | PipelineArticle): BlogArticle {
+  const { _pipeline, ...rest } = article as PipelineArticle;
+
+  return {
+    ...rest,
+    sections: article.sections.map((section) => {
+      if ('heading' in section) {
+        return section;
+      }
+
+      return {
+        heading: section.h2,
+        body: section.body,
+        bullets: section.bullets,
+      };
+    }),
+    faq: article.faq.map((item) => {
+      if ('q' in item) {
+        return item;
+      }
+
+      return {
+        q: item.question,
+        a: item.answer,
+      };
+    }),
+  };
+}
+
+function loadHydratedBlogArticles(): BlogArticle[] {
+  if (typeof window === 'undefined') {
+    return [];
+  }
+
+  const hydratedArticles = window.__AIINSIDER_BLOG_ARTICLES__;
+  if (!Array.isArray(hydratedArticles)) {
+    return [];
+  }
+
+  return hydratedArticles.map((article) => normalizeDynamicArticle(article));
+}
+
+function loadDynamicArticles(): BlogArticle[] {
+  const articles: BlogArticle[] = [];
+
+  const hydratedArticles = loadHydratedBlogArticles();
+  if (hydratedArticles.length > 0) {
+    return hydratedArticles;
+  }
+
+  if (typeof window !== 'undefined') {
+    return articles;
+  }
+
+  const nodeRequire = eval('require') as (id: string) => any;
+  const fs = nodeRequire('fs') as typeof import('fs');
+  const path = nodeRequire('path') as typeof import('path');
+  const dynamicContentDir = path.join(process.cwd(), 'content', 'blog');
+
+  if (!fs.existsSync(dynamicContentDir)) {
+    return articles;
+  }
+
+  let files: string[];
+  try {
+    files = fs.readdirSync(dynamicContentDir).filter((f) => f.endsWith('.json'));
+  } catch {
+    return articles;
+  }
+
+  for (const file of files) {
+    const filePath = path.join(dynamicContentDir, file);
+    try {
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      const article = normalizeDynamicArticle(JSON.parse(raw) as BlogArticle | PipelineArticle);
+
+      if (!article.slug || !article.titleTag || !article.sections || !article.h1) {
+        console.warn(`[blogData] Skipping invalid article file: ${file}`);
+        continue;
+      }
+
+      articles.push(article);
+    } catch (err) {
+      console.warn(`[blogData] Failed to load ${file}:`, err);
+    }
+  }
+
+  articles.sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
+
+  return articles;
+}
+
+const staticArticles: BlogArticle[] = [
   /* ─── Article 1 ─── */
   {
     slug: 'how-to-automate-lead-routing-with-ai',
@@ -4524,3 +4641,15 @@ export const blogArticles: BlogArticle[] = [
     relatedLinks: [],
   },
 ];
+
+function buildBlogArticles(): BlogArticle[] {
+  const dynamicOrHydratedArticles = loadDynamicArticles();
+
+  if (typeof window !== 'undefined') {
+    return dynamicOrHydratedArticles.length > 0 ? dynamicOrHydratedArticles : staticArticles;
+  }
+
+  return [...staticArticles, ...dynamicOrHydratedArticles];
+}
+
+export const blogArticles: BlogArticle[] = buildBlogArticles();

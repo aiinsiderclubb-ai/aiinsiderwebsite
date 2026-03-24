@@ -6,6 +6,7 @@ import LazyChatWidget from './components/LazyChatWidget';
 import { ChatProvider } from './context/ChatContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { blogArticles } from './lib/blogData';
 import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE, getSiteUrl, SITE_NAME } from './lib/site';
 
 const inter = Inter({
@@ -170,6 +171,11 @@ export default async function RootLayout({
     ],
   };
 
+  const hydratedBlogArticlesScript = `window.__AIINSIDER_BLOG_ARTICLES__ = ${JSON.stringify(blogArticles)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')};`;
+
   return (
     <html
       lang={lang === 'uk' ? 'uk-UA' : 'en'}
@@ -211,6 +217,10 @@ export default async function RootLayout({
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: hydratedBlogArticlesScript }}
         />
         <LanguageProvider initialLang={lang}>
           <ThemeProvider>
