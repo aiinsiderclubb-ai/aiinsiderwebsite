@@ -65,7 +65,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
     roi: `${beautyPillarBase}#roi-calculator`,
     audit: `${beautyPillarBase}#audit-form`,
   } as const;
-  const hasBeautyPillarCta = beautyClusterSlugs.has(slug) || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy');
+  const hasBeautyPillarCta = !isEn && (beautyClusterSlugs.has(slug) || article.ctaHref?.includes('/avtomatizaciya-salonu-krasy'));
 
 
   /* ── JSON-LD ── */
@@ -369,7 +369,9 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
               {isEn ? 'Related services' : '\u041f\u043e\u0432\u02bc\u044f\u0437\u0430\u043d\u0456 \u043f\u043e\u0441\u043b\u0443\u0433\u0438'}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {article.relatedLinks.map((link) => (
+              {article.relatedLinks.filter((link) =>
+                !isEn || (!link.href.includes('avtomatizaciya-salonu-krasy') && !link.href.includes('avtomatizaciya-nerukhomosti'))
+              ).map((link) => (
                 <Link key={link.href} href={withLang(lang, link.href)}
                   className="group inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full text-gray-400 border transition-all duration-200 hover:text-white hover:-translate-y-0.5"
                   style={{

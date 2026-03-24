@@ -131,6 +131,46 @@ export default async function SolutionsIndexPage({ params }: { params: Promise<P
         </div>
       </section>
 
+      {/* Content Factory featured solution */}
+      <section className="py-10 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Link
+            href={withLang(lang, '/content-factory')}
+            className="group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 rounded-[2rem] border border-emerald-500/25 bg-gradient-to-br from-emerald-500/[0.08] to-teal-500/[0.04] p-7 md:p-8 overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_48px_rgba(16,185,129,0.08)]"
+          >
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            <div
+              className="absolute -right-16 -top-16 w-56 h-56 rounded-full pointer-events-none opacity-15"
+              style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.6) 0%, transparent 65%)', filter: 'blur(50px)' }}
+            />
+            <div className="relative flex items-start gap-5">
+              <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-xl shadow-lg shadow-emerald-500/25">
+                🏭
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-lg font-bold text-white">Content Factory</span>
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 uppercase tracking-wider">
+                    {isEn ? 'New' : 'Новинка'}
+                  </span>
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 uppercase tracking-wider">
+                    {isEn ? 'Featured' : 'Рекомендовано'}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-300 leading-relaxed max-w-lg">
+                  {isEn
+                    ? '500+ posts per month. AI finds viral ideas, creates videos and posts, publishes across all platforms. You just tap Approve in Telegram.'
+                    : '500+ постів на місяць. AI знаходить вірусні ідеї, створює відео та пости, публікує у всі соцмережі. Ви лише натискаєте Схвалити в Telegram.'}
+                </p>
+              </div>
+            </div>
+            <span className="relative shrink-0 text-sm font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors">
+              {isEn ? 'Explore →' : 'Детальніше →'}
+            </span>
+          </Link>
+        </div>
+      </section>
+
       {/* Use Cases Section */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">

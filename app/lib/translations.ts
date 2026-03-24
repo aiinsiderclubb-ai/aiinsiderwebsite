@@ -8,6 +8,7 @@ export const translations = {
     about: { uk: 'Про нас', en: 'About' },
     cases: { uk: 'Кейси', en: 'Cases' },
     services: { uk: 'Послуги', en: 'Services' },
+    contentFactory: { uk: 'Content Factory', en: 'Content Factory' },
     solutions: { uk: 'Рішення', en: 'Solutions' },
     blog: { uk: 'Блог', en: 'Blog' },
     pricing: { uk: 'Ціни', en: 'Pricing' },

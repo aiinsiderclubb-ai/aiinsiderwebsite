@@ -501,6 +501,42 @@ export default function AIContentStudio() {
         </div>
       </div>
 
+      {/* Content Factory feature card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mx-6 mt-10 mb-2"
+      >
+        <Link
+          href={`${basePath}/content-factory`}
+          className="group relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.08] to-teal-500/[0.04] px-6 py-5 overflow-hidden hover:border-emerald-500/40 hover:bg-emerald-500/[0.12] transition-all duration-300"
+        >
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
+          <div className="flex items-start gap-4">
+            <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-base shadow-lg shadow-emerald-500/25">
+              🏭
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-bold text-white">Content Factory</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 uppercase tracking-wider">
+                  {isEn ? 'New' : 'Новинка'}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 leading-snug max-w-md">
+                {isEn
+                  ? '500+ posts/month. AI finds ideas, creates content, publishes to social media. You just approve in Telegram.'
+                  : '500+ постів на місяць. AI знаходить ідеї, створює контент, публікує у соцмережі. Ви лише схвалюєте в Telegram.'}
+              </p>
+            </div>
+          </div>
+          <span className="shrink-0 text-xs font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors">
+            {isEn ? 'Learn more →' : 'Дізнатися →'}
+          </span>
+        </Link>
+      </motion.div>
+
       <style jsx global>{`
         @keyframes gradient-shift {
           0% { background-position: 0% 50%; }

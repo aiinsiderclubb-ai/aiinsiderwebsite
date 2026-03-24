@@ -27,6 +27,7 @@ export default function Footer() {
     { label: t('footer.linkVoiceAgents'), href: `${basePath}/services/ai-voice-agent` },
     { label: t('footer.linkAutomation'), href: `${basePath}/services/workflow-automation` },
     { label: t('footer.linkCustomAgents'), href: `${basePath}/services/custom-ai-models` },
+    { label: 'Content Factory', href: `${basePath}/content-factory` },
     { label: 'Sweezy', href: `${basePath}/cases/sweezy` },
   ];
 

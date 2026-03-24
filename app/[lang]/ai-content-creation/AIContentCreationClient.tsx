@@ -238,8 +238,30 @@ export default function AIContentCreationClient() {
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
+      {/* Content Factory cross-sell banner */}
+      <div className="relative z-10 pt-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Link
+            href={`${basePath}/content-factory`}
+            className="group flex items-center justify-between gap-4 px-5 py-3.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.07] hover:border-emerald-500/50 hover:bg-emerald-500/[0.12] transition-all duration-300"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="text-lg shrink-0">🔥</span>
+              <span className="text-sm font-semibold text-emerald-300 truncate">
+                {isEn
+                  ? 'Want all of this on full autopilot? Check out Content Factory'
+                  : 'Хочете все це на повному автопілоті? Подивіться на Content Factory'}
+              </span>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold group-hover:bg-emerald-500/30 transition-colors">
+              {isEn ? 'Explore →' : 'Переглянути →'}
+            </span>
+          </Link>
+        </div>
+      </div>
+
       {/* Hero Section - Enhanced */}
-      <section className="relative pt-28 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-8 pb-24 px-6 overflow-hidden">
         {/* Animated mesh gradient background */}
         <div className="absolute inset-0">
           <div
@@ -1109,6 +1131,44 @@ export default function AIContentCreationClient() {
             >
               {isEn ? 'See all AI solutions for your industry →' : 'Переглянути всі AI-рішення для вашої галузі →'}
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Factory cross-sell block */}
+      <section className="relative py-16 px-6 overflow-hidden border-t border-white/5">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="relative rounded-[2rem] border border-emerald-500/20 bg-gradient-to-br from-emerald-500/[0.07] to-teal-500/[0.04] p-8 md:p-10 overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            <div
+              className="absolute -right-20 -top-20 w-72 h-72 rounded-full pointer-events-none opacity-20"
+              style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.5) 0%, transparent 65%)', filter: 'blur(60px)' }}
+            />
+            <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="max-w-xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 border border-emerald-500/30 bg-emerald-500/10">
+                  <span className="text-lg">🏭</span>
+                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">Content Factory</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  {isEn
+                    ? 'Want a system that combines everything automatically?'
+                    : 'Хочете систему що обʼєднує все автоматично?'}
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
+                  {isEn
+                    ? 'Content Factory is a fully automated AI system: it finds viral ideas, writes posts, creates videos and publishes across all social media. 500+ posts per month — you just tap Approve in Telegram.'
+                    : 'Content Factory — це повністю автоматизована AI система: знаходить вірусні ідеї, пише пости, створює відео та публікує у всі соцмережі. 500+ постів на місяць — ви лише натискаєте Схвалити в Telegram.'}
+                </p>
+              </div>
+              <Link
+                href={`${basePath}/content-factory`}
+                className="shrink-0 inline-flex items-center gap-3 px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)]"
+              >
+                {isEn ? 'Learn about Content Factory' : 'Дізнатися про Content Factory'}
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

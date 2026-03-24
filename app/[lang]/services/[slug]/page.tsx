@@ -739,6 +739,42 @@ export default function ServiceDetailPage() {
         </section>
       ) : null}
 
+      {/* Content Factory cross-sell — shown only for content-related services */}
+      {['ai-video-production', 'ai-ugc-content', 'ai-influencers'].includes(slug) ? (
+        <section className="relative py-12 px-6 overflow-hidden border-t border-white/5">
+          <div className="relative max-w-6xl mx-auto">
+            <div className="relative rounded-[2rem] border border-emerald-500/20 bg-gradient-to-br from-emerald-500/[0.07] to-teal-500/[0.03] p-7 md:p-9 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+              <div
+                className="absolute -right-16 -top-16 w-56 h-56 rounded-full pointer-events-none opacity-20"
+                style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.6) 0%, transparent 65%)', filter: 'blur(50px)' }}
+              />
+              <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+                <div className="max-w-lg">
+                  <p className="text-sm font-semibold text-emerald-400 mb-2 uppercase tracking-wider">Content Factory</p>
+                  <p className="text-white font-semibold text-lg leading-snug mb-2">
+                    {isEn
+                      ? 'This service is part of Content Factory — a fully automated AI content production system.'
+                      : 'Цей сервіс є частиною Content Factory — повністю автоматизованої системи виробництва контенту.'}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {isEn
+                      ? 'Combine all content services on full autopilot: ideas, videos, posts, publishing.'
+                      : 'Обʼєднайте всі контент-сервіси на повному автопілоті: ідеї, відео, пости, публікація.'}
+                  </p>
+                </div>
+                <Link
+                  href={`${basePath}/content-factory`}
+                  className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-sm transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)]"
+                >
+                  {isEn ? 'Learn more →' : 'Дізнатися більше →'}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Final CTA */}
       <PageCTA />
 

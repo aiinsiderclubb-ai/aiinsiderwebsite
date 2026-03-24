@@ -48,6 +48,7 @@ export default function Navbar() {
   const navLinks = [
     { name: t('nav.about'), href: `${basePath}/about` },
     { name: t('nav.services'), href: `${basePath}/services` },
+    { name: t('nav.contentFactory'), href: `${basePath}/content-factory` },
     { name: t('nav.solutions'), href: `${basePath}/solutions` },
     { name: t('nav.cases'), href: `${basePath}/cases` },
     { name: t('nav.blog'), href: `${basePath}/blog` },

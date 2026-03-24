@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/projects', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/services', changeFrequency: 'monthly', priority: 0.8 },
     { path: '/ai-content-creation', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/content-factory', changeFrequency: 'monthly', priority: 0.95 },
     { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
     { path: '/solutions', changeFrequency: 'weekly', priority: 0.8 },
     // SEO landing pages
@@ -31,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/ai-automation-for-ecommerce', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-automation-for-saas', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/custom-ai-agents', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/content-factory-for-coaches', changeFrequency: 'monthly', priority: 0.85 },
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = SUPPORTED_LANGS.flatMap((lang) =>

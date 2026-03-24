@@ -21,6 +21,7 @@ const features = [
     title: 'Практичні гайди',
     titleEn: 'Practical Guides',
     description: 'Покрокові інструкції для вирішення повсякденних завдань у новій країні',
+    descriptionEn: 'Step-by-step instructions for navigating everyday tasks in a new country.',
     color: '#0057B8',
   },
   {
@@ -28,6 +29,7 @@ const features = [
     title: 'Чеклісти та шаблони',
     titleEn: 'Checklists & Templates',
     description: 'Готові списки та документи для швидкого старту',
+    descriptionEn: 'Ready-to-use checklists and document templates for a fast start.',
     color: '#FFD700',
   },
   {
@@ -35,6 +37,7 @@ const features = [
     title: 'Багатомовний контент',
     titleEn: 'Multilingual Content',
     description: 'Українська, німецька, французька, англійська та інші мови',
+    descriptionEn: 'Ukrainian, German, French, English and more — all in one place.',
     color: '#0057B8',
   },
   {
@@ -42,6 +45,7 @@ const features = [
     title: 'Особистий кабінет',
     titleEn: 'Personal Account',
     description: 'Збереження прогресу, закладки та персоналізовані рекомендації',
+    descriptionEn: 'Save progress, bookmark guides and get personalized recommendations.',
     color: '#FFD700',
   },
   {
@@ -49,6 +53,7 @@ const features = [
     title: 'Оновлення та новини',
     titleEn: 'Updates & News',
     description: 'Актуальна інформація про зміни в законодавстві та можливості',
+    descriptionEn: 'Stay informed about legal changes, deadlines and new opportunities.',
     color: '#0057B8',
   },
   {
@@ -56,48 +61,54 @@ const features = [
     title: 'AI-асистент',
     titleEn: 'AI Assistant',
     description: 'Розумний помічник, який відповідає на питання 24/7',
+    descriptionEn: 'Smart assistant that answers your questions 24/7 in any language.',
     color: '#FFD700',
   },
 ];
 
 const screenshots = [
-  { id: 1, label: 'Головна' },
-  { id: 2, label: 'Гайди' },
-  { id: 3, label: 'Профіль' },
-  { id: 4, label: 'Чат' },
+  { id: 1, label: 'Головна', labelEn: 'Home' },
+  { id: 2, label: 'Гайди', labelEn: 'Guides' },
+  { id: 3, label: 'Профіль', labelEn: 'Profile' },
+  { id: 4, label: 'Чат', labelEn: 'Chat' },
 ];
 
 const stats = [
-  { value: '10,000+', label: 'Користувачів' },
-  { value: '4.8', label: 'Рейтинг', icon: Star },
-  { value: '50+', label: 'Гайдів' },
-  { value: '24/7', label: 'Підтримка' },
+  { value: '10,000+', label: 'Користувачів', labelEn: 'Users' },
+  { value: '4.8', label: 'Рейтинг', labelEn: 'Rating', icon: Star },
+  { value: '50+', label: 'Гайдів', labelEn: 'Guides' },
+  { value: '24/7', label: 'Підтримка', labelEn: 'Support' },
 ];
 
 const reviews = [
   {
-    name: 'Олена К.',
-    location: 'Цюрих',
+    name: 'Olena K.',
+    location: 'Zurich',
     rating: 5,
     text: 'Sweezy допомогла мені швидко розібратися з усіма документами. Дуже зручний застосунок!',
+    textEn: 'Sweezy helped me quickly navigate all the paperwork after relocating. A very convenient app!',
   },
   {
-    name: 'Дмитро С.',
-    location: 'Женева',
+    name: 'Dmytro S.',
+    location: 'Geneva',
     rating: 5,
     text: 'AI-асистент відповів на всі мої питання о 2 годині ночі. Це як мати друга, який знає все.',
+    textEn: 'The AI assistant answered all my questions at 2 AM. It\'s like having a friend who knows everything.',
   },
   {
-    name: 'Ірина М.',
-    location: 'Берн',
+    name: 'Iryna M.',
+    location: 'Bern',
     rating: 5,
     text: 'Завдяки чеклістам я нічого не забула при переїзді. Рекомендую всім!',
+    textEn: 'Thanks to the checklists, I didn\'t miss anything during the move. Highly recommended!',
   },
 ];
 
 export default function SweezyAppPage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
+  const isEn = lang === 'en';
+  const t = (uk: string, en: string) => isEn ? en : uk;
   const siteUrl = getSiteUrl();
   const sweezyCase = getCaseBySlug('sweezy');
   const relatedService = sweezyCase?.relatedServiceSlug ? getServiceBySlug(sweezyCase.relatedServiceSlug) : undefined;
@@ -180,7 +191,7 @@ export default function SweezyAppPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 text-sm text-gray-400 mb-8"
           >
-            <Link href={`${basePath}/cases`} className="hover:text-white transition-colors">Кейси</Link>
+            <Link href={`${basePath}/cases`} className="hover:text-white transition-colors">{t('Кейси', 'Cases')}</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-blue-400">Sweezy</span>
           </motion.div>
@@ -214,20 +225,21 @@ export default function SweezyAppPage() {
                         <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-400">4.8 • 2.5K оцінок</span>
+                    <span className="text-sm text-gray-400">4.8 • {t('2.5K оцінок', '2.5K ratings')}</span>
                   </div>
                 </div>
               </div>
 
               {/* Tagline */}
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Розумний цифровий помічник
+                {t('Розумний цифровий помічник', 'Smart Digital Assistant')}
               </h2>
               
               <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-                Sweezy — це сучасна платформа, яка допомагає швидко знаходити актуальну, 
-                корисну та структуровану інформацію в одному місці. 
-                Єдина точка доступу до знань та сервісів.
+                {t(
+                  'Sweezy — це сучасна платформа, яка допомагає швидко знаходити актуальну, корисну та структуровану інформацію в одному місці. Єдина точка доступу до знань та сервісів.',
+                  'Sweezy is a modern platform that helps Ukrainian refugees in Switzerland quickly find accurate, useful, and structured information — all in one place. A single hub for knowledge and services.',
+                )}
               </p>
 
               {/* Download Buttons */}
@@ -240,7 +252,7 @@ export default function SweezyAppPage() {
                 >
                   <Apple className="w-6 h-6" />
                   <div className="text-left">
-                    <div className="text-[10px] opacity-70">Завантажити в</div>
+                    <div className="text-[10px] opacity-70">{t('Завантажити в', 'Download on the')}</div>
                     <div className="text-sm">App Store</div>
                   </div>
                 </a>
@@ -250,7 +262,7 @@ export default function SweezyAppPage() {
                 >
                   <Play className="w-6 h-6" />
                   <div className="text-left">
-                    <div className="text-[10px] opacity-70">Завантажити в</div>
+                    <div className="text-[10px] opacity-70">{t('Завантажити в', 'Get it on')}</div>
                     <div className="text-sm">Google Play</div>
                   </div>
                 </a>
@@ -264,7 +276,7 @@ export default function SweezyAppPage() {
                       {stat.icon && <stat.icon className="w-5 h-5 text-yellow-400 fill-yellow-400" />}
                       {stat.value}
                     </div>
-                    <div className="text-xs text-gray-500">{stat.label}</div>
+                    <div className="text-xs text-gray-500">{isEn ? stat.labelEn : stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -294,8 +306,8 @@ export default function SweezyAppPage() {
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6">
                       <div>
-                        <div className="text-xs text-blue-300 mb-1">Вітаємо!</div>
-                        <div className="text-lg font-bold text-white">Головна</div>
+                        <div className="text-xs text-blue-300 mb-1">{t('Вітаємо!', 'Welcome!')}</div>
+                        <div className="text-lg font-bold text-white">{t('Головна', 'Home')}</div>
                       </div>
                       <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                         <User className="w-5 h-5 text-white" />
@@ -304,7 +316,7 @@ export default function SweezyAppPage() {
 
                     {/* Search Bar */}
                     <div className="h-10 bg-white/10 rounded-xl mb-6 flex items-center px-4">
-                      <span className="text-sm text-white/50">Пошук...</span>
+                      <span className="text-sm text-white/50">{t('Пошук...', 'Search...')}</span>
                     </div>
 
                     {/* Cards */}
@@ -315,8 +327,8 @@ export default function SweezyAppPage() {
                             <BookOpen className="w-5 h-5 text-blue-300" />
                           </div>
                           <div>
-                            <div className="text-sm font-medium text-white">Гайд: Документи</div>
-                            <div className="text-xs text-blue-300">12 кроків</div>
+                            <div className="text-sm font-medium text-white">{t('Гайд: Документи', 'Guide: Documents')}</div>
+                            <div className="text-xs text-blue-300">{t('12 кроків', '12 steps')}</div>
                           </div>
                         </div>
                       </div>
@@ -327,8 +339,8 @@ export default function SweezyAppPage() {
                             <CheckSquare className="w-5 h-5 text-yellow-300" />
                           </div>
                           <div>
-                            <div className="text-sm font-medium text-white">Чекліст: Переїзд</div>
-                            <div className="text-xs text-yellow-300">8 з 15 виконано</div>
+                            <div className="text-sm font-medium text-white">{t('Чекліст: Переїзд', 'Checklist: Relocation')}</div>
+                            <div className="text-xs text-yellow-300">{t('8 з 15 виконано', '8 of 15 done')}</div>
                           </div>
                         </div>
                       </div>
@@ -339,8 +351,8 @@ export default function SweezyAppPage() {
                             <Brain className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="text-sm font-medium text-white">AI Асистент</div>
-                            <div className="text-xs text-gray-400">Задати питання</div>
+                            <div className="text-sm font-medium text-white">AI Assistant</div>
+                            <div className="text-xs text-gray-400">{t('Задати питання', 'Ask a question')}</div>
                           </div>
                         </div>
                       </div>
@@ -350,10 +362,10 @@ export default function SweezyAppPage() {
                   {/* Bottom Nav */}
                   <div className="absolute bottom-0 left-0 right-0 h-20 bg-black/50 backdrop-blur-xl border-t border-white/10 flex items-center justify-around px-6">
                     {[
-                      { icon: '🏠', label: 'Головна', active: true },
-                      { icon: '📚', label: 'Гайди', active: false },
-                      { icon: '💬', label: 'Чат', active: false },
-                      { icon: '👤', label: 'Профіль', active: false },
+                      { icon: '🏠', label: t('Головна', 'Home'), active: true },
+                      { icon: '📚', label: t('Гайди', 'Guides'), active: false },
+                      { icon: '💬', label: t('Чат', 'Chat'), active: false },
+                      { icon: '👤', label: t('Профіль', 'Profile'), active: false },
                     ].map((item, i) => (
                       <div key={i} className={`flex flex-col items-center ${item.active ? 'text-blue-400' : 'text-gray-500'}`}>
                         <span className="text-xl">{item.icon}</span>
@@ -442,15 +454,17 @@ export default function SweezyAppPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 mb-6">
               <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-blue-400">Можливості</span>
+              <span className="text-sm text-blue-400">{t('Можливості', 'Features')}</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Все що потрібно в
-              <span className="text-blue-400"> одному застосунку</span>
+              {t('Все що потрібно в', 'Everything you need in')}
+              <span className="text-blue-400"> {t('одному застосунку', 'one app')}</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Sweezy створено як єдину точку доступу до знань та сервісів з фокусом на зручність, 
-              зрозумілість та реальну користь.
+              {t(
+                'Sweezy створено як єдину точку доступу до знань та сервісів з фокусом на зручність, зрозумілість та реальну користь.',
+                'Sweezy is designed as a single access point for knowledge and services, focused on convenience, clarity, and real-world value.',
+              )}
             </p>
           </motion.div>
 
@@ -471,8 +485,8 @@ export default function SweezyAppPage() {
                 >
                   <feature.icon className="w-7 h-7" style={{ color: feature.color }} />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-400">{feature.description}</p>
+                <h3 className="text-lg font-bold text-white mb-2">{isEn ? feature.titleEn : feature.title}</h3>
+                <p className="text-sm text-gray-400">{isEn ? feature.descriptionEn : feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -491,24 +505,31 @@ export default function SweezyAppPage() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 border border-yellow-500/30 mb-6">
                 <Brain className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm text-yellow-400">AI-функції</span>
+                <span className="text-sm text-yellow-400">{t('AI-функції', 'AI Features')}</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Розумний помічник
-                <span className="text-yellow-400"> завжди поруч</span>
+                {t('Розумний помічник', 'Smart assistant')}
+                <span className="text-yellow-400"> {t('завжди поруч', 'always by your side')}</span>
               </h2>
               <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-                Платформа постійно розширюється та доповнюється AI-функціями і автоматизаціями, 
-                щоб ви могли вирішувати свої завдання швидше та простіше.
+                {t(
+                  'Платформа постійно розширюється та доповнюється AI-функціями і автоматизаціями, щоб ви могли вирішувати свої завдання швидше та простіше.',
+                  'The platform continuously expands with AI features and automations so you can solve challenges faster and with less effort.',
+                )}
               </p>
 
               <ul className="space-y-4">
-                {[
+                {(isEn ? [
+                  'Instant answers in any language',
+                  'Personalized recommendations',
+                  'Automatic document translation',
+                  'Reminders for important deadlines',
+                ] : [
                   'Миттєві відповіді на питання українською',
                   'Персоналізовані рекомендації',
                   'Автоматичний переклад документів',
                   'Нагадування про важливі дедлайни',
-                ].map((item, i) => (
+                ]).map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-gray-300">
                     <div className="w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
                       <span className="text-yellow-400 text-sm">✓</span>
@@ -534,7 +555,7 @@ export default function SweezyAppPage() {
                   </div>
                   <div>
                     <div className="font-medium text-white">Sweezy AI</div>
-                    <div className="text-xs text-green-400">Онлайн</div>
+                    <div className="text-xs text-green-400">{t('Онлайн', 'Online')}</div>
                   </div>
                 </div>
 
@@ -542,30 +563,44 @@ export default function SweezyAppPage() {
                   {/* User Message */}
                   <div className="flex justify-end">
                     <div className="max-w-[80%] px-4 py-3 rounded-2xl bg-blue-500 text-white text-sm">
-                      Як отримати дозвіл на проживання?
+                      {t('Як отримати дозвіл на проживання?', 'How do I get a residence permit?')}
                     </div>
                   </div>
 
                   {/* AI Response */}
                   <div className="flex justify-start">
                     <div className="max-w-[80%] px-4 py-3 rounded-2xl bg-white/10 text-gray-200 text-sm">
-                      Привіт! 👋 Для отримання дозволу S (статус захисту) потрібно:
-                      <br /><br />
-                      1. Зареєструватись у центрі біженців<br />
-                      2. Пройти реєстрацію в SEM<br />
-                      3. Отримати біометричні дані<br />
-                      <br />
-                      Хочете детальний гайд по кожному кроку?
+                      {isEn ? (
+                        <>
+                          Hi! 👋 To get Protection Status S you need to:
+                          <br /><br />
+                          1. Register at a reception centre<br />
+                          2. Complete registration with SEM<br />
+                          3. Provide biometric data<br />
+                          <br />
+                          Want a step-by-step guide?
+                        </>
+                      ) : (
+                        <>
+                          Привіт! 👋 Для отримання дозволу S (статус захисту) потрібно:
+                          <br /><br />
+                          1. Зареєструватись у центрі біженців<br />
+                          2. Пройти реєстрацію в SEM<br />
+                          3. Отримати біометричні дані<br />
+                          <br />
+                          Хочете детальний гайд по кожному кроку?
+                        </>
+                      )}
                     </div>
                   </div>
 
                   {/* Quick Actions */}
                   <div className="flex gap-2">
                     <button className="px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-400 text-xs border border-blue-500/30">
-                      Детальний гайд
+                      {t('Детальний гайд', 'Full guide')}
                     </button>
                     <button className="px-3 py-1.5 rounded-full bg-white/10 text-gray-400 text-xs border border-white/10">
-                      Інше питання
+                      {t('Інше питання', 'Ask more')}
                     </button>
                   </div>
                 </div>
@@ -584,8 +619,8 @@ export default function SweezyAppPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">Відгуки користувачів</h2>
-            <p className="text-gray-400">Що кажуть люди про Sweezy</p>
+            <h2 className="text-3xl font-bold mb-4">{t('Відгуки користувачів', 'User Reviews')}</h2>
+            <p className="text-gray-400">{t('Що кажуть люди про Sweezy', 'What people say about Sweezy')}</p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -605,7 +640,7 @@ export default function SweezyAppPage() {
                     <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <p className="text-gray-300 mb-4 italic">"{review.text}"</p>
+                <p className="text-gray-300 mb-4 italic">"{isEn ? review.textEn : review.text}"</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
                     <User className="w-5 h-5 text-blue-400" />
@@ -637,10 +672,13 @@ export default function SweezyAppPage() {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
             <div className="relative text-5xl mb-6">🇺🇦</div>
             <h2 className="relative text-3xl md:text-4xl font-bold font-heading mb-4">
-              Завантажте Sweezy сьогодні
+              {t('Завантажте Sweezy сьогодні', 'Download Sweezy Today')}
             </h2>
             <p className="relative text-xl text-gray-400 mb-8 max-w-xl mx-auto">
-              Приєднуйтесь до тисяч користувачів, які вже користуються Sweezy для вирішення своїх завдань.
+              {t(
+                'Приєднуйтесь до тисяч користувачів, які вже користуються Sweezy для вирішення своїх завдань.',
+                'Join thousands of users already using Sweezy to navigate life in a new country.',
+              )}
             </p>
 
             <div className="relative flex flex-wrap justify-center gap-4">
@@ -663,7 +701,7 @@ export default function SweezyAppPage() {
             </div>
 
             <p className="relative mt-8 text-sm text-gray-500">
-              Безкоштовно • Без реклами • Для всіх українців
+              {t('Безкоштовно • Без реклами • Для всіх українців', 'Free • No ads • For the Ukrainian community')}
             </p>
           </motion.div>
         </div>
@@ -679,7 +717,7 @@ export default function SweezyAppPage() {
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Повернутися до кейсів
+            {t('Повернутися до кейсів', 'Back to case studies')}
           </Link>
         </div>
       </section>
