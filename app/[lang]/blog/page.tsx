@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { getPublishedBlogArticles, getBlogText } from '@/app/lib/blogData';
 import { buildHubLinks } from '@/app/lib/internalLinks';
@@ -90,29 +91,14 @@ export async function generateMetadata({
           'автоматизація CRM',
         ];
 
-  return {
+  return buildPageMetadata({
     title: titleWithBrand,
     description,
     keywords,
-    alternates: {
-      canonical: canonicalPath,
-      languages: buildHreflang('/blog'),
-    },
-    openGraph: {
-      title: titleWithBrand,
-      description,
-      url: canonicalPath,
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: titleWithBrand,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: canonicalPath,
+    languages: buildHreflang('/blog'),
+    lang,
+  });
 }
 
 export default async function BlogPage({
@@ -400,7 +386,7 @@ export default async function BlogPage({
               </p>
               <div className="flex gap-3">
                 <input type="email" placeholder={isEn ? 'your@email.com' : '\u0432\u0430\u0448@email.com'} className="flex-1 px-5 py-3.5 rounded-full bg-white/5 border border-white/15 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-white/30 transition-colors" />
-                <button type="button" className="px-6 py-3.5 bg-white text-black rounded-full font-bold text-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25 shrink-0">
+                <button type="button" className="btn-primary px-6 py-3.5 text-sm shrink-0">
                   {isEn ? 'Subscribe' : '\u041f\u0456\u0434\u043f\u0438\u0441\u0430\u0442\u0438\u0441\u044c'}
                 </button>
               </div>

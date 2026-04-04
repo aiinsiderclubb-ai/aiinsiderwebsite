@@ -81,6 +81,14 @@ export default function Hero() {
           </span>
         </div>
 
+        <p
+          className={`mx-auto mb-6 max-w-2xl text-sm md:text-base font-medium text-gray-300 transition-all duration-700 delay-[250ms] ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
+        >
+          {t('hero.descriptor')}
+        </p>
+
         {/* Main Heading */}
         <h1
           className={`text-4xl md:text-7xl lg:text-8xl font-bold font-heading mb-6 leading-[0.9] transition-all duration-700 delay-300 ${
@@ -146,9 +154,7 @@ export default function Hero() {
               href={SCHEDULING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden
-                transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-[0.98]"
-              style={{ boxShadow: 'var(--theme-shadow-glow)' }}
+              className="btn-primary group relative px-10 py-5 text-lg active:scale-[0.98]"
             >
               <span className="relative z-10 flex items-center gap-3">
                 {t('hero.cta1')}
@@ -158,12 +164,11 @@ export default function Hero() {
 
             <a
               href={`${basePath}/solutions`}
-              className="group px-10 py-5 border border-white/20 rounded-full font-bold text-lg
-                transition-all duration-300 hover:border-white/40 hover:bg-white/[0.04] hover:scale-105 hover:-translate-y-1 active:scale-[0.98]"
+              className="btn-secondary group px-10 py-5 text-lg active:scale-[0.98]"
             >
-              <span className="flex items-center gap-3 text-white">
+              <span className="flex items-center gap-3">
                 {t('hero.cta2')}
-                <Sparkles className="w-6 h-6 text-white transition-transform duration-300 group-hover:rotate-12" />
+                <Sparkles className="w-6 h-6 transition-transform duration-300 group-hover:rotate-12" />
               </span>
             </a>
           </div>

@@ -4,6 +4,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ProgrammaticLanding from '@/app/components/ProgrammaticLanding';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import {
   getProgrammaticPage,
@@ -31,29 +32,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const path = `/solutions/${slug}`;
   const canonical = withLang(lang, path);
 
-  return {
+  return buildPageMetadata({
     title: getLocalizedProgrammatic(page.titleTag, lang),
     description: getLocalizedProgrammatic(page.metaDescription, lang),
-    alternates: {
-      canonical,
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: getLocalizedProgrammatic(page.titleTag, lang),
-      description: getLocalizedProgrammatic(page.metaDescription, lang),
-      url: canonical,
-      siteName: SITE_NAME,
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: getLocalizedProgrammatic(page.titleTag, lang),
-      description: getLocalizedProgrammatic(page.metaDescription, lang),
-      images: ['/twitter-image'],
-    },
-  };
+    canonical,
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default async function ProgrammaticSolutionPage({ params }: { params: Promise<Params> }) {

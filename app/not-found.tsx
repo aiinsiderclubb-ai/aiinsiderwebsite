@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { buildPageMetadata } from './lib/metadata';
 
-export const metadata = {
+export const metadata = buildPageMetadata({
   title: '404 — Page Not Found | AI Insider',
+  description: 'The page you requested could not be found.',
+  canonical: '/404',
   robots: { index: false, follow: false },
-};
+});
 
 export default function NotFound() {
   return (

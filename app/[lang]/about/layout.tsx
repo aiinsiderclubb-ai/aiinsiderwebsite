@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { translations } from '@/app/lib/translations';
 
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ? 'Meet AI Insider: we build AI automation, AI agents, voice agents, n8n workflows, and AI-driven marketing systems for businesses in Switzerland and globally.'
       : 'Познайомтесь з AI Insider: ми будуємо AI автоматизацію, AI агентів, голосових агентів, n8n воркфлоу та AI‑маркетинг системи для бізнесу в Швейцарії та глобально.';
 
-  return {
+  return buildPageMetadata({
     title,
     description,
     keywords:
@@ -49,25 +50,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
             'Швейцарія',
             'Цюрих',
           ],
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title,
-      description,
-      url: withLang(lang, path),
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default async function AboutLangLayout({

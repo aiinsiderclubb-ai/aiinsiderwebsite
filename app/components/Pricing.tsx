@@ -199,15 +199,12 @@ export default function Pricing() {
                       href={SCHEDULING_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`group/btn relative flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-base overflow-hidden transition-all duration-300 hover:scale-[1.02]
-                        ${plan.popular
-                          ? 'bg-white text-black'
-                          : 'bg-white/5 text-white border border-white/15 hover:bg-white/10 hover:border-white/25'
-                        }`}
-                      style={plan.popular ? { boxShadow: 'var(--theme-shadow-glow)' } : {}}
+                      className={`group/btn relative flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-base overflow-hidden ${
+                        plan.popular ? 'btn-primary' : 'btn-secondary'
+                      }`}
                     >
                       <span className="relative z-10">{plan.popular ? t('pricing.startNow') : t('pricing.getStarted')}</span>
-                      <ArrowRight className={`w-5 h-5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1 ${plan.popular ? 'text-black' : 'text-white'}`} />
+                      <ArrowRight className="w-5 h-5 relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </div>

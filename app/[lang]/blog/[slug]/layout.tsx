@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
 import { getPublishedBlogArticle, getBlogText } from '@/app/lib/blogData';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
 type Params = { lang: string; slug: string };
 
@@ -26,30 +27,16 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const description = getBlogText(article.metaDescription, lang);
   const keywords = article.metaKeywords[lang];
 
-  return {
+  return buildPageMetadata({
     title,
     description,
     keywords,
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title,
-      description,
-      url: withLang(lang, path),
-      type: 'article',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      publishedTime: article.publishedAt,
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+    type: 'article',
+    publishedTime: article.publishedAt,
+  });
 }
 
 export default function BlogArticleLayout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getCaseBySlug, getLocalizedText } from '@/app/lib/casesData';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
 type Params = { lang: string; slug: string };
 
@@ -40,28 +41,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const description = getLocalizedText(caseData.shortDescription, lang);
   const titleWithBrand = `${title} | AI Insider`;
 
-  return {
+  return buildPageMetadata({
     title: titleWithBrand,
     description,
-    alternates: {
-      canonical: withLang(lang, `/cases/${caseData.slug}`),
-      languages: buildHreflang(`/cases/${caseData.slug}`),
-    },
-    openGraph: {
-      title: titleWithBrand,
-      description,
-      url: withLang(lang, `/cases/${caseData.slug}`),
-      type: 'article',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: titleWithBrand,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, `/cases/${caseData.slug}`),
+    languages: buildHreflang(`/cases/${caseData.slug}`),
+    lang,
+    type: 'article',
+  });
 }
 
 export default function CaseSlugLangLayout({ children }: { children: React.ReactNode }) {

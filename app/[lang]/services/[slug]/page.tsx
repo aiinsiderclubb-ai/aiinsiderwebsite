@@ -10,6 +10,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { MAX_REVEAL_DURATION } from '@/app/lib/motion';
 import { getLocalizedText, getServiceBySlug } from '@/app/lib/servicesData';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import PageCTA from '@/app/components/PageCTA';
@@ -187,7 +188,7 @@ export default function ServiceDetailPage() {
           <motion.nav
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-sm text-gray-500 mb-8"
           >
             <Link href={`${basePath}`} className="hover:text-white transition-colors">
@@ -205,7 +206,7 @@ export default function ServiceDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className={`inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-8 border border-white/20 bg-gradient-to-r ${gradient} bg-opacity-10`}
             style={{ background: `linear-gradient(135deg, ${glowColor}, transparent)` }}
           >
@@ -222,7 +223,7 @@ export default function ServiceDetailPage() {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-5 leading-[1.05]"
           >
             <span
@@ -240,7 +241,7 @@ export default function ServiceDetailPage() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
             className="text-xl md:text-2xl text-gray-400 max-w-4xl mb-10 leading-relaxed"
           >
             {pageSubtitle}
@@ -250,13 +251,12 @@ export default function ServiceDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 mb-12"
           >
             <Link
               href={`${basePath}/contact`}
-              className={`group relative px-8 py-4 bg-gradient-to-r ${gradient} text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg`}
-              style={{ boxShadow: `0 10px 40px ${glowColor}` }}
+              className="btn-primary group relative px-8 py-4"
             >
               <span className="relative z-10 flex items-center gap-2">
                 {bookCallLabel}
@@ -265,7 +265,7 @@ export default function ServiceDetailPage() {
             </Link>
             <Link
               href={`${basePath}/cases`}
-              className="group px-8 py-4 border border-white/20 text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/40 flex items-center gap-2"
+              className="btn-secondary group px-8 py-4"
             >
               <Play className="w-5 h-5" />
               {viewCasesLabel}
@@ -276,7 +276,7 @@ export default function ServiceDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.4 }}
             className="grid md:grid-cols-3 gap-4"
           >
             {service.outcomes.map((o, idx) => (
@@ -323,7 +323,7 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-gradient-to-r ${gradient} bg-opacity-10`}>
@@ -353,7 +353,7 @@ export default function ServiceDetailPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.1 }}
                 className="group relative"
               >
                 <div
@@ -388,7 +388,7 @@ export default function ServiceDetailPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="text-center mb-14"
             >
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -417,7 +417,7 @@ export default function ServiceDetailPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: n * 0.08 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: n * 0.08 }}
                   className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition-all duration-300${n === 1 ? ' row-span-2' : ''}`}
                 >
                   <Image
@@ -458,7 +458,7 @@ export default function ServiceDetailPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="mb-10"
             >
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -479,7 +479,7 @@ export default function ServiceDetailPage() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.1 }}
                   className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
@@ -502,7 +502,7 @@ export default function ServiceDetailPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="mb-10"
             >
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -527,7 +527,7 @@ export default function ServiceDetailPage() {
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.15 }}
+                    transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.15 }}
                     className="relative pl-14"
                   >
                     {/* Step number */}
@@ -562,7 +562,7 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-12"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -592,7 +592,7 @@ export default function ServiceDetailPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.1 }}
                 className="group"
               >
                 <button
@@ -692,7 +692,7 @@ export default function ServiceDetailPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="text-center mb-12"
             >
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -713,7 +713,7 @@ export default function ServiceDetailPage() {
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.08 }}
                   className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
                 >
                   <div className="mb-4 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
@@ -765,7 +765,7 @@ export default function ServiceDetailPage() {
                 </div>
                 <Link
                   href={`${basePath}/content-factory`}
-                  className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-sm transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)]"
+                  className="btn-primary shrink-0 px-6 py-3.5 text-sm"
                 >
                   {isEn ? 'Learn more →' : 'Дізнатися більше →'}
                 </Link>

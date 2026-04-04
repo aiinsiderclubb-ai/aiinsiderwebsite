@@ -69,8 +69,7 @@ export default function PageCTA({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href={resolvedPrimaryHref}
-                className={`group relative px-10 py-5 bg-gradient-to-r ${gradient} text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105`}
-                style={{ boxShadow: `0 15px 50px ${glowColor}` }}
+                className="btn-primary group relative px-10 py-5"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   {isEn ? 'Book an intro call' : 'Замовити дзвінок'}
@@ -79,9 +78,12 @@ export default function PageCTA({
               </Link>
               <Link
                 href={resolvedSecondaryHref}
-                className="px-8 py-4 text-white/70 hover:text-white font-semibold transition-colors"
+                className="btn-secondary px-8 py-4"
               >
-                {resolvedSecondaryLabel} →
+                <span className="flex items-center gap-2">
+                  {resolvedSecondaryLabel}
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </Link>
             </div>
 

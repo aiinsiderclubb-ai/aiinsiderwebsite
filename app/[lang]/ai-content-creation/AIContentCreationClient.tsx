@@ -8,6 +8,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { blogArticles, getBlogText } from '@/app/lib/blogData';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '@/app/lib/motion';
 import { SEO_SERVICE_PAGES, getLocalizedSeo } from '@/app/lib/seoServicePages';
 
 const services = [
@@ -157,7 +158,7 @@ export default function AIContentCreationClient() {
   const [isPlaying, setIsPlaying] = useState(true);
   const showcaseVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const carouselRef = useRef(null);
-  const carouselInView = useInView(carouselRef, { once: true, margin: '-100px' });
+  const carouselInView = useInView(carouselRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
   const heroParticles = useMemo(
     () =>
       Array.from({ length: 14 }, () => ({
@@ -315,7 +316,7 @@ export default function AIContentCreationClient() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: MAX_REVEAL_DURATION }}
                 className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-8 border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
               >
                 <div className="relative flex items-center gap-1">
@@ -333,7 +334,7 @@ export default function AIContentCreationClient() {
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.1 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-[1.05]"
               >
                 {isEn ? 'Create ' : 'Створюйте '}
@@ -359,7 +360,7 @@ export default function AIContentCreationClient() {
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
                 className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed"
               >
                 {isEn
@@ -371,7 +372,7 @@ export default function AIContentCreationClient() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.25 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.25 }}
                 className="space-y-2.5 mb-10"
               >
                 {services.map((service) => {
@@ -410,7 +411,7 @@ export default function AIContentCreationClient() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
                 className="flex flex-col sm:flex-row items-start gap-4"
               >
                 <Link
@@ -440,7 +441,7 @@ export default function AIContentCreationClient() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.5 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.5 }}
                 className="mt-12 flex flex-wrap items-center gap-4 sm:gap-8"
               >
                 {[
@@ -459,7 +460,7 @@ export default function AIContentCreationClient() {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: 0.5 }}
                 className="mt-10 block lg:hidden"
               >
                 <div className="relative max-w-[260px] mx-auto">
@@ -506,7 +507,7 @@ export default function AIContentCreationClient() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
               className="relative hidden lg:flex justify-center"
             >
               {/* Glow behind phone */}
@@ -639,7 +640,7 @@ export default function AIContentCreationClient() {
                 initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -677,7 +678,7 @@ export default function AIContentCreationClient() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={carouselInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -729,7 +730,7 @@ export default function AIContentCreationClient() {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: MAX_REVEAL_DURATION }}
                     className="relative"
                   >
                     {/* Glow */}
@@ -864,7 +865,7 @@ export default function AIContentCreationClient() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -897,7 +898,7 @@ export default function AIContentCreationClient() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.15 }}
                   className="group relative"
                 >
                   {/* Glow effect on hover */}
@@ -982,7 +983,7 @@ export default function AIContentCreationClient() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-white/15 bg-white/5">
@@ -1013,7 +1014,7 @@ export default function AIContentCreationClient() {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.08 }}
                 className="group relative"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${useCase.color} rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
@@ -1055,7 +1056,7 @@ export default function AIContentCreationClient() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.08 }}
               >
                 <Link
                   href={`${basePath}/blog/${article.slug}`}
@@ -1104,7 +1105,7 @@ export default function AIContentCreationClient() {
                 initial={{ opacity: 0, y: 20, scale: 0.97 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.06 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.06 }}
                 className="group relative"
               >
                 <Link href={`${basePath}/${page.slug}`}>
@@ -1163,7 +1164,7 @@ export default function AIContentCreationClient() {
               </div>
               <Link
                 href={`${basePath}/content-factory`}
-                className="shrink-0 inline-flex items-center gap-3 px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)]"
+                className="btn-primary shrink-0 px-7 py-4"
               >
                 {isEn ? 'Learn about Content Factory' : 'Дізнатися про Content Factory'}
                 <ArrowRight className="w-5 h-5" />
@@ -1190,7 +1191,7 @@ export default function AIContentCreationClient() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="relative"
           >
             {/* Outer glow */}

@@ -3,6 +3,7 @@
 import { Instagram, Linkedin, MessageCircle, MapPin, Zap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import Link from 'next/link';
+import { CONTACT_EMAIL } from '../lib/site';
 
 export default function Footer() {
   const { t, lang } = useLanguage();
@@ -148,6 +149,12 @@ export default function Footer() {
             </h3>
             <div className="space-y-2.5">
               <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              <a
                 href="https://t.me/aiinsider"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -184,7 +191,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
-            © 2025 AI Insider —{' '}
+            © {new Date().getFullYear()} AI Insider —{' '}
             <span className="text-white font-semibold">{t('footer.copyright')}</span>
           </p>
           <p className="text-xs text-gray-500">{t('footer.rights')}</p>

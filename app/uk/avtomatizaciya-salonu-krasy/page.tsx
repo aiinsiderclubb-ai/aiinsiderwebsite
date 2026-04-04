@@ -16,6 +16,7 @@ import { buildBeautyServiceSchema } from '@/app/lib/schema/serviceSchema';
 import PageCTA from '@/app/components/PageCTA';
 import Footer from '@/app/components/Footer';
 import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl } from '@/app/lib/site';
 import { beautyPillarUk } from '@/app/lib/verticals/beauty';
 
@@ -38,37 +39,21 @@ const BEAUTY_CLUSTER_SLUGS = [
 ] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
-  const canonicalUrl = new URL(PAGE_PATH, siteUrl).toString();
+  const title = 'Автоматизація салону краси: менше no-show, більше записів | AI Insider';
+  const description =
+    'Автоматизація салону краси з фокусом на виручку: Instagram-ліди, онлайн-запис 24/7, нагадування, CRM-сегментація та повторні продажі.';
 
-  return {
-    title: 'Автоматизація салону краси: менше no-show, більше записів | AI Insider',
-    description:
-      'Автоматизація салону краси з фокусом на виручку: Instagram-ліди, онлайн-запис 24/7, нагадування, CRM-сегментація та повторні продажі.',
-    alternates: {
-      canonical: PAGE_PATH,
-      languages: {
-        'uk-UA': PAGE_PATH,
-        'x-default': PAGE_PATH,
-      },
+  return buildPageMetadata({
+    title,
+    description,
+    canonical: PAGE_PATH,
+    languages: {
+      'uk-UA': PAGE_PATH,
+      'x-default': PAGE_PATH,
     },
-    openGraph: {
-      type: 'article',
-      title: 'Автоматизація салону краси: менше no-show, більше записів',
-      description:
-        'Практичний гайд по автоматизації салону краси: де втрачаються гроші, які рішення дають ROI і як запустити за 14–30 днів.',
-      url: canonicalUrl,
-      locale: 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Автоматизація салону краси: менше no-show, більше записів',
-      description:
-        'ROI-driven підхід: Instagram-ліди, запис, нагадування, CRM і повторні продажі для салонів краси.',
-      images: ['/twitter-image'],
-    },
-  };
+    lang: 'uk',
+    type: 'article',
+  });
 }
 
 export default async function BeautySalonAutomationPage({

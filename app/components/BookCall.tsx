@@ -468,8 +468,7 @@ export default function BookCall() {
               <button
                 type="button"
                 onClick={handleContinue}
-                className="w-full mt-6 px-6 py-4 bg-white text-black rounded-full font-bold 
-                  transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30 active:scale-[0.98]"
+                className="btn-primary w-full mt-6 px-6 py-4 active:scale-[0.98]"
               >
                 {t('bookCall.continue')} {selectedDate} {monthName.split(' ')[0]} {lang === 'uk' ? 'о' : 'at'} {selectedTime}
               </button>
@@ -599,9 +598,7 @@ export default function BookCall() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-white text-black rounded-full font-bold flex items-center justify-center gap-2
-                    transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30 
-                    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="btn-primary w-full py-4 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {isSubmitting ? (
                     <>

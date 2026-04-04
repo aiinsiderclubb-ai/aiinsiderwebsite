@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUpRight, Zap, TrendingUp, Clock, Sparkles } from 'lucide-react';
 import { CaseStudy, getLocalizedText } from '@/app/lib/casesData';
 import { useLanguage } from '@/app/context/LanguageContext';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '@/app/lib/motion';
 
 interface CaseCardProps {
   caseData: CaseStudy;
@@ -35,8 +36,8 @@ export default function CaseCard({ caseData, index, onDemoClick }: CaseCardProps
     <motion.article
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.06 }}
+      viewport={{ once: true, margin: REVEAL_VIEWPORT_MARGIN }}
+      transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.06 }}
       className="group relative h-full"
     >
       <Link href={`${basePath}/cases/${caseData.slug}`} className="block h-full">

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Bot, Phone, Zap, Settings, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
+import { MAX_REVEAL_DURATION } from '@/app/lib/motion';
 
 interface ConversionSectionProps {
   onOpenChat: () => void;
@@ -36,7 +37,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: MAX_REVEAL_DURATION }}
           className="text-center"
         >
           {/* Badge */}
@@ -70,7 +71,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                 className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -85,8 +86,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href={`${basePath}#bookcall`}
-              className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg
-                transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/30"
+              className="btn-primary px-8 py-4 text-lg"
             >
               <Phone className="w-5 h-5" />
               {t('conversion.bookDemo')}
@@ -95,8 +95,7 @@ export default function ConversionSection({ onOpenChat }: ConversionSectionProps
             
             <button
               onClick={onOpenChat}
-              className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg
-                border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/30"
+              className="btn-secondary px-8 py-4 text-lg"
             >
               <MessageCircle className="w-5 h-5" />
               {t('conversion.discussBusiness')}

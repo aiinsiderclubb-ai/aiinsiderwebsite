@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '../lib/motion';
 
 const categories = ['All', 'Voice AI', 'Automation', 'Chatbots', 'Custom AI', 'Mobile'];
 
@@ -105,9 +106,9 @@ export default function ProjectsPage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
   
-  const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const featuredInView = useInView(featuredRef, { once: true, margin: '-100px' });
-  const projectsInView = useInView(projectsRef, { once: true, margin: '-100px' });
+  const heroInView = useInView(heroRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const featuredInView = useInView(featuredRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const projectsInView = useInView(projectsRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
 
   const filteredProjects = activeCategory === 'All' 
     ? projects 
@@ -137,7 +138,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
               <span className="text-sm font-medium text-white">Our Portfolio</span>
@@ -190,7 +191,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={featuredInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-10"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
@@ -204,7 +205,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={featuredInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
           >
             <Link href={`${basePath}/projects/sweezy`} className="block group">
               <div className="relative rounded-3xl overflow-hidden border-2 transition-all duration-500 hover:-translate-y-2"
@@ -387,7 +388,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
             className="flex flex-wrap justify-center gap-4"
           >
             {categories.map((category) => (
@@ -419,7 +420,7 @@ export default function ProjectsPage() {
                   key={project.title}
                   initial={{ opacity: 0, y: 30 }}
                   animate={projectsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                   className="group relative"
                 >
                   <Link href={`${basePath}/projects/${project.slug}`} className="block">
@@ -502,7 +503,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
@@ -518,16 +519,13 @@ export default function ProjectsPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href={`${basePath}#bookcall`}
-                className="inline-block px-10 py-4 bg-white text-black rounded-full 
-                  font-bold text-lg transition-all duration-300 hover:scale-105"
-                style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
+                className="btn-primary px-10 py-4 text-lg"
               >
                 Start Your Project
               </Link>
               <Link
                 href={`${basePath}#contact`}
-                className="inline-block px-10 py-4 glass-strong border border-white/30 rounded-full 
-                  font-bold text-lg text-white transition-all duration-300 hover:bg-white/10 hover:scale-105"
+                className="btn-secondary px-10 py-4 text-lg"
               >
                 Get in Touch
               </Link>

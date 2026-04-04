@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import {
   PROGRAMMATIC_PAGES,
@@ -28,29 +29,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     ? 'Explore AI solutions by use case, industry, and business function. Find the right AI automation for your needs.'
     : 'Досліджуйте AI рішення за кейсами використання, індустріями та бізнес-функціями. Знайдіть правильну AI автоматизацію для ваших потреб.';
 
-  return {
+  return buildPageMetadata({
     title: titleWithBrand,
     description,
-    alternates: {
-      canonical,
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: titleWithBrand,
-      description,
-      url: canonical,
-      siteName: SITE_NAME,
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: titleWithBrand,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical,
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default async function SolutionsIndexPage({ params }: { params: Promise<Params> }) {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import AIContentCreationClient from './AIContentCreationClient';
 
 type Params = { lang: string };
@@ -17,7 +18,6 @@ const AI_CONTENT_METADATA = {
       'virtual influencer',
       'AI advertising',
     ],
-    locale: 'en_US',
   },
   uk: {
     title: 'AI Контент-Студія | AI Інфлюенсери, Відео та UGC — AI Insider',
@@ -31,7 +31,6 @@ const AI_CONTENT_METADATA = {
       'віртуальний інфлюенсер',
       'AI реклама',
     ],
-    locale: 'uk_UA',
   },
 } as const;
 
@@ -45,29 +44,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const path = '/ai-content-creation';
   const metadata = AI_CONTENT_METADATA[lang];
 
-  return {
+  return buildPageMetadata({
     title: metadata.title,
     description: metadata.description,
     keywords: [...metadata.keywords],
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: metadata.title,
-      description: metadata.description,
-      url: withLang(lang, path),
-      type: 'website',
-      locale: metadata.locale,
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: metadata.title,
-      description: metadata.description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default function AIContentCreationPage() {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
 type Params = { lang: string };
 
@@ -18,28 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ? 'Selected AI projects — voice agents, chatbots and automation systems built by AI Insider.'
       : 'Вибрані AI‑проєкти — голосові агенти, чатботи та системи автоматизації від AI Insider.';
 
-  return {
+  return buildPageMetadata({
     title: titleWithBrand,
     description,
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: titleWithBrand,
-      description,
-      url: withLang(lang, path),
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: titleWithBrand,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default function ProjectsLangLayout({ children }: { children: React.ReactNode }) {

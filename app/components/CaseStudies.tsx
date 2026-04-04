@@ -212,8 +212,7 @@ export default function CaseStudies() {
         <div className={`mt-10 text-center reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '500ms' }}>
           <Link
             href={`${basePath}/cases`}
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-base overflow-hidden transition-all duration-300 hover:scale-105 relative"
-            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
+            className="btn-primary group relative px-8 py-4 text-base"
           >
             <span className="relative z-10">{isEn ? 'See All Case Studies' : 'Всі кейси'}</span>
             <span className="relative z-10 w-7 h-7 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">

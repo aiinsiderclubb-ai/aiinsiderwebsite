@@ -15,6 +15,7 @@ import { buildRealEstateServiceSchema } from '@/app/lib/schema/serviceSchema';
 import PageCTA from '@/app/components/PageCTA';
 import Footer from '@/app/components/Footer';
 import { getBlogArticle, getBlogText } from '@/app/lib/blogData';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl } from '@/app/lib/site';
 import { realEstatePillarUk } from '@/app/lib/verticals/realEstate';
 
@@ -32,13 +33,13 @@ const REAL_ESTATE_CLUSTER_SLUGS = [
 ] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
-  const canonicalUrl = new URL(PAGE_PATH, siteUrl).toString();
+  const title = 'Автоматизація нерухомості | AI для агентств — AI Insider';
+  const description =
+    'AI-автоматизація для агентств нерухомості: кваліфікація лідів, голосові агенти, CRM-автоматизація. Швейцарська AI-студія.';
 
-  return {
-    title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
-    description:
-      'AI-автоматизація для агентств нерухомості: кваліфікація лідів, голосові агенти, CRM-автоматизація. Швейцарська AI-студія.',
+  return buildPageMetadata({
+    title,
+    description,
     keywords: [
       'автоматизація нерухомості',
       'AI для ріелторів',
@@ -46,30 +47,14 @@ export async function generateMetadata(): Promise<Metadata> {
       'голосовий агент нерухомість',
       'AI агентство нерухомості',
     ],
-    alternates: {
-      canonical: PAGE_PATH,
-      languages: {
-        'uk-UA': PAGE_PATH,
-        'x-default': PAGE_PATH,
-      },
+    canonical: PAGE_PATH,
+    languages: {
+      'uk-UA': PAGE_PATH,
+      'x-default': PAGE_PATH,
     },
-    openGraph: {
-      type: 'article',
-      title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
-      description:
-        'AI-автоматизація для агентств нерухомості: кваліфікація лідів, голосові агенти, CRM-автоматизація та контроль воронки.',
-      url: canonicalUrl,
-      locale: 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Автоматизація нерухомості | AI для агентств — AI Insider',
-      description:
-        'Від кваліфікації лідів до CRM і голосових агентів: practical pillar page для агентств нерухомості.',
-      images: ['/twitter-image'],
-    },
-  };
+    lang: 'uk',
+    type: 'article',
+  });
 }
 
 export default function RealEstateAutomationPage() {

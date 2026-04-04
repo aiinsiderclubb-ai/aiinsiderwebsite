@@ -8,6 +8,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
+import { MAX_REVEAL_DURATION } from '@/app/lib/motion';
 
 export default function OutreachUIDemo() {
   const { lang } = useLanguage();
@@ -100,7 +101,7 @@ export default function OutreachUIDemo() {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: MAX_REVEAL_DURATION }}
       className="mt-12"
     >
       {/* Section Header */}

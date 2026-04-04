@@ -12,6 +12,7 @@ import PageCTA from '../../components/PageCTA';
 import ProjectStructuredData from '../../components/ProjectStructuredData';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '../../lib/motion';
 
 const features = [
   {
@@ -65,9 +66,9 @@ export default function WorkflowXEnginePage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
   
-  const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' });
-  const resultsInView = useInView(resultsRef, { once: true, margin: '-100px' });
+  const heroInView = useInView(heroRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const featuresInView = useInView(featuresRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const resultsInView = useInView(resultsRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
 
   return (
     <main className="min-h-screen">
@@ -88,7 +89,7 @@ export default function WorkflowXEnginePage() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
           >
             <Link href={`${basePath}/projects`} className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -100,7 +101,7 @@ export default function WorkflowXEnginePage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 mb-6">
                 <Zap className="w-4 h-4 text-white" />
@@ -146,7 +147,7 @@ export default function WorkflowXEnginePage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
               className="relative"
             >
               <div className="relative rounded-3xl overflow-hidden border border-white/20"
@@ -169,7 +170,7 @@ export default function WorkflowXEnginePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={resultsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
@@ -189,7 +190,7 @@ export default function WorkflowXEnginePage() {
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={resultsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                   className="text-center p-6 rounded-2xl glass-strong border border-white/20"
                 >
                   <Icon className="w-8 h-8 mx-auto mb-4 text-white" />
@@ -216,7 +217,7 @@ export default function WorkflowXEnginePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">
@@ -236,7 +237,7 @@ export default function WorkflowXEnginePage() {
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                   className="p-6 rounded-2xl glass-strong border border-white/10 hover:border-white/30 transition-colors"
                 >
                   <Icon className="w-10 h-10 text-white mb-4" />
@@ -255,7 +256,7 @@ export default function WorkflowXEnginePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">
@@ -265,9 +266,7 @@ export default function WorkflowXEnginePage() {
               Let's build automation that scales with your business.
             </p>
             <Link href={`${basePath}#bookcall`} 
-              className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg
-                transition-all duration-300 hover:scale-105"
-              style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}>
+              className="btn-primary px-10 py-4 text-lg">
               Book a Consultation
             </Link>
           </motion.div>

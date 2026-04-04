@@ -1,9 +1,11 @@
 export const SITE_NAME = 'AI Insider';
+export const CONTACT_EMAIL = 'hello@aiinsider.it.com';
 
 export const DEFAULT_TITLE = 'AI Insider | AI Automation & Voice Agent Studio';
 export const TITLE_TEMPLATE = '%s | AI Insider';
 export const DEFAULT_DESCRIPTION =
   'We build AI systems that think, speak and act — chatbots, voice agents, and automation for your business. Based in Switzerland, working globally.';
+export const SITE_URL = 'https://www.aiinsider.it.com';
 
 export const DEFAULT_KEYWORDS = [
   'AI automation',
@@ -22,7 +24,7 @@ export const DEFAULT_KEYWORDS = [
 
 /**
  * Best-effort site URL resolution for metadataBase/canonicals/sitemap.
- * Configure `NEXT_PUBLIC_SITE_URL` in Vercel (e.g. https://aiinsider.ch).
+ * Configure `NEXT_PUBLIC_SITE_URL` in Vercel (e.g. https://www.aiinsider.it.com).
  */
 export function getSiteUrl(): URL {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -31,6 +33,6 @@ export function getSiteUrl(): URL {
   const vercelUrl = process.env.VERCEL_URL?.trim();
   if (vercelUrl) return new URL(`https://${vercelUrl}`);
 
-  return new URL('http://localhost:3000');
+  return new URL(SITE_URL);
 }
 

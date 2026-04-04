@@ -81,13 +81,13 @@ export default function ProgrammaticLanding({ page, lang }: Props) {
           <div className="flex flex-wrap gap-4">
             <Link
               href={`${withLang(lang, '/')}#bookcall`}
-              className="px-8 py-4 bg-white text-black rounded-full font-bold text-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/25"
+              className="btn-primary px-8 py-4 text-lg"
             >
               {ctaBook}
             </Link>
             <Link
               href={`${withLang(lang, '/')}#bookcall`}
-              className="px-8 py-4 bg-white/5 text-white rounded-full font-bold text-lg border border-white/20 transition-all duration-200 hover:bg-white/10"
+              className="btn-secondary px-8 py-4 text-lg"
             >
               {ctaAudit}
             </Link>

@@ -168,8 +168,7 @@ export default function Testimonials() {
         <div className={`mt-14 text-center reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '600ms' }}>
           <a
             href="#bookcall"
-            className="group inline-flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 relative"
-            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
+            className="btn-primary group relative px-10 py-5 text-lg"
           >
             <span className="relative z-10">{t('testimonials.ctaButton')}</span>
             <span className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Users, Video, Sparkles, Play, Pause, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '@/app/context/LanguageContext';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '@/app/lib/motion';
 
 const services = [
   {
@@ -89,7 +90,7 @@ const videoExamples = [
 
 export default function AIContentStudio() {
   const sectionRef = useRef(null);
-  const inViewOnce = useInView(sectionRef, { once: true, margin: '-100px' });
+  const inViewOnce = useInView(sectionRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
   const isOnScreen = useInView(sectionRef, { once: false, amount: 0.25 });
   const { lang } = useLanguage();
   const isEn = lang === 'en';
@@ -182,7 +183,7 @@ export default function AIContentStudio() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
             >
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-5 border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl">
@@ -229,7 +230,7 @@ export default function AIContentStudio() {
                     key={service.slug}
                     initial={{ opacity: 0, x: -20 }}
                     animate={inViewOnce ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.08 }}
+                    transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 + index * 0.08 }}
                   >
                     <Link href={`${basePath}/services/${service.slug}`} className="group block">
                       <div className="relative flex items-center gap-2.5 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300">
@@ -269,7 +270,7 @@ export default function AIContentStudio() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.5 }}
               className="flex flex-wrap items-center gap-4 mb-6"
             >
               <Link
@@ -292,7 +293,7 @@ export default function AIContentStudio() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={inViewOnce ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.6 }}
               className="flex items-center gap-6"
             >
               {[
@@ -313,7 +314,7 @@ export default function AIContentStudio() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inViewOnce ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
             className="md:col-span-2 hidden md:flex items-center justify-center gap-4"
           >
             {/* Phone mockup */}
@@ -505,7 +506,7 @@ export default function AIContentStudio() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inViewOnce ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 }}
         className="mx-6 mt-10 mb-2"
       >
         <Link

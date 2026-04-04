@@ -16,6 +16,7 @@ import { getServiceBySlug } from '../../lib/servicesData';
 import { useChatContext } from '../../context/ChatContext';
 import { useLanguage } from '../../context/LanguageContext';
 import PageCTA from '../../components/PageCTA';
+import { MAX_REVEAL_DURATION } from '../../lib/motion';
 
 export default function CaseDetailPage() {
   const params = useParams();
@@ -40,7 +41,7 @@ export default function CaseDetailPage() {
           <p className="text-gray-400 mb-8">{lang === 'uk' ? 'Кейс, який ви шукаєте, не існує.' : 'The case study you\'re looking for doesn\'t exist.'}</p>
           <Link 
             href={`${basePath}/cases`}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-bold"
+            className="btn-secondary px-6 py-3"
           >
             <ArrowLeft className="w-4 h-4" />
             {lang === 'uk' ? 'Повернутися до кейсів' : 'Back to Cases'}
@@ -340,7 +341,7 @@ export default function CaseDetailPage() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.5 }}
+                  transition={{ delay: i * 0.15, duration: MAX_REVEAL_DURATION }}
                   className="group relative"
                 >
                   {/* Card */}

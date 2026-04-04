@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import PageCTA from '@/app/components/PageCTA';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { withLang, buildHreflang, isSupportedLang } from '@/app/lib/i18n';
 import type { Language } from '@/app/lib/translations';
@@ -21,7 +22,6 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isSupportedLang(lang)) return {};
 
-  const siteUrl = getSiteUrl();
   const hreflang = buildHreflang('/content-factory');
   const canonicalPath = withLang(lang as Language, '/content-factory');
 
@@ -39,30 +39,14 @@ export async function generateMetadata({
     ? ['content factory', 'AI content automation', 'automated content system', 'AI content creation', 'social media autopilot']
     : ['content factory', 'автоматизація контенту', 'AI контент система', 'автопостинг', 'AI SMM автоматизація', 'генерація контенту AI'];
 
-  return {
+  return buildPageMetadata({
     title,
     description,
     keywords: keywords.join(', '),
-    alternates: {
-      canonical: canonicalPath,
-      languages: hreflang,
-    },
-    openGraph: {
-      type: 'website',
-      title,
-      description,
-      url: new URL(canonicalPath, siteUrl).toString(),
-      locale: isEn ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-      siteName: SITE_NAME,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: canonicalPath,
+    languages: hreflang,
+    lang,
+  });
 }
 
 /* ── JSON-LD helpers ──────────────────────────────────────── */
@@ -420,13 +404,13 @@ export default async function ContentFactoryPage({
           <div className="flex flex-col sm:flex-row gap-4 mb-16">
             <Link
               href={`${basePath}#bookcall`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-emerald-500/30"
+              className="btn-primary px-8 py-4 text-lg"
             >
               {t('Замовити систему →', 'Get Your System →')}
             </Link>
             <a
               href="#how-it-works"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-white border border-white/20 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/10 hover:border-white/40"
+              className="btn-secondary px-8 py-4 text-lg"
             >
               {t('Як це працює ↓', 'How it works ↓')}
             </a>
@@ -846,10 +830,10 @@ export default async function ContentFactoryPage({
 
           <Link
             href={`${basePath}#bookcall`}
-            className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(16,185,129,0.35)]"
+            className="btn-primary px-10 py-5 text-xl"
           >
             {t('Замовити систему', 'Get Your System')}
-            <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">→</span>
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">→</span>
           </Link>
         </div>
       </section>

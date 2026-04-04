@@ -4,6 +4,7 @@ import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import BookCall from '@/app/components/BookCall';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
 type Params = { lang: string };
 
@@ -11,12 +12,10 @@ const CONTACT_METADATA = {
   en: {
     title: 'Contact | AI Insider',
     description: 'Contact AI Insider — AI studio from Switzerland. Book a consultation or send us a message.',
-    locale: 'en_US',
   },
   uk: {
     title: 'Контакт | AI Insider',
     description: "Зв'яжіться з AI Insider — AI-студія з Швейцарії. Замовте консультацію або напишіть нам.",
-    locale: 'uk_UA',
   },
 } as const;
 
@@ -30,28 +29,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const path = '/contact';
   const metadata = CONTACT_METADATA[lang];
 
-  return {
+  return buildPageMetadata({
     title: metadata.title,
     description: metadata.description,
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: metadata.title,
-      description: metadata.description,
-      url: withLang(lang, path),
-      type: 'website',
-      locale: metadata.locale,
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: metadata.title,
-      description: metadata.description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+  });
 }
 
 export default async function ContactPage({ params }: { params: Promise<Params> }) {

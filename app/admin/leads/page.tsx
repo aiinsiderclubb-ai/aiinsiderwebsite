@@ -3,16 +3,19 @@ import RetryButton from './RetryButton';
 import NotesEditor from './NotesEditor';
 import SalesStatusSelect from './SalesStatusSelect';
 import ThemeSwitcher from '@/app/components/ThemeSwitcher';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { listLeadSubmissions, type LeadDeliveryStatus, type LeadFilters, type LeadSortDir, type LeadSortKey, type SalesStatus } from '@/app/lib/leads/store';
 import type { LeadPriority } from '@/app/lib/leads/scoring';
 import type { ConversionFormType, ConversionLocale, ConversionVertical } from '@/app/lib/forms/types';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Admin • Leads',
+  description: 'Internal lead management dashboard.',
+  canonical: '/admin/leads',
   robots: { index: false, follow: false },
-};
+});
 
 const FORM_TYPES: Array<ConversionFormType> = ['lead-magnet', 'audit-request', 'contact', 'booking', 'chat-lead'];
 const LOCALES: Array<ConversionLocale> = ['uk', 'en'];

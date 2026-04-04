@@ -241,8 +241,7 @@ export default function Solutions() {
         <div className={`text-center mt-14 reveal ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '500ms' }}>
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-lg
-              overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
+            className="btn-primary group relative px-8 py-4 text-lg"
           >
             <span className="relative z-10">{t('solutions.cta')}</span>
             <Zap className="relative z-10 w-5 h-5" />

@@ -12,6 +12,7 @@ import Footer from '../../components/Footer';
 import ProjectStructuredData from '../../components/ProjectStructuredData';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '../../lib/motion';
 
 const features = [
   {
@@ -88,11 +89,11 @@ export default function SweezyPage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
   
-  const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const featuresInView = useInView(featuresRef, { once: true, margin: '-100px' });
-  const storyInView = useInView(storyRef, { once: true, margin: '-100px' });
-  const timelineInView = useInView(timelineRef, { once: true, margin: '-100px' });
-  const testimonialsInView = useInView(testimonialsRef, { once: true, margin: '-100px' });
+  const heroInView = useInView(heroRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const featuresInView = useInView(featuresRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const storyInView = useInView(storyRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const timelineInView = useInView(timelineRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const testimonialsInView = useInView(testimonialsRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
 
   return (
     <main className="min-h-screen">
@@ -128,7 +129,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
           >
             <Link href={`${basePath}/projects`} 
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
@@ -142,7 +143,7 @@ export default function SweezyPage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
             >
               {/* Badge */}
               <div className="flex items-center gap-3 mb-6">
@@ -217,7 +218,7 @@ export default function SweezyPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
               className="relative flex justify-center"
             >
               {/* Glow */}
@@ -326,7 +327,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={storyInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
@@ -341,7 +342,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={storyInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
             className="prose prose-lg prose-invert mx-auto"
           >
             <div className="rounded-3xl p-8 md:p-10 border"
@@ -383,7 +384,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
@@ -406,7 +407,7 @@ export default function SweezyPage() {
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.1 }}
                   className="group rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-2"
                   style={{ 
                     background: 'rgba(255, 255, 255, 0.03)',
@@ -432,7 +433,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={timelineInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
@@ -455,7 +456,7 @@ export default function SweezyPage() {
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                 animate={timelineInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.15 }}
                 className={`relative flex items-center mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
               >
                 {/* Dot */}
@@ -499,7 +500,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
@@ -517,7 +518,7 @@ export default function SweezyPage() {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.15 }}
                 className="rounded-2xl p-6 border"
                 style={{ 
                   background: 'rgba(255, 255, 255, 0.03)',
@@ -559,7 +560,7 @@ export default function SweezyPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             viewport={{ once: true }}
           >
             <div className="flex justify-center gap-2 mb-6">

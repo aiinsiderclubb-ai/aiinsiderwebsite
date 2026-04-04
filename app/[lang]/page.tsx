@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Home from '../page';
 import { buildHreflang, isSupportedLang, withLang } from '../lib/i18n';
+import { buildPageMetadata } from '../lib/metadata';
 
 type Params = { lang: string };
 
@@ -52,29 +53,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ? 'We build AI systems that think, speak and act — chatbots, voice agents and automation for your business in Switzerland and globally.'
       : 'Ми створюємо AI системи, які думають, говорять і діють — чатботи, голосові агенти та автоматизації для бізнесу в Швейцарії та по всьому світу.';
 
-  return {
+  return buildPageMetadata({
     title,
     description,
     keywords,
-    alternates: {
-      canonical: withLang(lang, '/'),
-      languages: buildHreflang('/'),
-    },
-    openGraph: {
-      title,
-      description,
-      url: withLang(lang, '/'),
-      type: 'website',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: withLang(lang, '/'),
+    languages: buildHreflang('/'),
+    lang,
+  });
 }
 
 export default function LangHomePage() {

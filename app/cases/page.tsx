@@ -151,8 +151,7 @@ export default function CasesPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => openChat()}
-              className="group flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg transition-all duration-300 hover:scale-105"
-              style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.15)' }}
+              className="btn-primary group px-8 py-4 text-lg"
             >
               <MessageCircle className="w-5 h-5" />
               <span>{t('cases.tryDemo')}</span>

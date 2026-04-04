@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import PageCTA from '@/app/components/PageCTA';
+import { buildPageMetadata } from '@/app/lib/metadata';
 import { getSiteUrl, SITE_NAME } from '@/app/lib/site';
 import { withLang, buildHreflang, isSupportedLang } from '@/app/lib/i18n';
 import type { Language } from '@/app/lib/translations';
@@ -18,7 +19,6 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isSupportedLang(lang)) return {};
 
-  const siteUrl = getSiteUrl();
   const hreflang = buildHreflang('/content-factory-for-coaches');
   const canonicalPath = withLang(lang as Language, '/content-factory-for-coaches');
   const isEn = lang === 'en';
@@ -31,32 +31,16 @@ export async function generateMetadata({
     ? 'Automated content system for coaches and psychologists. Viral topic research in your niche, AI posts and videos, Telegram approval, auto-publishing to all platforms.'
     : 'Автоматизована система контенту для психологів та коучів. Вірусні теми у вашій ніші, AI-пости та відео, Telegram-апрув, автопостинг. 500+ постів без вашої участі.';
 
-  return {
+  return buildPageMetadata({
     title,
     description,
     keywords: isEn
       ? 'content factory for coaches, AI content for psychologists, automated content coaching, social media automation psychology'
       : 'content factory для коучів, AI контент для психологів, автоматизація контенту коуч, SMM автоматизація психолог',
-    alternates: {
-      canonical: canonicalPath,
-      languages: hreflang,
-    },
-    openGraph: {
-      type: 'website',
-      title,
-      description,
-      url: new URL(canonicalPath, siteUrl).toString(),
-      locale: isEn ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-      siteName: SITE_NAME,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/twitter-image'],
-    },
-  };
+    canonical: canonicalPath,
+    languages: hreflang,
+    lang,
+  });
 }
 
 /* ── Static FAQ data ──────────────────────────────────────── */
@@ -313,13 +297,13 @@ export default async function ContentFactoryForCoachesPage({
           <div className="flex flex-col sm:flex-row gap-4 mb-14">
             <Link
               href={`${basePath}#bookcall`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-emerald-500/30"
+              className="btn-primary px-8 py-4 text-lg"
             >
               {t('Замовити систему →', 'Get Your System →')}
             </Link>
             <Link
               href={`${basePath}/content-factory`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-white border border-white/20 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/10"
+              className="btn-secondary px-8 py-4 text-lg"
             >
               {t('Про Content Factory ↗', 'About Content Factory ↗')}
             </Link>
@@ -517,14 +501,14 @@ export default async function ContentFactoryForCoachesPage({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={`${basePath}#bookcall`}
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-bold text-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(16,185,129,0.35)]"
+              className="btn-primary px-10 py-5 text-xl"
             >
               {t('Замовити консультацію', 'Book a Consultation')}
-              <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">→</span>
+              <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">→</span>
             </Link>
             <Link
               href={`${basePath}/content-factory`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-5 bg-white/5 text-white border border-white/20 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/10"
+              className="btn-secondary px-8 py-5 text-lg"
             >
               {t('Детальніше про систему', 'Learn More About the System')}
             </Link>

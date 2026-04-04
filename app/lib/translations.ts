@@ -19,6 +19,7 @@ export const translations = {
   // Hero Section
   hero: {
     badge: { uk: 'AI-автоматизація', en: 'AI-Powered Automation' },
+    descriptor: { uk: 'AI-агенція з автоматизації зі Швейцарії', en: 'AI automation agency based in Switzerland' },
     title1: { uk: 'Автоматизація', en: 'Automation' },
     title2: { uk: 'Майбутнього', en: 'Reimagined' },
     subtitle: { uk: 'AI системи які', en: 'AI systems that' },

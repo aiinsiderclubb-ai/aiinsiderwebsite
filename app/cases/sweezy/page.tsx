@@ -14,6 +14,7 @@ import PageCTA from '../../components/PageCTA';
 import { getCaseBySlug } from '../../lib/casesData';
 import { getLocalizedText as getLocalizedServiceText, getServiceBySlug } from '../../lib/servicesData';
 import { getSiteUrl } from '../../lib/site';
+import { MAX_REVEAL_DURATION } from '../../lib/motion';
 
 const features = [
   {
@@ -201,7 +202,7 @@ export default function SweezyAppPage() {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
             >
               {/* App Icon */}
               <div className="flex items-start gap-6 mb-8">
@@ -286,7 +287,7 @@ export default function SweezyAppPage() {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
               className="relative flex justify-center"
             >
               {/* Phone Frame */}

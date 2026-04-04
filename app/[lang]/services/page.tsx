@@ -255,8 +255,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href={`${withLang(lang, '/')}#bookcall`}
-              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden
-                transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(255,255,255,0.3)]"
+              className="btn-primary group relative px-10 py-5 text-lg overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
                 {bookCallLabel}
@@ -267,8 +266,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
             </Link>
             <Link
               href={withLang(lang, '/cases')}
-              className="px-10 py-5 bg-white/5 text-white rounded-full font-bold text-lg
-                border border-white/20 transition-all duration-300 hover:bg-white/10 hover:border-white/30"
+              className="btn-secondary px-10 py-5 text-lg"
             >
               {viewCasesLabel}
             </Link>
@@ -301,11 +299,10 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
             </div>
             <Link
               href={withLang(lang, '/solutions')}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 text-white rounded-full font-semibold
-                border border-white/15 transition-all duration-300 hover:bg-white/10 hover:border-white/25 shrink-0"
+              className="btn-secondary shrink-0 px-6 py-3"
             >
               {isEn ? 'All solutions' : 'Всі рішення'}
-              <span className="text-gray-400">→</span>
+              <span>→</span>
             </Link>
           </div>
 
@@ -561,8 +558,7 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href={`${withLang(lang, '/')}#bookcall`}
-                    className="group px-10 py-5 bg-white text-black rounded-full font-bold text-lg
-                      transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(255,255,255,0.3)]"
+                    className="btn-primary group px-10 py-5 text-lg"
                   >
                     <span className="flex items-center gap-2">
                       {bookCallLabel}
@@ -573,10 +569,14 @@ export default async function ServicesPage({ params }: { params: Promise<Params>
                   </Link>
                   <Link
                     href={withLang(lang, '/cases')}
-                    className="px-10 py-5 text-white font-bold text-lg
-                      transition-all duration-300 hover:text-gray-300"
+                    className="btn-secondary px-10 py-5 text-lg"
                   >
-                    {viewCasesLabel} →
+                    <span className="flex items-center gap-2">
+                      {viewCasesLabel}
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </span>
                   </Link>
                 </div>
               </div>

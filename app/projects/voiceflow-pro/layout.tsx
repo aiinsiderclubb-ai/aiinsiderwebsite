@@ -1,18 +1,13 @@
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'VoiceFlow Pro',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'VoiceFlow Pro | AI Insider',
   description:
     'VoiceFlow Pro — AI voice agent for handling incoming calls with natural speech, CRM logging and analytics.',
-  alternates: { canonical: '/projects/voiceflow-pro' },
-  openGraph: {
-    title: 'VoiceFlow Pro | AI Insider',
-    description:
-      'AI voice agent for handling incoming calls with natural speech, CRM logging and analytics.',
-    url: '/projects/voiceflow-pro',
-    type: 'article',
-  },
-};
+  canonical: '/projects/voiceflow-pro',
+  type: 'article',
+});
 
 export default function VoiceflowProLayout({ children }: { children: React.ReactNode }) {
   return children;

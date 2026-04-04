@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
 import PageCTA from '../components/PageCTA';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '../lib/motion';
 
 type TeamMember = {
   id?: string;
@@ -156,7 +157,7 @@ const AI_ASSISTANTS = [
 
 function AiAssistantsSection() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const inView = useInView(ref, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
   const { t, lang } = useLanguage();
   const isEn = lang === 'en';
 
@@ -176,7 +177,7 @@ function AiAssistantsSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: MAX_REVEAL_DURATION }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5">
@@ -205,7 +206,7 @@ function AiAssistantsSection() {
                 key={assistant.id}
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
                 animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                 className="group relative"
               >
                 <div
@@ -279,9 +280,9 @@ export default function AboutPage() {
   const basePath = `/${lang}`;
   const isEn = lang === 'en';
   
-  const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const storyInView = useInView(storyRef, { once: true, margin: '-100px' });
-  const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
+  const heroInView = useInView(heroRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const storyInView = useInView(storyRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
+  const teamInView = useInView(teamRef, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
 
   const teamMembers = TEAM_MEMBERS;
 
@@ -309,7 +310,7 @@ export default function AboutPage() {
         id={member.id}
         initial={{ opacity: 0, y: 50, scale: 0.95 }}
         animate={teamInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-        transition={{ duration: 0.7, delay: index * 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+        transition={{ duration: MAX_REVEAL_DURATION, delay: index * 0.2, ease: [0.25, 0.1, 0.25, 1] }}
         className="group relative"
       >
         {/* Outer glow on hover */}
@@ -513,7 +514,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
           >
             <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
               <span className="text-sm font-medium text-white">{t('about.badge')}</span>
@@ -571,7 +572,7 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={storyInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="lg:col-span-6"
             >
               {/* Badge */}
@@ -604,7 +605,7 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={storyInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.2 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
                   className="relative pl-6 border-l-2 border-white/20"
                 >
                   <div className="absolute left-0 top-0 w-3 h-3 -translate-x-[7px] rounded-full bg-white shadow-lg shadow-white/30" />
@@ -614,7 +615,7 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={storyInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.35 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: 0.35 }}
                   className="relative pl-6 border-l-2 border-white/10"
                 >
                   <div className="absolute left-0 top-0 w-2 h-2 -translate-x-[5px] rounded-full bg-white/50" />
@@ -624,7 +625,7 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={storyInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.5 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: 0.5 }}
                   className="relative pl-6 border-l-2 border-white/10"
                 >
                   <div className="absolute left-0 top-0 w-2 h-2 -translate-x-[5px] rounded-full bg-white/50" />
@@ -637,7 +638,7 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={storyInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.2 }}
               className="lg:col-span-6"
             >
               <div className="relative">
@@ -673,7 +674,7 @@ export default function AboutPage() {
                         key={index}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={storyInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                        transition={{ duration: MAX_REVEAL_DURATION, delay: 0.3 + index * 0.1 }}
                         className="group relative"
                       >
                         <div className={`relative rounded-2xl border border-white/10 bg-gradient-to-br ${stat.color} p-6 text-center transition-all duration-500 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(255,255,255,0.05)]`}>
@@ -743,7 +744,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={teamInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -790,7 +791,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={teamInView ? { opacity: 1, scaleX: 1 } : {}}
-            transition={{ duration: 1, delay: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.8 }}
             className="mt-20 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
           />
         </div>
@@ -824,7 +825,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/20 bg-white/5 backdrop-blur-xl">
@@ -846,7 +847,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: MAX_REVEAL_DURATION }}
               className="lg:col-span-2 group"
             >
               <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 lg:p-10 overflow-hidden transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_60px_rgba(255,255,255,0.05)]">
@@ -908,7 +909,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
+              transition={{ duration: MAX_REVEAL_DURATION, delay: 0.15 }}
               className="lg:col-span-3"
             >
               <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-xl p-8 lg:p-10">
@@ -974,7 +975,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -1003,7 +1004,7 @@ export default function AboutPage() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.15 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.15 }}
                   className="group relative"
                 >
                   <div className="relative rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 transition-all duration-500 hover:border-white/25 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(255,255,255,0.05)]">
@@ -1048,13 +1049,12 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: MAX_REVEAL_DURATION, delay: 0.6 }}
             className="mt-16 flex justify-center"
           >
             <Link
               href={`${basePath}/services`}
-              className="group relative inline-flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105"
-              style={{ boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)' }}
+              className="btn-primary group relative px-10 py-5 text-lg"
             >
               <span className="relative z-10">{isEn ? 'Explore services' : 'Переглянути послуги'}</span>
               <span className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">
@@ -1084,7 +1084,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -1176,7 +1176,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/15 bg-white/5 backdrop-blur-xl">
@@ -1210,7 +1210,7 @@ export default function AboutPage() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  transition={{ duration: MAX_REVEAL_DURATION, delay: idx * 0.1 }}
                   className="group"
                 >
                   <div className={`relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl p-8 overflow-hidden transition-all duration-500 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_30px_60px_-15px] ${accents[idx]}`}>

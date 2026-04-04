@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { buildHreflang, isSupportedLang, withLang } from '@/app/lib/i18n';
+import { buildPageMetadata } from '@/app/lib/metadata';
 
 type Params = { lang: string };
 
@@ -18,23 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       ? 'End-to-end sales automation pipeline with CRM integrations, lead qualification and workflow orchestration.'
       : 'End‑to‑end автоматизація продажів з CRM інтеграціями, кваліфікацією лідів та orchestration workflow.';
 
-  return {
+  return buildPageMetadata({
     title: titleWithBrand,
     description,
-    alternates: {
-      canonical: withLang(lang, path),
-      languages: buildHreflang(path),
-    },
-    openGraph: {
-      title: titleWithBrand,
-      description,
-      url: withLang(lang, path),
-      type: 'article',
-      locale: lang === 'en' ? 'en_US' : 'uk_UA',
-      images: ['/opengraph-image'],
-    },
-    twitter: { card: 'summary_large_image', title: titleWithBrand, description, images: ['/twitter-image'] },
-  };
+    canonical: withLang(lang, path),
+    languages: buildHreflang(path),
+    lang,
+    type: 'article',
+  });
 }
 
 export default function AutoScaleCrmLangLayout({ children }: { children: React.ReactNode }) {

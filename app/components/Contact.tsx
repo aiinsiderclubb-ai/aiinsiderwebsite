@@ -3,13 +3,14 @@
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Send, MessageCircle, Mail, Loader2 } from 'lucide-react';
+import { MAX_REVEAL_DURATION, REVEAL_VIEWPORT_MARGIN } from '../lib/motion';
 import { SCHEDULING_URL } from '../lib/config';
 import { useLanguage } from '../context/LanguageContext';
 import { getLastCtaAttribution, trackFormEvent } from '../lib/analytics';
 
 export default function Contact() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: REVEAL_VIEWPORT_MARGIN });
   const { t, lang } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
@@ -138,7 +139,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: MAX_REVEAL_DURATION }}
           className="text-center mb-16"
         >
           <div className="inline-block px-4 py-2 glass rounded-full mb-6 border border-white/20">
@@ -169,7 +170,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
           >
             <form onSubmit={handleSubmit} className="space-y-6" data-form-type="contact" data-source-section="contact">
               {/* Name Input */}
@@ -224,9 +225,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full px-8 py-4 bg-white text-black rounded-full font-semibold text-lg flex items-center justify-center gap-2 
-                  transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:hover:scale-100"
-                style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.25)' }}
+                className="btn-primary w-full px-8 py-4 text-lg disabled:opacity-60 disabled:hover:scale-100 active:scale-[0.98]"
               >
                 <span>{status === 'loading' ? (t('contact.sending') || 'Sending...') : t('contact.sendMessage')}</span>
                 {status === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
@@ -247,8 +246,7 @@ export default function Contact() {
                 href={SCHEDULING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 block text-center w-full px-8 py-4 glass-strong border border-white/30 rounded-full font-semibold text-lg text-white
-                  transition-all duration-200 hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                className="btn-secondary mt-3 w-full px-8 py-4 text-lg active:scale-[0.98]"
               >
                 {t('contact.bookCall')}
               </a>
@@ -259,7 +257,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: MAX_REVEAL_DURATION }}
             className="space-y-8"
           >
             {/* Telegram Card */}

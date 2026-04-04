@@ -136,9 +136,7 @@ export default function Navbar() {
             href={SCHEDULING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative px-6 py-3 bg-white text-black rounded-full font-bold text-sm overflow-hidden
-              transition-all duration-200 hover:scale-105 active:scale-95"
-            style={{ boxShadow: 'var(--theme-shadow-glow)' }}
+            className="btn-primary relative px-6 py-3 text-sm overflow-hidden active:scale-95"
           >
             <span className="relative z-10">{t('nav.bookCall')}</span>
           </a>
@@ -200,7 +198,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="block mt-4 px-6 py-3 bg-white text-black rounded-full font-bold text-center"
+              className="btn-primary mt-4 w-full px-6 py-3 text-center"
             >
               {t('nav.bookCall')}
             </a>
