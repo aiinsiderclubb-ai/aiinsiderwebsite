@@ -66,9 +66,8 @@ export default function Navbar() {
     >
       {(isScrolled || !isHomePage) && (
         <div
-          className="absolute inset-0 border-b border-white/10 transition-opacity duration-300"
+          className="absolute inset-0 nav-backdrop border-b border-white/10 transition-opacity duration-300"
           style={{
-            background: 'rgba(0, 0, 0, 0.75)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
           }}
