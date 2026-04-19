@@ -18,39 +18,63 @@ interface TypewriterChatProps {
 }
 
 /**
- * Scripted AI chat with typewriter animation.
- * Messages appear sequentially; AI messages type character-by-character.
- * Loops after a pause.
+ * Scripted AI chat with word-chunked typewriter animation.
+ * Pauses entirely when the component is off-screen (IntersectionObserver),
+ * and yields to requestAnimationFrame to keep the main thread responsive.
  */
 export default function TypewriterChat({ title, online, placeholder, messages, chips = [] }: TypewriterChatProps) {
   const [visibleMessages, setVisibleMessages] = useState<ChatMessage[]>([]);
   const [typingText, setTypingText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const node = rootRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsVisible(entry.isIntersecting));
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     let cancelled = false;
 
     const delay = (ms: number) =>
       new Promise<void>((resolve) => {
-        setTimeout(() => {
+        const id = setTimeout(() => {
           if (!cancelled) resolve();
         }, ms);
+        return () => clearTimeout(id);
       });
 
-    const typeChar = (full: string, charIdx: number) =>
-      new Promise<void>((resolve) => {
-        setTypingText(full.slice(0, charIdx));
-        setTimeout(() => {
-          if (!cancelled) resolve();
-        }, 18 + Math.random() * 20);
-      });
+    // Split text into word-chunks (keeping trailing spaces/newlines with the word).
+    const chunkWords = (text: string): string[] => {
+      const out: string[] = [];
+      const regex = /\S+\s*|\s+/g;
+      let match: RegExpExecArray | null;
+      while ((match = regex.exec(text)) !== null) {
+        out.push(match[0]);
+      }
+      return out;
+    };
 
     const run = async () => {
       while (!cancelled) {
         setVisibleMessages([]);
         setTypingText('');
-        await delay(600);
+        await delay(500);
 
         for (let i = 0; i < messages.length; i++) {
           if (cancelled) return;
@@ -58,22 +82,33 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
 
           if (msg.role === 'user') {
             setVisibleMessages((prev) => [...prev, msg]);
-            await delay(900);
+            await delay(850);
           } else {
             setIsTyping(true);
-            await delay(600);
-            for (let c = 1; c <= msg.text.length; c++) {
+            await delay(500);
+            const chunks = chunkWords(msg.text);
+            let built = '';
+            for (let c = 0; c < chunks.length; c++) {
               if (cancelled) return;
-              await typeChar(msg.text, c);
+              built += chunks[c];
+              setTypingText(built);
+              // Pause by word length — short words fly, punctuation hangs a bit.
+              const base = 42;
+              const pause =
+                base +
+                Math.min(80, chunks[c].length * 8) +
+                (/[.!?]\s*$/.test(chunks[c]) ? 140 : 0) +
+                (/\n/.test(chunks[c]) ? 180 : 0);
+              await delay(pause);
             }
             setIsTyping(false);
             setVisibleMessages((prev) => [...prev, { role: 'ai', text: msg.text }]);
             setTypingText('');
-            await delay(700);
+            await delay(650);
           }
         }
 
-        await delay(5000);
+        await delay(6000);
       }
     };
 
@@ -81,7 +116,7 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
     return () => {
       cancelled = true;
     };
-  }, [messages]);
+  }, [messages, isVisible]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -91,16 +126,17 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
 
   return (
     <div
+      ref={rootRef}
       className="relative w-full rounded-3xl border border-white/10 overflow-hidden"
       style={{
         background:
           'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(0,87,184,0.08) 50%, rgba(255,215,0,0.04) 100%)',
-        boxShadow: '0 40px 120px -30px rgba(0,87,184,0.35), inset 0 0 0 1px rgba(255,255,255,0.05)',
+        boxShadow: '0 20px 60px -20px rgba(0,87,184,0.35), inset 0 0 0 1px rgba(255,255,255,0.05)',
       }}
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#FFD700]/60 to-transparent" />
 
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 backdrop-blur-xl bg-black/20">
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-[#0a0c12]/70">
         <div className="relative">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0057B8] to-[#6eb1ff] flex items-center justify-center">
             <Brain className="w-5 h-5 text-white" />
@@ -127,9 +163,9 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
           {visibleMessages.map((msg, idx) => (
             <motion.div
               key={`${idx}-${msg.role}`}
-              initial={{ opacity: 0, y: 10, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'ai' && (
@@ -151,11 +187,7 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
         </AnimatePresence>
 
         {isTyping && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex justify-start"
-          >
+          <div className="flex justify-start">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0057B8] to-[#6eb1ff] flex items-center justify-center mr-2 flex-shrink-0">
               <Brain className="w-4 h-4 text-white" />
             </div>
@@ -163,7 +195,7 @@ export default function TypewriterChat({ title, online, placeholder, messages, c
               {typingText}
               <span className="inline-block w-[2px] h-4 bg-[#FFD700] ml-0.5 -mb-0.5 animate-pulse" />
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
 

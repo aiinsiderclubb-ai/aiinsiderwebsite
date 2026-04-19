@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, type MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -24,6 +24,7 @@ import {
   Zap,
   ShieldCheck,
 } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PageCTA from '../../components/PageCTA';
@@ -33,21 +34,25 @@ import { getLocalizedText as getLocalizedServiceText, getServiceBySlug } from '.
 import { getSiteUrl } from '../../lib/site';
 import SilkRibbon from './_components/SilkRibbon';
 import PhoneFrame, { type ScreenId } from './_components/PhoneFrame';
-import TypewriterChat, { type ChatMessage } from './_components/TypewriterChat';
+import type { ChatMessage } from './_components/TypewriterChat';
+
+// Heavy sections below the fold — lazy loaded to cut initial JS.
+const TypewriterChat = dynamic(() => import('./_components/TypewriterChat'), {
+  ssr: false,
+  loading: () => <div className="w-full min-h-[420px] rounded-3xl border border-white/10 bg-white/[0.03]" />,
+});
 
 /* ===== Hero horizontal parallax rail ===== */
 function HeroRail({ text, basePath, t, lang }: { text: any; basePath: string; t: (uk: string, en: string) => string; lang: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
 
-  // Three phones drift horizontally at different speeds / depths
-  const x1 = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
-  const x2 = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
-  const x3 = useTransform(scrollYProgress, [0, 1], ['0%', '22%']);
-  const yParallax = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
-  const opacityFade = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [-6, -10]);
-  const rotate3 = useTransform(scrollYProgress, [0, 1], [6, 10]);
+  // Three phones drift horizontally at different speeds / depths — desktop only
+  const x1 = useTransform(scrollYProgress, [0, 1], ['0%', '-14%']);
+  const x2 = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
+  const x3 = useTransform(scrollYProgress, [0, 1], ['0%', '16%']);
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
+  const opacityFade = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
 
   return (
     <section ref={ref} className="relative pt-28 md:pt-36 pb-20 px-6 overflow-hidden">
@@ -177,33 +182,36 @@ function HeroRail({ text, basePath, t, lang }: { text: any; basePath: string; t:
             </div>
           </motion.div>
 
-          {/* Right — three phones in horizontal parallax */}
+          {/* Right — three phones in horizontal parallax (desktop) */}
           <motion.div
-            style={{ y: yParallax, opacity: opacityFade }}
-            className="relative h-[620px] hidden md:block"
+            style={{ y: yParallax, opacity: opacityFade, willChange: 'transform, opacity' }}
+            className="relative h-[620px] hidden lg:block"
           >
             <motion.div
-              style={{ x: x1, rotate: rotate1 }}
-              className="absolute top-8 -left-10 opacity-60"
+              style={{ x: x1, rotate: -7, willChange: 'transform' }}
+              className="absolute top-10 -left-6 opacity-55"
             >
-              <PhoneFrame screen="guides" text={text} scale={0.7} />
-            </motion.div>
-
-            <motion.div style={{ x: x2 }} className="absolute inset-0 flex items-center justify-center z-10">
-              <PhoneFrame screen="home" text={text} scale={0.95} showFloating />
+              <PhoneFrame screen="guides" text={text} scale={0.65} />
             </motion.div>
 
             <motion.div
-              style={{ x: x3, rotate: rotate3 }}
-              className="absolute bottom-4 -right-12 opacity-60"
+              style={{ x: x2, willChange: 'transform' }}
+              className="absolute inset-0 flex items-center justify-center z-10"
             >
-              <PhoneFrame screen="chat" text={text} scale={0.7} />
+              <PhoneFrame screen="home" text={text} scale={0.92} showFloating halo />
+            </motion.div>
+
+            <motion.div
+              style={{ x: x3, rotate: 7, willChange: 'transform' }}
+              className="absolute bottom-6 -right-6 opacity-55"
+            >
+              <PhoneFrame screen="chat" text={text} scale={0.65} />
             </motion.div>
           </motion.div>
 
-          {/* Mobile: single phone only */}
-          <div className="md:hidden flex justify-center mt-4">
-            <PhoneFrame screen="home" text={text} scale={0.85} showFloating />
+          {/* Tablet / mobile — one centered phone */}
+          <div className="lg:hidden flex justify-center mt-4">
+            <PhoneFrame screen="home" text={text} scale={0.85} showFloating halo />
           </div>
         </div>
 
@@ -234,148 +242,87 @@ interface TourChapter {
 function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 22, mass: 0.4 });
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, 'change', (value) => {
+    const clamped = Math.max(0, Math.min(0.999, value));
+    const next = Math.floor(clamped * chapters.length);
+    setActiveIndex((prev) => (prev === next ? prev : next));
+  });
 
   return (
-    <section ref={ref} className="relative" style={{ height: `${chapters.length * 80 + 40}vh` }}>
+    <section ref={ref} className="relative" style={{ height: `${chapters.length * 70 + 40}vh` }}>
       <div className="sticky top-0 min-h-screen flex items-center py-16 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: text chapters */}
+          {/* Left: text chapters (only active one rendered + animated via AnimatePresence) */}
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#FFD700]/30 bg-[#FFD700]/10 mb-8">
               <Sparkles className="w-4 h-4 text-[#FFD700]" />
-              <span className="text-sm text-[#FFD700] font-medium">
-                {text.interactiveTour}
-              </span>
+              <span className="text-sm text-[#FFD700] font-medium">{text.interactiveTour}</span>
             </div>
 
-            <div className="relative">
-              {chapters.map((chapter, i) => (
-                <TourChapterText key={i} chapter={chapter} index={i} total={chapters.length} progress={smoothProgress} />
-              ))}
-            </div>
-
-            {/* Progress bar */}
-            <div className="mt-10 flex items-center gap-3">
-              <span className="text-xs text-white/40 uppercase tracking-wider font-medium tabular-nums">
-                <TourCounter progress={smoothProgress} total={chapters.length} />
-              </span>
-              <div className="relative h-1 flex-1 rounded-full bg-white/8 overflow-hidden max-w-xs">
+            <div className="relative min-h-[220px]">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  style={{ scaleX: smoothProgress, transformOrigin: 'left' }}
-                  className="absolute inset-0 bg-gradient-to-r from-[#0057B8] via-[#6eb1ff] to-[#FFD700]"
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -18 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                >
+                  <div className="text-sm font-semibold tracking-[0.25em] uppercase text-[#FFD700]/80 mb-3">
+                    {chapters[activeIndex].eyebrow}
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 font-heading leading-tight">
+                    {chapters[activeIndex].title}
+                  </h3>
+                  <p className="text-lg text-white/70 leading-relaxed max-w-xl">
+                    {chapters[activeIndex].body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Chapter pills */}
+            <div className="mt-10 flex items-center gap-2 flex-wrap">
+              {chapters.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    i === activeIndex ? 'w-10 bg-gradient-to-r from-[#0057B8] to-[#FFD700]' : 'w-5 bg-white/15'
+                  }`}
                 />
-              </div>
+              ))}
+              <span className="ml-3 text-xs text-white/40 uppercase tracking-wider font-medium tabular-nums">
+                {String(activeIndex + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
+              </span>
             </div>
           </div>
 
-          {/* Right: pinned phone */}
+          {/* Right: pinned phone — only active screen is mounted */}
           <div className="relative flex items-center justify-center min-h-[580px]">
             <div
-              className="absolute w-[420px] h-[420px] rounded-full opacity-40 pointer-events-none"
+              className="absolute w-[380px] h-[380px] rounded-full opacity-40 pointer-events-none"
               style={{
-                background: 'radial-gradient(circle, rgba(0,87,184,0.4) 0%, transparent 65%)',
-                filter: 'blur(60px)',
+                background:
+                  'radial-gradient(circle, rgba(0,87,184,0.35) 0%, rgba(255,215,0,0.12) 60%, transparent 75%)',
               }}
             />
-            <TourPhone chapters={chapters} text={text} progress={smoothProgress} />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, scale: 0.92, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: -20 }}
+                transition={{ duration: 0.45, ease: 'easeOut' }}
+              >
+                <PhoneFrame screen={chapters[activeIndex].screen} text={text} scale={1} halo />
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function TourChapterText({
-  chapter,
-  index,
-  total,
-  progress,
-}: {
-  chapter: TourChapter;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const start = index / total;
-  const peak = (index + 0.4) / total;
-  const end = (index + 1) / total;
-
-  const opacity = useTransform(progress, [start, peak, end], [0.15, 1, 0.15]);
-  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
-  const scale = useTransform(progress, [start, peak, end], [0.96, 1, 0.96]);
-
-  return (
-    <motion.div style={{ opacity, y, scale }} className={index === 0 ? '' : 'absolute inset-0'}>
-      <div className="text-sm font-semibold tracking-[0.25em] uppercase text-[#FFD700]/80 mb-3">
-        {chapter.eyebrow}
-      </div>
-      <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 font-heading leading-tight">
-        {chapter.title}
-      </h3>
-      <p className="text-lg text-white/70 leading-relaxed max-w-xl">{chapter.body}</p>
-    </motion.div>
-  );
-}
-
-function TourCounter({ progress, total }: { progress: MotionValue<number>; total: number }) {
-  const idx = useTransform(progress, (v) => {
-    const capped = Math.max(0, Math.min(0.999, v));
-    const current = Math.floor(capped * total) + 1;
-    return `${String(current).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
-  });
-  return <motion.span>{idx}</motion.span>;
-}
-
-function TourPhone({ chapters, text, progress }: { chapters: TourChapter[]; text: any; progress: MotionValue<number> }) {
-  return (
-    <div className="relative">
-      {chapters.map((chapter, i) => {
-        const start = i / chapters.length;
-        const peak = (i + 0.4) / chapters.length;
-        const end = (i + 1) / chapters.length;
-        return (
-          <TourPhoneScreen
-            key={i}
-            screen={chapter.screen}
-            text={text}
-            start={start}
-            peak={peak}
-            end={end}
-            isFirst={i === 0}
-            progress={progress}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-function TourPhoneScreen({
-  screen,
-  text,
-  start,
-  peak,
-  end,
-  isFirst,
-  progress,
-}: {
-  screen: ScreenId;
-  text: any;
-  start: number;
-  peak: number;
-  end: number;
-  isFirst: boolean;
-  progress: MotionValue<number>;
-}) {
-  const opacity = useTransform(progress, [start, peak, end], [0, 1, 0]);
-  const scale = useTransform(progress, [start, peak, end], [0.88, 1, 0.88]);
-  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
-
-  return (
-    <motion.div style={{ opacity, scale, y }} className={isFirst ? 'relative' : 'absolute inset-0'}>
-      <PhoneFrame screen={screen} text={text} scale={1} />
-    </motion.div>
   );
 }
 
@@ -750,8 +697,10 @@ export default function SweezyAppPage() {
                         }}
                       >
                         <div
-                          className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-40 blur-3xl pointer-events-none group-hover:opacity-60 transition-opacity"
-                          style={{ background: scene.color }}
+                          className="absolute -top-20 -right-20 w-56 h-56 rounded-full opacity-25 pointer-events-none group-hover:opacity-40 transition-opacity"
+                          style={{
+                            background: `radial-gradient(circle, ${scene.color} 0%, transparent 60%)`,
+                          }}
                         />
                         <div className="relative flex items-center justify-between mb-6">
                           <div
@@ -790,10 +739,9 @@ export default function SweezyAppPage() {
         {/* Live AI chat section */}
         <section className="relative py-24 px-6 overflow-hidden">
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-30 pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-25 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(255,215,0,0.25) 0%, transparent 60%)',
-              filter: 'blur(80px)',
+              background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 65%)',
             }}
           />
           <div className="relative max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
@@ -895,8 +843,10 @@ export default function SweezyAppPage() {
                   }}
                 >
                   <div
-                    className="absolute -top-16 -right-16 w-40 h-40 rounded-full opacity-20 blur-3xl pointer-events-none group-hover:opacity-40 transition-opacity"
-                    style={{ background: feature.color }}
+                    className="absolute -top-16 -right-16 w-40 h-40 rounded-full opacity-15 pointer-events-none group-hover:opacity-25 transition-opacity"
+                    style={{
+                      background: `radial-gradient(circle, ${feature.color} 0%, transparent 65%)`,
+                    }}
                   />
                   <div
                     className="relative w-12 h-12 rounded-xl flex items-center justify-center mb-4"

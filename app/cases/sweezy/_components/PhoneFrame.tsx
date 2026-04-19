@@ -45,22 +45,25 @@ interface PhoneFrameProps {
   className?: string;
   scale?: number;
   showFloating?: boolean;
+  /** When true render a subtle static halo behind the phone. Cheap radial gradient, not a blur filter. */
+  halo?: boolean;
 }
 
-export default function PhoneFrame({ screen, text, className = '', scale = 1, showFloating = false }: PhoneFrameProps) {
+export default function PhoneFrame({ screen, text, className = '', scale = 1, showFloating = false, halo = false }: PhoneFrameProps) {
   const width = 280 * scale;
   const height = 570 * scale;
 
   return (
-    <div className={`relative ${className}`} style={{ width, height }}>
-      {/* Glow halo */}
-      <div
-        className="absolute -inset-6 rounded-[70px] opacity-70 blur-3xl pointer-events-none"
-        style={{
-          background:
-            'conic-gradient(from 180deg, rgba(0,87,184,0.35), rgba(255,215,0,0.25), rgba(0,87,184,0.35))',
-        }}
-      />
+    <div className={`relative ${className}`} style={{ width, height, willChange: 'transform' }}>
+      {halo && (
+        <div
+          className="absolute -inset-8 rounded-[70px] opacity-60 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse at 30% 30%, rgba(0,87,184,0.35) 0%, transparent 55%), radial-gradient(ellipse at 70% 70%, rgba(255,215,0,0.22) 0%, transparent 55%)',
+          }}
+        />
+      )}
 
       {/* Phone body */}
       <div
@@ -68,7 +71,7 @@ export default function PhoneFrame({ screen, text, className = '', scale = 1, sh
         style={{
           background: 'linear-gradient(160deg, #2b2f3a 0%, #0a0c12 50%, #1a1d27 100%)',
           boxShadow:
-            '0 60px 120px -30px rgba(0,0,0,0.7), 0 20px 60px -10px rgba(0,87,184,0.35), inset 0 0 0 1px rgba(255,255,255,0.08)',
+            '0 30px 60px -20px rgba(0,0,0,0.6), 0 10px 30px -10px rgba(0,87,184,0.28), inset 0 0 0 1px rgba(255,255,255,0.08)',
         }}
       >
         {/* Side metal rim highlight */}
@@ -111,7 +114,7 @@ export default function PhoneFrame({ screen, text, className = '', scale = 1, sh
           </div>
 
           {/* Bottom nav */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-around px-4 z-10">
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-[#05060b]/95 border-t border-white/10 flex items-center justify-around px-4 z-10">
             {([
               { id: 'home', emoji: '🏠', label: text.nav.home },
               { id: 'guides', emoji: '📚', label: text.nav.guides },
@@ -139,7 +142,7 @@ export default function PhoneFrame({ screen, text, className = '', scale = 1, sh
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="absolute -left-8 top-24 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
+            className="absolute -left-8 top-24 px-3 py-2 rounded-xl bg-[#0a0c12]/90 border border-white/20 shadow-xl"
           >
             <div className="flex items-center gap-2 text-xs">
               <span className="relative flex h-2 w-2">
@@ -153,7 +156,7 @@ export default function PhoneFrame({ screen, text, className = '', scale = 1, sh
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="absolute -right-8 bottom-36 px-3 py-2 rounded-xl border border-[#FFD700]/30 bg-[#FFD700]/10 backdrop-blur-md"
+            className="absolute -right-8 bottom-36 px-3 py-2 rounded-xl border border-[#FFD700]/30 bg-[#2a2100]/90 shadow-xl"
           >
             <div className="text-xs font-semibold text-[#FFD700]">🇺🇦 Слава Україні!</div>
           </motion.div>
