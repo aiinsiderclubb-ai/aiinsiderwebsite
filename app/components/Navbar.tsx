@@ -47,12 +47,12 @@ export default function Navbar() {
 
   const navLinks = [
     { name: t('nav.about'), href: `${basePath}/about` },
+    { name: t('nav.products'), href: `${basePath}/products` },
     { name: t('nav.services'), href: `${basePath}/services` },
-    { name: t('nav.contentFactory'), href: `${basePath}/content-factory` },
-    { name: t('nav.solutions'), href: `${basePath}/solutions` },
     { name: t('nav.cases'), href: `${basePath}/cases` },
+    { name: t('nav.partners'), href: `${basePath}/partners` },
+    { name: t('nav.careers'), href: `${basePath}/careers` },
     { name: t('nav.blog'), href: `${basePath}/blog` },
-    { name: t('nav.pricing'), href: isHomePage ? '#pricing' : `${basePath}#pricing` },
     { name: t('nav.contact'), href: isHomePage ? '#bookcall' : `${basePath}#bookcall` },
   ];
 
@@ -89,15 +89,18 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => {
             const isExternal = link.href.startsWith('#');
             const isActive =
               (!isExternal && pathname === link.href) ||
               (!isExternal && link.href.endsWith('/about') && pathname === `${basePath}/about`) ||
+              (!isExternal && link.href.endsWith('/products') && pathname?.startsWith(`${basePath}/products`)) ||
               (!isExternal && link.href.endsWith('/services') && pathname?.startsWith(`${basePath}/services`)) ||
               (!isExternal && link.href.endsWith('/solutions') && pathname?.startsWith(`${basePath}/solutions`)) ||
               (!isExternal && link.href.endsWith('/cases') && pathname?.startsWith(`${basePath}/cases`)) ||
+              (!isExternal && link.href.endsWith('/partners') && (pathname?.startsWith(`${basePath}/partners`) || pathname?.startsWith(`${basePath}/become-partner`))) ||
+              (!isExternal && link.href.endsWith('/careers') && pathname?.startsWith(`${basePath}/careers`)) ||
               (!isExternal && link.href.endsWith('/blog') && pathname?.startsWith(`${basePath}/blog`));
 
             if (isExternal) {
@@ -105,7 +108,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`relative text-sm font-semibold transition-colors duration-200 group
+                  className={`relative text-[13px] font-semibold transition-colors duration-200 group whitespace-nowrap
                     ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
                 >
                   {link.name}
@@ -118,7 +121,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-semibold transition-colors duration-200 group
+                className={`relative text-[13px] font-semibold transition-colors duration-200 group whitespace-nowrap
                   ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
               >
                 {link.name}
@@ -144,7 +147,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden relative w-10 h-10 rounded-lg border border-white/15 bg-white/[0.04] flex items-center justify-center
+          className="lg:hidden relative w-10 h-10 rounded-lg border border-white/15 bg-white/[0.04] flex items-center justify-center
             transition-transform duration-200 active:scale-95"
         >
           {isOpen ? (
@@ -157,7 +160,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-6 animate-fade-in">
+        <div className="lg:hidden absolute top-full left-0 right-0 mt-2 mx-6 animate-fade-in">
           <div className="rounded-2xl p-6 border border-white/10 bg-black/90 max-h-[80vh] overflow-y-auto" style={{ backdropFilter: 'blur(16px)' }}>
             {navLinks.map((link) => {
               const isExternal = link.href.startsWith('#');

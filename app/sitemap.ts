@@ -22,6 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/content-factory', changeFrequency: 'monthly', priority: 0.95 },
     { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
     { path: '/solutions', changeFrequency: 'weekly', priority: 0.8 },
+    { path: '/products', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/partners', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/become-partner', changeFrequency: 'monthly', priority: 0.7 },
+    { path: '/careers', changeFrequency: 'weekly', priority: 0.7 },
     // SEO landing pages
     { path: '/ai-automation-for-business', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/ai-chatbots-for-business', changeFrequency: 'monthly', priority: 0.9 },

@@ -17,10 +17,18 @@ export default function Footer() {
 
   const companyLinks = [
     { label: t('footer.linkAbout'), href: `${basePath}/about` },
+    { label: t('nav.partners'), href: `${basePath}/partners` },
+    { label: t('nav.careers'), href: `${basePath}/careers` },
     { label: t('footer.linkCases'), href: `${basePath}/cases` },
-    { label: t('footer.linkProjects'), href: `${basePath}/projects` },
-    { label: t('footer.linkPricing'), href: `${basePath}#pricing` },
     { label: t('footer.linkContact'), href: `${basePath}#bookcall` },
+  ];
+
+  const productLinks = [
+    { label: 'Content Factory', href: `${basePath}/content-factory` },
+    { label: 'Sweezy', href: `${basePath}/cases/sweezy` },
+    { label: 'AI Receptionist', href: `${basePath}/products` },
+    { label: 'AI SDR', href: `${basePath}/products` },
+    { label: t('products.allProducts'), href: `${basePath}/products` },
   ];
 
   const serviceLinks = [
@@ -28,14 +36,13 @@ export default function Footer() {
     { label: t('footer.linkVoiceAgents'), href: `${basePath}/services/ai-voice-agent` },
     { label: t('footer.linkAutomation'), href: `${basePath}/services/workflow-automation` },
     { label: t('footer.linkCustomAgents'), href: `${basePath}/services/custom-ai-models` },
-    { label: 'Content Factory', href: `${basePath}/content-factory` },
-    { label: 'Sweezy', href: `${basePath}/cases/sweezy` },
   ];
 
   const resourceLinks = [
     { label: `${t('footer.linkBlog')} (30+)`, href: `${basePath}/blog` },
     { label: t('footer.linkServices'), href: `${basePath}/services` },
     { label: t('footer.linkSolutions'), href: `${basePath}/solutions` },
+    { label: t('footer.linkPricing'), href: `${basePath}#pricing` },
     ...(lang === 'uk'
       ? [
           { label: 'Автоматизація салону краси', href: '/uk/avtomatizaciya-salonu-krasy' },
@@ -57,7 +64,7 @@ export default function Footer() {
       />
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-8 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-10 lg:gap-8 mb-16">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Link href={basePath} className="flex items-center gap-3 group mb-5">
@@ -92,6 +99,25 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Products */}
+          <div>
+            <h3 className="text-sm font-bold font-heading mb-4 text-white uppercase tracking-wider">
+              {t('nav.products')}
+            </h3>
+            <ul className="space-y-2.5">
+              {productLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
