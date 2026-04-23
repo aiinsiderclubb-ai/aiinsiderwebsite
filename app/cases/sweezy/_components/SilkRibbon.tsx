@@ -5,14 +5,15 @@ import { memo } from 'react';
 /**
  * Ukrainian silk ribbon — pure CSS version.
  * Two soft radial bands (blue + gold) drift slowly via transform-only animations.
- * No SVG filters, no blend modes, no path morphing — GPU-friendly.
+ * No blur() filter, no SVG filters, no blend modes — GPU friendly on scroll.
+ * Softness comes from the radial gradients themselves (very wide, low-opacity).
  */
 function SilkRibbonComponent() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-      style={{ contain: 'strict' }}
+      className="pointer-events-none fixed inset-0 overflow-hidden"
+      style={{ zIndex: 0 }}
     >
       <div className="silk-band silk-blue" />
       <div className="silk-band silk-gold" />
@@ -21,32 +22,34 @@ function SilkRibbonComponent() {
       <style jsx>{`
         .silk-band {
           position: absolute;
-          left: -20%;
-          right: -20%;
-          height: 42vh;
-          filter: blur(80px);
-          opacity: 0.35;
+          left: -30%;
+          right: -30%;
+          height: 80vh;
+          opacity: 0.45;
           will-change: transform;
+          transform: translateZ(0);
         }
         .silk-blue {
-          top: 18%;
+          top: -10%;
           background: radial-gradient(
-            ellipse 60% 100% at 50% 50%,
-            rgba(0, 87, 184, 0.85) 0%,
-            rgba(44, 125, 214, 0.4) 40%,
-            transparent 70%
+            ellipse 55% 60% at 50% 50%,
+            rgba(0, 87, 184, 0.55) 0%,
+            rgba(44, 125, 214, 0.22) 35%,
+            rgba(0, 30, 80, 0.08) 60%,
+            transparent 80%
           );
-          animation: silk-drift-blue 26s ease-in-out infinite alternate;
+          animation: silk-drift-blue 36s ease-in-out infinite alternate;
         }
         .silk-gold {
-          bottom: 12%;
+          bottom: -10%;
           background: radial-gradient(
-            ellipse 55% 100% at 50% 50%,
-            rgba(255, 215, 0, 0.6) 0%,
-            rgba(255, 184, 0, 0.3) 40%,
-            transparent 70%
+            ellipse 50% 55% at 50% 50%,
+            rgba(255, 215, 0, 0.32) 0%,
+            rgba(255, 184, 0, 0.14) 35%,
+            rgba(120, 80, 0, 0.04) 60%,
+            transparent 80%
           );
-          animation: silk-drift-gold 32s ease-in-out infinite alternate;
+          animation: silk-drift-gold 42s ease-in-out infinite alternate;
         }
         .silk-vignette {
           position: absolute;
@@ -61,24 +64,18 @@ function SilkRibbonComponent() {
 
         @keyframes silk-drift-blue {
           0% {
-            transform: translate3d(-4%, -2%, 0) scaleY(1);
-          }
-          50% {
-            transform: translate3d(3%, 3%, 0) scaleY(1.08);
+            transform: translate3d(-3%, -1%, 0);
           }
           100% {
-            transform: translate3d(5%, -1%, 0) scaleY(0.96);
+            transform: translate3d(3%, 2%, 0);
           }
         }
         @keyframes silk-drift-gold {
           0% {
-            transform: translate3d(4%, 2%, 0) scaleY(0.96);
-          }
-          50% {
-            transform: translate3d(-5%, -3%, 0) scaleY(1.08);
+            transform: translate3d(3%, 1%, 0);
           }
           100% {
-            transform: translate3d(-3%, 3%, 0) scaleY(1);
+            transform: translate3d(-3%, -2%, 0);
           }
         }
 

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -77,25 +77,17 @@ function HeroRail({ text, basePath, t, lang }: { text: any; basePath: string; t:
       </div>
 
       <div className="relative max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-sm text-white/50 mb-8"
-        >
+        <div className="flex items-center gap-2 text-sm text-white/50 mb-8 sweezy-reveal">
           <Link href={`${basePath}/cases`} className="hover:text-white transition-colors">
             {t('Кейси', 'Cases')}
           </Link>
           <ChevronRight className="w-4 h-4" />
           <span className="text-[#FFD700]">Sweezy</span>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
           {/* Left text column */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="sweezy-reveal sweezy-reveal-delay-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="relative">
                 <div className="absolute -inset-1 rounded-[28px] bg-gradient-to-br from-[#0057B8] via-[#2c7dd6] to-[#FFD700] opacity-70 blur-md" />
@@ -180,12 +172,12 @@ function HeroRail({ text, basePath, t, lang }: { text: any; basePath: string; t:
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Right — three phones in horizontal parallax (desktop) */}
           <motion.div
             style={{ y: yParallax, opacity: opacityFade, willChange: 'transform, opacity' }}
-            className="relative h-[620px] hidden lg:block"
+            className="relative h-[620px] hidden lg:block sweezy-reveal sweezy-reveal-delay-2"
           >
             <motion.div
               style={{ x: x1, rotate: -7, willChange: 'transform' }}
@@ -216,22 +208,20 @@ function HeroRail({ text, basePath, t, lang }: { text: any; basePath: string; t:
         </div>
 
         {/* Chapter scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="mt-16 flex items-center gap-3 text-white/40"
-        >
+        <div className="mt-16 flex items-center gap-3 text-white/40 sweezy-reveal sweezy-reveal-delay-3">
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/40" />
           <span className="text-xs uppercase tracking-[0.3em]">{t('Глава 1 · Історія', 'Chapter 1 · The story')}</span>
           <div className="h-px flex-1 bg-gradient-to-r from-white/40 via-white/20 to-transparent" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ===== Sticky Phone Tour ===== */
+/* ===== Sticky Phone Tour =====
+ * Desktop (lg+): sticky scroll-jacking with one pinned phone + rotating chapters.
+ * Mobile / tablet: regular stacked sections so content is always visible.
+ */
 interface TourChapter {
   eyebrow: string;
   title: string;
@@ -239,7 +229,7 @@ interface TourChapter {
   screen: ScreenId;
 }
 
-function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) {
+function StickyTourDesktop({ chapters, text }: { chapters: TourChapter[]; text: any }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const [activeIndex, setActiveIndex] = useState(0);
@@ -251,24 +241,24 @@ function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) 
   });
 
   return (
-    <section ref={ref} className="relative" style={{ height: `${chapters.length * 70 + 40}vh` }}>
-      <div className="sticky top-0 min-h-screen flex items-center py-16 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: text chapters (only active one rendered + animated via AnimatePresence) */}
+    <section ref={ref} className="relative hidden lg:block" style={{ height: `${chapters.length * 60 + 30}vh` }}>
+      <div className="sticky top-0 h-screen flex items-center py-12 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-2 gap-12 items-center">
+          {/* Left: text chapter */}
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#FFD700]/30 bg-[#FFD700]/10 mb-8">
               <Sparkles className="w-4 h-4 text-[#FFD700]" />
               <span className="text-sm text-[#FFD700] font-medium">{text.interactiveTour}</span>
             </div>
 
-            <div className="relative min-h-[220px]">
+            <div className="relative min-h-[240px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -18 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
                 >
                   <div className="text-sm font-semibold tracking-[0.25em] uppercase text-[#FFD700]/80 mb-3">
                     {chapters[activeIndex].eyebrow}
@@ -283,7 +273,6 @@ function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) 
               </AnimatePresence>
             </div>
 
-            {/* Chapter pills */}
             <div className="mt-10 flex items-center gap-2 flex-wrap">
               {chapters.map((_, i) => (
                 <div
@@ -299,7 +288,7 @@ function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) 
             </div>
           </div>
 
-          {/* Right: pinned phone — only active screen is mounted */}
+          {/* Right: pinned phone */}
           <div className="relative flex items-center justify-center min-h-[580px]">
             <div
               className="absolute w-[380px] h-[380px] rounded-full opacity-40 pointer-events-none"
@@ -311,10 +300,10 @@ function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) 
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, scale: 0.92, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92, y: -20 }}
-                transition={{ duration: 0.45, ease: 'easeOut' }}
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.94 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
               >
                 <PhoneFrame screen={chapters[activeIndex].screen} text={text} scale={1} halo />
               </motion.div>
@@ -326,12 +315,83 @@ function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) 
   );
 }
 
+function StickyTourMobile({ chapters, text }: { chapters: TourChapter[]; text: any }) {
+  return (
+    <section className="relative lg:hidden py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#FFD700]/30 bg-[#FFD700]/10 mb-10">
+          <Sparkles className="w-4 h-4 text-[#FFD700]" />
+          <span className="text-sm text-[#FFD700] font-medium">{text.interactiveTour}</span>
+        </div>
+
+        <div className="space-y-24">
+          {chapters.map((chapter, i) => (
+            <div key={i} className="grid md:grid-cols-2 gap-10 items-center">
+              <div className={i % 2 === 1 ? 'md:order-2' : ''}>
+                <div className="text-sm font-semibold tracking-[0.25em] uppercase text-[#FFD700]/80 mb-3">
+                  {chapter.eyebrow}
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 font-heading leading-tight">
+                  {chapter.title}
+                </h3>
+                <p className="text-base md:text-lg text-white/70 leading-relaxed">
+                  {chapter.body}
+                </p>
+              </div>
+              <div className={`relative flex items-center justify-center ${i % 2 === 1 ? 'md:order-1' : ''}`}>
+                <div
+                  className="absolute w-[300px] h-[300px] rounded-full opacity-35 pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(circle, rgba(0,87,184,0.35) 0%, rgba(255,215,0,0.12) 60%, transparent 75%)',
+                  }}
+                />
+                <PhoneFrame screen={chapter.screen} text={text} scale={0.85} halo />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StickyTour({ chapters, text }: { chapters: TourChapter[]; text: any }) {
+  return (
+    <>
+      <StickyTourDesktop chapters={chapters} text={text} />
+      <StickyTourMobile chapters={chapters} text={text} />
+    </>
+  );
+}
+
 /* ===== Main page ===== */
 export default function SweezyAppPage() {
   const { lang } = useLanguage();
   const basePath = `/${lang}`;
   const isEn = lang === 'en';
   const t = (uk: string, en: string) => (isEn ? en : uk);
+
+  // Force dark theme while on Sweezy case — its cinematic design is dark-only.
+  // We set data-theme="dark" directly and re-assert on the next frame so the
+  // ThemeProvider (whose effect runs AFTER children's effects) can't overwrite
+  // us on initial mount. We do NOT touch localStorage, so the user's saved
+  // preference is preserved for the rest of the site after they navigate away.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const html = document.documentElement;
+    const previousTheme = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', 'dark');
+    const raf = requestAnimationFrame(() => {
+      html.setAttribute('data-theme', 'dark');
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (previousTheme) {
+        html.setAttribute('data-theme', previousTheme);
+      }
+    };
+  }, []);
   const siteUrl = getSiteUrl();
   const sweezyCase = getCaseBySlug('sweezy');
   const relatedService = sweezyCase?.relatedServiceSlug ? getServiceBySlug(sweezyCase.relatedServiceSlug) : undefined;
@@ -554,12 +614,46 @@ export default function SweezyAppPage() {
   ];
 
   return (
-    <main className="relative min-h-screen bg-[#05060b] text-white overflow-x-hidden">
+    <main
+      className="sweezy-case relative min-h-screen bg-[#05060b] text-white overflow-x-hidden"
+      style={{ isolation: 'isolate' }}
+    >
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+
+      {/* CSS-based reveal animations — content visible immediately without JS. */}
+      <style jsx global>{`
+        .sweezy-reveal {
+          animation: sweezy-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .sweezy-reveal-delay-1 {
+          animation-delay: 0.05s;
+        }
+        .sweezy-reveal-delay-2 {
+          animation-delay: 0.15s;
+        }
+        .sweezy-reveal-delay-3 {
+          animation-delay: 0.35s;
+        }
+        @keyframes sweezy-fade-up {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 16px, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sweezy-reveal {
+            animation: none;
+          }
+        }
+      `}</style>
 
       <SilkRibbon />
 
