@@ -14,7 +14,6 @@ const SCROLL_THROTTLE_MS = 100;
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [navVisible, setNavVisible] = useState(false);
   const lastScrollUpdate = useRef(0);
   const rafId = useRef<number | null>(null);
   const pathname = usePathname();
@@ -31,12 +30,8 @@ export default function Navbar() {
         lastScrollUpdate.current = now;
         const y = window.scrollY;
         setIsScrolled(y > 50);
-        if (isHomePage) {
-          setNavVisible(y > 30);
-        }
       });
     };
-    if (!isHomePage) setNavVisible(true);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
@@ -60,9 +55,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled || !isHomePage ? 'py-4' : 'py-6'
-      } ${
-        isHomePage && !navVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
+      } opacity-100`}
     >
       {(isScrolled || !isHomePage) && (
         <div

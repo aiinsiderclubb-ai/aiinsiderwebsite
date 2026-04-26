@@ -176,10 +176,9 @@ export default async function RootLayout({
       document.documentElement.dataset.theme = theme;
       return;
     }
-    var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-    document.documentElement.dataset.theme = prefersLight ? 'light' : 'dark';
+    document.documentElement.dataset.theme = 'light';
   } catch (e) {
-    document.documentElement.dataset.theme = 'dark';
+    document.documentElement.dataset.theme = 'light';
   }
 })();`,
           }}

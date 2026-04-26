@@ -10,15 +10,15 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          dark: '#0A0014',
-          darker: '#050008',
+          dark: '#0B1020',
+          darker: '#070B1A',
         },
         accent: {
-          cyan: '#00F0FF',
-          violet: '#9945FF',
-          pink: '#FF0080',
-          yellow: '#FFD700',
-          green: '#00FF88',
+          cyan: '#38BDF8',
+          violet: '#6366F1',
+          pink: '#A78BFA',
+          yellow: '#FBBF24',
+          green: '#22C55E',
         },
       },
       fontFamily: {
